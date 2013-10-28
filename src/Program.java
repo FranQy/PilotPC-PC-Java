@@ -1,3 +1,4 @@
+import java.io.Console;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -8,25 +9,25 @@ public class Program {
 	/**
 	 * @param args
 	 */
-	static Okno główneOkno;
-	static Połączenie połączenia;
-	static TypWyświetlania wyświetlanie;
+	static Okno glowneOkno;
+	static Polaczenie polaczenia;
+	static TypWyswietlania wyswietlanie;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		wyświetlanie=TypWyświetlania.Konsola;
+		wyswietlanie=TypWyswietlania.Konsola;
 		boolean pomoc=false;
 		for(int i=0;i<args.length;i++)
 		{
 			if(args[i].equalsIgnoreCase("/o"))	
-				wyświetlanie=TypWyświetlania.Okno;
+				wyswietlanie=TypWyswietlania.Okno;
 			else if(args[i].equals("/?"))	
 					pomoc=true;
 			
 		}
-		if(wyświetlanie==TypWyświetlania.Okno)
+		if(wyswietlanie==TypWyswietlania.Okno)
 		{
-główneOkno=new Okno();
-główneOkno.show();
+glowneOkno=new Okno();
+glowneOkno.show();
 		}
 		if(pomoc){
 			String Tekst="To jest pomoc.\n\r\n\rParametry:\n\r /?  Wyświetlenie pomocy\n\r /k  Uruchomienie bez okna (tylko konsola)\n\r\r\n";
@@ -35,8 +36,7 @@ główneOkno.show();
 				//Mess
 		}
 		
-		połączenia=new Połączenie();
-
+		polaczenia=new Polaczenie();
 	}
 }
 
