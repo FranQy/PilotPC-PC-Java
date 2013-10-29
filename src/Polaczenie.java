@@ -33,12 +33,13 @@ public Polaczenie()
 		soc=socServ.accept();
 			String wyj="";
 		InputStream is = soc.getInputStream();
-		/*try{
+		try{
 
 			   ObjectInputStream in = new ObjectInputStream(is);
 			   Object o=in.readObject();
+				System.out.print(o.toString());
 		}
-		catch(Exception e)*/
+		catch(Exception e)
 		{
 			byte liczbaNowychLinii=0;
 		while (true) {
@@ -62,7 +63,7 @@ int n = is.read();
 
 			break;
 		}}
-		if(wyj.indexOf("GET")==0)
+		if(wyj.indexOf("/")==0)
 		{
 			OutputStream os =soc.getOutputStream();
 			String wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nContent-Type: application/xhtml+xml\r\n\r\n<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title></head>	<body>Aplikacja w trakcie pisania :)</body></html>";
