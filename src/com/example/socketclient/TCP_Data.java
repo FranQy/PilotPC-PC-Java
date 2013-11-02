@@ -1,5 +1,7 @@
 package com.example.socketclient;
 
+
+
 import java.io.Serializable;
 import java.util.Hashtable;
 
@@ -32,3 +34,6 @@ public class TCP_Data implements Serializable {
 	    }
 
 	}
+
+
+
