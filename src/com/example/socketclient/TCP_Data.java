@@ -9,15 +9,26 @@ import java.util.Hashtable;
 public class TCP_Data implements Serializable {
 
 
-enum typ{GAMEPAD, PILOT, KEYBOARD, TOUCHPAD};
-    enum  pilotButton{OFF, MUSIC, MULTIMEDIA, PLAYPAUSE, PERV, NEXT, STOP, EXIT, BACK, VOLDOWN, VOLUP, MUTE,
-    UP, DOWN, RIGHT, LEFT, RETTURN};
+	public enum typ{GAMEPAD, PILOT, KEYBOARD, TOUCHPAD};
+	  public enum  pilotButton{OFF, MUSIC, MULTIMEDIA, PLAYPAUSE, PERV, NEXT, STOP, EXIT, BACK, VOLDOWN, VOLUP, MUTE,
+	    UP, DOWN, RIGHT, LEFT, RETTURN};
 
-    enum touchpadTYPE{NORMAL, LONG, SCROLL, LPM, PPM};
+	  public enum touchedTYPE {NORMAL, LONG, UP, SCROLL, LPM, PPM};
 
-    int touchpadX;
-    int touchpadY;
+	    public int touchpadX;
+	    public int touchpadY;
+	    public typ type;
+	    public pilotButton button;
+	    public touchedTYPE mouse;
 
+	    public void clean()
+	    {
+	        touchpadX = 0;
+	        touchpadY = 0;
+	      //  type = null;
+	        button = null;
+	        mouse = null;
 
+	    }
 
-}
+	}
