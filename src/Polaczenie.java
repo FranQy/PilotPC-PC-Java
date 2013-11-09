@@ -12,6 +12,7 @@ import java.net.Socket;
 import com.example.socketclient.TCP_Data;
 
 
+
 public class Polaczenie {
 	ServerSocket socServ;
 	Socket soc;
@@ -19,9 +20,10 @@ public class Polaczenie {
 	int port=12345;
 public Polaczenie()
 {
-	
+
 	MouseRobot mouse = new MouseRobot();  //klasa do sterowania myszka
-	
+Pilot pilot = new Pilot();
+
 	while(true)
 	{
 	try {
@@ -84,6 +86,11 @@ public Polaczenie()
 							}
 							}
 								 								
+						}
+						else if(data.type == TCP_Data.typ.PILOT )
+						{
+							pilot.click(data);
+							System.out.println("pilot");
 						}
 						data.clean();//czyszczenie zmiennych w TCP_Data
 					
