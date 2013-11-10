@@ -35,11 +35,11 @@ Pilot pilot = new Pilot();
 			soc=socServ.accept();		
 			InputStream is = soc.getInputStream();
 		
-			  ObjectInputStream in = new ObjectInputStream(soc.getInputStream());
 			
 			
 			  try {
-          		        		
+          		        	
+			  ObjectInputStream in = new ObjectInputStream(soc.getInputStream());	
           		TCP_Data data;
           		
           		while(true)

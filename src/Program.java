@@ -2,8 +2,8 @@ import java.io.Console;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-
 import java.net.Socket;
+import java.util.Random;
 public class Program {
 
 	/**
@@ -12,6 +12,10 @@ public class Program {
 	static Okno glowneOkno;
 	static Polaczenie polaczenia;
 	static TypWyswietlania wyswietlanie;
+	/**
+	 * Numer urzywany przy nawiązywaniu połączenia do uwierzytelniania
+	 */
+	static public int token=(new Random()).nextInt();
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		wyswietlanie=TypWyswietlania.Konsola;
