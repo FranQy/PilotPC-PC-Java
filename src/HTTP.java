@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -34,8 +33,7 @@ int n = is.read();
 	if(wyj.indexOf("/")==0)
 	{
 		OutputStream os =soc.getOutputStream();
-		String wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nContent-Type: application/xhtml+xml\r\n\r\n<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title></head>	<body>Aplikacja w trakcie pisania :)</body></html>";
-		os.write(wysylanie.getBytes());
+		String wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nContent-Type: application/xhtml+xml\r\n\r\n<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title></head><style></style>	<body><div class=\"karta\" id=\"gamepad\"></div><div class=\"karta\" id=\"pilot\"></div><div class=\"karta\" id=\"klawiatura\"></div><div class=\"karta\" id=\"touchpad\"></div><ul id=\"menu\"><li><img/></li><li><img title=\"gamepad\"/></li><li><img/></li><li><img/></li></ul>Aplikacja w trakcie pisania :)</body></html>";os.write(wysylanie.getBytes());
 		os.close();
 		is.close();
 	}
