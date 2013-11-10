@@ -23,6 +23,22 @@ JNIEXPORT void JNICALL Java_Pilot_click(JNIEnv *env, jobject jobj, jint a) {
 		keybd_event(VK_VOLUME_MUTE, 0, 1, 0);
 		keybd_event(VK_VOLUME_MUTE, 0, 2, 0);
 		break;
+	case PLAYPAUSE:
+		keybd_event(VK_MEDIA_PLAY_PAUSE, 0, 1, 0);
+		keybd_event(VK_MEDIA_PLAY_PAUSE, 0, 2, 0);
+		break;
+	case NEXT:
+		keybd_event(VK_MEDIA_NEXT_TRACK, 0, 1, 0);
+		keybd_event(VK_MEDIA_NEXT_TRACK, 0, 2, 0);
+		break;
+	case PERV:
+		keybd_event(VK_MEDIA_PREV_TRACK, 0, 1, 0);
+		keybd_event(VK_MEDIA_PREV_TRACK, 0, 2, 0);
+		break;
+	case STOP:
+		keybd_event(VK_MEDIA_STOP, 0, 1, 0);
+		keybd_event(VK_MEDIA_STOP, 0, 2, 0);
+		break;
 
 	}
 }
