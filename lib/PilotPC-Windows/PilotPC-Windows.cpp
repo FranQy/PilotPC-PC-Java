@@ -3,8 +3,8 @@
 
 #include "stdafx.h"
 #include "start.h"
-enum przyciskiDoCpp{  VOLUP, VOLDOWN, PLAYPAUSE } ;
-JNIEXPORT jint JNICALL Java_test_Start_kwadrat(JNIEnv *env, jclass jobj, jint a) {
+enum przyciskiDoCpp{  VOLUP, VOLDOWN, MUTE } ;
+JNIEXPORT void JNICALL Java_Pilot_click(JNIEnv *env, jclass jobj, jint a) {
 	przyciskiDoCpp przycisk = (przyciskiDoCpp)a;
 	switch (przycisk)
 	{
@@ -16,14 +16,11 @@ JNIEXPORT jint JNICALL Java_test_Start_kwadrat(JNIEnv *env, jclass jobj, jint a)
 		keybd_event(VK_VOLUME_DOWN, 0, 1, 0);
 		keybd_event(VK_VOLUME_DOWN, 0, 2, 0);
 		break;
-	case PLAYPAUSE:
-		keybd_event(VK_MEDIA_PLAY_PAUSE, 0, 1, 0);
-		keybd_event(VK_MEDIA_PLAY_PAUSE, 0, 2, 0);
+	case MUTE:
+		keybd_event(VK_VOLUME_MUTE, 0, 1, 0);
+		keybd_event(VK_VOLUME_MUTE, 0, 2, 0);
 		break;
 
 	}
-	
-	return a*a;
-	//return a*a;
 }
 
