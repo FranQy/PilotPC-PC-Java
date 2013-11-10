@@ -3,9 +3,12 @@
 
 #include "stdafx.h"
 #include "start.h"
-enum przyciskiDoCpp{  VOLUP, VOLDOWN, MUTE } ;
-JNIEXPORT void JNICALL Java_Pilot_click(JNIEnv *env, jclass jobj, jint a) {
-	przyciskiDoCpp przycisk = (przyciskiDoCpp)a;
+enum  pilotButton{
+	OFF, MUSIC, MULTIMEDIA, PLAYPAUSE, PERV, NEXT, STOP, EXIT, BACK, VOLDOWN, VOLUP, MUTE,
+	UP, DOWN, RIGHT, LEFT, RETTURN
+};
+JNIEXPORT void JNICALL Java_Pilot_click(JNIEnv *env, jobject jobj, jint a) {
+	pilotButton przycisk = (pilotButton)a;
 	switch (przycisk)
 	{
 	case VOLUP:

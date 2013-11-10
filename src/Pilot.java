@@ -3,9 +3,12 @@ import com.example.socketclient.TCP_Data;
 
 public class Pilot {
 	
-	  static {
-	      System.loadLibrary("clicker"); // hello.dll (Windows) or libhello.so (Unixes)
-	   }
+	static {
+		 if(System.getenv("PROCESSOR_ARCHITECTURE").contentEquals("AMD64"))
+	        System.loadLibrary("libpilotpc-x64");
+		 else
+		        System.loadLibrary("libpilotpc");
+	    }
 	   // A native method that receives nothing and returns void
 	   private native void click(int i);
 	   
@@ -19,17 +22,17 @@ public class Pilot {
 		   {
 		   case VOLDOWN:
 		   {
-			   click(0);
+			   click(data.button.ordinal());//Korzysta z tego samego enuma co TCP_DATA, bo po co robic dwa osobne
 			   break;
 		   }
 		   case VOLUP:
 		   {
-			   click(1);
+			   click(data.button.ordinal());
 			   break;
 		   }
 		   case MUTE:
 		   {
-			   click(2);
+			   click(data.button.ordinal());
 			   break;
 		   }
 		   }
