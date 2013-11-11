@@ -34,6 +34,7 @@ info.setText("twój IP to:"+java.net.InetAddress.getLocalHost().getHostAddress()
 lewy.add(info);
 Label link=new Label();
 link.setText("http://"+java.net.InetAddress.getLocalHost().getHostAddress()+":12345/");
+System.out.println();
 link.setForeground(Color.BLUE);
 lewy.add(link);
 } catch (UnknownHostException e) {
@@ -42,5 +43,10 @@ lewy.add(link);
 }
 add(lewy);
 add(new PanelQRCode());
+
+show();
+}
+protected void finalize() throws Throwable {
+	Program.wyswietlanie=TypWyswietlania.Konsola;
 }
 }

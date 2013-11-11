@@ -45,7 +45,6 @@ public class Program {
 		if(wyswietlanie==TypWyswietlania.Okno)
 		{
 glowneOkno=new Okno();
-glowneOkno.show();
 		}
 		if(pomoc){
 			String Tekst="To jest pomoc.\n\r\n\rParametry:\n\r /?  Wyświetlenie pomocy\n\r /k  Uruchomienie bez okna (tylko konsola)\n\r\r\n";
@@ -56,27 +55,42 @@ glowneOkno.show();
 		if (SystemTray.isSupported()){ 
 			SystemTray tray = SystemTray.getSystemTray();
 			PopupMenu popup = new PopupMenu();
-			MenuItem zakoncz = new MenuItem("Zakończ"); //tworzymy obiekt menuItem
-			popup.add(zakoncz);                //dodajemy objekt do menu
-			ActionListener exitListener = new ActionListener() {         // tworzymy obiekt ActionListener
-				public void actionPerformed(ActionEvent e) {    // tworzymy funkcję zamykającą naszą aplikację
-				System.out.println("Kończę działanie programu...");
-				System.exit(0);    
-				}
-				};
-
-				zakoncz.addActionListener(exitListener);  // dodajemy zdarzenie do pozycji zakończ
+			MenuItem pokaz = new MenuItem("Pokaż"); //tworzymy obiekt menuItem
+			popup.add(pokaz);                //dodajemy objekt do menu
+			
+			pokaz.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
+								public void actionPerformed(ActionEvent e) {    
+									wyswietlanie=TypWyswietlania.Okno;  
+					
+									glowneOkno=new Okno();
+							}
+							});
+				MenuItem zakoncz = new MenuItem("Zakończ"); //tworzymy obiekt menuItem
+				popup.add(zakoncz);                //dodajemy objekt do menu
+				zakoncz.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
+					public void actionPerformed(ActionEvent e) {    // tworzymy funkcję zamykającą naszą aplikację
+						System.out.println("Kończę działanie programu...");
+						System.exit(0);    
+						}
+						});// dodajemy zdarzenie do pozycji zakończ
+				
 				BufferedImage imgObrazek;
 				imgObrazek=   new BufferedImage (16, 16, BufferedImage.TYPE_INT_RGB);
 			
-				TrayIcon trayIcon = new TrayIcon(imgObrazek, "Program w tray'u", popup);
+				TrayIcon trayIcon = new TrayIcon(imgObrazek, "PilotPC-PC-Java", popup);
+				trayIcon.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
+					public void actionPerformed(ActionEvent e) {    
+						wyswietlanie=TypWyswietlania.Okno;  
+		
+						glowneOkno=new Okno();
+				}
+				});
 				try {
 					tray.add(trayIcon);   // dodanie naszej ikony do zasobnika systemowego
 					}
 					catch (AWTException e) {
-					javax.swing.JOptionPane.showMessageDialog(null, "Błąd podczas dodawania ikony do zasobnika systemowego." +
-					"\nAplikacja zostanie zamknięta.");            // Wyświetl komunikat
-					System.exit(-1);        // Zamknij aplikację z błędem
+					javax.swing.JOptionPane.showMessageDialog(null, "Błąd podczas dodawania ikony do zasobnika systemowego.");            // Wyświetl komunikat
+					
 					}
 
 					trayIcon.displayMessage ("PilotPC", "Serwer został uruchomiony", TrayIcon.MessageType.INFO);  // Wyświetlenie dymka powitalnego.
