@@ -1,5 +1,9 @@
 import java.awt.Button;
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.Panel;
@@ -23,14 +27,27 @@ public Okno()
 	super("SockedServer");
 this.setSize(500,500);
 
-setLayout(new GridLayout(1, 2));
+setLayout(new GridLayout());
 Panel lewy=new Panel();
-lewy.setLayout(new GridLayout(3,1));
+lewy.setLayout(new FlowLayout());
 Button przyciskInformacje=new Button("Informacje");
+przyciskInformacje.setSize(100, 20);
+przyciskInformacje.setMaximumSize(new Dimension(100, 20));
 lewy.add(przyciskInformacje);
 try{
 Label info=new Label();
-info.setText("twój IP to:"+java.net.InetAddress.getLocalHost().getHostAddress());
+
+InetAddress[] adresy=java.net.Inet4Address.getAllByName(java.net.InetAddress.getLocalHost().getHostName());
+String tekstIP="";
+if(adresy.length==1)
+	tekstIP="twój IP to: "+adresy[0].getHostAddress();
+else
+{
+tekstIP="twoje IP to: "+adresy[0].getHostAddress();
+	for(int i=1;i<adresy.length;i++)
+		tekstIP+=", "+adresy[i].getHostAddress();
+}
+info.setText(tekstIP);
 lewy.add(info);
 Label link=new Label();
 link.setText("http://"+java.net.InetAddress.getLocalHost().getHostAddress()+":12345/");

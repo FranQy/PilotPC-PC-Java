@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Panel;
@@ -26,17 +27,16 @@ import com.google.zxing.qrcode.encoder.QRCode;
 public class PanelQRCode extends JPanel{
 
 	ByteMatrix macierz;
-
+Dimension rozmiar;
 	public PanelQRCode()
 	{
 		setBackground(Color.white);
-	
+
 		QRCode kod;
 		try {
 			kod = Encoder.encode("http://"+java.net.InetAddress.getLocalHost().getHostAddress()+":12345/"+Program.ustawienia.haslo, ErrorCorrectionLevel.M);
 			macierz= kod.getMatrix();
-		
-		
+		rozmiar=new Dimension(macierz.getHeight()*10, macierz.getHeight()*10);
 		} catch (WriterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,11 +44,13 @@ public class PanelQRCode extends JPanel{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		setSize(rozmiar);
 	}
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+		setSize(rozmiar);
         Graphics2D g2d = (Graphics2D) g;
 
         for(int y=0;y<macierz.getHeight();y++)
@@ -63,7 +65,7 @@ public class PanelQRCode extends JPanel{
             	g2d.draw(rectangle);
             }
         
- 
+
     }
 	
 }
