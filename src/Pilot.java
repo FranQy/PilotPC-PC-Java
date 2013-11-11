@@ -77,28 +77,14 @@ public class Pilot {
 			}
 			case MULTIMEDIA:
 			{
-				// TODO obs�uga linuxa i wykrywanie systemu
-				Runtime rt = Runtime.getRuntime();//odpala domy�lny odtwarzacz DVD pod windowsem (domy�lnie Windows Media Player)
 
-			    try {
-					Process pr = rt.exec(System.getenv("SystemRoot")+"\\System32\\dvdplay.exe");
-				} catch (IOException e) {
-					// TODO komunikat o bledzie
-					
-				}
+				   click(data.button.ordinal());
 				
 				break;
 			}
 			case MUSIC:
-			{//Jak wy�ej
-				Runtime rt = Runtime.getRuntime();
-				 
-			    try {
-					Process pr = rt.exec(System.getenv("SystemRoot")+"\\System32\\dvdplay.exe");
-				} catch (IOException e) {
-					// TODO komunikat o bledzie
-					
-				}
+			{
+				   click(data.button.ordinal());
 				break;
 			}
 		   case VOLDOWN:
