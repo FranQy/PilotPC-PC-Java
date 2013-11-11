@@ -9,11 +9,20 @@ import com.example.socketclient.TCP_Data;
 public class Pilot {
 	
 	static {
+		try{
 		 if(System.getenv("PROCESSOR_ARCHITECTURE").contentEquals("AMD64"))
-	        System.loadLibrary("libpilotpc-x64");
+	        System.loadLibrary("pilotpc-x64");
 		 else
-		        System.loadLibrary("libpilotpc");
+		        System.loadLibrary("pilotpc");
 	    }
+	catch(NullPointerException e){
+		if(System.getenv("LD_LIBRARY_PATH").indexOf("amd64")>=0)
+			System.loadLibrary("pilotpc-x64");
+		 else
+		        System.loadLibrary("pilotpc");
+		
+	}
+	}
 	   // A native method that receives nothing and returns void
 	   private native void click(int i);
 	   
@@ -68,8 +77,8 @@ public class Pilot {
 			}
 			case MULTIMEDIA:
 			{
-				// TODO obs³uga linuxa i wykrywanie systemu
-				Runtime rt = Runtime.getRuntime();//odpala domyœlny odtwarzacz DVD pod windowsem (domyœlnie Windows Media Player)
+				// TODO obsï¿½uga linuxa i wykrywanie systemu
+				Runtime rt = Runtime.getRuntime();//odpala domyï¿½lny odtwarzacz DVD pod windowsem (domyï¿½lnie Windows Media Player)
 
 			    try {
 					Process pr = rt.exec(System.getenv("SystemRoot")+"\\System32\\dvdplay.exe");
@@ -81,7 +90,7 @@ public class Pilot {
 				break;
 			}
 			case MUSIC:
-			{//Jak wy¿ej
+			{//Jak wyï¿½ej
 				Runtime rt = Runtime.getRuntime();
 				 
 			    try {

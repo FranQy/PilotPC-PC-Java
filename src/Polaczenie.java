@@ -30,7 +30,7 @@ Pilot pilot = new Pilot();
 		socServ=new ServerSocket(port);
 
 				System.out.print("Nasłuchiwanie na porcie "+port+"\r\n");
-		
+
 		while(true){	
 			soc=socServ.accept();		
 			InputStream is = soc.getInputStream();
@@ -123,6 +123,11 @@ Pilot pilot = new Pilot();
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		 catch(NullPointerException e2)
+		 {
+
+				break;
+		 }
 	}catch(IOException e)
 	{
 
