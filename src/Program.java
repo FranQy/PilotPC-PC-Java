@@ -12,12 +12,13 @@ public class Program {
 	static Okno glowneOkno;
 	static Polaczenie polaczenia;
 	static TypWyswietlania wyswietlanie;
+	static Ustawienia ustawienia=Ustawienia.importuj();
 	/**
 	 * Numer urzywany przy nawiązywaniu połączenia do uwierzytelniania
 	 */
-	static public int token=(new Random()).nextInt();
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
 		wyswietlanie=TypWyswietlania.Konsola;
 		boolean pomoc=false;
 		for(int i=0;i<args.length;i++)
@@ -39,7 +40,6 @@ glowneOkno.show();
 			//if(wyświetlanie==TypWyświetlania.Okno)
 				//Mess
 		}
-		
 		polaczenia=new Polaczenie();
 	}
 }

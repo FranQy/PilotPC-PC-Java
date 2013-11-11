@@ -26,7 +26,7 @@ this.setSize(500,500);
 setLayout(new GridLayout(1, 2));
 Panel lewy=new Panel();
 lewy.setLayout(new GridLayout(3,1));
-Button przyciskInformacje=new Button();
+Button przyciskInformacje=new Button("Informacje");
 lewy.add(przyciskInformacje);
 try{
 Label info=new Label();

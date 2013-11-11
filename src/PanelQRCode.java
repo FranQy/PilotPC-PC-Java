@@ -33,7 +33,7 @@ public class PanelQRCode extends JPanel{
 	
 		QRCode kod;
 		try {
-			kod = Encoder.encode("http://"+java.net.InetAddress.getLocalHost().getHostAddress()+":12345/"+Program.token, ErrorCorrectionLevel.M);
+			kod = Encoder.encode("http://"+java.net.InetAddress.getLocalHost().getHostAddress()+":12345/"+Program.ustawienia.haslo, ErrorCorrectionLevel.M);
 			macierz= kod.getMatrix();
 		
 		
