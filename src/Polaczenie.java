@@ -15,101 +15,22 @@ import com.example.socketclient.TCP_Data;
 
 public class Polaczenie {
 	ServerSocket socServ;
-	Socket soc;
 	Robot robot;
 	int port=12345;
 public Polaczenie()
 {
 
-	MouseRobot mouse = new MouseRobot();  //klasa do sterowania myszka
-Pilot pilot = new Pilot();
+	
 
-	while(true)
-	{
+	
 	try {
 		socServ=new ServerSocket(port);
 
 				System.out.print("Nasłuchiwanie na porcie "+port+"\r\n");
 
-		while(true){	
-			soc=socServ.accept();		
-			InputStream is = soc.getInputStream();
-		
-			
-			
-			  try {
-          		        	
-			  ObjectInputStream in = new ObjectInputStream(soc.getInputStream());	
-          		TCP_Data data;
-          		
-          		while(true)
-          		{
-					data = (TCP_Data) in.readObject();
-					
-						if(data.type == TCP_Data.typ.TOUCHPAD )
-						{							
-							switch(data.mouse)
-							{
-							case LPM:
-							{
-							
-								mouse.LPM();
-								
-								break;
-							}
-							case PPM:
-							{
-								
-								mouse.PPM();
-								break;
-							}
-							case NORMAL:
-							{
-								mouse.move(data.touchpadX, data.touchpadY); //ruszanie myszka
-								break;
-							}
-							case LONG:
-							{
-								// TODO zmiana "algorytmu" ruszania z LPM
-								mouse.move(true, data.touchpadX, data.touchpadY); //ruszanie ze wcisnietym LPM
-								break;
-							}
-							case UP:
-							{
-								mouse.up(); //podniesienie LPM
-								break;
-							}
-							case SCROLL:
-							{
-								mouse.scroll(data.touchpadY);
-								break;
-							}
-							}
-								 								
-						}
-						else if(data.type == TCP_Data.typ.PILOT )
-						{
-							pilot.click(data);
-							System.out.println("pilot");
-						}
-						data.clean();//czyszczenie zmiennych w TCP_Data
-					
-          		}
-				
-					
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		
-			
-			
-			
-		catch(Exception e)
-		{
-			HTTP.polaczenie(is, soc);
-		}
-			System.out.print("Rozłączono \n\r\r\n");}
+		PolaczenieWatek watek=new PolaczenieWatek();
+		watek.socServ=socServ;
+		watek.start();
 
 	} catch (BindException e) {
 		System.out.print("Błąd, port "+port+"zajęty\r\n");
@@ -117,22 +38,11 @@ Pilot pilot = new Pilot();
 		/**
 		 * bo teraz przy rozlaczaniu to wywala
 		 */
-		 try {
-				socServ.close();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		 catch(NullPointerException e2)
-		 {
-
-				break;
-		 }
 	}catch(IOException e)
 	{
 
 		System.out.print("Błąd z połączeniem\r\n");	
 	
-	}}
+	}
 }
 }
