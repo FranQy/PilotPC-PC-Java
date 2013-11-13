@@ -11,6 +11,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import com.google.zxing.WriterException;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
@@ -25,7 +26,7 @@ public class Okno extends JFrame {
 public Okno()
 {
 	super("SockedServer");
-this.setSize(500,500);
+this.setSize(750,550);
 
 setLayout(new GridLayout());
 Panel lewy=new Panel();
@@ -35,25 +36,24 @@ przyciskInformacje.setSize(100, 20);
 przyciskInformacje.setMaximumSize(new Dimension(100, 20));
 lewy.add(przyciskInformacje);
 try{
-Label info=new Label();
-
+JLabel info=new JLabel();
 InetAddress[] adresy=java.net.Inet4Address.getAllByName(java.net.InetAddress.getLocalHost().getHostName());
 String tekstIP="";
 if(adresy.length==1)
 	tekstIP="twój IP to: "+adresy[0].getHostAddress();
 else
 {
-tekstIP="twoje IP to: "+adresy[0].getHostAddress();
+tekstIP="twoje IP to:<br/>"+adresy[0].getHostAddress();
 	for(int i=1;i<adresy.length;i++)
-		tekstIP+=", "+adresy[i].getHostAddress();
+		tekstIP+=",<br/>"+adresy[i].getHostAddress();
 }
-info.setText(tekstIP);
+info.setText("<html>"+tekstIP+"</html>");
 lewy.add(info);
-Label link=new Label();
+/*JLabel link=new JLabel();
 link.setText("http://"+java.net.InetAddress.getLocalHost().getHostAddress()+":12345/");
 System.out.println();
 link.setForeground(Color.BLUE);
-lewy.add(link);
+lewy.add(link);*/
 } catch (UnknownHostException e) {
 	// TODO Auto-generated catch block
 	e.printStackTrace();

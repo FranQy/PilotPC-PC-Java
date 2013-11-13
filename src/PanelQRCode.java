@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Panel;
 import java.awt.geom.Rectangle2D;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import javax.swing.JPanel;
@@ -34,7 +35,12 @@ Dimension rozmiar;
 
 		QRCode kod;
 		try {
-			kod = Encoder.encode("http://"+java.net.InetAddress.getLocalHost().getHostAddress()+":12345/"+Program.ustawienia.haslo, ErrorCorrectionLevel.M);
+
+InetAddress[] adresy=java.net.Inet4Address.getAllByName(java.net.InetAddress.getLocalHost().getHostName());
+			String tresc="http://"+adresy[0].getHostAddress()+":12345/"+Program.ustawienia.haslo;
+			for(int i=1;i<adresy.length;i++)
+				tresc+="/"+adresy[i].getHostAddress();
+			kod = Encoder.encode(tresc, ErrorCorrectionLevel.M);
 			macierz= kod.getMatrix();
 		rozmiar=new Dimension(macierz.getHeight()*10, macierz.getHeight()*10);
 		} catch (WriterException e) {

@@ -17,20 +17,24 @@ public class Polaczenie {
 	ServerSocket socServ;
 	Robot robot;
 	int port=12345;
+	public static PolaczenieWatek[] watki= new PolaczenieWatek[100];
 public Polaczenie()
 {
-
 	
 
-	
 	try {
 		socServ=new ServerSocket(port);
 
 				System.out.print("Nasłuchiwanie na porcie "+port+"\r\n");
-
-		PolaczenieWatek watek=new PolaczenieWatek();
-		watek.socServ=socServ;
-		watek.start();
+				for(byte i=0;i<100;i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
+				{
+					if(watki[i]==null){
+						watki[i]=new PolaczenieWatek();
+						watki[i].socServ=socServ;
+						watki[i].start();
+						break;
+					}
+				}
 
 	} catch (BindException e) {
 		System.out.print("Błąd, port "+port+"zajęty\r\n");
