@@ -42,7 +42,7 @@ InetAddress[] adresy=java.net.Inet4Address.getAllByName(java.net.InetAddress.get
 				tresc+="/"+adresy[i].getHostAddress();
 			kod = Encoder.encode(tresc, ErrorCorrectionLevel.M);
 			macierz= kod.getMatrix();
-		rozmiar=new Dimension(macierz.getHeight()*10, macierz.getHeight()*10);
+		//rozmiar=new Dimension(macierz.getHeight()*10, macierz.getHeight()*10);
 		} catch (WriterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,19 +50,24 @@ InetAddress[] adresy=java.net.Inet4Address.getAllByName(java.net.InetAddress.get
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setSize(rozmiar);
+		//setSize(rozmiar);
 	}
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-		setSize(rozmiar);
+		//setSize(rozmiar);
+        int wielkosc;
+        if(getSize().height>getSize().width)
+        	wielkosc=getSize().width/macierz.getWidth();
+        else
+        	wielkosc=getSize().height/macierz.getWidth();
         Graphics2D g2d = (Graphics2D) g;
 
         for(int y=0;y<macierz.getHeight();y++)
             for(int x=0;x<macierz.getWidth();x++)
             {
-            	Rectangle2D rectangle = new Rectangle2D.Double(x*10, y*10, 10, 10);
+            	Rectangle2D rectangle = new Rectangle2D.Double(x*wielkosc, y*wielkosc, wielkosc, wielkosc);
             	if(macierz.get(x, y)==1)
                 	g2d.setPaint(Color.BLACK);
             	else
