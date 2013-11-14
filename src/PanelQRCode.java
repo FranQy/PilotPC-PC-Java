@@ -38,8 +38,12 @@ Dimension rozmiar;
 
 InetAddress[] adresy=java.net.Inet4Address.getAllByName(java.net.InetAddress.getLocalHost().getHostName());
 			String tresc="http://"+adresy[0].getHostAddress()+":12345/"+Program.ustawienia.haslo;
+			
 			for(int i=1;i<adresy.length;i++)
+			{
+				if(adresy[i].getAddress().length==4)
 				tresc+="/"+adresy[i].getHostAddress();
+			}
 			kod = Encoder.encode(tresc, ErrorCorrectionLevel.M);
 			macierz= kod.getMatrix();
 		//rozmiar=new Dimension(macierz.getHeight()*10, macierz.getHeight()*10);

@@ -45,6 +45,7 @@ else
 {
 tekstIP="twoje IP to:<br/>"+adresy[0].getHostAddress();
 	for(int i=1;i<adresy.length;i++)
+		if(adresy[i].getAddress().length==4)
 		tekstIP+=",<br/>"+adresy[i].getHostAddress();
 }
 info.setText("<html>"+tekstIP+"</html>");
