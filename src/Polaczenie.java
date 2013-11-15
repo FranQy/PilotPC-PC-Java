@@ -17,6 +17,7 @@ public class Polaczenie {
 	ServerSocket socServ;
 	Robot robot;
 	int port=12345;
+	public static boolean nasluchiwanie=false;
 	public static PolaczenieWatek[] watki= new PolaczenieWatek[100];
 public Polaczenie()
 {
@@ -24,7 +25,7 @@ public Polaczenie()
 
 	try {
 		socServ=new ServerSocket(port);
-
+		nasluchiwanie=true;
 				System.out.print("Nasłuchiwanie na porcie "+port+"\r\n");
 				for(byte i=0;i<100;i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
 				{

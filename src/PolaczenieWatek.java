@@ -9,6 +9,7 @@ import com.example.socketclient.TCP_Data;
 public class PolaczenieWatek
     extends Thread {
 	public ServerSocket socServ;
+	public boolean gotowe=false;
 	Socket soc;
     	Pilot pilot = new Pilot();
     	MouseRobot mouse = new MouseRobot();
@@ -19,7 +20,7 @@ public class PolaczenieWatek
 			
     		InputStream is=null;
 			  try {
-          		        	
+          		   gotowe=true;;     	
 			soc=socServ.accept();	
 
 			for(byte i=0;i<100;i++)//Otwiera max 100 połączeń, zapisuje je w tablicy

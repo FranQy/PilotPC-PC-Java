@@ -9,6 +9,8 @@ import java.awt.Label;
 import java.awt.Panel;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,6 +25,7 @@ public class Okno extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static Label status=new Label("Inicjowanie");
 public Okno()
 {
 	super("SockedServer");
@@ -35,6 +38,8 @@ Button przyciskInformacje=new Button("Informacje");
 przyciskInformacje.setSize(100, 20);
 przyciskInformacje.setMaximumSize(new Dimension(100, 20));
 lewy.add(przyciskInformacje);
+
+lewy.add(status);
 try{
 JLabel info=new JLabel();
 InetAddress[] adresy=java.net.Inet4Address.getAllByName(java.net.InetAddress.getLocalHost().getHostName());
@@ -63,8 +68,24 @@ add(lewy);
 add(new PanelQRCode());
 
 show();
+Timer timer1 = new Timer();
+Odswierz timer1_task = new Odswierz();
+timer1.schedule (timer1_task, 100, 100);
 }
 protected void finalize() throws Throwable {
 	Program.wyswietlanie=TypWyswietlania.Konsola;
+}
+class Odswierz extends TimerTask
+{
+ public void run()
+ {
+   if(Polaczenie.nasluchiwanie)
+   {
+	   if(Polaczenie.watki[0].gotowe)
+		   status.setText("Gotowe!");
+	   else
+		   status.setText("Inicjowanie...");
+   }
+ }
 }
 }
