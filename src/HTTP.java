@@ -61,7 +61,7 @@ int n = is.read();
 				+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
 				+"<style>#menu{position: absolute;bottom: 0;background: gray;margin: 0;left: 0;width: 100%;}#menu li{display:inline;}.karta{position:absolute;left:0;top:0;width:100%;bottom:20px;display:none;}</style>"
 				+"<script> var touchpad=new Object();touchpad.mPreviousX=0; touchpad.mPreviousY=0;touchpad.oldX =0;touchpad.oldY=0;touchpad.longClicked = false;touchpad.returnState = true;"
-				+"touchpad.onTouchMove=function(e){var dx = event.clientX - this.mPreviousX;var dy = event.clientY - this.mPreviousY;"
+				+"touchpad.onTouchMove=function(e){var dx=this.mPreviousX = event.clientX - this.mPreviousX;var dy =this.mPreviousY= event.clientY - this.mPreviousY;"
 				+"var data=new TCP_Data();data.mouse = TCP_Data.touchedTYPE.NORMAL;data.touchpadX = dx;data.touchpadY =dy;data.type=TCP_Data.typ.TOUCHPAD;send(data);};"
 				+"function send(data){"
 				+ "var socket=new XMLHttpRequest();"

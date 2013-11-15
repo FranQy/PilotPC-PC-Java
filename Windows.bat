@@ -6,11 +6,7 @@ if not exist pilotpc-pc-java.jar pause
 if exist pilotpc-pc-java.jar javaw -jar pilotpc-pc-java.jar
 goto end
 :java
-echo Brak Javy. Czy przejść na stronę pobierania?
-choice /C:TN
-IF ERRORLEVEL 2 goto end
-IF ERRORLEVEL 1 goto pobierz
-goto end
+echo Brak Javy. CUruchamianie strony pobierania.
 :pobierz
 explorer http://java.com/
 :end
