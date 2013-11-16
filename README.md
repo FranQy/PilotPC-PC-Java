@@ -1,5 +1,4 @@
-PilotPC-PC-Java
-===================
+<h1>PilotPC-PC-Java<h1>
 <h2>Wstęp</h2>
 <p>
 	Jest to serwer dla programu PilotPC.
@@ -19,11 +18,17 @@ PilotPC-PC-Java
 </p>
 <h2>Pliki</h2>
 <table>
-	<tr><td><b>PilotPC-PC-Java<b>.jar</td><td>Główny plik z programem</td></tr>
-	<tr><td><b>libpilotpc<b>.so</td><td>Dodatkowa biblioteka dlaLinuksa z 32-bitową Javą</td></tr>
-	<tr><td><b>libpilotpc-x64<b>.so</td><td>Dodatkowa biblioteka dla Linuksa z 64-bitową Javą</td></tr>
-	<tr><td><b>pilotpc<b>.dll</td><td>Dodatkowa biblioteka dla Windowsa z 32-bitową Javą</td></tr>
+	<tr><td><b>PilotPC-PC-Java</b>.jar</td><td>Główny plik z programem</td></tr>
+	<tr><td><b>libpilotpc</b>.so</td><td>Dodatkowa biblioteka dla Linuksa z 32-bitową Javą</td></tr>
+	<tr><td><b>libpilotpc-x64</b>.so</td><td>Dodatkowa biblioteka dla Linuksa z 64-bitową Javą</td></tr>
+	<tr><td><b>pilotpc</b>.dll</td><td>Dodatkowa biblioteka dla Windowsa z 32-bitową Javą</td></tr>
 	<tr><td><b>pilotpc-x64<b>.dll</td><td>Dodatkowa biblioteka dla Windowsa z 64-bitową Javą</td></tr>
 </table>
+<h2>Wspierane systemy operacyjne</h2>
+<p>
+Windows XP i nowsze (dla procesorów x86 i x64)
+</p><p>
+GNU/Linux (dla procesorów x86 i x64)
+</p>
 <h2>Linki</h2>
 <a href="https://github.com/FranQy/PilotPC-Android">Aplikacja na androida</a><br/>
