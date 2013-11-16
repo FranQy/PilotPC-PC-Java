@@ -39,6 +39,10 @@ JNIEXPORT void JNICALL Java_Pilot_click(JNIEnv *env, jobject jobj, jint a) {
 		keybd_event(VK_MEDIA_STOP, 0, 1, 0);
 		keybd_event(VK_MEDIA_STOP, 0, 2, 0);
 		break;
+	case MULTIMEDIA:
+		keybd_event(VK_LAUNCH_MEDIA_SELECT, 0, 1, 0);
+		keybd_event(VK_LAUNCH_MEDIA_SELECT, 0, 2, 0);
+		break;
 
 	}
 }

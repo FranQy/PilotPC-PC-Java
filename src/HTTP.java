@@ -6,6 +6,7 @@ import java.net.Socket;
 import org.json.*;
 
 import com.example.socketclient.TCP_Data;
+import com.example.socketclient.TCP_Data.pilotButton;
 import com.example.socketclient.TCP_Data.touchedTYPE;
 import com.example.socketclient.TCP_Data.typ;
 
@@ -47,7 +48,7 @@ int n = is.read();
 		ret.touchpadY=klasaObjekt.getInt("touchpadY");
 		ret.type=typ.values()[klasaObjekt.getInt("type")];
 		ret.mouse=touchedTYPE.values()[klasaObjekt.getInt("mouse")];
-		
+		ret.button=pilotButton.values()[klasaObjekt.getInt("button")];
 		OutputStream os =soc.getOutputStream();
 		
 		os.close();
@@ -59,20 +60,50 @@ int n = is.read();
 		OutputStream os =soc.getOutputStream();
 		String wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nContent-Type: application/xhtml+xml\r\n\r\n"
 				+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
-				+"<style>#menu{position: absolute;bottom: 0;background: gray;margin: 0;left: 0;width: 100%;}#menu li{display:inline;}.karta{position:absolute;left:0;top:0;width:100%;bottom:20px;display:none;}</style>"
-				+"<script> var touchpad=new Object();touchpad.mPreviousX=0; touchpad.mPreviousY=0;touchpad.oldX =0;touchpad.oldY=0;touchpad.longClicked = false;touchpad.returnState = true;"
-				+"touchpad.onTouchMove=function(e){var dx=this.mPreviousX = event.clientX - this.mPreviousX;var dy =this.mPreviousY= event.clientY - this.mPreviousY;"
-				+"var data=new TCP_Data();data.mouse = TCP_Data.touchedTYPE.NORMAL;data.touchpadX = dx;data.touchpadY =dy;data.type=TCP_Data.typ.TOUCHPAD;send(data);};"
+				+"<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
+				+ "<style>#menu{position: absolute;bottom: 0;background: gray;margin: 0;left: 0;width: 100%;}#menu li{display:inline;}.karta{position:absolute;left:0;top:0;width:100%;bottom:20px;display:none;} #menu li img{width:16px;height:16px;}</style>"
+				+"<script> var touchpad=new Object();touchpad.wcisniete=false;touchpad.mPreviousX=0; touchpad.mPreviousY=0;touchpad.oldX =0;touchpad.oldY=0;touchpad.longClicked = false;touchpad.returnState = true;"
+				+"touchpad.onTouchDown=function(e){"
+				+ "touchpad.mPreviousX=event.clientX;"
+				+ "touchpad.mPreviousY=event.clientY;"
+				+ "touchpad.wcisniete=true;"
+				+ "};"
+				+"touchpad.onTouchUp=function(e){"
+				+ "touchpad.wcisniete=false;"
+				+ "};"
+				+ "touchpad.onMouseMove=function(e){"
+				+ "if(touchpad.wcisniete||true){"
+				+ "return touchpad.onTouchMove(e);"
+				+ "}};"
+				+ "touchpad.onTouchMove=function(e){"
+				+ "alert(event.pageX+' '+event.pageY);"
+				+ "var dx = event.pageX - this.mPreviousX;var dy = event.pageY - this.mPreviousY;"
+				+ "this.mPreviousX=event.pageX;"
+				+ "this.mPreviousY=event.[ageY;"
+				+"var data=new TCP_Data();data.mouse = TCP_Data.touchedTYPE.NORMAL;data.touchpadX = dx;data.touchpadY =dy;"
+				+ "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
+				+ "return false;};"
 				+"function send(data){"
 				+ "var socket=new XMLHttpRequest();"
+				+ "alert(data);"
 				+ "socket.open('get', '?'+JSON.stringify(data));"
+				+ "alert('?'+JSON.stringify(data));"
 				+ "socket.send();"
 				+ "}"
-				+ "function TCP_Data(){this.touchpadX=0;this.touchpadY=0;};"
+				+ "function TCP_Data(){this.touchpadX=0;this.touchpadY=0;this.button=0;this.type=0;this.mouse=0;};"
 				+ "TCP_Data.touchedTYPE={NORMAL:0, LONG:1, UP:2, SCROLL:3, LPM:4, PPM:5};"
-				+ "TCP_Data.typ={GAMEPAD:0, PILOT:1, KEYBOARD:2, TOUCHPAD:3};</script>"
-				+"</head><body><div class=\"karta\" id=\"gamepad\"></div><div class=\"karta\" id=\"pilot\"></div><div class=\"karta\" id=\"klawiatura\"></div><div class=\"karta\" style=\"display:block\" ontouchmove=\"touchpad.onTouchMove(event)\" onmousemove=\"touchpad.onTouchMove(event)\" id=\"touchpad\"></div>"
-				+"<ul id=\"menu\"><li><img/></li><li><img title=\"gamepad\"/></li><li><img/></li><li><img title=\"touchpad\"/></li></ul>Aplikacja w trakcie pisania :)</body></html>";
+				+ "TCP_Data.typ={GAMEPAD:0, PILOT:1, KEYBOARD:2, TOUCHPAD:3};"
+				+ "function kartaPokaz(id){"
+				+ "document.getElementById('gamepad').style.display=document.getElementById('pilot').style.display=document.getElementById('klawiatura').style.display=document.getElementById('touchpad').style.display='none';"
+				+ "document.getElementById(id).style.display='block';"
+				+ "}"
+				+ "</script>"
+				+"</head><body>"
+				+ "<div class=\"karta\" id=\"gamepad\">Gamepad wkrótce</div>"
+				+ "<div class=\"karta\" id=\"pilot\">Pilot wkrótce</div>"
+				+ "<div class=\"karta\" id=\"klawiatura\">Klawiatura wkródce</div>"
+				+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" onmousemove=\"return touchpad.onMouseMove(event)\" ontouchdown=\"touchpad.onTouchDown(event)\" onmousedown=\"touchpad.onTouchDown(event)\" ontouchup=\"touchpad.onTouchUp(event)\" onmouseup=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" onmouseleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
+				+"<ul id=\"menu\"><li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\"/></li><li onclick='kartaPokaz(\"pilot\")'><img title=\"pilot\"/></li><li onclick='kartaPokaz(\"klawiatura\")'><img title=\"klawiatura\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img title=\"touchpad\"/></li></ul></body></html>";
 		os.write(wysylanie.getBytes());
 		os.close();
 		is.close();
