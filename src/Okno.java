@@ -2,11 +2,14 @@ import java.awt.Button;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Event;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.Panel;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Timer;
@@ -14,6 +17,8 @@ import java.util.TimerTask;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import org.omg.CORBA.Object;
 
 import com.google.zxing.WriterException;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
@@ -26,7 +31,45 @@ public class Okno extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	public static Label status=new Label("Inicjowanie");
+	Label kod=new Label("Kod do połączenia: "+Program.ustawienia.haslo);
 	JLabel telefony=new JLabel();
+	PanelQRCode qr=new PanelQRCode();
+	private MouseListener zmienKodClick=new MouseListener() {
+		
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			Program.ustawienia.haslo=Ustawienia.generujHaslo();
+			kod.setText("Kod do połączenia: "+Program.ustawienia.haslo);
+			qr.odswierz();
+			Program.ustawienia.eksportuj();
+			
+			
+		}
+	};
 public Okno()
 {
 	super("SockedServer");
@@ -58,6 +101,10 @@ info.setText("<html>"+tekstIP+"</html>");
 lewy.add(info);
 
 lewy.add(telefony);
+lewy.add(kod);
+Button zmienKod=new Button("Zmień kod");
+zmienKod.addMouseListener(zmienKodClick);
+lewy.add(zmienKod);
 /*JLabel link=new JLabel();
 link.setText("http://"+java.net.InetAddress.getLocalHost().getHostAddress()+":12345/");
 System.out.println();
@@ -68,7 +115,7 @@ lewy.add(link);*/
 	e.printStackTrace();
 }
 add(lewy);
-add(new PanelQRCode());
+add(qr);
 
 show();
 Timer timer1 = new Timer();

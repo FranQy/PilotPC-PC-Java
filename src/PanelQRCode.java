@@ -32,7 +32,16 @@ Dimension rozmiar;
 	public PanelQRCode()
 	{
 		setBackground(Color.white);
-
+odswierz();
+		
+		//setSize(rozmiar);
+	}
+/**
+ * generuje QRCode na nowo
+ * 
+ */
+	public void odswierz()
+	{
 		QRCode kod;
 		try {
 
@@ -54,9 +63,9 @@ InetAddress[] adresy=java.net.Inet4Address.getAllByName(java.net.InetAddress.get
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//setSize(rozmiar);
+	this.paintImmediately(0,0,2000,2000);
 	}
-
+	
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
