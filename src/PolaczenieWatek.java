@@ -1,6 +1,8 @@
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.StreamCorruptedException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -13,12 +15,13 @@ public class PolaczenieWatek
 	Socket soc;
     	Pilot pilot = new Pilot();
     	MouseRobot mouse = new MouseRobot();
+    	InputStream is;
     public void run() {  //klasa do sterowania myszka
     	while(true){	
     		
 		
 			
-    		InputStream is=null;
+    		is=null;
 			  try {
           		   gotowe=true;;     	
 			soc=socServ.accept();	
@@ -42,7 +45,7 @@ public class PolaczenieWatek
 					wykonuj(data);
         		}
 			}
-			  catch(Exception e)
+			  catch(StreamCorruptedException e)
 				{
 					try {
 						TCP_Data data=HTTP.polaczenie(is, soc);
@@ -53,6 +56,10 @@ public class PolaczenieWatek
 						e1.printStackTrace();
 					}
 				}
+			  }catch(EOFException e)
+			  {
+					System.out.print("Rozłączono. \n\r\r\n");
+				  
 			  }catch(Exception e)
 			  {
 					System.out.print("Błąd, rozłączono. \n\r\r\n");
@@ -115,5 +122,20 @@ public class PolaczenieWatek
 				System.out.println("pilot");
 			}
 			data.clean();//czyszczenie zmiennych w TCP_Data
+    	}
+    	/**
+    	 * 
+    	 * @return Adres IP podłączonego telefonu
+    	 */
+    	public String getIP()
+    	{
+    		return soc.getRemoteSocketAddress().toString();
+    	}
+    	public boolean czyPolaczono()
+    	{
+    		if(is!=null)
+    		return true;
+    		else
+    			return false;
     	}
 }

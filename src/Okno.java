@@ -26,6 +26,7 @@ public class Okno extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	public static Label status=new Label("Inicjowanie");
+	JLabel telefony=new JLabel();
 public Okno()
 {
 	super("SockedServer");
@@ -55,6 +56,8 @@ tekstIP="twoje IP to:<br/>"+adresy[0].getHostAddress();
 }
 info.setText("<html>"+tekstIP+"</html>");
 lewy.add(info);
+
+lewy.add(telefony);
 /*JLabel link=new JLabel();
 link.setText("http://"+java.net.InetAddress.getLocalHost().getHostAddress()+":12345/");
 System.out.println();
@@ -86,6 +89,14 @@ class Odswierz extends TimerTask
 	   else
 		   status.setText("Inicjowanie...");
    }
+   String listaUrzadzen="<html>Połączone urządzenia:<ul>";
+   for(byte i=0;i<Polaczenie.watki.length;i++)
+   {
+	   if(Polaczenie.watki[i]!=null)
+		   if(Polaczenie.watki[i].czyPolaczono())
+			   listaUrzadzen+="<li>"+Polaczenie.watki[i].getIP()+"</li>";
+   }
+   telefony.setText(listaUrzadzen+"</ul></html>");
  }
 }
 }
