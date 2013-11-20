@@ -1,10 +1,6 @@
 import java.awt.Button;
-import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Event;
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.Panel;
@@ -19,12 +15,6 @@ import java.util.TimerTask;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
-import org.omg.CORBA.Object;
-
-import com.google.zxing.WriterException;
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import com.google.zxing.qrcode.encoder.*;
 
 public class Okno extends JFrame {
 
@@ -128,7 +118,7 @@ lewy.add(link);*/
 add(lewy);
 add(qr);
 
-show();
+setVisible(true);
 Timer timer1 = new Timer();
 Odswierz timer1_task = new Odswierz();
 timer1.schedule (timer1_task, 100, 100);

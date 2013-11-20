@@ -2,14 +2,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Panel;
 import java.awt.geom.Rectangle2D;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import javax.swing.JPanel;
-
-import org.w3c.dom.css.Rect;
 
 import com.google.zxing.WriterException;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
@@ -27,6 +24,10 @@ import com.google.zxing.qrcode.encoder.QRCode;
  */
 public class PanelQRCode extends JPanel{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	ByteMatrix macierz;
 Dimension rozmiar;
 	public PanelQRCode()
