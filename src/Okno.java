@@ -142,7 +142,12 @@ class Odswierz extends TimerTask
    {
 	   if(Polaczenie.watki[i]!=null)
 		   if(Polaczenie.watki[i].czyPolaczono())
-			   listaUrzadzen+="<li>"+Polaczenie.watki[i].getIP()+"</li>";
+		   {   listaUrzadzen+="<li>";
+		   if(Polaczenie.watki[i].infoPrzyPolaczeniu!=null)
+			   listaUrzadzen+=Polaczenie.watki[i].infoPrzyPolaczeniu.nazwa+" - ";
+		   listaUrzadzen+=Polaczenie.watki[i].getIP()+"</li>";
+		   
+		   }
    }
    telefony.setText(listaUrzadzen+"</ul></html>");
  }

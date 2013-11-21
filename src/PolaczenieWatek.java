@@ -2,6 +2,8 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.StreamCorruptedException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -47,13 +49,21 @@ public class PolaczenieWatek
 				  if(dataObject.getClass()==Connect.class)
 				  { 
 					  infoPrzyPolaczeniu=(Connect)dataObject;
-
-				  dataObject =  in.readObject();
+					  Connect odpowiedz=new Connect();
+					  odpowiedz.status=Connect.Status.ok;
+					  odpowiedz.nazwa=java.net.InetAddress.getLocalHost().getHostName();
+ObjectOutputStream oos= new ObjectOutputStream(soc.getOutputStream());
+oos.writeObject(odpowiedz);
+oos.flush();
+				 // dataObject =  in.readObject();
 				  }
+				  else
+				  {
 				  TCP_Data data=(TCP_Data) dataObject;
 					  
 				  //TCP_Data data = (TCP_Data) in.readObject();
 					wykonuj(data);
+				  }
         		}
 			}
 			  catch(StreamCorruptedException e)
@@ -70,6 +80,7 @@ public class PolaczenieWatek
 			  }catch(EOFException e)
 			  {
 					System.out.print("Rozłączono. \n\r\r\n");
+					
 				  
 			  }catch(Exception e)
 			  {
