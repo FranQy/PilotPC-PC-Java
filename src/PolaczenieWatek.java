@@ -6,6 +6,7 @@ import java.io.StreamCorruptedException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.example.socketclient.Connect;
 import com.example.socketclient.TCP_Data;
 
 public class PolaczenieWatek
@@ -16,6 +17,7 @@ public class PolaczenieWatek
     	Pilot pilot = new Pilot();
     	MouseRobot mouse = new MouseRobot();
     	InputStream is;
+    	Connect infoPrzyPolaczeniu;
     public void run() {  //klasa do sterowania myszka
     	while(true){	
     		
@@ -40,8 +42,17 @@ public class PolaczenieWatek
 			  ObjectInputStream in = new ObjectInputStream(soc.getInputStream());	
 			  while(true)
         		{
-					
-				  TCP_Data data = (TCP_Data) in.readObject();
+
+				  Object dataObject =  in.readObject();
+				  if(dataObject.getClass()==Connect.class)
+				  { 
+					  infoPrzyPolaczeniu=(Connect)dataObject;
+
+				  dataObject =  in.readObject();
+				  }
+				  TCP_Data data=(TCP_Data) dataObject;
+					  
+				  //TCP_Data data = (TCP_Data) in.readObject();
 					wykonuj(data);
         		}
 			}
