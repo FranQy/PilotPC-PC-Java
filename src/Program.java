@@ -6,6 +6,7 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.Timer;
 public class Program {
 
 	/**
@@ -15,6 +16,7 @@ public class Program {
 	static Polaczenie polaczenia;
 	static TypWyswietlania wyswietlanie;
 	static Ustawienia ustawienia=Ustawienia.importuj();
+	static public String wersja="0.01";
 	/**
 	 * Numer urzywany przy nawiązywaniu połączenia do uwierzytelniania
 	 */
@@ -84,6 +86,10 @@ glowneOkno=new Okno();
 
 					trayIcon.displayMessage ("PilotPC", "Serwer został uruchomiony", TrayIcon.MessageType.INFO);  // Wyświetlenie dymka powitalnego.
 		}
+
+Timer timer1 = new Timer();
+Aktualizacja timer1_task = new Aktualizacja();
+timer1.schedule (timer1_task, 0, 21600);
 		polaczenia=new Polaczenie();
 	}
 }
