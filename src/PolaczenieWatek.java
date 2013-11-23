@@ -48,7 +48,16 @@ public class PolaczenieWatek
 				  { 
 					  infoPrzyPolaczeniu=(Connect)dataObject;
 					  Connect odpowiedz=new Connect();
+					  if(infoPrzyPolaczeniu.haslo.length()==0)
 					  odpowiedz.status=Connect.Status.ok;
+					  else if(infoPrzyPolaczeniu.haslo.compareTo(Program.ustawienia.haslo)==0)
+						  odpowiedz.status=Connect.Status.ok;
+					  else
+					  {	  
+						  odpowiedz.status=Connect.Status.zlyKod;
+						  is.close();
+						  break;
+					  }
 					  odpowiedz.nazwa=java.net.InetAddress.getLocalHost().getHostName();
 ObjectOutputStream oos= new ObjectOutputStream(soc.getOutputStream());
 oos.writeObject(odpowiedz);

@@ -150,7 +150,7 @@ class Odswierz extends TimerTask
 if(Aktualizacja.zaktualizowano)
 	statusTxt+=" Zaktualizowano do nowej wersji!";
 else if(Aktualizacja.trwa)
-		statusTxt+=" Trwa aktuaizacja do nowej wersji...";
+		statusTxt+=" Trwa aktualizacja do nowej wersji...";
    status.setText(statusTxt);
    String listaUrzadzen="<html>Połączone urządzenia:<ul>";
    for(byte i=0;i<Polaczenie.watki.length;i++)

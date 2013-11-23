@@ -16,7 +16,7 @@ public class Program {
 	static Polaczenie polaczenia;
 	static TypWyswietlania wyswietlanie;
 	static Ustawienia ustawienia=Ustawienia.importuj();
-	static public String wersja="0.1.2";
+	static public String wersja="0.1.3";
 	/**
 	 * Numer urzywany przy nawiązywaniu połączenia do uwierzytelniania
 	 */
@@ -84,7 +84,7 @@ glowneOkno=new Okno();
 					
 					}
 
-					trayIcon.displayMessage ("PilotPC", "Serwer został uruchomiony", TrayIcon.MessageType.INFO);  // Wyświetlenie dymka powitalnego.
+					trayIcon.displayMessage ("PilotPC "+wersja, "Serwer został uruchomiony", TrayIcon.MessageType.INFO);  // Wyświetlenie dymka powitalnego.
 		}
 
 Timer timer1 = new Timer();

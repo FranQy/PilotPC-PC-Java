@@ -37,9 +37,9 @@ int n = is.read();
 		break;
 	}}
 	System.out.print(wyj);
-	if(wyj.indexOf("/?")==0)
+	if(wyj.indexOf("/")==0&&wyj.indexOf("?")>0)
 	{
-		String klasaString=wyj.substring(2, wyj.indexOf(" HTTP"));
+		String klasaString=wyj.substring(wyj.indexOf("?")+1, wyj.indexOf(" HTTP"));
 		klasaString=klasaString.replaceAll("%22", "\"");
 		JSONObject klasaObjekt=new JSONObject(klasaString);
 		TCP_Data ret=new TCP_Data();
@@ -62,14 +62,22 @@ int n = is.read();
 				+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
 				+"<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
 				+ "<style>#menu{position: absolute;bottom: 0;background: gray;margin: 0;left: 0;width: 100%;}#menu li{display:inline;}.karta{position:absolute;left:0;top:0;width:100%;bottom:20px;display:none;} #menu li img{width:16px;height:16px;}</style>"
-				+"<script> var touchpad=new Object();touchpad.wcisniete=false;touchpad.mPreviousX=0; touchpad.mPreviousY=0;touchpad.oldX =0;touchpad.oldY=0;touchpad.longClicked = false;touchpad.returnState = true;"
-				+"touchpad.onTouchDown=function(e){"
-				+ "touchpad.mPreviousX=event.touches[0].screenX;"
-				+ "touchpad.mPreviousY=event.touches[0].screenY;"
+				+"<script>/*<![CDATA[*/ var touchpad=new Object();touchpad.wcisniete=false;touchpad.mPreviousX=0; touchpad.mPreviousY=0;touchpad.oldX =0;touchpad.oldY=0;touchpad.longClicked = false;touchpad.returnState = true;"
+				+"touchpad.onTouchDown=function(event){"
+				+ "touchpad.mPreviousX=touchpad.oldX=event.touches[0].screenX;"
+				+ "touchpad.mPreviousY=touchpad.oldY=event.touches[0].screenY;"
 				+ "touchpad.wcisniete=true;document.body.style.background='red';"
 				+ "};"
-				+"touchpad.onTouchUp=function(e){"
+				+"touchpad.onTouchUp=function(event){"
+				
 				+ "touchpad.wcisniete=false;document.body.style.background='blue';"
+				+ "if(event.changedTouches[0].screenX>touchpad.oldX-2&&event.changedTouches[0].screenX<touchpad.oldX+2&&event.changedTouches[0].screenY>touchpad.oldY-2&&event.changedTouches[0].screenY<touchpad.oldY+2)"
+				
+				//+ "if(event.screenX>touchpad.oldX-10)"
+				+ "{"
+				+"var data=new TCP_Data();data.mouse = TCP_Data.touchedTYPE.LPM;data.touchpadX = 0;data.touchpadY =0;"
+				+ "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
+				+ "}"
 				+ "};"
 				+ "touchpad.onMouseMove=function(e){"
 				+ "if(touchpad.wcisniete){"
@@ -96,7 +104,7 @@ int n = is.read();
 				+ "document.getElementById('gamepad').style.display=document.getElementById('pilot').style.display=document.getElementById('klawiatura').style.display=document.getElementById('touchpad').style.display='none';"
 				+ "document.getElementById(id).style.display='block';"
 				+ "}"
-				+ "</script>"
+				+ "/*]]>*/</script>"
 				+"</head><body>"
 				+ "<div class=\"karta\" id=\"gamepad\">Gamepad wkrótce</div>"
 				+ "<div class=\"karta\" id=\"pilot\">Pilot wkrótce</div>"
