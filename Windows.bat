@@ -1,6 +1,7 @@
 @echo off
 
 if not exist %systemroot%\system32\javaw.exe goto java
+:uruchom
 if exist pilotpc-pc-java.jar.new goto aktualizacja
 if not exist pilotpc-pc-java.jar echo Brak pliku PilotPC-PC-Java.jar
 if not exist pilotpc-pc-java.jar pause
@@ -15,4 +16,5 @@ goto end
 echo Brak Javy. Uruchamianie strony pobierania.
 :pobierz
 explorer http://java.com/
+goto uruchom
 :end

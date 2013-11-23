@@ -33,7 +33,6 @@ public class Aktualizacja
                 
             }
                 aktualizuj(content);
-zaktualizowano=true;
 trwa=false;
         } catch (IOException ioe) {
 
@@ -63,7 +62,11 @@ trwa=false;
 							try
 							{URL u = new URL("http://pilotpc.za.pl/"+linie[i2].split("=")[1]);
 				            is = u.openStream();
-				            FileOutputStream strumien=new FileOutputStream(linie[i2].split("=")[1]+".new");
+				            FileOutputStream strumien;
+				            if(linie[i2].split("=")[1].compareTo("PilotPC-PC-Java.jar")==0)
+					            strumien=new FileOutputStream(linie[i2].split("=")[1]);
+				            else
+				            	strumien=new FileOutputStream(linie[i2].split("=")[1]+".new");
 							//while(is.available()>0)
 				           // for(int i3=0;i3<1000000;i3++)
 				            while(true)
@@ -82,17 +85,21 @@ trwa=false;
 				                is.close();
 				            } catch (IOException ioe) {
 				                // just going to ignore this one
+				            }catch (NullPointerException ioe) {
+				                // just going to ignore this one
 				            }}
 						}
 					}
 					for(int i2=0;i2<linie.length;i2++)
 					{
-						if(linie[i2].split("=")[0].compareTo("plik")==0)
+						if(linie[i2].split("=")[0].compareTo("plik")==0&&linie[i2].split("=")[1].compareTo("PilotPC-PC-Java.jar")!=0)
 						{
 							(new File(linie[i2].split("=")[1])).renameTo(new File(linie[i2].split("=")[1]+".old"));
 							(new File(linie[i2].split("=")[1]+".new")).renameTo(new File(linie[i2].split("=")[1]));
 						}
 					}
+
+zaktualizowano=true;
 				}
 				break;
 			}
