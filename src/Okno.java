@@ -90,10 +90,10 @@ JLabel info=new JLabel();
 InetAddress[] adresy=java.net.Inet4Address.getAllByName(java.net.InetAddress.getLocalHost().getHostName());
 String tekstIP="";
 if(adresy.length==1)
-	tekstIP="twój IP to: "+adresy[0].getHostAddress();
+	tekstIP="twój IP to: "+java.net.InetAddress.getLocalHost()+adresy[0].getHostAddress();
 else
 {
-tekstIP="twoje IP to:<br/>"+adresy[0].getHostAddress();
+tekstIP="twoje IP to:<br/>"+java.net.InetAddress.getLocalHost()+adresy[0].getHostAddress();
 	for(int i=1;i<adresy.length;i++)
 		if(adresy[i].getAddress().length==4)
 		tekstIP+=",<br/>"+adresy[i].getHostAddress();
@@ -130,13 +130,19 @@ class Odswierz extends TimerTask
 {
  public void run()
  {
+	 String statusTxt="";
    if(Polaczenie.nasluchiwanie)
    {
 	   if(Polaczenie.watki[0].gotowe)
-		   status.setText("Gotowe!");
+		   statusTxt="Gotowe!";
 	   else
-		   status.setText("Inicjowanie...");
+		   statusTxt="Inicjowanie...";
    }
+if(Aktualizacja.zaktualizowano)
+	statusTxt+=" Zaktualizowano do nowej wersji!";
+else if(Aktualizacja.trwa)
+		statusTxt+=" Trwa aktuaizacja do nowej wersji...";
+   status.setText(statusTxt);
    String listaUrzadzen="<html>Połączone urządzenia:<ul>";
    for(byte i=0;i<Polaczenie.watki.length;i++)
    {

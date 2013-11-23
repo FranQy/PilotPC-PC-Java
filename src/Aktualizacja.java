@@ -14,11 +14,12 @@ import java.util.TimerTask;
  */
 public class Aktualizacja
     extends TimerTask {
-
+	public static boolean zaktualizowano=false;
+	public static boolean trwa=false;
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
+		if(!zaktualizowano){
         InputStream is = null;
         String s;
         String content = new String();
@@ -32,7 +33,8 @@ public class Aktualizacja
                 
             }
                 aktualizuj(content);
-
+zaktualizowano=true;
+trwa=false;
         } catch (IOException ioe) {
 
             System.out.println("Oops- an IOException happened.");
@@ -43,7 +45,7 @@ public class Aktualizacja
                 // just going to ignore this one
             }
         }
-	}
+	}}
 	static void aktualizuj(String content)
 	{
 		String[] linie=content.split("\n");
@@ -52,16 +54,16 @@ public class Aktualizacja
 			{
 				if(linie[i].split("=")[1].compareTo(Program.wersja)!=0)//czy jest inna wersja
 				{
+					trwa=true;
 					for(int i2=0;i2<linie.length;i2++)
 					{
 						if(linie[i2].split("=")[0].compareTo("plik")==0)
 						{
-							(new File(linie[i2].split("=")[1])).renameTo(new File(linie[i2].split("=")[1]+".old"));
 							InputStream is = null;
 							try
 							{URL u = new URL("http://pilotpc.za.pl/"+linie[i2].split("=")[1]);
 				            is = u.openStream();
-				            FileOutputStream strumien=new FileOutputStream(linie[i2].split("=")[1]);
+				            FileOutputStream strumien=new FileOutputStream(linie[i2].split("=")[1]+".new");
 							//while(is.available()>0)
 				           // for(int i3=0;i3<1000000;i3++)
 				            while(true)
@@ -81,6 +83,14 @@ public class Aktualizacja
 				            } catch (IOException ioe) {
 				                // just going to ignore this one
 				            }}
+						}
+					}
+					for(int i2=0;i2<linie.length;i2++)
+					{
+						if(linie[i2].split("=")[0].compareTo("plik")==0)
+						{
+							(new File(linie[i2].split("=")[1])).renameTo(new File(linie[i2].split("=")[1]+".old"));
+							(new File(linie[i2].split("=")[1]+".new")).renameTo(new File(linie[i2].split("=")[1]));
 						}
 					}
 				}

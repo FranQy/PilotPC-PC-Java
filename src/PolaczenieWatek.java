@@ -28,7 +28,6 @@ public class PolaczenieWatek
 			  try {
           		   gotowe=true;;     	
 			soc=socServ.accept();	
-
 			for(byte i=0;i<100;i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
 			{
 				if(Polaczenie.watki[i]==null){
