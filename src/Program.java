@@ -60,8 +60,17 @@ glowneOkno=new Okno();
 				popup.add(zakoncz);                //dodajemy objekt do menu
 				zakoncz.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
 					public void actionPerformed(ActionEvent e) {    // tworzymy funkcję zamykającą naszą aplikację
-						System.out.println("Kończę działanie programu...");
-						System.exit(0);    
+						while(true)
+							{if(!Aktualizacja.trwa)
+						System.exit(0);
+							else
+								try {
+									Thread.sleep(500);
+								} catch (InterruptedException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
 						}
 						});// dodajemy zdarzenie do pozycji zakończ
 				
