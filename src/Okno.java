@@ -9,7 +9,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Enumeration;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -85,18 +88,27 @@ przyciskInformacje.setMaximumSize(new Dimension(100, 20));
 lewy.add(przyciskInformacje);
 
 lewy.add(status);
-try{
+
 JLabel info=new JLabel();
-InetAddress[] adresy=java.net.Inet4Address.getAllByName(java.net.InetAddress.getLocalHost().getHostName());
-String tekstIP="";
-if(adresy.length==1)
-	tekstIP="twój IP to: "+java.net.InetAddress.getLocalHost()+adresy[0].getHostAddress();
-else
+String tekstIP="Twoje IP to:<br/>";
+Enumeration<NetworkInterface> n;
+try {
+	n = NetworkInterface.getNetworkInterfaces();
+
+for (; n.hasMoreElements();)
 {
-tekstIP="twoje IP to:<br/>"+java.net.InetAddress.getLocalHost()+adresy[0].getHostAddress();
-	for(int i=1;i<adresy.length;i++)
-		if(adresy[i].getAddress().length==4)
-		tekstIP+=",<br/>"+adresy[i].getHostAddress();
+        NetworkInterface e = n.nextElement();
+       // System.out.println("Interface: " + e.getName());
+        Enumeration<InetAddress> a = e.getInetAddresses();
+        for (; a.hasMoreElements();)
+        {
+                InetAddress addr = a.nextElement();
+               if(!addr.isLoopbackAddress()&&addr.getAddress().length==4)
+                	tekstIP+=addr.getHostAddress()+"<br/>";
+        }
+}} catch (SocketException e1) {
+	// TODO Auto-generated catch block
+	e1.printStackTrace();
 }
 info.setText("<html>"+tekstIP+"</html>");
 lewy.add(info);
@@ -111,10 +123,7 @@ link.setText("http://"+java.net.InetAddress.getLocalHost().getHostAddress()+":12
 System.out.println();
 link.setForeground(Color.BLUE);
 lewy.add(link);*/
-} catch (UnknownHostException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-}
+
 add(lewy);
 add(qr);
 

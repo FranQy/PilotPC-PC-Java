@@ -4,7 +4,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Enumeration;
 
 import javax.swing.JPanel;
 
@@ -45,25 +48,43 @@ odswierz();
 	{
 		QRCode kod;
 		try {
-
-InetAddress[] adresy=java.net.Inet4Address.getAllByName(java.net.InetAddress.getLocalHost().getHostName());
-			String tresc="http://"+adresy[0].getHostAddress()+":12345/"+Program.ustawienia.haslo;
+String adres1="";
+String adres2="";
 			
-			for(int i=1;i<adresy.length;i++)
+			String tekstIP="Twoje IP to:<br/>";
+			Enumeration<NetworkInterface> n;
+			try {
+				n = NetworkInterface.getNetworkInterfaces();
+
+			for (; n.hasMoreElements();)
 			{
-				if(adresy[i].getAddress().length==4)
-				tresc+="/"+adresy[i].getHostAddress();
+			        NetworkInterface e = n.nextElement();
+			       // System.out.println("Interface: " + e.getName());
+			        Enumeration<InetAddress> a = e.getInetAddresses();
+			        for (; a.hasMoreElements();)
+			        {
+			                InetAddress addr = a.nextElement();
+			               if(!addr.isLoopbackAddress()&&addr.getAddress().length==4)
+			               {
+			            	   if(adres1.length()==0)
+			            	   adres1=addr.getHostAddress();
+			            	   else
+			            		   adres2+="/"+addr.getHostAddress();
+			               
+			               }
+			        }
+			}} catch (SocketException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
+			String tresc="http://"+adres1+":12345/"+Program.ustawienia.haslo+adres2;
 			kod = Encoder.encode(tresc, ErrorCorrectionLevel.M);
 			macierz= kod.getMatrix();
 		//rozmiar=new Dimension(macierz.getHeight()*10, macierz.getHeight()*10);
 		} catch (WriterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 	this.paintImmediately(0,0,2000,2000);
 	}
 	
