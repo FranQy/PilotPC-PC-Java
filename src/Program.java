@@ -16,7 +16,7 @@ public class Program {
 	static Polaczenie polaczenia;
 	static TypWyswietlania wyswietlanie;
 	static Ustawienia ustawienia=Ustawienia.importuj();
-	static public String wersja="0.1.3";
+	static public String wersja="0.1.5";
 	/**
 	 * Numer urzywany przy nawiązywaniu połączenia do uwierzytelniania
 	 */
@@ -89,7 +89,7 @@ glowneOkno=new Okno();
 
 Timer timer1 = new Timer();
 Aktualizacja timer1_task = new Aktualizacja();
-timer1.schedule (timer1_task, 0, 21600);
+timer1.schedule (timer1_task, 0, 3600000);
 		polaczenia=new Polaczenie();
 	}
 }

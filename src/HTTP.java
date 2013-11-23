@@ -58,7 +58,7 @@ int n = is.read();
 	else if(wyj.indexOf("/")==0)
 	{
 		OutputStream os =soc.getOutputStream();
-		String wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nContent-Type: application/xhtml+xml\r\n\r\n"
+		String wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nContent-Type: application/xhtml+xml; charset=UTF-8\r\n\r\n"
 				+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
 				+"<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
 				+ "<style>#menu{position: absolute;bottom: 0;background: gray;margin: 0;left: 0;width: 100%;}#menu li{display:inline;}.karta{position:absolute;left:0;top:0;width:100%;bottom:20px;display:none;} #menu li img{width:16px;height:16px;}</style>"
@@ -106,9 +106,9 @@ int n = is.read();
 				+ "}"
 				+ "/*]]>*/</script>"
 				+"</head><body>"
-				+ "<div class=\"karta\" id=\"gamepad\">Gamepad wkrótce</div>"
-				+ "<div class=\"karta\" id=\"pilot\">Pilot wkrótce</div>"
-				+ "<div class=\"karta\" id=\"klawiatura\">Klawiatura wkródce</div>"
+				+ "<div class=\"karta\" id=\"gamepad\">Gamepad wkrotce</div>"
+				+ "<div class=\"karta\" id=\"pilot\">Pilot wkrotce</div>"
+				+ "<div class=\"karta\" id=\"klawiatura\">Klawiatura wkrodce</div>"
 				//+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" onmousemove=\"return touchpad.onMouseMove(event)\" ontouchdown=\"touchpad.onTouchDown(event)\" onmousedown=\"touchpad.onTouchDown(event)\" ontouchup=\"touchpad.onTouchUp(event)\" onmouseup=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" onmouseleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
 				+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"touchpad.onTouchDown(event)\" ontouchend=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\"  id=\"touchpad\"></div>"
 				+"<ul id=\"menu\"><li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\"/></li><li onclick='kartaPokaz(\"pilot\")'><img title=\"pilot\"/></li><li onclick='kartaPokaz(\"klawiatura\")'><img title=\"klawiatura\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img title=\"touchpad\"/></li></ul></body></html>";
