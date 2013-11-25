@@ -16,7 +16,7 @@ public class Program {
 	static Polaczenie polaczenia;
 	static TypWyswietlania wyswietlanie;
 	static Ustawienia ustawienia=Ustawienia.importuj();
-	static public String wersja="0.1.6";
+	static public String wersja="0.1.8";
 	/**
 	 * Numer urzywany przy nawiązywaniu połączenia do uwierzytelniania
 	 */
@@ -75,7 +75,7 @@ glowneOkno=new Okno();
 						});// dodajemy zdarzenie do pozycji zakończ
 				
 				BufferedImage imgObrazek;
-				imgObrazek=   new BufferedImage (16, 16, BufferedImage.TYPE_INT_RGB);
+				imgObrazek=   new BufferedImage (64, 64, BufferedImage.TYPE_INT_RGB);
 			
 				TrayIcon trayIcon = new TrayIcon(imgObrazek, "PilotPC-PC-Java", popup);
 				trayIcon.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
