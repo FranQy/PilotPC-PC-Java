@@ -16,11 +16,21 @@ public class Pilot {
 		        System.loadLibrary("pilotpc");
 	    }
 	catch(NullPointerException e){
-		if(System.getenv("LD_LIBRARY_PATH").indexOf("amd64")>=0)
+		try{if(System.getenv("LD_LIBRARY_PATH").indexOf("amd64")>=0)
 			System.loadLibrary("pilotpc-x64");
 		 else
 		        System.loadLibrary("pilotpc");
-		
+		}catch (Exception e2)
+		{
+			try{
+
+		        System.loadLibrary("pilotpc");
+			}
+			catch (Exception e3)
+			{
+				System.loadLibrary("pilotpc-x64");
+			}
+		}
 	}
 	}
 	   // A native method that receives nothing and returns void
