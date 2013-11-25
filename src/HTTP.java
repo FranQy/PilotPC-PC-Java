@@ -39,6 +39,7 @@ int n = is.read();
 	System.out.print(wyj);
 	if(wyj.indexOf("/")==0&&wyj.indexOf("?")>0)
 	{
+		
 		String klasaString=wyj.substring(wyj.indexOf("?")+1, wyj.indexOf(" HTTP"));
 		klasaString=klasaString.replaceAll("%22", "\"");
 		JSONObject klasaObjekt=new JSONObject(klasaString);
@@ -50,15 +51,28 @@ int n = is.read();
 		ret.mouse=touchedTYPE.values()[klasaObjekt.getInt("mouse")];
 		ret.button=pilotButton.values()[klasaObjekt.getInt("button")];
 		OutputStream os =soc.getOutputStream();
-		
+
+		byte i=id(wyj);
+		String wysylanie="HTTP/1.1 200 OK\r\nSet-Cookie: id="+i+"; path=/\r\n\r\n";
+		os.write(wysylanie.getBytes());
 		os.close();
 		is.close();
+		
 		return ret;
 	}
 	else if(wyj.indexOf("/")==0)
 	{
 		OutputStream os =soc.getOutputStream();
-		String wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nContent-Type: application/xhtml+xml; charset=UTF-8\r\n\r\n"
+		//spradzanie po cookie czy jest już
+				byte i=0;
+				for(;i<100;i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
+				{
+					if(Polaczenie.polaczeniaHttp[i]==null){
+						Polaczenie.polaczeniaHttp[i]=new HttpPolaczenie();
+						break;
+					}
+				}
+		String wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: application/xhtml+xml; charset=UTF-8\r\n\r\n"
 				+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
 				+"<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
 				+ "<style>#menu{position: absolute;bottom: 0;background: gray;margin: 0;left: 0;width: 100%;}#menu li{display:inline;}.karta{position:absolute;left:0;top:0;width:100%;bottom:20px;display:none;} #menu li img{width:16px;height:16px;}</style>"
@@ -118,5 +132,18 @@ int n = is.read();
 	}
 	//else
 			return null;
+}
+byte id(String wyj)
+{
+	//spradzanie po cookie czy jest już
+			byte i=0;
+			for(;i<100;i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
+			{
+				if(Polaczenie.polaczeniaHttp[i]==null){
+					Polaczenie.polaczeniaHttp[i]=new HttpPolaczenie();
+					break;
+				}
+			}
+			return i;
 }
 }

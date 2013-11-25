@@ -164,6 +164,17 @@ else if(Aktualizacja.trwa)
 		   
 		   }
    }
+   for(byte i=0;i<Polaczenie.polaczeniaHttp.length;i++)
+   {
+	   if(Polaczenie.polaczeniaHttp[i]!=null)
+		   
+		   {   listaUrzadzen+="<li>";
+		   if(Polaczenie.polaczeniaHttp[i].UserAgent!=null)
+			   listaUrzadzen+=Polaczenie.polaczeniaHttp[i].UserAgent+" - ";
+		   listaUrzadzen+="HTTP</li>";
+		   
+		   }
+   }
    telefony.setText(listaUrzadzen+"</ul></html>");
  }
 }

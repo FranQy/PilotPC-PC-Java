@@ -9,6 +9,7 @@ public class Polaczenie {
 	ServerSocket socServ;
 	Robot robot;
 	int port=12345;
+	public static HttpPolaczenie[] polaczeniaHttp=new HttpPolaczenie[100];
 	public static boolean nasluchiwanie=false;
 	public static PolaczenieWatek[] watki= new PolaczenieWatek[100];
 public Polaczenie()
