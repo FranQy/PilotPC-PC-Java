@@ -7,7 +7,7 @@ html{font:13px Helvetica, arial, freesans, clean, sans-serif;}
 <body><h1>PilotPC-PC-Java</h1>
 <h2>Wstęp</h2>
 <p>
-	Jest to serwer dla programu PilotPC.
+	Jest to serwer dla programu PilotPC. Program posiada mechanizm automatycznej aktualizacji.
 </p>
 <h2>Zaczynamy!</h2>
 <p>
@@ -17,10 +17,13 @@ html{font:13px Helvetica, arial, freesans, clean, sans-serif;}
 	W zasobniku systemowym pokarze się ikona (tymczasowo jest to czarny kwadrat) informująca że serwer jest uruchomiony. Można kliknąć ją 2 razy aby pojawiło się okno serwera. Okno to można dowolnie otwierać i zamykać: nie wpływa to na działanie serwera.
 </p>
 <p>
-	Pierwszą metodą na połączenie się jest skorzystanie z <a href="https://github.com/FranQy/PilotPC-Android">Aplikacji na androida</a>. Nalerzy w niej wpisać adres IP komputera (pokazuje się on w oknie serwera).
+	Pierwszą metodą na połączenie się jest skorzystanie z <a href="https://github.com/FranQy/PilotPC-Android">Aplikacji na androida</a>. Nalerzy w niej wpisać adres IP komputera (pokazuje się on w oknie serwera) oraz hasło (równierz pokazuje się w oknie serwera).
 </p>
 <p>
-	Drugą metodą (niezalecaną, obecnie działającą tylko prowizorycznie) jest uruchomienie przeglądarki www w telefonie/tablecie i wpisanie numeru IP komputera, dwukropka i liczby <i>12345</i> np. <i>127.127.127.127:12345</i>.
+	Drógą metodą jest zeskanowanie kodu QR wyświetlonego w oknie serwera.
+</p>
+<p>
+	Trzecią metodą (niezalecaną, obecnie działającą tylko prowizorycznie) jest uruchomienie przeglądarki www w telefonie/tablecie i wpisanie numeru IP komputera, dwukropka i liczby <i>12345</i> np. <i>127.127.127.127:12345</i>.
 </p>
 <h2>Pliki</h2>
 <table>
