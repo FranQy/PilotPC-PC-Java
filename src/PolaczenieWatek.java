@@ -18,7 +18,9 @@ public class PolaczenieWatek
     	Pilot pilot = new Pilot();
     	MouseRobot mouse = new MouseRobot();
     	InputStream is;
-    	Connect infoPrzyPolaczeniu;
+    	public Okno.Urzadzenie<PolaczenieWatek> UI=null;
+    	public boolean pokazane=false;
+    			public Connect infoPrzyPolaczeniu;
     public void run() {  //klasa do sterowania myszka
     	while(true){	
     		
@@ -38,6 +40,7 @@ public class PolaczenieWatek
 				}
 			}
           		is = soc.getInputStream();
+          		
 			try{
 			  ObjectInputStream in = new ObjectInputStream(soc.getInputStream());	
 			  while(true)
@@ -75,7 +78,15 @@ oos.flush();
 			}
 			  catch(StreamCorruptedException e)
 				{
-					try {
+
+					if(UI!=null)
+					{
+						UI.ramka.remove(UI);
+						UI=null;
+					}
+				  this.infoPrzyPolaczeniu=null;
+					this.pokazane=false;
+				  try {
 						TCP_Data data=HTTP.polaczenie(is, soc);
 						if(data!=null)
 							wykonuj(data);
@@ -86,11 +97,25 @@ oos.flush();
 				}
 			  }catch(EOFException e)
 			  {
-					System.out.print("Rozłączono. \n\r\r\n");
+					if(UI!=null)
+					{
+						UI.ramka.remove(UI);
+						UI=null;
+					}
+				  this.infoPrzyPolaczeniu=null;
+					this.pokazane=false;
+				  System.out.print("Rozłączono. \n\r\r\n");
 					
 				  
 			  }catch(Exception e)
 			  {
+					if(UI!=null)
+					{
+						UI.ramka.remove(UI);
+						UI=null;
+					}
+				  this.infoPrzyPolaczeniu=null;
+					this.pokazane=false;
 					System.out.print("Błąd, rozłączono. \n\r\r\n");
 				  
 			  }
@@ -166,5 +191,13 @@ oos.flush();
     		return true;
     		else
     			return false;
+    	}
+    	@Override
+    	public String toString()
+    	{
+    		if(infoPrzyPolaczeniu!=null)
+    		return infoPrzyPolaczeniu.nazwa;
+    		else
+    			return soc.getRemoteSocketAddress().toString();
     	}
 }

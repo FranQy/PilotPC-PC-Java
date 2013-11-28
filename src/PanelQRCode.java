@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Panel;
 import java.awt.geom.Rectangle2D;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -10,6 +11,7 @@ import java.net.UnknownHostException;
 import java.util.Enumeration;
 
 import javax.swing.JPanel;
+
 
 import com.google.zxing.WriterException;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
@@ -33,8 +35,10 @@ public class PanelQRCode extends JPanel{
 	private static final long serialVersionUID = 1L;
 	ByteMatrix macierz;
 Dimension rozmiar;
-	public PanelQRCode()
+Panel okno;
+	public PanelQRCode(Panel lewy)
 	{
+		okno=lewy;
 		setBackground(Color.white);
 odswierz();
 		
@@ -90,13 +94,17 @@ String adres2="";
 	
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-		//setSize(rozmiar);
         int wielkosc;
-        if(getSize().height>getSize().width)
-        	wielkosc=getSize().width/macierz.getWidth();
+        double test1=(double)okno.getSize().width/(double)macierz.getWidth();
+        double test2=Math.floor((double)okno.getSize().width/(double)macierz.getWidth());
+        if(okno.getSize().height>okno.getSize().width/2)
+        	wielkosc=(int)Math.floor((double)okno.getSize().width/(double)macierz.getWidth()/2.0);
         else
-        	wielkosc=getSize().height/macierz.getWidth();
+        	wielkosc=(int)Math.floor((double)okno.getSize().height/(double)macierz.getWidth());
+
+        setSize(macierz.getWidth()*wielkosc,macierz.getWidth()*wielkosc);
+        setLocation(okno.getWidth()-macierz.getWidth()*wielkosc,0);
+super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
         for(int y=0;y<macierz.getHeight();y++)
@@ -110,7 +118,6 @@ String adres2="";
                 g2d.fill(rectangle);
             	g2d.draw(rectangle);
             }
-        
 
     }
 	

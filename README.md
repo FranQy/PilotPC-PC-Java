@@ -39,6 +39,11 @@ Windows XP i nowsze (dla procesorów x86 i x64)
 </p><p>
 GNU/Linux (dla procesorów x86 i x64)
 </p>
+<h2>Lista zmian</h2>
+<table>
+<tr><th>Numer</th><th>Data</th><th>Zmiany</th></tr>
+<tr><td>0.1.9</td><td>28.11.2013r.</td><td>Zmiany w wyglądzie</td></tr>
+</table>
 <h2>Linki</h2>
 <a href="https://github.com/FranQy/PilotPC-Android">Aplikacja na androida</a><br/>
 </body></html>
