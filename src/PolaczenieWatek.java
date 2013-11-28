@@ -22,6 +22,15 @@ public class PolaczenieWatek
     	public Okno.Urzadzenie getUI(){return UI;}
     	public boolean pokazane=false;
     			public Connect infoPrzyPolaczeniu;
+    			public void rozlacz()
+    			{
+    				try {
+						soc.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+    			}
     public void run() {  //klasa do sterowania myszka
     	while(true){	
     		

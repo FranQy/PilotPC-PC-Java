@@ -280,6 +280,14 @@ class Urzadzenie extends JPanel
 		zrodlo=z;
 		ramka=telefony;
 		rozlacz.setLocation(0, 0);
+		rozlacz.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				zrodlo.rozlacz();
+			}
+		});
 		add(rozlacz);
 		tekst.setText(z.toString());
 		
