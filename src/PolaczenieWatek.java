@@ -11,14 +11,15 @@ import com.example.socketclient.Connect;
 import com.example.socketclient.TCP_Data;
 
 public class PolaczenieWatek
-    extends Thread {
+    extends Thread  implements PolaczenieInfo{
 	public ServerSocket socServ;
 	public boolean gotowe=false;
 	Socket soc;
     	Pilot pilot = new Pilot();
     	MouseRobot mouse = new MouseRobot();
     	InputStream is;
-    	public Okno.Urzadzenie<PolaczenieWatek> UI=null;
+    	public Okno.Urzadzenie UI=null;
+    	public Okno.Urzadzenie getUI(){return UI;}
     	public boolean pokazane=false;
     			public Connect infoPrzyPolaczeniu;
     public void run() {  //klasa do sterowania myszka
@@ -199,5 +200,14 @@ oos.flush();
     		return infoPrzyPolaczeniu.nazwa;
     		else
     			return soc.getRemoteSocketAddress().toString();
+    	}
+    	public String opis()
+    	{
+    		String ret="IP:"+soc.getRemoteSocketAddress().toString();
+
+    		if(infoPrzyPolaczeniu!=null)
+    		ret+="\r\nNazwa:"+infoPrzyPolaczeniu.nazwa;
+    		return ret;
+    		
     	}
 }

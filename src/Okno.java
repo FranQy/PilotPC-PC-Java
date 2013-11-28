@@ -175,7 +175,7 @@ else if(Aktualizacja.trwa)
 				 //  if(!Polaczenie.watki[i].pokazane&&Polaczenie.watki[i].infoPrzyPolaczeniu!=null)
 			   {
 				   Polaczenie.watki[i].pokazane=true;
-				   telefony.add(Polaczenie.watki[i].UI=new Urzadzenie<PolaczenieWatek>(Polaczenie.watki[i],telefony));
+				   telefony.add(Polaczenie.watki[i].UI=new Urzadzenie(Polaczenie.watki[i],telefony));
 				   potrzebneOdswierzenie=true;
 			   }
 		   }
@@ -186,7 +186,7 @@ else if(Aktualizacja.trwa)
 		   if(!Polaczenie.polaczeniaHttp[i].pokazane)
 		   {
 			   Polaczenie.polaczeniaHttp[i].pokazane=true;
-		   telefony.add(Polaczenie.polaczeniaHttp[i].UI=new Urzadzenie<HttpPolaczenie>(Polaczenie.polaczeniaHttp[i],telefony));
+		   telefony.add(Polaczenie.polaczeniaHttp[i].UI=new Okno.Urzadzenie(Polaczenie.polaczeniaHttp[i],telefony));
 		   potrzebneOdswierzenie=true;
 		   }
    }
@@ -268,13 +268,14 @@ int liczPolaczenia=countComponents();
 		   
 	}
 }
-class Urzadzenie<typ> extends JPanel
+class Urzadzenie extends JPanel
 {
 	Button rozlacz=new Button("Rozłącz");
 	Label tekst=new Label();
-	public typ zrodlo;
+	
+	public PolaczenieInfo zrodlo;
 	Urzadzenia ramka;
-	public Urzadzenie(typ z, Urzadzenia telefony)
+	public Urzadzenie(PolaczenieInfo z, Urzadzenia telefony)
 	{
 		zrodlo=z;
 		ramka=telefony;
@@ -283,6 +284,7 @@ class Urzadzenie<typ> extends JPanel
 		tekst.setText(z.toString());
 		
 		add(tekst);
+		setToolTipText(zrodlo.opis());
 		
 	}
 }
