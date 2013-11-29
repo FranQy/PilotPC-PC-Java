@@ -19,12 +19,12 @@ public String toString()
 }
 public String opis()
 {
-String ret="";
+String ret="<html>";
 if(UserAgent.OS!=null)
 ret+="System: "+UserAgent.OS;
 if(UserAgent.urzadzenie!=null)
-ret+="\r\nModel: "+UserAgent.urzadzenie;
-ret+="\n\rUser-Agent: "+UserAgent;
+ret+="<br>Model: "+UserAgent.urzadzenie;
+ret+="<br>User-Agent: "+UserAgent+"</html>";
 	return ret;
 }
 }
