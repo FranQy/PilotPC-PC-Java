@@ -77,6 +77,7 @@ public Okno()
 {
 	super("SockedServer");
 this.setSize(750,550);
+setMinimumSize(new Dimension(500,300));
 //setLayout(new GridLayout());
 Panel lewy=new Panel();
 qr=new PanelQRCode(lewy);

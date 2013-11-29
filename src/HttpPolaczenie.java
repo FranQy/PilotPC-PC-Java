@@ -1,12 +1,13 @@
 
 public class HttpPolaczenie implements PolaczenieInfo {
+public boolean zablokowane=false;
 public String UserAgent;
 public Okno.Urzadzenie UI=null;
 public Okno.Urzadzenie getUI(){return UI;}
 public boolean pokazane=false;
 public void rozlacz()
 {
-	//TODO zrobić rozłączanie http
+	zablokowane=true;
 }
 @Override
 public String toString()

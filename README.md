@@ -2,7 +2,7 @@
 <head><meta charset="utf-8" />
 <title>Readme - PilotPC-PC-Java</title>
 <style type="text/css">
-html{font:13px Helvetica, arial, freesans, clean, sans-serif;}
+<!--html{font:13px Helvetica, arial, freesans, clean, sans-serif;}-->
 </style></head>
 <body><h1>PilotPC-PC-Java</h1>
 <h2>Wstęp</h2>
@@ -42,7 +42,13 @@ GNU/Linux (dla procesorów x86 i x64)
 <h2>Lista zmian</h2>
 <table>
 <tr><th>Numer</th><th>Data</th><th>Zmiany</th></tr>
-<tr><td>0.1.9</td><td>28.11.2013r.</td><td>Zmiany w wyglądzie</td></tr>
+<tr><td>0.1.9</td><td>28.11.2013r.</td><td><ul><li>Zmiany w wyglądzie okna serwera</li></ul></td></tr>
+<tr><td>0.1.10</td><td>28.11.2013r.</td><td><ul>
+<li>Zmiany w wyglądzie okna serwera</li>
+<li>Możliwość rozłączania telefonów z poziomu serwera</li>
+<li>Wersja www: dodanie ikon na dole menu</li>
+<li>Wersja www: ustawianie kolorów interfejsu na takie, jakie są w wersji na androida</li>
+</ul></td></tr>
 </table>
 <h2>Linki</h2>
 <a href="https://github.com/FranQy/PilotPC-Android">Aplikacja na androida</a><br/>
