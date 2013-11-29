@@ -1,10 +1,4 @@
-<html>
-<head><meta charset="utf-8" />
-<title>Readme - PilotPC-PC-Java</title>
-<style type="text/css">
-<!--html{font:13px Helvetica, arial, freesans, clean, sans-serif;}-->
-</style></head>
-<body><h1>PilotPC-PC-Java</h1>
+<h1>PilotPC-PC-Java</h1>
 <h2>Wstęp</h2>
 <p>
 	Jest to serwer dla programu PilotPC. Program posiada mechanizm automatycznej aktualizacji.
@@ -52,4 +46,3 @@ GNU/Linux (dla procesorów x86 i x64)
 </table>
 <h2>Linki</h2>
 <a href="https://github.com/FranQy/PilotPC-Android">Aplikacja na androida</a><br/>
-</body></html>
