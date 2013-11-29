@@ -1,7 +1,7 @@
 
 public class HttpPolaczenie implements PolaczenieInfo {
 public boolean zablokowane=false;
-public String UserAgent;
+public UserAgent UserAgent;
 public Okno.Urzadzenie UI=null;
 public Okno.Urzadzenie getUI(){return UI;}
 public boolean pokazane=false;
@@ -12,11 +12,19 @@ public void rozlacz()
 @Override
 public String toString()
 {
-	return UserAgent;
+	if(UserAgent.urzadzenie==null)
+	return UserAgent.toString();
+	else
+		return UserAgent.urzadzenie;
 }
 public String opis()
 {
-
-	return "User-Agent: "+UserAgent+"\r\n";
+String ret="";
+if(UserAgent.OS!=null)
+ret+="System: "+UserAgent.OS;
+if(UserAgent.urzadzenie!=null)
+ret+="\r\nModel: "+UserAgent.urzadzenie;
+ret+="\n\rUser-Agent: "+UserAgent;
+	return ret;
 }
 }

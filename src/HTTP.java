@@ -227,7 +227,7 @@ static byte id(String wyj)
 			}
 				if(Polaczenie.polaczeniaHttp[i]==null){
 				Polaczenie.polaczeniaHttp[i]=new HttpPolaczenie();
-				Polaczenie.polaczeniaHttp[i].UserAgent=wyj.substring(wyj.indexOf("User-Agent:")+11, wyj.indexOf('\r',wyj.indexOf("User-Agent:")));
+				Polaczenie.polaczeniaHttp[i].UserAgent=new UserAgent(wyj.substring(wyj.indexOf("User-Agent:")+11, wyj.indexOf('\r',wyj.indexOf("User-Agent:"))));
 				}return i;
 }
 }

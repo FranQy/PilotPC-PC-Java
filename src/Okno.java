@@ -272,7 +272,7 @@ int liczPolaczenia=countComponents();
 class Urzadzenie extends JPanel
 {
 	Button rozlacz=new Button("Rozłącz");
-	Label tekst=new Label();
+	JLabel tekst=new JLabel();
 	
 	public PolaczenieInfo zrodlo;
 	Urzadzenia ramka;
@@ -291,9 +291,9 @@ class Urzadzenie extends JPanel
 		});
 		add(rozlacz);
 		tekst.setText(z.toString());
-		
-		add(tekst);
 		setToolTipText(zrodlo.opis());
+		tekst.setToolTipText(zrodlo.opis());
+		add(tekst);
 		
 	}
 }

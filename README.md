@@ -41,7 +41,7 @@ GNU/Linux (dla procesorów x86 i x64)
 <li>Zmiany w wyglądzie okna serwera</li>
 <li>Możliwość rozłączania telefonów z poziomu serwera</li>
 <li>Wersja www: dodanie ikon na dole menu</li>
-<li>Wersja www: ustawianie kolorów interfejsu na takie, jakie są w wersji na androida</li>
+<li>Wersja www: ustewienie kolorów interfejsu na takie, jakie są w wersji na androida</li>
 </ul></td></tr>
 </table>
 <h2>Linki</h2>
