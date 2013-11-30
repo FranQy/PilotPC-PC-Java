@@ -50,6 +50,7 @@ public UserAgent(String UA)
 			OS="Windows 8.1";
 		else
 			OS="Windows";
+		urzadzenie="PC";
 	}
 	else if(UA.contains("Android"))
 	{
@@ -94,9 +95,17 @@ public UserAgent(String UA)
 		OS="iOS";}
 	}
 	else if(UA.contains("Mac OS X"))
+	{
 		OS=UA.substring(UA.indexOf("Mac OS X"),UA.indexOf(")",UA.indexOf("Mac OS X")));
+		urzadzenie="Mac";
+	}
 	else if(UA.contains("Linux"))
+	{
 		OS="Linux";
+		urzadzenie="PC";
+	}
+	else
+		urzadzenie="Nieznane";
 }
 public String toString()
 {
