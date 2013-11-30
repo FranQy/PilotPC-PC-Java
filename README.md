@@ -1,5 +1,4 @@
-
-<body><h1>PilotPC-PC-Java</h1>
+<h1>PilotPC-PC-Java</h1>
 <h2>Wstęp</h2>
 <p>
 	Jest to serwer dla programu PilotPC. Program posiada mechanizm automatycznej aktualizacji.
@@ -45,6 +44,12 @@ GNU/Linux (dla procesorów x86 i x64)
 <li>Wersja www: ustawienie kolorów interfejsu na takie, jakie są w wersji na androida</li>
 </ul></td></tr>
 <tr><td>0.1.11</td><td>30.11.2013r.</td><td><ul><li>Odczytywanie informacji o telefonie i pokazywanie na serwerze.</li></ul></td></tr>
+<tr><td>0.1.12</td><td>30.11.2013r.</td><td><ul>
+<li>Zmiana kolorystyki serwera</li>
+<li>Ulepszenie odczytywania informacji o podłączonym telefonie</li>
+<li>Wersja www: sprawdzanie hasła</li>
+<li>Wersja www: wyświetlanie komunikatu, że rozłączono</li>
+</ul></td></tr>
 </table>
 <h2>Linki</h2>
 <a href="https://github.com/FranQy/PilotPC-Android">Aplikacja na androida</a><br/>

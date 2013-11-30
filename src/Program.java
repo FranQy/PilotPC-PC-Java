@@ -16,7 +16,7 @@ public class Program {
 	static Polaczenie polaczenia;
 	static TypWyswietlania wyswietlanie;
 	static Ustawienia ustawienia=Ustawienia.importuj();
-	static public String wersja="0.1.11";
+	static public String wersja="0.1.12";
 	/**
 	 * Numer urzywany przy nawiązywaniu połączenia do uwierzytelniania
 	 */

@@ -128,7 +128,7 @@ int n = is.read();
 					  touchpadBase64="data:image/png;base64,"+DatatypeConverter.printBase64Binary(touchpadBytes);
 					}
 					catch ( IOException e ) { touchpadBase64=""; }
-		 wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: application/xhtml+xml; charset=UTF-8\r\n\r\n"
+		 wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
 				+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
 				+"<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
 				+ "<style>"
@@ -257,7 +257,7 @@ int n = is.read();
 						typ="number";
 					else
 						typ="text";
-					wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: application/xhtml+xml; charset=UTF-8\r\n\r\n"
+					wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
 							+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
 							+"<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
 							+ "</head>"
@@ -273,7 +273,7 @@ int n = is.read();
 						typ="number";
 					else
 						typ="text";
-					wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: application/xhtml+xml; charset=UTF-8\r\n\r\n"
+					wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
 							+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
 							+"<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
 							+ "</head>"
