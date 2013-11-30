@@ -54,6 +54,19 @@ trwa=false;
 				if(linie[i].split("=")[1].compareTo(Program.wersja)!=0)//czy jest inna wersja
 				{
 					trwa=true;
+
+					for(int i2=0;i2<linie.length;i2++)
+					{
+						if(linie[i2].split("=")[0].compareTo("plik")==0)
+						{//Usuwa pozostałości po ostatniej aktualizacji
+							File old=new File(linie[i2].split("=")[1]+".old");
+							if(old.isFile())
+								old.delete();
+							File New=new File(linie[i2].split("=")[1]+".new");
+							if(New.isFile())
+								New.delete();
+						}
+					}
 					for(int i2=0;i2<linie.length;i2++)
 					{
 						if(linie[i2].split("=")[0].compareTo("plik")==0)

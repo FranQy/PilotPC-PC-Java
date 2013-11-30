@@ -49,7 +49,7 @@ int n = is.read();
 		TCP_Data ret=new TCP_Data();
 		if(Polaczenie.polaczeniaHttp[i].zablokowane)
 			wysylanie="HTTP/1.1 403	Forbidden\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\nZostałeś rozłączony";
-		else
+		else if(wyj.indexOf("/"+Program.ustawienia.haslo)==0)
 		{ wysylanie="HTTP/1.1 200 OK\r\nSet-Cookie: id="+i+"; path=/\r\n\r\n";
 		String klasaString=wyj.substring(wyj.indexOf("?")+1, wyj.indexOf(" HTTP"));
 		klasaString=klasaString.replaceAll("%22", "\"");
@@ -61,6 +61,11 @@ int n = is.read();
 		ret.mouse=touchedTYPE.values()[klasaObjekt.getInt("mouse")];
 		ret.button=pilotButton.values()[klasaObjekt.getInt("button")];
 	}
+		else
+		{
+			wysylanie="HTTP/1.1 403	Forbidden\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\nKod błędny";
+			
+		}
 		os.write(wysylanie.getBytes());
 		os.close();
 		is.close();
@@ -74,7 +79,7 @@ int n = is.read();
 				String wysylanie;
 				if(Polaczenie.polaczeniaHttp[i].zablokowane)
 					wysylanie="HTTP/1.1 403	Forbidden\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\nZostałeś rozłączony";
-				else
+				else if(wyj.indexOf("/"+Program.ustawienia.haslo)==0)
 				{
 					String gamepadBase64;
 					try
@@ -127,12 +132,23 @@ int n = is.read();
 				+ "body{background:#26211b;color:white;font-style:non-sherif;}"
 				+ "#menu{position: absolute;bottom: 0;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
 				+ "#menu li{display:inline;}.karta{position:absolute;left:0;top:0;width:100%;bottom:64px;display:none;}"
-				+ "#menu li img{width:10%;padding:0 2%;}</style>"
-				+"<script>/*<![CDATA[*/ var touchpad=new Object();touchpad.wcisniete=false;touchpad.mPreviousX=0; touchpad.mPreviousY=0;touchpad.oldX =0;touchpad.oldY=0;touchpad.longClicked = false;touchpad.returnState = true;"
+				+ "#menu li img{width:10%;padding:0 2%;}"
+				+ "#pilot .przycisk{width:20%;}"
+				+ "</style>"
+				+"<script>/*<![CDATA[*/\n"
+				+ "var pilot=new Object();\n"
+				+ "pilot.click=function(przycisk)"
+				+ "{"
+				+ "var data=new TCP_Data();"
+				+ "data.type=TCP_Data.typ.PILOT;"
+				+ "data.button=przycisk;"
+				+ "send(data);"
+				+ "};\n"
+				+ " var touchpad=new Object();touchpad.wcisniete=false;touchpad.mPreviousX=0; touchpad.mPreviousY=0;touchpad.oldX =0;touchpad.oldY=0;touchpad.longClicked = false;touchpad.returnState = true;"
 				+"touchpad.onTouchDown=function(event){"
 				+ "touchpad.mPreviousX=touchpad.oldX=event.touches[0].screenX;"
 				+ "touchpad.mPreviousY=touchpad.oldY=event.touches[0].screenY;"
-				+ "touchpad.wcisniete=true;document.body.style.background='red';"
+				+ "touchpad.wcisniete=true;"
 				+ "};"
 				+"touchpad.onMouseDown=function(event){"
 				+ "touchpad.mPreviousX=touchpad.oldX=event.screenX;"
@@ -186,6 +202,7 @@ int n = is.read();
 				+ "function TCP_Data(){this.touchpadX=0;this.touchpadY=0;this.button=0;this.type=0;this.mouse=0;};"
 				+ "TCP_Data.touchedTYPE={NORMAL:0, LONG:1, UP:2, SCROLL:3, LPM:4, PPM:5};"
 				+ "TCP_Data.typ={GAMEPAD:0, PILOT:1, KEYBOARD:2, TOUCHPAD:3};"
+				+ "TCP_Data.pilotButton={OFF:0, MUSIC:1, MULTIMEDIA:2, PLAYPAUSE:3, PERV:4, NEXT:5, STOP:6, EXIT:7, BACK:8, VOLDOWN:9, VOLUP:10, MUTE:11,UP:12, DOWN:13, RIGHT:14, LEFT:15, RETTURN:16};"
 				+ "function kartaPokaz(id){"
 				+ "document.getElementById('gamepad').style.display=document.getElementById('pilot').style.display=document.getElementById('klawiatura').style.display=document.getElementById('touchpad').style.display='none';"
 				+ "document.getElementById(id).style.display='block';"
@@ -193,7 +210,15 @@ int n = is.read();
 				+ "/*]]>*/</script>"
 				+"</head><body>"
 				+ "<div class=\"karta\" id=\"gamepad\">Gamepad wkrodce</div>"
-				+ "<div class=\"karta\" id=\"pilot\">Pilot wkrodce</div>"
+				+ "<div class=\"karta\" id=\"pilot\">"
+				+ "<img alt=\"Wycisz\" onclick=\"pilot.click(TCP_Data.pilotButton.MUTE)\" class=\"przycisk\"/>"
+				+ "<img alt=\"Ciszej\" onclick=\"pilot.click(TCP_Data.pilotButton.VOLDOWN)\" class=\"przycisk\"/>"
+				+ "<img alt=\"Głośniej\" onclick=\"pilot.click(TCP_Data.pilotButton.VOLUP)\" class=\"przycisk\"/>"
+				+ "<img alt=\"Poprzednia\" onclick=\"pilot.click(TCP_Data.pilotButton.PERV)\" class=\"przycisk\"/>"
+				+ "<img alt=\"Następna\" onclick=\"pilot.click(TCP_Data.pilotButton.NEXT)\" class=\"przycisk\"/>"
+				+ "<img alt=\"Play/Pauza\" onclick=\"pilot.click(TCP_Data.pilotButton.PLAYPAUSE)\" class=\"przycisk\"/>"
+				+ "<img alt=\"Stop\" onclick=\"pilot.click(TCP_Data.pilotButton.STOP)\" class=\"przycisk\"/>"
+				+ "</div>"
 				+ "<div class=\"karta\" id=\"klawiatura\">Klawiatura wkrodce</div>"
 				//Tu były problemy ze zdarzeniami
 				//+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" onmousemove=\"return touchpad.onMouseMove(event)\" ontouchdown=\"touchpad.onTouchDown(event)\" onmousedown=\"touchpad.onTouchDown(event)\" ontouchup=\"touchpad.onTouchUp(event)\" onmouseup=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" onmouseleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
@@ -202,7 +227,27 @@ int n = is.read();
 				+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"touchpad.onTouchDown(event)\" ontouchend=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
 				+"<ul id=\"menu\"><li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li><li onclick='kartaPokaz(\"pilot\")'><img title=\"pilot\" src=\""+pilotBase64+"\"/></li><li onclick='kartaPokaz(\"klawiatura\")'><img title=\"klawiatura\" src=\""+klawiaturaBase64+"\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img title=\"touchpad\" src=\""+touchpadBase64+"\"/></li></ul></body></html>";
 		
-				}os.write(wysylanie.getBytes());
+				}
+
+				else if(wyj.indexOf("/ ")==0)
+					{
+					wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: application/xhtml+xml; charset=UTF-8\r\n\r\n"
+							+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title></head>"
+							+ "<body>"
+							+ "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\"><label>wpisz kod<input type=\"password\"/></label><input type=\"submit\" value=\"ok\"/></form>"
+							+ "</body></html>";
+							
+					}
+				else
+				{
+					wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: application/xhtml+xml; charset=UTF-8\r\n\r\n"
+							+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title></head>"
+							+ "<body>"
+							+ "<strong>Błędny kod!</strong>"
+							+ "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\"><label>wpisz kod<input type=\"password\"/></label><input type=\"submit\" value=\"ok\"/></form>"
+							+ "</body></html>";
+				}
+				os.write(wysylanie.getBytes());
 		os.close();
 		is.close();
 	}
