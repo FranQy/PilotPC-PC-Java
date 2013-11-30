@@ -1,5 +1,6 @@
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -77,9 +78,11 @@ public Okno()
 {
 	super("SockedServer");
 this.setSize(750,550);
+//setBackground(new Color(38,33,27));
 setMinimumSize(new Dimension(500,300));
 //setLayout(new GridLayout());
 Panel lewy=new Panel();
+lewy.setBackground(new Color(38,33,27));
 qr=new PanelQRCode(lewy);
 telefony=new Urzadzenia(lewy);
 przyciskInformacje=new Przycisk("Informacje",new Dimension(100, 20),new Point(0,0));
@@ -207,10 +210,11 @@ class Przycisk extends JButton
 {
 	public Przycisk(String string, Dimension dimension, Point point) {
 		super(string);
+		
 		wymiary=dimension;
 		lokacja=point;
-
-	}
+		setBackground(Color.white);
+}
 	    @Override
 	    protected void paintComponent(Graphics g) {
 	    	
@@ -230,7 +234,7 @@ class Tekst extends JLabel
 		super(string);
 		//wymiary=dimension;
 		lokacja=point;
-
+setForeground(Color.white);
 	}
 	    @Override
 	    protected void paintComponent(Graphics g) {
@@ -252,9 +256,10 @@ class Urzadzenia extends JPanel
 		{
 		super();
 			this.okno=lewy;
-			   setBackground(Color.CYAN);
+			   setBackground(new Color(46,46,46));
 			   setLayout(new GridLayout(200,1));
 			   Label tytul=new Label("Podłączone urządzenia:");
+			   tytul.setForeground(Color.white);
 			   add(tytul);
 		}
 	@Override
@@ -262,8 +267,9 @@ class Urzadzenia extends JPanel
 	{
 		
 int liczPolaczenia=countComponents();
-		   setSize(okno.getWidth()/2,liczPolaczenia*30+15);
-		   setLocation(0,okno.getHeight()-liczPolaczenia*30-15);
+		   setSize(okno.getWidth()/2,liczPolaczenia*36);
+		   setLocation(0,okno.getHeight()-liczPolaczenia*36);
+		   Component[] test=getComponents();
 		  // setLocation(0,50);
 		super.paintComponent(g);
 		   
@@ -271,13 +277,16 @@ int liczPolaczenia=countComponents();
 }
 class Urzadzenie extends JPanel
 {
-	Button rozlacz=new Button("Rozłącz");
+	JButton rozlacz=new JButton("Rozłącz");
+
 	JLabel tekst=new JLabel();
-	
 	public PolaczenieInfo zrodlo;
 	Urzadzenia ramka;
 	public Urzadzenie(PolaczenieInfo z, Urzadzenia telefony)
 	{
+		   setBackground(new Color(46,46,46));
+	tekst.setForeground(Color.white);
+	rozlacz.setBackground(Color.white);
 		zrodlo=z;
 		ramka=telefony;
 		rozlacz.setLocation(0, 0);
