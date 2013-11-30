@@ -55,11 +55,14 @@ int n = is.read();
 		klasaString=klasaString.replaceAll("%22", "\"");
 		JSONObject klasaObjekt=new JSONObject(klasaString);
 
-		ret.touchpadX=klasaObjekt.getInt("touchpadX");
+		try
+			{ret.touchpadX=klasaObjekt.getInt("touchpadX");
 		ret.touchpadY=klasaObjekt.getInt("touchpadY");
 		ret.type=typ.values()[klasaObjekt.getInt("type")];
 		ret.mouse=touchedTYPE.values()[klasaObjekt.getInt("mouse")];
 		ret.button=pilotButton.values()[klasaObjekt.getInt("button")];
+			}
+		catch(Exception e){ret=null;}
 	}
 		else
 		{
@@ -136,6 +139,8 @@ int n = is.read();
 				+ "#pilot .przycisk{width:20%;}"
 				+ "</style>"
 				+"<script>/*<![CDATA[*/\n"
+				+ "var czasPrzesylu=new Date();"
+				+ "var polaczono=false;"
 				+ "var pilot=new Object();\n"
 				+ "pilot.click=function(przycisk)"
 				+ "{"
@@ -197,9 +202,14 @@ int n = is.read();
 				+ "var czas=new Date();"
 				+ "data.czas=czas.getTime()*1000+czas.getMilliseconds();"
 				//+ "alert(data);"
-				+ "socket.open('get', '?'+JSON.stringify(data));"
+				+ "socket.open('get', '?'+JSON.stringify(data))\n"
 				//+ "alert('?'+JSON.stringify(data));"
-				+ "socket.send();"
+				+ "socket.onloadend=function(){\n"
+				+ "if(socket.responseText=='ok')\n"
+				+ "{czasPrzesylu=czas;"
+				+ "polaczono=true;"
+				+ "}};\n"
+				+ "socket.send();\n"
 				+ "}"
 				+ "function TCP_Data(){this.touchpadX=0;this.touchpadY=0;this.button=0;this.type=0;this.mouse=0;};"
 				+ "TCP_Data.touchedTYPE={NORMAL:0, LONG:1, UP:2, SCROLL:3, LPM:4, PPM:5};"
@@ -209,6 +219,15 @@ int n = is.read();
 				+ "document.getElementById('gamepad').style.display=document.getElementById('pilot').style.display=document.getElementById('klawiatura').style.display=document.getElementById('touchpad').style.display='none';"
 				+ "document.getElementById(id).style.display='block';"
 				+ "}"
+				+ "var timer=setInterval(function(){"
+				+ "if(new Date()-czasPrzesylu>3000&&polaczono)"
+				+ "{"
+				+ "polaczono=false;"
+				+ "alert('Rozłączono!');"
+				+ "}"
+				+ "if(new Date()-czasPrzesylu>1000)"
+				+ "send(new Object());"
+				+ "},250);"
 				+ "/*]]>*/</script>"
 				+"</head><body>"
 				+ "<div class=\"karta\" id=\"gamepad\">Gamepad wkrodce</div>"
