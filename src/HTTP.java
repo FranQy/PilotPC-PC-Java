@@ -231,10 +231,15 @@ int n = is.read();
 
 				else if(wyj.indexOf("/ ")==0)
 					{
+					String typ;
+					if(wyj.contains("mobile")||wyj.contains("touch")||wyj.contains("android"))
+						typ="number";
+					else
+						typ="text";
 					wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: application/xhtml+xml; charset=UTF-8\r\n\r\n"
 							+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title></head>"
 							+ "<body>"
-							+ "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\"><label>wpisz kod<input type=\"password\"/></label><input type=\"submit\" value=\"ok\"/></form>"
+							+ "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\"><label>wpisz kod<input type=\""+typ+"\"/></label><input type=\"submit\" value=\"ok\"/></form>"
 							+ "</body></html>";
 							
 					}
