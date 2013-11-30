@@ -50,7 +50,7 @@ int n = is.read();
 		if(Polaczenie.polaczeniaHttp[i].zablokowane)
 			wysylanie="HTTP/1.1 403	Forbidden\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\nZostałeś rozłączony";
 		else if(wyj.indexOf("/"+Program.ustawienia.haslo)==0)
-		{ wysylanie="HTTP/1.1 200 OK\r\nSet-Cookie: id="+i+"; path=/\r\n\r\n";
+		{ wysylanie="HTTP/1.1 200 OK\r\nSet-Cookie: id="+i+"; path=/\r\n\r\nok";
 		String klasaString=wyj.substring(wyj.indexOf("?")+1, wyj.indexOf(" HTTP"));
 		klasaString=klasaString.replaceAll("%22", "\"");
 		JSONObject klasaObjekt=new JSONObject(klasaString);
@@ -194,6 +194,8 @@ int n = is.read();
 				+ "return false;};"
 				+"function send(data){"
 				+ "var socket=new XMLHttpRequest();"
+				+ "var czas=new Date();"
+				+ "data.czas=czas.getTime()*1000+czas.getMilliseconds();"
 				//+ "alert(data);"
 				+ "socket.open('get', '?'+JSON.stringify(data));"
 				//+ "alert('?'+JSON.stringify(data));"
@@ -237,19 +239,28 @@ int n = is.read();
 					else
 						typ="text";
 					wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: application/xhtml+xml; charset=UTF-8\r\n\r\n"
-							+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title></head>"
-							+ "<body>"
+							+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
+							+"<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
+							+ "</head>"
+							+ "<body style=\"color:white;background:#26211b;\">"
 							+ "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\"><label>wpisz kod<input type=\""+typ+"\"/></label><input type=\"submit\" value=\"ok\"/></form>"
 							+ "</body></html>";
 							
 					}
 				else
 				{
+					String typ;
+					if(wyj.contains("mobile")||wyj.contains("touch")||wyj.contains("android"))
+						typ="number";
+					else
+						typ="text";
 					wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: application/xhtml+xml; charset=UTF-8\r\n\r\n"
-							+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title></head>"
-							+ "<body>"
+							+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
+							+"<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
+							+ "</head>"
+							+ "<body style=\"color:white;background:#26211b;\">"
 							+ "<strong>Błędny kod!</strong>"
-							+ "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\"><label>wpisz kod<input type=\"password\"/></label><input type=\"submit\" value=\"ok\"/></form>"
+							+ "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\"><label>wpisz kod<input type=\""+typ+"\"/></label><input type=\"submit\" value=\"ok\"/></form>"
 							+ "</body></html>";
 				}
 				os.write(wysylanie.getBytes());

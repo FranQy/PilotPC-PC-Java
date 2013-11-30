@@ -28,7 +28,7 @@ public UserAgent(String UA)
 	{
 		OS=UA.substring(UA.indexOf("Windows Phone"),UA.indexOf(";",UA.indexOf("Windows Phone")));
 		String[] explode=UA.split("[;)]");
-		urzadzenie=explode[explode.length-3]+" "+explode[explode.length-2];
+		urzadzenie=explode[explode.length-2]+" "+explode[explode.length-1];
 	}
 	else if(UA.contains("Windows"))
 	{
