@@ -4,7 +4,7 @@
 //
 
 #pragma once
-
+#define  _WIN32_WINNT   0x0500
 #include <SDKDDKVer.h>
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
@@ -16,6 +16,6 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
-
+#include <string>
 
 // TODO: reference additional headers your program requires here

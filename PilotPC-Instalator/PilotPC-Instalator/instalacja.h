@@ -4,9 +4,14 @@ using namespace std;
 class instalacja
 {
 public:
-	instalacja(bool systemStart,bool wszyscy, char* folder);
+
+	instalacja(bool systemStart, bool wszyscy, LPWSTR folder);
+public: void instalacja::start();
+public: void instalacja::start(HWND hWnd);
 	bool czyJava();
-	int getHttp(char host[], int hostl, char* path, int pathl);
+	bool systemStart; bool wszyscy; LPWSTR folder;
+	//WCHAR* lacz(LPCWSTR a, string b);
+	int getHttp(char host[], int hostl, string path, int pathl);
 	~instalacja();
-	void instalacja::pobierz(char* od, int dlugosc);
+	void instalacja::pobierz(string nazwa);
 };

@@ -29,9 +29,9 @@ int WinMain(HINSTANCE hInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow
 	);
+	HWND                hWnd;
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT iCmdShow)
 {
-	HWND                hWnd;
 	MSG                 msg;
 	WNDCLASS            wndClass;
 	GdiplusStartupInput gdiplusStartupInput;
@@ -122,13 +122,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 		break;
 	case WM_COMMAND:
 		if ((HWND)lParam == g_hPrzycisk)
-			new instalacja(systemStartBool,wszyscy,"");
+		{
+			DWORD dlugosc = GetWindowTextLength(folder);
+			LPWSTR Bufor = (LPWSTR)GlobalAlloc(GPTR, dlugosc*2 + 2);
+			GetWindowText(folder, Bufor, dlugosc + 2);
+			//Bufor[dlugosc] = 0;
+			instalacja* ins=new instalacja(systemStartBool, wszyscy, Bufor);
+			(*ins).start(hWnd);
+		}
 		else if ((HWND)lParam == user1)
 		{
 			SendMessage(user1, BM_SETCHECK, 1, 0);
-		SendMessage(userWiele, BM_SETCHECK, 0, 0);
-		wszyscy = false;
-	}
+			SendMessage(userWiele, BM_SETCHECK, 0, 0);
+			wszyscy = false;
+		}
 		else if ((HWND)lParam == userWiele)
 		{
 			SendMessage(user1, BM_SETCHECK, 0, 0);

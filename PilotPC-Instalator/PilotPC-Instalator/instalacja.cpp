@@ -8,67 +8,140 @@
 #include <unistd.h>
 #endif
 #include <Winsock2.h>
+#include <comdef.h>
 using namespace std;
 
+/*WCHAR* lacz(LPCWSTR a, string b)
+{
+	int i = 0;
+	for (; a[i] != 0; i++)
+	{
+	}
+	cstring ret = (WCHAR*)GlobalAlloc(GPTR, (i + b.length()) * 2);
 
-instalacja::instalacja(bool systemStart, bool wszyscy, char* folder)
+	for (int i = 0; a[i] != 0; i++)
+	{
+		ret[i] = a[i];
+	}
+	for (int i2 = 0; i2<b.length(); i++)
+	{
+		ret[i + i2] = a[i2];
+	}
+	return ret;
+}*/
+instalacja::instalacja(bool _systemStart, bool _wszyscy, LPWSTR _folder)
+{
+	systemStart = _systemStart;
+	wszyscy = _wszyscy;
+	folder = _folder;
+}
+void instalacja::start()
 {
 	if (!czyJava())
 	{
-		
+
 	}
+	CreateDirectory(folder, NULL);
 	//int soc=getHttp("pilotpc.za.pl", 13, "pilotpc-pc-java.jar", 19);
-	int soc=getHttp("pilotpc.za.pl", 13, "version.ini", 11);
+	int soc = getHttp("pilotpc.za.pl", 13, "version.ini", 11);
 	const int BuffSize = 10000;
-	char buff[1+BuffSize];
+	char buff[1 + BuffSize];
 	//memset(&buff, 0, BuffSize + 1);
 	//char[] = new char[];
 	//while (true)
 	//{
-		int n = recv(soc, buff, BuffSize, 0);
-		
-		buff[n] = 0;
-		int i = 0;
-		for (; i < n; i++)
+	int n = recv(soc, buff, BuffSize, 0);
+
+	buff[n] = 0;
+	int i = 0;
+	for (; i < n; i++)
+	{
+		if (buff[i] == '\n'&&buff[i + 1] == '\n')
 		{
-			if (buff[i] == '\n'&&buff[i + 1] == '\n')
-			{
-				i = i + 2;
-				break;
-			}
-			else if (buff[i] == '\n'&&buff[i + 2] == '\n'){
-				i = i + 3;
-				break;
-			}
+			i = i + 2;
+			break;
 		}
-		char* tresc = buff + i;
-		for (int x = 0; x < n - i; x++)
+		else if (buff[i] == '\n'&&buff[i + 2] == '\n'){
+			i = i + 3;
+			break;
+		}
+	}
+	string tresc = buff + i;
+	for (int x = 0; x < n - i; x++)
+	{
+		if (tresc[x] == '\n'&&tresc[x + 1] == 'p'&&tresc[x + 2] == 'l'&&tresc[x + 3] == 'i'&&tresc[x + 4] == 'k'&&tresc[x + 5] == '=')
 		{
-			if (tresc[x] == '\n'&&tresc[x+1] == 'p'&&tresc[x+2] == 'l'&&tresc[x+3] == 'i'&&tresc[x+4] == 'k'&&tresc[x+5] == '=')
-			{
-				x = x + 6;
-				int x2 = x;
-				char* plik = tresc + x;
-				for (; x<n; x++)
-				{
-					if (tresc[x] == '\r')
-					{
-						pobierz(plik, x - x2);
-						break;
-					}
-				}
-			}
+			x = x + 6;
+			int x2 = x;
+			string plik = tresc.substr(x);
+			plik = plik.substr(0, plik.find_first_of('\r'));
+			pobierz(plik);
 		}
-	//}
+	}
+}
+void instalacja::start(HWND hWnd)
+{
+	start();
+		MessageBox(hWnd, L"Zainstalowano", L"Zainstalowano", MB_ICONINFORMATION);
+		PostQuitMessage(0);
 }
 
 
 instalacja::~instalacja()
 {
 }
-void instalacja::pobierz(char* od, int dlugosc)
+void instalacja::pobierz(string nazwa)
 {
+	int soc = getHttp("pilotpc.za.pl", 13, nazwa,nazwa.length());
+	const int BuffSize = 10240;
+	char buff[1 + BuffSize];
+	int n = 1;
+	bool znalezione = false;
 
+	_bstr_t b(nazwa.c_str());
+	WCHAR* nazwa2 = b;
+	_bstr_t c(folder);
+	WCHAR* folder2 = c;
+	//_bstr_t naz2 = new _bstr_t()
+	//HANDLE  hPlik = CreateFile(lacz(folder, nazwa), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, 0, NULL);
+	//WCHAR* test = c +L"\\"+ b;
+	HANDLE  hPlik = CreateFile(c + L"\\" + b, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, 0, NULL);
+	
+	if (hPlik == INVALID_HANDLE_VALUE) {
+		MessageBox(NULL, L"B³¹d podczas instalacji",L"Nie mo¿na utworzyæ pliku.", MB_ICONEXCLAMATION);
+		PostQuitMessage(0); // Zakoñcz program
+	}
+	LPDWORD zapisane = 0;
+	while (n>0)
+	{
+		 n= recv(soc, buff, BuffSize, 0);
+		 int i = 0;
+		 if (!znalezione)
+		 for (; i < n; i++)
+		 {
+			 if (buff[i] == '\n'&&buff[i + 1] == '\n')
+			 {
+				 i = i + 2;
+				 znalezione = true;
+				 break;
+			 }
+			 else if (buff[i] == '\n'&&buff[i + 2] == '\n'){
+				 i = i + 3;
+				 znalezione = true;
+				 break;
+			 }
+		 }
+		 if (znalezione)
+		 {
+			 if (!WriteFile(hPlik, buff + i, n-i, 0, NULL)) {
+				 MessageBox(NULL, L"B³¹d podczas instalacji", L"B³¹d zapisu do pliku", MB_ICONEXCLAMATION);
+				 PostQuitMessage(0); // Zakoñcz program
+			 }
+			 else
+				 zapisane += BuffSize - i;
+		 }
+	}
+	CloseHandle(hPlik);
 }
 bool instalacja::czyJava()
 {
@@ -87,12 +160,12 @@ bool instalacja::czyJava()
 	}
 	return true;
 }
-int instalacja::getHttp(char host[] ,int hostl,char* path,int pathl)
+int instalacja::getHttp(char host[], int hostl, string path, int pathl)
 {
 	WSAData wsdata;
 	if (WSAStartup(MAKEWORD(2, 2), &wsdata) != 0)
 	{
-	exit(1);
+		exit(1);
 	}
 	int soc = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	struct sockaddr_in odb;
@@ -103,13 +176,13 @@ int instalacja::getHttp(char host[] ,int hostl,char* path,int pathl)
 	odb.sin_addr.s_addr = ((in_addr*)*hp->h_addr_list)->s_addr;
 	if (connect(soc, (sockaddr*)&odb, sizeof(odb)))
 	{
-	exit(1);
+		exit(1);
 	}
 	char data1[] = "GET /";
 	char data2[] = " HTTP/1.1\nHost: ";
 	int test1 = sizeof(host);
 	int test2 = sizeof(path);
-	int test = hostl+pathl+23;
+	int test = hostl + pathl + 23;
 	char data[1024];
 	//memset(data1 + 5, 0, hostl + pathl + 23);
 	for (int i = 0; i < 5; i++)
@@ -144,9 +217,10 @@ int instalacja::getHttp(char host[] ,int hostl,char* path,int pathl)
 	int n = recv(soc, buff, BuffSize, 0);
 	if (n <= 0) break;
 	buff[n] = 0;
-	
+
 	}*/
 	//cout<
 	//closesocket(soc);
 	WSACleanup();
+	//return 5;
 }
