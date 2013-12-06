@@ -305,5 +305,14 @@ class Urzadzenie extends JPanel
 		add(tekst);
 		
 	}
+	@Override
+	protected void paintComponent(Graphics g)
+	{
+		String nowaNazwa=zrodlo.toString();
+		if(tekst.getText().compareTo(nowaNazwa)!=0)
+			tekst.setText(nowaNazwa);
+		super.paintComponent(g);
+	   
+}
 }
 }

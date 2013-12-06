@@ -55,8 +55,10 @@ glowneOkno=new Okno();
 			pokaz.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
 								public void actionPerformed(ActionEvent e) {    
 									wyswietlanie=TypWyswietlania.Okno;  
-					
-									glowneOkno=new Okno();
+									if(glowneOkno==null)
+										glowneOkno=new Okno();
+						else
+							glowneOkno.show();
 							}
 							});
 				MenuItem zakoncz = new MenuItem("Zakończ"); //tworzymy obiekt menuItem
@@ -84,8 +86,10 @@ glowneOkno=new Okno();
 				trayIcon.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
 					public void actionPerformed(ActionEvent e) {    
 						wyswietlanie=TypWyswietlania.Okno;  
-		
+		if(glowneOkno==null)
 						glowneOkno=new Okno();
+		else
+			glowneOkno.show();
 				} 
 				});
 				try {
