@@ -6,6 +6,9 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.Timer;
 public class Program {
 
@@ -83,7 +86,7 @@ glowneOkno=new Okno();
 						wyswietlanie=TypWyswietlania.Okno;  
 		
 						glowneOkno=new Okno();
-				}
+				} 
 				});
 				try {
 					tray.add(trayIcon);   // dodanie naszej ikony do zasobnika systemowego
