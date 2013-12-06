@@ -95,22 +95,22 @@ String adres2="";
     @Override
     protected void paintComponent(Graphics g) {
         int wielkosc;
-        double test1=(double)okno.getSize().width/(double)macierz.getWidth();
-        double test2=Math.floor((double)okno.getSize().width/(double)macierz.getWidth());
+        //double test1=(double)okno.getSize().width/(double)macierz.getWidth();
+        //double test2=Math.floor((double)okno.getSize().width/(double)macierz.getWidth());
         if(okno.getSize().height>okno.getSize().width/2)
-        	wielkosc=(int)Math.floor((double)okno.getSize().width/(double)macierz.getWidth()/2.0);
+        	wielkosc=(int)Math.floor((double)okno.getSize().width/((double)macierz.getWidth()+2)/2.0);
         else
-        	wielkosc=(int)Math.floor((double)okno.getSize().height/(double)macierz.getWidth());
+        	wielkosc=(int)Math.floor((double)okno.getSize().height/((double)macierz.getWidth()+2));
 
-        setSize(macierz.getWidth()*wielkosc,macierz.getWidth()*wielkosc);
-        setLocation(okno.getWidth()-macierz.getWidth()*wielkosc,0);
+        setSize((macierz.getWidth()+2)*wielkosc,(macierz.getWidth()+2)*wielkosc);
+        setLocation(okno.getWidth()-(macierz.getWidth()+2)*wielkosc,0);
 super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
         for(int y=0;y<macierz.getHeight();y++)
             for(int x=0;x<macierz.getWidth();x++)
             {
-            	Rectangle2D rectangle = new Rectangle2D.Double(x*wielkosc, y*wielkosc, wielkosc, wielkosc);
+            	Rectangle2D rectangle = new Rectangle2D.Double((x+1)*wielkosc, (1+y)*wielkosc, wielkosc, wielkosc);
             	if(macierz.get(x, y)==1)
                 	g2d.setPaint(Color.BLACK);
             	else
