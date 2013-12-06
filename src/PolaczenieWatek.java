@@ -212,11 +212,11 @@ oos.flush();
     	}
     	public String opis()
     	{
-    		String ret="IP:"+soc.getRemoteSocketAddress().toString();
+    		String ret="<html>IP:"+soc.getRemoteSocketAddress().toString();
 
     		if(infoPrzyPolaczeniu!=null)
-    		ret+="\r\nNazwa:"+infoPrzyPolaczeniu.nazwa;
-    		return ret;
+    		ret+="<br/>Nazwa:"+infoPrzyPolaczeniu.nazwa;
+    		return ret+"</html>";
     		
     	}
 }
