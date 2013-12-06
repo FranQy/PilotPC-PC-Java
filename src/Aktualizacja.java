@@ -16,6 +16,7 @@ public class Aktualizacja
     extends TimerTask {
 	public static boolean zaktualizowano=false;
 	public static boolean trwa=false;
+	public static Boolean wymus=false;
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -51,7 +52,7 @@ trwa=false;
 		for(int i=0;i<linie.length;i++)
 			if(linie[i].split("=")[0].compareTo("wersja")==0)
 			{
-				if(linie[i].split("=")[1].compareTo(Program.wersja)!=0)//czy jest inna wersja
+				if(linie[i].split("=")[1].compareTo(Program.wersja)!=0||wymus)//czy jest inna wersja
 				{
 					trwa=true;
 

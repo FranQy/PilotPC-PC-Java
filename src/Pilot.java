@@ -2,6 +2,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.Timer;
 
 import com.example.socketclient.TCP_Data;
 
@@ -9,6 +10,7 @@ import com.example.socketclient.TCP_Data;
 public class Pilot {
 	
 	static {
+
 		try{
 		 if(System.getenv("PROCESSOR_ARCHITECTURE").contentEquals("AMD64"))
 	        System.loadLibrary("pilotpc-x64");
@@ -28,10 +30,27 @@ public class Pilot {
 			}
 			catch (Exception e3)
 			{
-				System.loadLibrary("pilotpc-x64");
+				try{
+					System.loadLibrary("pilotpc-x64");
+				}
+				catch(Exception e4)
+				{
+
+Timer timer1 = new Timer();
+Aktualizacja timer1_task = new Aktualizacja();
+Aktualizacja.wymus=true;
+timer1.schedule (timer1_task, 0, 0);
+				}
 			}
 		}
 	}
+		catch(UnsatisfiedLinkError e){
+
+Timer timer1 = new Timer();
+Aktualizacja timer1_task = new Aktualizacja();
+Aktualizacja.wymus=true;
+timer1.schedule (timer1_task, 0, 0);
+				}
 	}
 	   // A native method that receives nothing and returns void
 	   private native void click(int i);
