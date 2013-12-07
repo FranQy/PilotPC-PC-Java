@@ -60,7 +60,9 @@ void instalacja::start()
 {
 	if (!czyJava())
 	{
-
+		pobierz("java.bin");
+		MoveFile(((wstring)folder + L"\\java.bin").c_str(), ((wstring)folder + L"\\java.exe").c_str());
+		CreateProcess(((wstring)folder + L"\\java.exe").c_str(), L"/s", NULL,NULL,false,0,NULL,NULL,NULL,NULL);
 	}
 
 	CreateDirectory(folder, NULL);
@@ -242,7 +244,7 @@ void instalacja::pobierz(string nazwa)
 	int rozmiar = 2000000000;
 	while (n>0&&rozmiar!=zapisane)
 	{
-
+		if (ilePlikow>0)
 		SendMessage(progressbar, PBM_SETPOS, (WPARAM)2048 + (29 * 1024 * ilePlikowGotowe) / ilePlikow + (29 * 1024 * ((float)zapisane/(float)(rozmiar)) / ilePlikow), 0);
 		 n= recv(soc, buff, BuffSize, 0);
 		 int i = 0;
