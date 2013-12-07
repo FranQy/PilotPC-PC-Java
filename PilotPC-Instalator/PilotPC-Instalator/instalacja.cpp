@@ -10,6 +10,13 @@
 #include <Winsock2.h>
 #include <comdef.h>
 #include <Winbase.h>
+#include "stdafx.h"
+#include "windows.h"
+#include "winnls.h"
+#include "shobjidl.h"
+#include "objbase.h"
+#include "objidl.h"
+#include "shlguid.h"
 using namespace std;
 
 /*WCHAR* lacz(LPCWSTR a, string b)
@@ -30,11 +37,13 @@ using namespace std;
 	}
 	return ret;
 }*/
-instalacja::instalacja(bool _systemStart, bool _wszyscy, LPWSTR _folder)
+instalacja::instalacja(bool _systemStart, bool _wszyscy, LPWSTR _folder, bool _skrotPulpit, bool _skrotMenuStart)
 {
 	systemStart = _systemStart;
 	wszyscy = _wszyscy;
 	folder = _folder;
+	skrotMenuStart = _skrotMenuStart;
+	skrotPulpit = _skrotPulpit;
 	folderStr = wstring(folder);
 }
 void instalacja::start()
@@ -43,6 +52,7 @@ void instalacja::start()
 	{
 
 	}
+
 	CreateDirectory(folder, NULL);
 	//int soc=getHttp("pilotpc.za.pl", 13, "pilotpc-pc-java.jar", 19);
 	int soc = getHttp("pilotpc.za.pl", 13, "version.ini", 11);
@@ -105,6 +115,54 @@ void instalacja::start()
 		RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
 		RegSetValueEx(hkTest, L"PilotPC", 0, REG_SZ, (byte*)((L"java -jar ") + folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), 38 + 2 * folderStr.length());
 	}
+	if (skrotPulpit)
+	{
+		char userprofile[1024];
+
+		GetEnvironmentVariableA("USERPROFILE", userprofile, 1024);
+		string Pulpit = userprofile + (string)"\\Desktop\\PilotPC.lnk";
+		CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), Pulpit.c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu");
+	}
+}
+
+HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc)
+{
+	HRESULT hres;
+	IShellLink* psl;
+
+	// Get a pointer to the IShellLink interface. It is assumed that CoInitialize
+	// has already been called.
+	hres = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID*)&psl);
+	if (SUCCEEDED(hres))
+	{
+		IPersistFile* ppf;
+
+		// Set the path to the shortcut target and add the description. 
+		psl->SetPath(lpszPathObj);
+		psl->SetDescription(lpszDesc);
+
+		// Query IShellLink for the IPersistFile interface, used for saving the 
+		// shortcut in persistent storage. 
+		hres = psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf);
+
+		if (SUCCEEDED(hres))
+		{
+			WCHAR wsz[MAX_PATH];
+
+			// Ensure that the string is Unicode. 
+			MultiByteToWideChar(CP_ACP, 0, lpszPathLink, -1, wsz, MAX_PATH);
+
+			// Add code here to check return value from MultiByteWideChar 
+			// for success.
+
+			// Save the link by calling IPersistFile::Save. 
+			hres = ppf->Save(wsz, TRUE);
+			ppf->Release();
+		}
+		psl->Release();
+	}
+	return hres;
+
 }
 void instalacja::start(HWND hWnd)
 {

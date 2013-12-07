@@ -3,12 +3,13 @@
 #include <objidl.h>
 #include <gdiplus.h>
 #include "start.h"
+#include <versionhelpers.h>
 using namespace Gdiplus;
-#pragma comment (lib,"Gdiplus.lib")
-
-HWND g_hPrzycisk, user1, userWiele, systemStart;
+HWND g_hPrzycisk, user1, userWiele, systemStart,skrotP,skrotMS;
 BOOL systemStartBool = true;
 BOOL wszyscy = false;
+BOOL skrotPulpit = true;
+BOOL skrotMenuStart = true;
 HWND folder;
 VOID OnPaint(HDC hdc)
 {
@@ -19,7 +20,7 @@ VOID OnPaint(HDC hdc)
 	PointF      pointF(10.0f, 10.0f);
 
 	graphics.DrawString(L"Podaj folder", -1, &font, pointF, &brush);
-
+	
 }
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -90,6 +91,23 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT iCmdShow)
 	SendMessage(systemStart, WM_SETFONT, (WPARAM)hNormalFont, 0);
 
 	SendMessage(systemStart, BM_SETCHECK, 1, 0);
+
+
+	skrotP = CreateWindowEx(0, L"BUTTON", L"Skrót na pulpicie", WS_CHILD | WS_VISIBLE | BS_CHECKBOX,
+		10, 120, 190, 30, hWnd, NULL, hInstance, NULL);
+	SendMessage(skrotP, WM_SETFONT, (WPARAM)hNormalFont, 0);
+
+	SendMessage(skrotP, BM_SETCHECK, 1, 0);
+	
+	if (IsWindows8OrGreater())
+		skrotMS = CreateWindowEx(0, L"BUTTON", L"Skrót na Ekranie Start", WS_CHILD | WS_VISIBLE | BS_CHECKBOX,
+		200, 120, 190, 30, hWnd, NULL, hInstance, NULL);
+	else
+	skrotMS = CreateWindowEx(0, L"BUTTON", L"Skrót w Menu Start", WS_CHILD | WS_VISIBLE | BS_CHECKBOX,
+		200, 120, 190, 30, hWnd, NULL, hInstance, NULL);
+	SendMessage(skrotMS, WM_SETFONT, (WPARAM)hNormalFont, 0);
+
+	SendMessage(skrotMS, BM_SETCHECK, 1, 0);
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
 
@@ -125,7 +143,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 			LPWSTR Bufor = (LPWSTR)GlobalAlloc(GPTR, dlugosc*2 + 2);
 			GetWindowText(folder, Bufor, dlugosc + 2);
 			//Bufor[dlugosc] = 0;
-			instalacja* ins=new instalacja(systemStartBool, wszyscy, Bufor);
+			instalacja* ins=new instalacja(systemStartBool, wszyscy, Bufor,skrotPulpit,skrotMenuStart);
 			(*ins).start(hWnd);
 		}
 		else if ((HWND)lParam == user1)
@@ -151,6 +169,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 			{
 				SendMessage(systemStart, BM_SETCHECK, 1, 0);
 				systemStartBool = true;
+			}
+		}
+		else if ((HWND)lParam == skrotP)
+		{
+			if (skrotPulpit)
+			{
+				SendMessage(skrotP, BM_SETCHECK, 0, 0);
+				skrotPulpit = false;
+			}
+			else
+			{
+				SendMessage(skrotP, BM_SETCHECK, 1, 0);
+				skrotPulpit = true;
+			}
+		}
+		else if ((HWND)lParam == skrotMS)
+		{
+			if (skrotMenuStart)
+			{
+				SendMessage(skrotMS, BM_SETCHECK, 0, 0);
+				skrotMenuStart = false;
+			}
+			else
+			{
+				SendMessage(skrotMS, BM_SETCHECK, 1, 0);
+				skrotMenuStart = true;
 			}
 		}
 
