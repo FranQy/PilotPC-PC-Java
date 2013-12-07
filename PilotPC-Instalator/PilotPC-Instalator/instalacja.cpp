@@ -17,6 +17,7 @@
 #include "objbase.h"
 #include "objidl.h"
 #include "shlguid.h"
+#include <process.h> 
 using namespace std;
 
 /*WCHAR* lacz(LPCWSTR a, string b)
@@ -37,7 +38,9 @@ using namespace std;
 	}
 	return ret;
 }*/
-instalacja::instalacja(bool _systemStart, bool _wszyscy, LPWSTR _folder, bool _skrotPulpit, bool _skrotMenuStart)
+
+
+instalacja::instalacja(bool _systemStart, bool _wszyscy, LPWSTR _folder, bool _skrotPulpit, bool _skrotMenuStart, HWND _progressbar)
 {
 	systemStart = _systemStart;
 	wszyscy = _wszyscy;
@@ -45,6 +48,13 @@ instalacja::instalacja(bool _systemStart, bool _wszyscy, LPWSTR _folder, bool _s
 	skrotMenuStart = _skrotMenuStart;
 	skrotPulpit = _skrotPulpit;
 	folderStr = wstring(folder);
+	progressbar = _progressbar;
+}
+void __cdecl watekStart(void * Args)
+{
+	((instalacja*)Args)[0].start();
+	MessageBox(((instalacja*)Args)[0].okno, L"Zainstalowano", L"Zainstalowano", MB_ICONINFORMATION);
+	exit(0);
 }
 void instalacja::start()
 {
@@ -54,6 +64,10 @@ void instalacja::start()
 	}
 
 	CreateDirectory(folder, NULL);
+	WCHAR bufor[1024];
+	GetModuleFileName(NULL, bufor, 1024);
+	CopyFile(bufor, (folderStr + (L"\\uninstall.exe")).c_str(), false);
+	SendMessage(progressbar, PBM_SETPOS, (WPARAM)512, 0);
 	//int soc=getHttp("pilotpc.za.pl", 13, "pilotpc-pc-java.jar", 19);
 	int soc = getHttp("pilotpc.za.pl", 13, "version.ini", 11);
 	const int BuffSize = 10000;
@@ -64,6 +78,7 @@ void instalacja::start()
 	//{
 	int n = recv(soc, buff, BuffSize, 0);
 
+	SendMessage(progressbar, PBM_SETPOS, (WPARAM)2048, 0);
 	buff[n] = 0;
 	int i = 0;
 	for (; i < n; i++)
@@ -79,6 +94,16 @@ void instalacja::start()
 		}
 	}
 	string tresc = buff + i;
+	ilePlikow = 0;
+	for (int x = 0; x < n - i; x++)
+	{
+		if (tresc[x] == '\n'&&tresc[x + 1] == 'p'&&tresc[x + 2] == 'l'&&tresc[x + 3] == 'i'&&tresc[x + 4] == 'k'&&tresc[x + 5] == '=')
+		{
+			x = x + 6;
+			ilePlikow++;
+		}
+	}
+	ilePlikowGotowe = 0;
 	for (int x = 0; x < n - i; x++)
 	{
 		if (tresc[x] == '\n'&&tresc[x + 1] == 'p'&&tresc[x + 2] == 'l'&&tresc[x + 3] == 'i'&&tresc[x + 4] == 'k'&&tresc[x + 5] == '=')
@@ -88,11 +113,12 @@ void instalacja::start()
 			string plik = tresc.substr(x);
 			plik = plik.substr(0, plik.find_first_of('\r'));
 			pobierz(plik);
+			ilePlikowGotowe++;
+			SendMessage(progressbar, PBM_SETPOS, (WPARAM)2048+(29*1024*ilePlikowGotowe)/ilePlikow, 0);
 		}
 	}
-	WCHAR bufor[1024];
-	GetModuleFileName(NULL, bufor,1024);
-	CopyFile(bufor, (folderStr + (L"\\uninstall.exe")).c_str(), false);
+
+	SendMessage(progressbar, PBM_SETPOS, (WPARAM)31*1024, 0);
 	HKEY hkUninstall;
 	HKEY hkProgram;
 	DWORD dwDisp;
@@ -115,14 +141,30 @@ void instalacja::start()
 		RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
 		RegSetValueEx(hkTest, L"PilotPC", 0, REG_SZ, (byte*)((L"java -jar ") + folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), 38 + 2 * folderStr.length());
 	}
+	char userprofile[1024];
+
+	GetEnvironmentVariableA("USERPROFILE", userprofile, 1024);
+	char appdata[1024];
+
+	GetEnvironmentVariableA("appdata", appdata, 1024);
 	if (skrotPulpit)
 	{
-		char userprofile[1024];
-
-		GetEnvironmentVariableA("USERPROFILE", userprofile, 1024);
 		string Pulpit = userprofile + (string)"\\Desktop\\PilotPC.lnk";
 		CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), Pulpit.c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu");
 	}
+	if (skrotMenuStart)
+	{
+		string folderMS;
+		if (IsWindowsVistaOrGreater())
+			folderMS = appdata + (string)"\\Microsoft\\Windows\\Start Menu\\Programs\\PilotPC";
+		else
+			folderMS = userprofile + (string)"\\Start Menu\\Programs\\PilotPC";
+		CreateDirectoryA(folderMS.c_str(), NULL);
+		CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), (folderMS + (string)"\\PilotPC.lnk").c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu");
+		CreateLink((folderStr + (L"\\Uninstall.exe")).c_str(), (folderMS + (string)"\\Odinstaluj.lnk").c_str(), L"Usuwa program PilotPC z tego komputera");
+	}
+
+	SendMessage(progressbar, PBM_SETPOS, (WPARAM)32*1024, 0);
 }
 
 HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc)
@@ -166,9 +208,9 @@ HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc)
 }
 void instalacja::start(HWND hWnd)
 {
-	start();
-		MessageBox(hWnd, L"Zainstalowano", L"Zainstalowano", MB_ICONINFORMATION);
-		PostQuitMessage(0);
+	okno = hWnd;
+	int test = (int)this;
+	_beginthread(watekStart, 0, this);
 }
 
 
@@ -196,9 +238,12 @@ void instalacja::pobierz(string nazwa)
 		MessageBox(NULL, L"B³¹d podczas instalacji",L"Nie mo¿na utworzyæ pliku.", MB_ICONEXCLAMATION);
 		PostQuitMessage(0); // Zakoñcz program
 	}
-	LPDWORD zapisane = 0;
-	while (n>0)
+	int zapisane = 0;
+	int rozmiar = 2000000000;
+	while (n>0&&rozmiar!=zapisane)
 	{
+
+		SendMessage(progressbar, PBM_SETPOS, (WPARAM)2048 + (29 * 1024 * ilePlikowGotowe) / ilePlikow + (29 * 1024 * ((float)zapisane/(float)(rozmiar)) / ilePlikow), 0);
 		 n= recv(soc, buff, BuffSize, 0);
 		 int i = 0;
 		 if (!znalezione)
@@ -216,6 +261,14 @@ void instalacja::pobierz(string nazwa)
 				 break;
 			 }
 		 }
+		 int lengthStringPos = ((string)buff).find("Content-Length:");
+		 if (lengthStringPos > 0)
+		 {
+			 int test = lengthStringPos + 15;
+			 int test2 = ((string)buff).find('\r', lengthStringPos + 15) - lengthStringPos - 15;
+			 string lengthString = ((string)buff).substr(lengthStringPos + 15, ((string)buff).find('\r', lengthStringPos + 15) - lengthStringPos - 15);
+			 rozmiar=stoi(lengthString);
+		 }
 		 if (znalezione)
 		 {
 			 if (!WriteFile(hPlik, buff + i, n-i, 0, NULL)) {
@@ -223,7 +276,7 @@ void instalacja::pobierz(string nazwa)
 				 PostQuitMessage(0); // Zakoñcz program
 			 }
 			 else
-				 zapisane += BuffSize - i;
+				 zapisane += n - i;
 		 }
 	}
 	

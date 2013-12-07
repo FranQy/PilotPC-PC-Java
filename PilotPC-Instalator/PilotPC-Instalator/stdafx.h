@@ -17,5 +17,9 @@
 #include <memory.h>
 #include <tchar.h>
 #include <string>
-
+#include <windows.h>
+#include <objidl.h>
+#include <gdiplus.h>
+#include <commctrl.h>
+#include <versionhelpers.h>
 // TODO: reference additional headers your program requires here

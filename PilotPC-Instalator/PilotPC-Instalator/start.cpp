@@ -1,9 +1,6 @@
 #include "stdafx.h"
-#include <windows.h>
-#include <objidl.h>
-#include <gdiplus.h>
+
 #include "start.h"
-#include <versionhelpers.h>
 using namespace Gdiplus;
 HWND g_hPrzycisk, user1, userWiele, systemStart,skrotP,skrotMS;
 BOOL systemStartBool = true;
@@ -11,6 +8,20 @@ BOOL wszyscy = false;
 BOOL skrotPulpit = true;
 BOOL skrotMenuStart = true;
 HWND folder;
+
+HWND hProgressBar;
+
+// Enable Visual Style
+#if defined _M_IX86
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#elif defined _M_IA64
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='ia64' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#elif defined _M_X64
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='amd64' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#else
+#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+#endif
+#pragma endregion
 VOID OnPaint(HDC hdc)
 {
 	Graphics    graphics(hdc);
@@ -22,7 +33,7 @@ VOID OnPaint(HDC hdc)
 	graphics.DrawString(L"Podaj folder", -1, &font, pointF, &brush);
 	
 }
-
+HBRUSH g_hBrush;
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 int WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
@@ -55,7 +66,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT iCmdShow)
 	hWnd = CreateWindow(
 		TEXT("GettingStarted"),   // window class name
 		TEXT("PilotPC - Instalator"),  // window caption
-		WS_OVERLAPPEDWINDOW,      // window style
+		WS_MINIMIZEBOX | WS_MINIMIZE | WS_VISIBLE | WS_CAPTION | WS_OVERLAPPED | WS_SYSMENU ,      // window style
 		CW_USEDEFAULT,            // initial x position
 		CW_USEDEFAULT,            // initial y position
 		420,            // initial x size
@@ -68,10 +79,12 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT iCmdShow)
 	ShowWindow(hWnd, iCmdShow);
 
 	UpdateWindow(hWnd);
+	 g_hBrush = CreateSolidBrush(RGB(255, 255, 255));
 	HFONT hNormalFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 	g_hPrzycisk = CreateWindowEx(0, L"BUTTON", L"Instaluj", WS_CHILD | WS_VISIBLE,
 		10, 250, 380, 40, hWnd, NULL, hInstance, NULL);
 	SendMessage(g_hPrzycisk, WM_SETFONT, (WPARAM)hNormalFont, 0);
+	//SendMessage(g_hPrzycisk, WM_CTLCOLORSTATIC, g_hBrush, 0);
 	folder = CreateWindowEx(WS_EX_CLIENTEDGE, L"EDIT", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER,
 		10, 25, 380, 25, hWnd, NULL, hInstance, NULL);
 	SendMessage(folder, WM_SETFONT, (WPARAM)hNormalFont, 0);
@@ -108,6 +121,12 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT iCmdShow)
 	SendMessage(skrotMS, WM_SETFONT, (WPARAM)hNormalFont, 0);
 
 	SendMessage(skrotMS, BM_SETCHECK, 1, 0);
+
+	InitCommonControls();
+	hProgressBar = CreateWindowEx(0, PROGRESS_CLASS, NULL, WS_CHILD | WS_VISIBLE | PBS_SMOOTH,
+		10, 230, 380, 15, hWnd, (HMENU)200, hInstance, NULL);
+
+	SendMessage(hProgressBar, PBM_SETRANGE, 0, (LPARAM)MAKELONG(0, 32*1024));
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
 
@@ -136,6 +155,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 		PostQuitMessage(0);
 		return 0;
 		break;
+	case WM_CTLCOLORSTATIC:
+			return (LRESULT)g_hBrush;
 	case WM_COMMAND:
 		if ((HWND)lParam == g_hPrzycisk)
 		{
@@ -143,7 +164,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 			LPWSTR Bufor = (LPWSTR)GlobalAlloc(GPTR, dlugosc*2 + 2);
 			GetWindowText(folder, Bufor, dlugosc + 2);
 			//Bufor[dlugosc] = 0;
-			instalacja* ins=new instalacja(systemStartBool, wszyscy, Bufor,skrotPulpit,skrotMenuStart);
+			instalacja* ins=new instalacja(systemStartBool, wszyscy, Bufor,skrotPulpit,skrotMenuStart,hProgressBar);
 			(*ins).start(hWnd);
 		}
 		else if ((HWND)lParam == user1)
