@@ -9,6 +9,7 @@
 #endif
 #include <Winsock2.h>
 #include <comdef.h>
+#include <Winbase.h>
 using namespace std;
 
 /*WCHAR* lacz(LPCWSTR a, string b)
@@ -34,6 +35,7 @@ instalacja::instalacja(bool _systemStart, bool _wszyscy, LPWSTR _folder)
 	systemStart = _systemStart;
 	wszyscy = _wszyscy;
 	folder = _folder;
+	folderStr = wstring(folder);
 }
 void instalacja::start()
 {
@@ -77,6 +79,31 @@ void instalacja::start()
 			plik = plik.substr(0, plik.find_first_of('\r'));
 			pobierz(plik);
 		}
+	}
+	WCHAR bufor[1024];
+	GetModuleFileName(NULL, bufor,1024);
+	CopyFile(bufor, (folderStr + (L"\\uninstall.exe")).c_str(), false);
+	HKEY hkUninstall;
+	HKEY hkProgram;
+	DWORD dwDisp;
+	RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", 0, KEY_ALL_ACCESS, &hkUninstall);
+	RegCreateKeyEx(hkUninstall, L"PilotPC", 0, NULL, REG_OPTION_NON_VOLATILE,
+		KEY_ALL_ACCESS, NULL, &hkProgram, &dwDisp);
+	RegSetValueEx(hkProgram, L"DisplayName", 0, REG_SZ, (byte*)L"PilotPC", 14);
+	RegSetValueEx(hkProgram, L"UninstallString", 0, REG_SZ, (byte*)(folderStr + (L"\\uninstall.exe")).c_str(), 28 + 2 * folderStr.length());
+	RegSetValueEx(hkProgram, L"URLInfoAbout", 0, REG_SZ, (byte*)L"https://github.com/FranQy/PilotPC-PC-Java", 82);
+	RegSetValueEx(hkProgram, L"Publisher", 0, REG_SZ, (byte*)L"Matrix0123456789&FranQy", 46);
+	RegSetValueEx(hkProgram, L"Readme", 0, REG_SZ, (byte*)(folderStr + (L"\\readme.html")).c_str(), 24 + 2 * folderStr.length());
+	int rozmiar = 1740;//sprawdziæ, czy dzia³a
+	RegSetValueEx(hkProgram, L"EstimatedSize", 0, REG_DWORD, (byte*)&rozmiar,4);
+	//string wersja = "0.1.14";
+	//RegSetValueEx(hkProgram, L"DisplayVersion", 0, REG_SZ, (byte*)wersja.c_str(), 2 * wersja.length());
+
+	if (systemStart)
+	{
+		HKEY hkTest;
+		RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
+		RegSetValueEx(hkTest, L"PilotPC", 0, REG_SZ, (byte*)((L"java -jar ") + folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), 38 + 2 * folderStr.length());
 	}
 }
 void instalacja::start(HWND hWnd)
@@ -141,7 +168,9 @@ void instalacja::pobierz(string nazwa)
 				 zapisane += BuffSize - i;
 		 }
 	}
+	
 	CloseHandle(hPlik);
+	shutdown(soc, 2);
 }
 bool instalacja::czyJava()
 {
@@ -167,7 +196,7 @@ int instalacja::getHttp(char host[], int hostl, string path, int pathl)
 	{
 		exit(1);
 	}
-	int soc = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	SOCKET soc = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	struct sockaddr_in odb;
 	memset(odb.sin_zero, 0, sizeof(odb.sin_zero));
 	odb.sin_family = AF_INET;

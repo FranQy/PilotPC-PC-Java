@@ -4,7 +4,6 @@
 #include <gdiplus.h>
 #include "start.h"
 using namespace Gdiplus;
-#include "instalacja.h"
 #pragma comment (lib,"Gdiplus.lib")
 
 HWND g_hPrzycisk, user1, userWiele, systemStart;
@@ -36,7 +35,6 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT iCmdShow)
 	WNDCLASS            wndClass;
 	GdiplusStartupInput gdiplusStartupInput;
 	ULONG_PTR           gdiplusToken;
-
 	// Initialize GDI+.
 	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
