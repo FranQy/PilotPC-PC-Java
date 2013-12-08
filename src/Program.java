@@ -19,7 +19,7 @@ public class Program {
 	static Polaczenie polaczenia;
 	static TypWyswietlania wyswietlanie;
 	static Ustawienia ustawienia=Ustawienia.importuj();
-	static public String wersja="0.1.14";
+	static public String wersja="0.1.15";
 	/**
 	 * Numer urzywany przy nawiązywaniu połączenia do uwierzytelniania
 	 */
