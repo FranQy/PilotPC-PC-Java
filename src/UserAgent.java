@@ -30,6 +30,19 @@ public UserAgent(String UA)
 		String[] explode=UA.split("[;)]");
 		urzadzenie=explode[explode.length-2]+" "+explode[explode.length-1];
 	}
+	else if(UA.contains("Xbox One"))
+	{
+		urzadzenie="Xbox One";
+	}else if(UA.contains("Xbox"))
+	{
+		urzadzenie="Xbox 360";
+	}else if(UA.contains("PlayStation 4"))
+	{
+		urzadzenie="PlayStation 4";
+	}else if(UA.contains("PLAYSTATION 3"))
+	{
+		urzadzenie="PlayStation 3";
+	}
 	else if(UA.contains("Windows"))
 	{
 		if(UA.contains("Windows NT 4.0"))
