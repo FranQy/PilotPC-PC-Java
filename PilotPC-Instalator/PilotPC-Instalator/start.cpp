@@ -8,9 +8,9 @@ BOOL wszyscy = false;
 BOOL skrotPulpit = true;
 BOOL skrotMenuStart = true;
 HWND folder;
-
+HWND FolderTxt;
 HWND hProgressBar;
-
+bool trwa = false;
 // Enable Visual Style
 #if defined _M_IX86
 #pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
@@ -22,15 +22,12 @@ HWND hProgressBar;
 #pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #endif
 #pragma endregion
+
+#pragma comment (lib,"Gdiplus.lib")
+#pragma comment (lib,"ws2_32.lib")
+#pragma comment (lib,"comctl32.lib")
 VOID OnPaint(HDC hdc)
 {
-	Graphics    graphics(hdc);
-	SolidBrush  brush(Color(255, 0, 0, 0));
-	FontFamily  fontFamily(L"Tahoma");
-	Font        font(&fontFamily, 12, FontStyleRegular, UnitPixel);
-	PointF      pointF(10.0f, 10.0f);
-
-	graphics.DrawString(L"Podaj folder", -1, &font, pointF, &brush);
 	
 }
 HBRUSH g_hBrush;
@@ -81,6 +78,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT iCmdShow)
 	UpdateWindow(hWnd);
 	 g_hBrush = CreateSolidBrush(RGB(255, 255, 255));
 	HFONT hNormalFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
+	FolderTxt = CreateWindowEx(0, L"STATIC", NULL, WS_CHILD | WS_VISIBLE |
+		SS_LEFT, 10, 10, 150, 200, hWnd, NULL, hInstance, NULL);
+	SendMessage(FolderTxt, WM_SETFONT, (WPARAM)hNormalFont, 0);
+	SetWindowText(FolderTxt, L"Wybierz folder:");
 	g_hPrzycisk = CreateWindowEx(0, L"BUTTON", L"Instaluj", WS_CHILD | WS_VISIBLE,
 		10, 250, 380, 40, hWnd, NULL, hInstance, NULL);
 	SendMessage(g_hPrzycisk, WM_SETFONT, (WPARAM)hNormalFont, 0);
@@ -112,10 +113,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT iCmdShow)
 
 	SendMessage(skrotP, BM_SETCHECK, 1, 0);
 	
-	if (IsWindows8OrGreater())
+/*	if (IsWindows8OrGreater())
 		skrotMS = CreateWindowEx(0, L"BUTTON", L"Skrót na Ekranie Start", WS_CHILD | WS_VISIBLE | BS_CHECKBOX,
 		200, 120, 190, 30, hWnd, NULL, hInstance, NULL);
-	else
+	else*/
 	skrotMS = CreateWindowEx(0, L"BUTTON", L"Skrót w Menu Start", WS_CHILD | WS_VISIBLE | BS_CHECKBOX,
 		200, 120, 190, 30, hWnd, NULL, hInstance, NULL);
 	SendMessage(skrotMS, WM_SETFONT, (WPARAM)hNormalFont, 0);
@@ -163,7 +164,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 			DWORD dlugosc = GetWindowTextLength(folder);
 			LPWSTR Bufor = (LPWSTR)GlobalAlloc(GPTR, dlugosc*2 + 2);
 			GetWindowText(folder, Bufor, dlugosc + 2);
+			trwa = true;
 			//Bufor[dlugosc] = 0;
+			DestroyWindow(user1);
+			DestroyWindow(userWiele);
+			DestroyWindow(systemStart);
+			DestroyWindow(skrotMS);
+			DestroyWindow(skrotP);
+			DestroyWindow(folder);
+			DestroyWindow(FolderTxt);
+
 			instalacja* ins=new instalacja(systemStartBool, wszyscy, Bufor,skrotPulpit,skrotMenuStart,hProgressBar);
 			(*ins).start(hWnd);
 		}

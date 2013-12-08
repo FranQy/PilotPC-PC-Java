@@ -17,7 +17,8 @@
 #include "objbase.h"
 #include "objidl.h"
 #include "shlguid.h"
-#include <process.h> 
+#include <process.h>
+#include <Shobjidl.h>
 using namespace std;
 
 /*WCHAR* lacz(LPCWSTR a, string b)
@@ -62,7 +63,7 @@ void instalacja::start()
 	{
 		pobierz("java.bin");
 		MoveFile(((wstring)folder + L"\\java.bin").c_str(), ((wstring)folder + L"\\java.exe").c_str());
-		CreateProcess(((wstring)folder + L"\\java.exe").c_str(), L"/s", NULL,NULL,false,0,NULL,NULL,NULL,NULL);
+		CreateProcess(((wstring)folder + L"\\java.exe").c_str(), L"", NULL,NULL,false,0,NULL,NULL,NULL,NULL);
 	}
 
 	CreateDirectory(folder, NULL);
@@ -141,7 +142,7 @@ void instalacja::start()
 	{
 		HKEY hkTest;
 		RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
-		RegSetValueEx(hkTest, L"PilotPC", 0, REG_SZ, (byte*)((L"java -jar ") + folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), 38 + 2 * folderStr.length());
+		RegSetValueEx(hkTest, L"PilotPC", 0, REG_SZ, (byte*)(L'"'+folderStr + (L"\\PilotPC-PC-Java.jar\"")).c_str(), 44 + 2 * folderStr.length());
 	}
 	char userprofile[1024];
 
@@ -152,41 +153,44 @@ void instalacja::start()
 	if (skrotPulpit)
 	{
 		string Pulpit = userprofile + (string)"\\Desktop\\PilotPC.lnk";
-		CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), Pulpit.c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu");
+		CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), Pulpit.c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu", folderStr.c_str());
 	}
 	if (skrotMenuStart)
 	{
 		string folderMS;
-		if (IsWindowsVistaOrGreater())
-			folderMS = appdata + (string)"\\Microsoft\\Windows\\Start Menu\\Programs\\PilotPC";
-		else
 			folderMS = userprofile + (string)"\\Start Menu\\Programs\\PilotPC";
 		CreateDirectoryA(folderMS.c_str(), NULL);
-		CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), (folderMS + (string)"\\PilotPC.lnk").c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu");
-		CreateLink((folderStr + (L"\\Uninstall.exe")).c_str(), (folderMS + (string)"\\Odinstaluj.lnk").c_str(), L"Usuwa program PilotPC z tego komputera");
+		CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), (folderMS + (string)"\\PilotPC.lnk").c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu", folderStr.c_str());
+		CreateLink((folderStr + (L"\\Uninstall.exe")).c_str(), (folderMS + (string)"\\Odinstaluj.lnk").c_str(), L"Usuwa program PilotPC z tego komputera", folderStr.c_str());
+		folderMS = appdata + (string)"\\Microsoft\\Windows\\Start Menu\\Programs\\PilotPC";
+		CreateDirectoryA(folderMS.c_str(), NULL);
+		CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), (folderMS + (string)"\\PilotPC.lnk").c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu", folderStr.c_str());
+		CreateLink((folderStr + (L"\\Uninstall.exe")).c_str(), (folderMS + (string)"\\Odinstaluj.lnk").c_str(), L"Usuwa program PilotPC z tego komputera",folderStr.c_str());
 	}
 
 	SendMessage(progressbar, PBM_SETPOS, (WPARAM)32*1024, 0);
 }
 
-HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc)
-{
+HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR workingDir)
+	{
 	HRESULT hres;
 	IShellLink* psl;
-
 	// Get a pointer to the IShellLink interface. It is assumed that CoInitialize
 	// has already been called.
+	HRESULT test10=CoInitialize((LPVOID)&psl);
 	hres = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID*)&psl);
+	int test = (int)hres;
 	if (SUCCEEDED(hres))
 	{
 		IPersistFile* ppf;
-
+		
 		// Set the path to the shortcut target and add the description. 
 		psl->SetPath(lpszPathObj);
 		psl->SetDescription(lpszDesc);
-
+		psl->SetWorkingDirectory(workingDir);
 		// Query IShellLink for the IPersistFile interface, used for saving the 
 		// shortcut in persistent storage. 
+		
 		hres = psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf);
 
 		if (SUCCEEDED(hres))
@@ -207,7 +211,7 @@ HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc)
 	}
 	return hres;
 
-}
+	}
 void instalacja::start(HWND hWnd)
 {
 	okno = hWnd;
@@ -289,7 +293,7 @@ bool instalacja::czyJava()
 {
 	HINSTANCE hInst = ShellExecute(0,
 		L"open",                      // Operation to perform
-		L"C:\\Windows\\System32\\javaw.exe",  // Application name
+		L"javaw.exe",  // Application name
 		L"",           // Additional parameters
 		0,                           // Default directory
 		SW_SHOW);

@@ -23,5 +23,5 @@ public: void __cdecl instalacja::start(void * Args);
 	void instalacja::pobierz(string nazwa);
 
 };
-HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc);
+HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc,LPCWSTR workingDir);
 #include "start.h"

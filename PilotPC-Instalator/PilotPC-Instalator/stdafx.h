@@ -4,7 +4,7 @@
 //
 
 #pragma once
-#define  _WIN32_WINNT   0x0501
+#define  _WIN32_WINNT   NTDDI_WINXP
 #include <SDKDDKVer.h>
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
@@ -21,5 +21,5 @@
 #include <objidl.h>
 #include <gdiplus.h>
 #include <commctrl.h>
-#include <versionhelpers.h>
+//#include <versionhelpers.h>
 // TODO: reference additional headers your program requires here
