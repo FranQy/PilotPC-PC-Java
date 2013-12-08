@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.Label;
 import java.awt.LayoutManager;
 import java.awt.LayoutManager2;
@@ -76,7 +77,7 @@ public class Okno extends JFrame {
 	};
 public Okno()
 {
-	super("SockedServer");
+	super("PilotPC");
 this.setSize(750,550);
 //setBackground(new Color(38,33,27));
 setMinimumSize(new Dimension(500,300));
@@ -86,6 +87,7 @@ lewy.setBackground(new Color(38,33,27));
 qr=new PanelQRCode(lewy);
 telefony=new Urzadzenia(lewy);
 przyciskInformacje=new Przycisk("Informacje",new Dimension(100, 20),new Point(0,0));
+przyciskInformacje.setMargin(new Insets(0, 0, 0, 0));
 ActionListener przyciskInformacjeListener=new ActionListener() {
 	
 	@Override
@@ -128,8 +130,9 @@ lewy.add(info);
 
 lewy.add(telefony);
 lewy.add(kod);
-Przycisk zmienKod=new Przycisk("Zmień kod", new Dimension(100,20), new Point(153,23));
+Przycisk zmienKod=new Przycisk("Zmień kod", new Dimension(100,20), new Point(190,23));
 zmienKod.addMouseListener(zmienKodClick);
+zmienKod.setMargin(new Insets(0, 0, 0, 0));
 lewy.add(zmienKod);
 /*JLabel link=new JLabel();
 link.setText("http://"+java.net.InetAddress.getLocalHost().getHostAddress()+":12345/");
