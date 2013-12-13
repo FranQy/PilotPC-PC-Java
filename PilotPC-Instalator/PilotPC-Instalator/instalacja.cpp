@@ -142,7 +142,8 @@ void instalacja::start()
 	{
 		HKEY hkTest;
 		RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
-		RegSetValueEx(hkTest, L"PilotPC", 0, REG_SZ, (byte*)(L'"'+folderStr + (L"\\PilotPC-PC-Java.jar\"")).c_str(), 44 + 2 * folderStr.length());
+		wstring polecenie = (L"\"" + folderStr + (L"\\Windows.bat\""));
+		RegSetValueEx(hkTest, L"PilotPC", 0, REG_SZ, (byte*)polecenie.c_str(),2 * polecenie.length());
 	}
 	char userprofile[1024];
 
@@ -246,6 +247,12 @@ void instalacja::pobierz(string nazwa)
 	}
 	int zapisane = 0;
 	int rozmiar = 2000000000;
+
+	string cd = "@echo off\r\ncd \"" + string(folderStr.begin(),folderStr.end()) + "\"\r\n";
+	if (!WriteFile(hPlik, cd.c_str(), cd.length(), 0, NULL)) {
+		MessageBox(NULL, L"B³¹d podczas instalacji", L"B³¹d zapisu do pliku", MB_ICONEXCLAMATION);
+		PostQuitMessage(0); // Zakoñcz program
+	}
 	while (n>0&&rozmiar!=zapisane)
 	{
 		if (ilePlikow>0)
