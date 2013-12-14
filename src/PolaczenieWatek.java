@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.StreamCorruptedException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -97,9 +98,41 @@ oos.flush();
 				  this.infoPrzyPolaczeniu=null;
 					this.pokazane=false;
 				  try {
-						TCP_Data data=HTTP.polaczenie(is, soc);
+					  String wyj="";
+						byte liczbaNowychLinii=0;
+						while (true) {
+					int n = is.read();
+						if (n == -1){
+
+							break;
+						}
+						else
+						{
+							//robot.keyPress(n+128);
+							if(n=='\n'||n=='\r')
+								liczbaNowychLinii++;
+							else
+								liczbaNowychLinii=0;
+							wyj+=(char)n;
+
+						}
+
+						if (liczbaNowychLinii==4){
+
+							break;
+						}}
+						if(wyj.charAt(0)=='/')
+						{
+						TCP_Data data=HTTP.polaczenie(is, soc,wyj);
 						if(data!=null)
 							wykonuj(data);
+						}
+						else
+						{
+							//pinguje
+							OutputStream os =soc.getOutputStream();
+							os.write(wyj.getBytes());
+						}
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

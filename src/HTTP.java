@@ -13,31 +13,9 @@ import com.example.socketclient.TCP_Data.touchedTYPE;
 import com.example.socketclient.TCP_Data.typ;
 
 public class HTTP {
-static TCP_Data polaczenie(InputStream is, Socket soc) throws IOException
+static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOException
 {
-	byte liczbaNowychLinii=0;
-	String wyj="";
-	while (true) {
-int n = is.read();
-	if (n == -1){
-
-		break;
-	}
-	else
-	{
-		//robot.keyPress(n+128);
-		if(n=='\n'||n=='\r')
-			liczbaNowychLinii++;
-		else
-			liczbaNowychLinii=0;
-		wyj+=(char)n;
-
-	}
-
-	if (liczbaNowychLinii==4){
-
-		break;
-	}}
+	
 	System.out.print(wyj);
 	if(wyj.indexOf("/")==0&&wyj.indexOf("?")>0)
 	{

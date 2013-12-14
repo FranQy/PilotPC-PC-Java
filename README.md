@@ -1,4 +1,3 @@
-
 <h1>PilotPC-PC-Java</h1>
 <h2>Wstęp</h2>
 <p>
@@ -54,6 +53,12 @@ GNU/Linux (dla procesorów x86 i x64)
 <li>Poprawa problemów z odczytywaniem kodu QR</li>
 </ul></td></tr><tr><td>0.1.14</td><td>6.12.2013r.</td><td><ul>
 <li>Automatyczne ściąganie brakujących bibliotek</li>
+</ul></td></tr>
+</ul></td></tr><tr><td>0.1.15</td><td>7.12.2013r.</td><td><ul>
+<li>Blokowanie wyskakiwania kilku okien na raz</li>
+</ul></td></tr>
+</ul></td></tr><tr><td>0.1.16</td><td>13.12.2013r.</td><td><ul>
+<li>Drobne zmiany w wyglądzie</li>
 </ul></td></tr>
 </table>
 <h2>Linki</h2>
