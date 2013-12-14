@@ -41,6 +41,7 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 		ret.button=pilotButton.values()[klasaObjekt.getInt("button")];
 			}
 		catch(Exception e){ret=null;}
+		
 	}
 		else
 		{

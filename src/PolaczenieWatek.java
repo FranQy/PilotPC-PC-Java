@@ -132,6 +132,7 @@ oos.flush();
 							//pinguje
 							OutputStream os =soc.getOutputStream();
 							os.write(wyj.getBytes());
+							os.close();
 						}
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block

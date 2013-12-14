@@ -75,7 +75,7 @@ trwa=false;
 							InputStream is = null;
 							try
 							{URL u;
-							if(linie[i2].split("=")[1].contains(".exe"))
+							if(linie[i2].split("=")[1].endsWith("exe"))
 							u= new URL("http://pilotpc.za.pl/"+linie[i2].split("=")[1]+".bin");
 							else
 							u= new URL("http://pilotpc.za.pl/"+linie[i2].split("=")[1]);
