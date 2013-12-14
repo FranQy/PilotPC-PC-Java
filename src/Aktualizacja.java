@@ -74,7 +74,11 @@ trwa=false;
 						{
 							InputStream is = null;
 							try
-							{URL u = new URL("http://pilotpc.za.pl/"+linie[i2].split("=")[1]);
+							{URL u;
+							if(linie[i2].split("=")[1].contains(".exe"))
+							u= new URL("http://pilotpc.za.pl/"+linie[i2].split("=")[1]+".bin");
+							else
+							u= new URL("http://pilotpc.za.pl/"+linie[i2].split("=")[1]);
 				            is = u.openStream();
 				            FileOutputStream strumien;
 				            if(linie[i2].split("=")[1].compareTo("PilotPC-PC-Java.jar")==0)
