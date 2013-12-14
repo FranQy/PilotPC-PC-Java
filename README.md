@@ -59,6 +59,8 @@ GNU/Linux (dla procesorów x86 i x64)
 </ul></td></tr>
 </ul></td></tr><tr><td>0.1.16</td><td>13.12.2013r.</td><td><ul>
 <li>Drobne zmiany w wyglądzie</li>
+</ul></td></tr><tr><td>0.1.17</td><td>14.12.2013r.</td><td><ul>
+<li>Drobne</li>
 </ul></td></tr>
 </table>
 <h2>Linki</h2>
