@@ -96,27 +96,39 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 					  klawiaturaBase64="data:image/png;base64,"+DatatypeConverter.printBase64Binary(klawiaturaBytes);
 					}
 					catch ( IOException e ) { klawiaturaBase64=""; }
-					String touchpadBase64;
-					try
-					{
-					  ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-					  InputStream input = classLoader.getResourceAsStream(
-					    "resources/myszka.png");
-					  byte[] touchpadBytes = new byte[2572];
-					  input.read(touchpadBytes);
-					  touchpadBase64="data:image/png;base64,"+DatatypeConverter.printBase64Binary(touchpadBytes);
-					}
-					catch ( IOException e ) { touchpadBase64=""; }
+                    String touchpadBase64;
+                    try
+                    {
+                        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                        InputStream input = classLoader.getResourceAsStream(
+                                "resources/myszka.png");
+                        byte[] touchpadBytes = new byte[2572];
+                        input.read(touchpadBytes);
+                        touchpadBase64="data:image/png;base64,"+DatatypeConverter.printBase64Binary(touchpadBytes);
+                    }
+                    catch ( IOException e ) { touchpadBase64=""; }
+                    String przyciskiBase64;
+                    try
+                    {
+                        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                        InputStream input = classLoader.getResourceAsStream(
+                                "resources/pilot 720p.png");
+                        byte[] przyciskiBytes = new byte[129047];
+                        input.read(przyciskiBytes);
+                        przyciskiBase64="data:image/png;base64,"+DatatypeConverter.printBase64Binary(przyciskiBytes);
+                    }
+                    catch ( IOException e ) { przyciskiBase64=""; }
 		 wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
 				+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
 				+"<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
 				+ "<style>"
 				+ "body{background:#26211b;color:white;font-style:non-sherif;}"
-				+ "#menu{position: absolute;bottom: 0;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
-				+ "#menu li{display:inline;}.karta{position:absolute;left:0;top:0;width:100%;bottom:64px;display:none;}"
-				+ "#menu li img{width:10%;padding:0 2%;}"
-				+ "#pilot .przycisk{width:20%;}"
-				+ "</style>"
+				+ "#menu{height:10%;position: absolute;bottom: 0;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
+				+ "#menu li{display:inline;}" +
+                 ".karta{position:absolute;left:0;top:0;width:100%;bottom:10%;display:none;}"
+				+ "#menu li img{height:100%;padding:0 2%;}"
+				+ "#pilot #przyciski{height:100%;}"+
+                 "</style>"
 				+"<script>/*<![CDATA[*/\n"
 				+ "var czasPrzesylu=new Date();"
 				+ "var polaczono=false;"
@@ -206,12 +218,37 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+ "}"
 				+ "if(new Date()-czasPrzesylu>1000)"
 				+ "send(new Object());"
-				+ "},250);"
+				+ "},250);" +
+                 "function mapa(skala)" +
+                 "{" +
+                 "document.getElementById('przycMapa').innerHTML='" +
+                 "<area href=\"#\" shape=\"rect\" coords=\"0,0,'+(skala*160)+','+(skala*160)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.OFF);\"/>" +
+                 "<area href=\"#\" shape=\"rect\" coords=\"'+(skala*560)+',0,'+(skala*720)+','+(skala*160)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.MUTE);\"/>" +
+                 "<area href=\"#\" shape=\"rect\" coords=\"'+(skala*120)+','+(skala*160)+','+(skala*360)+','+(skala*390)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.PLAYPAUSE);\"/>" +
+                 "<area href=\"#\" shape=\"rect\" coords=\"'+(skala*360)+','+(skala*160)+','+(skala*600)+','+(skala*390)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.STOP);\"/>" +
+                 "<area href=\"#\" shape=\"rect\" coords=\"0,'+(skala*1040)+','+(skala*240)+','+(skala*1280)+'\" onclick=\"\"/>" +
+                 "<area href=\"#\" shape=\"rect\" coords=\"'+(skala*240)+','+(skala*1040)+','+(skala*480)+','+(skala*1280)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.MULTIMEDIA);\"/>" +
+                 "<area href=\"#\" shape=\"rect\" coords=\"'+(skala*480)+','+(skala*1040)+','+(skala*720)+','+(skala*1280)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.MUSIC);\"/>" +
+
+                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*40)+','+(skala*390)+','+(skala*320)+','+(skala*390)+','+(skala*40)+','+(skala*670)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.VOLDOWN);\"/>" +
+                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*670)+','+(skala*390)+','+(skala*400)+','+(skala*390)+','+(skala*670)+','+(skala*670)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.VOLUP);\"/>" +
+                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*40)+','+(skala*1020)+','+(skala*320)+','+(skala*1020)+','+(skala*40)+','+(skala*730)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.PERV);\"/>" +
+                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*670)+','+(skala*1020)+','+(skala*400)+','+(skala*1020)+','+(skala*670)+','+(skala*730)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.NEXT);\"/>" +
+
+                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*180)+','+(skala*530)+','+(skala*320)+','+(skala*390)+','+(skala*400)+','+(skala*390)+','+(skala*540)+','+(skala*530)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.UP);\"/>" +
+                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*540)+','+(skala*870)+','+(skala*670)+','+(skala*730)+','+(skala*670)+','+(skala*670)+','+(skala*540)+','+(skala*530)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.RIGHT);\"/>" +
+                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*540)+','+(skala*870)+','+(skala*400)+','+(skala*1010)+','+(skala*320)+','+(skala*1010)+','+(skala*180)+','+(skala*870)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.DOWN);\"/>" +
+                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*180)+','+(skala*530)+','+(skala*50)+','+(skala*660)+','+(skala*50)+','+(skala*730)+','+(skala*180)+','+(skala*870)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.LEFT);\"/>" +
+                 "'" +
+                 "}"
 				+ "/*]]>*/</script>"
-				+"</head><body>"
+				+"</head><body onload=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onresize=\"mapa(document.getElementById('przyciski').clientHeight/1280)\">"
 				+ "<div class=\"karta\" id=\"gamepad\">Gamepad wkrodce</div>"
 				+ "<div class=\"karta\" id=\"pilot\">"
-				+ "<img alt=\"Wycisz\" onclick=\"pilot.click(TCP_Data.pilotButton.MUTE)\" class=\"przycisk\"/>"
+				+ "<img id=\"przyciski\" src=\""+przyciskiBase64+"\" usemap=\"#przycMapa\" />" +
+                 "<map id=\"przycMapa\" name=\"przycMapa\">" +
+                 "</map>" +
+                 "<img alt=\"Wycisz\" onclick=\"pilot.click(TCP_Data.pilotButton.MUTE)\" class=\"przycisk\"/>"
 				+ "<img alt=\"Ciszej\" onclick=\"pilot.click(TCP_Data.pilotButton.VOLDOWN)\" class=\"przycisk\"/>"
 				+ "<img alt=\"Głośniej\" onclick=\"pilot.click(TCP_Data.pilotButton.VOLUP)\" class=\"przycisk\"/>"
 				+ "<img alt=\"Poprzednia\" onclick=\"pilot.click(TCP_Data.pilotButton.PERV)\" class=\"przycisk\"/>"
@@ -225,7 +262,7 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				//+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\"  id=\"touchpad\"></div>"
 				//+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"touchpad.onTouchDown(event)\" ontouchend=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\"  id=\"touchpad\"></div>"
 				+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"touchpad.onTouchDown(event)\" ontouchend=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
-				+"<ul id=\"menu\"><li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li><li onclick='kartaPokaz(\"pilot\")'><img title=\"pilot\" src=\""+pilotBase64+"\"/></li><li onclick='kartaPokaz(\"klawiatura\")'><img title=\"klawiatura\" src=\""+klawiaturaBase64+"\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img title=\"touchpad\" src=\""+touchpadBase64+"\"/></li></ul></body></html>";
+				+"<ul id=\"menu\"><li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li><li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img title=\"pilot\" src=\""+pilotBase64+"\"/></li><li onclick='kartaPokaz(\"klawiatura\")'><img title=\"klawiatura\" src=\""+klawiaturaBase64+"\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img title=\"touchpad\" src=\""+touchpadBase64+"\"/></li></ul></body></html>";
 		
 				}
 
