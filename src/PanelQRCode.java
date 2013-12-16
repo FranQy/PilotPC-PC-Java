@@ -81,7 +81,7 @@ String adres2="";
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			String tresc="http://"+adres1+":12345/"+Program.ustawienia.haslo+adres2;
+			String tresc="http://"+adres1+":8753/"+Program.ustawienia.haslo+adres2;
 			kod = Encoder.encode(tresc, ErrorCorrectionLevel.M);
 			macierz= kod.getMatrix();
 		//rozmiar=new Dimension(macierz.getHeight()*10, macierz.getHeight()*10);
