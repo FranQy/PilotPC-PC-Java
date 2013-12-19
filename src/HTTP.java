@@ -140,7 +140,8 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+ "#menu{height:10%;position: absolute;bottom: 0;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
 				+ "#menu li{display:inline;}" +
                  ".karta{position:absolute;left:0;top:0;width:100%;bottom:10%;display:none;}"
-				+ "#menu li img{height:100%;padding:0 2%;}"
+				+ "#menu li img{height:100%;padding:0 2%;}" +
+                 "#menu div{background:black;text-aling:left;}"
 				+ "#pilot #przyciski{height:100%;margin: auto; display: block;}"+
                  "</style>"
 				+"<script>/*<![CDATA[*/\n"
@@ -280,7 +281,15 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				//+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\"  id=\"touchpad\"></div>"
 				//+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"touchpad.onTouchDown(event)\" ontouchend=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\"  id=\"touchpad\"></div>"
 				+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"touchpad.onTouchDown(event)\" ontouchend=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
-				+"<ul id=\"menu\"><li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li><li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img title=\"pilot\" src=\""+pilotBase64+"\"/></li><li onclick='kartaPokaz(\"klawiatura\")'><img title=\"klawiatura\" src=\""+klawiaturaBase64+"\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img title=\"touchpad\" src=\""+touchpadBase64+"\"/></li></ul></body></html>";
+				+"<ul id=\"menu\"><li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li><li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img title=\"pilot\" src=\""+pilotBase64+"\"/></li><li onclick='kartaPokaz(\"klawiatura\")'><img title=\"klawiatura\" src=\""+klawiaturaBase64+"\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img title=\"touchpad\" src=\""+touchpadBase64+"\"/></li><li onclick=\"if(document.getElementById('menu').style.top=='5%')document.getElementById('menu').style.top='';else document.getElementById('menu').style.top='5%';\">menu</li>" +
+                 "<div><h2>Informacje</h2>" +
+                 "CODER<br />" +
+                 "-FranQy<br />" +
+                 "-Matrix0123456789<br />" +
+                 "DESIGNERS<br/>" +
+                 "-FranQy<br/>" +
+                 "-Wieczur" +
+                 "</div></ul></body></html>";
 		
 				}
 
