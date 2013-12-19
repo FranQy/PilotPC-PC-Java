@@ -61,6 +61,12 @@ GNU/Linux (dla procesorów x86 i x64)
 <li>Drobne zmiany w wyglądzie</li>
 </ul></td></tr><tr><td>0.1.17</td><td>14.12.2013r.</td><td><ul>
 <li>Drobne</li>
+</ul></td></tr><tr><td>0.1.19</td><td>16.12.2013r.</td><td><ul>
+<li>Pilot przez przeglądarkę</li>
+</ul></td></tr><tr><td>0.1.19</td><td>16.12.2013r.</td><td><ul>
+<li>Poprawki błędów</li>
+</ul></td></tr><tr><td>0.1.20</td><td>18.12.2013r.</td><td><ul>
+<li>Poprawki błędów</li>
 </ul></td></tr>
 </table>
 <h2>Linki</h2>

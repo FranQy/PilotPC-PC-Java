@@ -112,22 +112,36 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
                     {
                         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
                         InputStream input = classLoader.getResourceAsStream(
-                                "resources/pilot 720p.png");
-                        byte[] przyciskiBytes = new byte[129047];
-                        input.read(przyciskiBytes);
-                        przyciskiBase64="data:image/png;base64,"+DatatypeConverter.printBase64Binary(przyciskiBytes);
+                                "resources/pilot720p.png");
+                        przyciskiBase64="data:image/png;base64,";
+                        byte[] przyciskiBytes = new byte[94707];
+                        byte[] przyciskiBytes2 = new byte[1024];
+                        int licznik=0;
+                        int a=1;
+                        while(a>0)
+                        {
+
+                            a=input.read(przyciskiBytes2);
+                            for(int z=0;z<a;z++)
+                            {
+                                przyciskiBytes[licznik+z]=  przyciskiBytes2[z];
+                            }
+                            licznik+=a;
+                        }
+                        przyciskiBase64+=DatatypeConverter.printBase64Binary(przyciskiBytes);
                     }
                     catch ( IOException e ) { przyciskiBase64=""; }
 		 wysylanie="HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
 				+"<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
 				+"<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
 				+ "<style>"
-				+ "body{background:#26211b;color:white;font-style:non-sherif;}"
+				+ "*{-ms-touch-action: none;}" +
+                 "body{background:#26211b;color:white;font-style:non-sherif;}"
 				+ "#menu{height:10%;position: absolute;bottom: 0;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
 				+ "#menu li{display:inline;}" +
                  ".karta{position:absolute;left:0;top:0;width:100%;bottom:10%;display:none;}"
 				+ "#menu li img{height:100%;padding:0 2%;}"
-				+ "#pilot #przyciski{height:100%;}"+
+				+ "#pilot #przyciski{height:100%;margin: auto; display: block;}"+
                  "</style>"
 				+"<script>/*<![CDATA[*/\n"
 				+ "var czasPrzesylu=new Date();"
@@ -144,12 +158,14 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+"touchpad.onTouchDown=function(event){"
 				+ "touchpad.mPreviousX=touchpad.oldX=event.touches[0].screenX;"
 				+ "touchpad.mPreviousY=touchpad.oldY=event.touches[0].screenY;"
-				+ "touchpad.wcisniete=true;"
+				+ "touchpad.wcisniete=true;" +
+                 "return false;"
 				+ "};"
 				+"touchpad.onMouseDown=function(event){"
 				+ "touchpad.mPreviousX=touchpad.oldX=event.screenX;"
 				+ "touchpad.mPreviousY=touchpad.oldY=event.screenY;"
-				+ "touchpad.wcisniete=true;"
+				+ "touchpad.wcisniete=true;" +
+                 "return false;"
 				+ "};"
 				+"touchpad.onTouchUp=function(event){"
 				
@@ -160,7 +176,8 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+ "{"
 				+"var data=new TCP_Data();data.mouse = TCP_Data.touchedTYPE.LPM;data.touchpadX = 0;data.touchpadY =0;"
 				+ "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
-				+ "}"
+				+ "}" +
+                 "return false;"
 				+ "};"
 				+"touchpad.onMouseUp=function(event){\n"
 				
@@ -247,14 +264,7 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+ "<div class=\"karta\" id=\"pilot\">"
 				+ "<img id=\"przyciski\" src=\""+przyciskiBase64+"\" usemap=\"#przycMapa\" />" +
                  "<map id=\"przycMapa\" name=\"przycMapa\">" +
-                 "</map>" +
-                 "<img alt=\"Wycisz\" onclick=\"pilot.click(TCP_Data.pilotButton.MUTE)\" class=\"przycisk\"/>"
-				+ "<img alt=\"Ciszej\" onclick=\"pilot.click(TCP_Data.pilotButton.VOLDOWN)\" class=\"przycisk\"/>"
-				+ "<img alt=\"Głośniej\" onclick=\"pilot.click(TCP_Data.pilotButton.VOLUP)\" class=\"przycisk\"/>"
-				+ "<img alt=\"Poprzednia\" onclick=\"pilot.click(TCP_Data.pilotButton.PERV)\" class=\"przycisk\"/>"
-				+ "<img alt=\"Następna\" onclick=\"pilot.click(TCP_Data.pilotButton.NEXT)\" class=\"przycisk\"/>"
-				+ "<img alt=\"Play/Pauza\" onclick=\"pilot.click(TCP_Data.pilotButton.PLAYPAUSE)\" class=\"przycisk\"/>"
-				+ "<img alt=\"Stop\" onclick=\"pilot.click(TCP_Data.pilotButton.STOP)\" class=\"przycisk\"/>"
+                 "</map>" 
 				+ "</div>"
 				+ "<div class=\"karta\" id=\"klawiatura\">Klawiatura wkrodce</div>"
 				//Tu były problemy ze zdarzeniami
