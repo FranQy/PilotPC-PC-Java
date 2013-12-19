@@ -159,12 +159,20 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+ "touchpad.mPreviousX=touchpad.oldX=event.touches[0].screenX;"
 				+ "touchpad.mPreviousY=touchpad.oldY=event.touches[0].screenY;"
 				+ "touchpad.wcisniete=true;" +
+                 "if(event.touches[0].screenX>document.body.clientWidth*0.9)" +
+                 "touchpad.typ=TCP_Data.touchedTYPE.SCROLL;" +
+                 "else " +
+                 "touchpad.typ=TCP_Data.touchedTYPE.NORMAL;" +
                  "return false;"
 				+ "};"
 				+"touchpad.onMouseDown=function(event){"
 				+ "touchpad.mPreviousX=touchpad.oldX=event.screenX;"
 				+ "touchpad.mPreviousY=touchpad.oldY=event.screenY;"
 				+ "touchpad.wcisniete=true;" +
+                 "if(event.screenX>document.body.clientWidth*0.9)" +
+                 "touchpad.typ=TCP_Data.touchedTYPE.SCROLL;" +
+                 "else " +
+                 "touchpad.typ=TCP_Data.touchedTYPE.NORMAL;" +
                  "return false;"
 				+ "};"
 				+"touchpad.onTouchUp=function(event){"
@@ -174,7 +182,7 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				
 				//+ "if(event.screenX>touchpad.oldX-10)"
 				+ "{"
-				+"var data=new TCP_Data();data.mouse = TCP_Data.touchedTYPE.LPM;data.touchpadX = 0;data.touchpadY =0;"
+				+"var data=new TCP_Data();data.mouse = touchpad.typ;data.touchpadX = 0;data.touchpadY =0;"
 				+ "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
 				+ "}" +
                  "return false;"
@@ -195,14 +203,14 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+ "var dx = event.screenX - this.mPreviousX;var dy = event.screenY - this.mPreviousY;"
 				+ "this.mPreviousX=event.screenX;"
 				+ "this.mPreviousY=event.screenY;"
-				+"var data=new TCP_Data();data.mouse = TCP_Data.touchedTYPE.NORMAL;data.touchpadX = dx;data.touchpadY =dy;"
+				+"var data=new TCP_Data();data.mouse = touchpad.typ;data.touchpadX = dx;data.touchpadY =dy;"
 				+ "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
 				+ "return false;}};"
 				+ "touchpad.onTouchMove=function(event){"
 				+ "var dx = event.touches[0].screenX - this.mPreviousX;var dy = event.touches[0].screenY - this.mPreviousY;"
 				+ "this.mPreviousX=event.touches[0].screenX;"
 				+ "this.mPreviousY=event.touches[0].screenY;"
-				+"var data=new TCP_Data();data.mouse = TCP_Data.touchedTYPE.NORMAL;data.touchpadX = dx;data.touchpadY =dy;"
+				+"var data=new TCP_Data();data.mouse = touchpad.typ;data.touchpadX = dx;data.touchpadY =dy;"
 				+ "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
 				+ "return false;};"
 				+"function send(data){"
