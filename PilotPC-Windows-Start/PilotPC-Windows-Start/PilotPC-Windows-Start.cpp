@@ -3,22 +3,51 @@
 
 #include "stdafx.h"
 #include <Windows.h>
-
-int _tmain(int argc, _TCHAR* argv[])
+#include <string>
+using namespace std;
+#pragma comment (lib,"Advapi32.lib")
+int _tmain(const int argc, _TCHAR* argv[])
 {
-	HINSTANCE hInst = ShellExecute(0,
-		L"open",                      // Operation to perform
-		L"javaw.exe",  // Application name
-		L"-jar PilotPC-PC-Java.jar",           // Additional parameters
-		0,                           // Default directory
-		SW_SHOW);
-	if (reinterpret_cast<int>(hInst) <= 32)
+	if (argc == 1)
 	{
-		if ((reinterpret_cast<int>(hInst)) == ERROR_FILE_NOT_FOUND)
+
+		HINSTANCE hInst = ShellExecute(0,
+			L"open",                      // Operation to perform
+			L"javaw.exe",  // Application name
+			L"-jar PilotPC-PC-Java.jar",           // Additional parameters
+			0,                           // Default directory
+			SW_SHOW);
+		if (reinterpret_cast<int>(hInst) <= 32)
 		{
-			//brak javy
-			return false;
+			if ((reinterpret_cast<int>(hInst)) == ERROR_FILE_NOT_FOUND)
+			{
+				//brak javy
+				printf("Brak zainstalowanej Javy!");
+				return false;
+			}
 		}
+	}
+	else if (wstring(argv[1]) == wstring(L"/?"))
+	{
+		wprintf(L"PilotPC\r\n\r\n/a	wlacza autostart przy starcie systemu");
+	}
+	else if (wstring(argv[1]) == wstring(L"/a"))
+	{
+		
+		wstring folder;
+		if (argv[0][1] == L':')
+			folder = wstring(L"\"") + wstring(argv[0]) + wstring(L"\"");
+		else
+		{
+			WCHAR curDir[1024];
+			GetCurrentDirectory(2048, curDir);
+			folder = wstring(L"\"") + curDir + wstring(L"\\") + wstring(argv[0])+wstring(L"\"");
+
+		}
+		wprintf(folder.c_str());
+		HKEY hkTest;
+		RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
+		RegSetValueEx(hkTest, L"PilotPC", 0, REG_SZ, (byte*)folder.c_str(), 2 * folder.length());
 	}
 	//return 0;
 }

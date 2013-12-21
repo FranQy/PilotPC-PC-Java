@@ -52,7 +52,6 @@ Aktualizacja.wymus=true;
 timer1.schedule (timer1_task, 0, 0);
 				}
 	}
-	   // A native method that receives nothing and returns void
 	   private native void click(int i);
 	   
 		   static Robot robot=null;

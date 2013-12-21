@@ -34,11 +34,12 @@ public class Okno extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public Tekst status=new Tekst("Inicjowanie", new Point(105,2));
+	public Tekst status=new Tekst("Inicjowanie", new Point(230,2));
 	Tekst kod=new Tekst("Kod do połączenia: "+Program.ustawienia.haslo, new Point(0,26));
 	Urzadzenia telefony;
 	PanelQRCode qr;
-	Przycisk przyciskInformacje;
+    Przycisk przyciskInformacje;
+    Przycisk przyciskAutostart;
 	private MouseListener zmienKodClick=new MouseListener() {
 		
 		@Override
@@ -86,22 +87,36 @@ Panel lewy=new Panel();
 lewy.setBackground(new Color(38,33,27));
 qr=new PanelQRCode(lewy);
 telefony=new Urzadzenia(lewy);
-przyciskInformacje=new Przycisk("Informacje",new Dimension(100, 20),new Point(0,0));
-przyciskInformacje.setMargin(new Insets(0, 0, 0, 0));
-ActionListener przyciskInformacjeListener=new ActionListener() {
-	
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		new OProgramie();
-	}
-};
-przyciskInformacje.addActionListener(przyciskInformacjeListener);
-przyciskInformacje.setSize(100, 20);
-przyciskInformacje.setMaximumSize(new Dimension(100, 20));
-przyciskInformacje.setLocation(0,0);
-lewy.add(przyciskInformacje);
-status.setLocation(105, 0);
+    przyciskInformacje=new Przycisk("Informacje",new Dimension(100, 20),new Point(0,0));
+    przyciskInformacje.setMargin(new Insets(0, 0, 0, 0));
+    ActionListener przyciskInformacjeListener=new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            // TODO Auto-generated method stub
+            new OProgramie();
+        }
+    };
+    przyciskInformacje.addActionListener(przyciskInformacjeListener);
+    przyciskInformacje.setSize(100, 20);
+    przyciskInformacje.setMaximumSize(new Dimension(100, 20));
+    przyciskInformacje.setLocation(0,0);
+    lewy.add(przyciskInformacje);
+    przyciskAutostart=new Przycisk("Start z systemem",new Dimension(120, 20),new Point(105,0));
+    przyciskAutostart.setMargin(new Insets(0, 0, 0, 0));
+    ActionListener przyciskAutostartListener=new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            Program.autostart();
+        }
+    };
+    przyciskAutostart.addActionListener(przyciskAutostartListener);
+    przyciskAutostart.setSize(120, 20);
+    przyciskAutostart.setMaximumSize(new Dimension(120, 20));
+    przyciskAutostart.setLocation(105,0);
+    lewy.add(przyciskAutostart);
+status.setLocation(230, 0);
 lewy.add(status);
 
 JLabel info=new Tekst(null, new Point(0,50));
