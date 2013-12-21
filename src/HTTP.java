@@ -148,16 +148,30 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+ "var czasPrzesylu=new Date();"
 				+ "var polaczono=false;"
 				+ "var pilot=new Object();\n"
-				+ "pilot.click=function(przycisk)"
-				+ "{"
-				+ "var data=new TCP_Data();"
-				+ "data.type=TCP_Data.typ.PILOT;"
-				+ "data.button=przycisk;"
-				+ "send(data);"
-				+ "};\n"
-				+ " var touchpad=new Object();touchpad.wcisniete=false;touchpad.mPreviousX=0; touchpad.mPreviousY=0;touchpad.oldX =0;touchpad.oldY=0;touchpad.longClicked = false;touchpad.returnState = true;"
+                 + "pilot.trzymajLicz=0;" +
+                 "pilot.trzymaj=null;" +
+                 "pilot.click=function(przycisk)"
+                 + "{"
+                 + "var data=new TCP_Data();"
+                 + "data.type=TCP_Data.typ.PILOT;"
+                 + "data.button=przycisk;"
+                 + "send(data);"
+                 + "};\n"
+                 + "pilot.clickTrzymaj=function(przycisk)"
+                 + "{"
+                 + "pilot.trzymaj=przycisk;" +
+                 "pilot.trzymajLicz=-10;" +
+                 "" +
+                 "pilot.click(przycisk);"
+                 + "};" +
+                 "pilot.timer=setInterval(function(){" +
+                 "if(pilot.trzymajLicz++>0&&pilot.trzymaj!=null)" +
+                 "pilot.click(pilot.trzymaj);" +
+                 "},50);\n"
+				+ " var touchpad=new Object();touchpad.czas=new Date(0);touchpad.wcisniete=false;touchpad.mPreviousX=0; touchpad.mPreviousY=0;touchpad.oldX =0;touchpad.oldY=0;touchpad.longClicked = false;touchpad.returnState = true;"
 				+"touchpad.onTouchDown=function(event){"
-				+ "touchpad.mPreviousX=touchpad.oldX=event.touches[0].screenX;"
+				+ "touchpad.czas=new Date();" +
+                 "touchpad.mPreviousX=touchpad.oldX=event.touches[0].screenX;"
 				+ "touchpad.mPreviousY=touchpad.oldY=event.touches[0].screenY;"
 				+ "touchpad.wcisniete=true;" +
                  "if(event.touches[0].screenX>document.body.clientWidth*0.9)" +
@@ -166,7 +180,8 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
                  "touchpad.typ=TCP_Data.touchedTYPE.NORMAL;" +
                  "return false;"
 				+ "};"
-				+"touchpad.onMouseDown=function(event){"
+				+"touchpad.onMouseDown=function(event){" +
+                 "touchpad.czas=new Date();"
 				+ "touchpad.mPreviousX=touchpad.oldX=event.screenX;"
 				+ "touchpad.mPreviousY=touchpad.oldY=event.screenY;"
 				+ "touchpad.wcisniete=true;" +
@@ -179,7 +194,7 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+"touchpad.onTouchUp=function(event){"
 				
 				+ "touchpad.wcisniete=false;"
-				+ "if(event.changedTouches[0].screenX>touchpad.oldX-2&&event.changedTouches[0].screenX<touchpad.oldX+2&&event.changedTouches[0].screenY>touchpad.oldY-2&&event.changedTouches[0].screenY<touchpad.oldY+2)"
+                 +"if(event.changedTouches[0].screenX>touchpad.oldX-2&&event.changedTouches[0].screenX<touchpad.oldX+2&&event.changedTouches[0].screenY>touchpad.oldY-2&&event.changedTouches[0].screenY<touchpad.oldY+2)"
 				
 				//+ "if(event.screenX>touchpad.oldX-10)"
 				+ "{"
@@ -197,20 +212,31 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+ "{"
 				+"var data=new TCP_Data();data.mouse = TCP_Data.touchedTYPE.LPM;data.touchpadX = 0;data.touchpadY =0;"
 				+ "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
-				+ "}"
+				+ "}" +
+                 ""
 				+ "};"
 				+ "touchpad.onMouseMove=function(event){"
 				+ "if(touchpad.wcisniete){"
 				+ "var dx = event.screenX - this.mPreviousX;var dy = event.screenY - this.mPreviousY;"
 				+ "this.mPreviousX=event.screenX;"
-				+ "this.mPreviousY=event.screenY;"
+				+ "this.mPreviousY=event.screenY;" +
+                 "if((new Date())-touchpad.czas>500)" +
+                 "{" +
+                 //"touchpad.typ=TCP_Data.touchedTYPE.LONG;" +
+                 "touchpad.czas=new Date(10000000000000)" +
+                 "}"
 				+"var data=new TCP_Data();data.mouse = touchpad.typ;data.touchpadX = dx;data.touchpadY =dy;"
 				+ "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
 				+ "return false;}};"
 				+ "touchpad.onTouchMove=function(event){"
 				+ "var dx = event.touches[0].screenX - this.mPreviousX;var dy = event.touches[0].screenY - this.mPreviousY;"
 				+ "this.mPreviousX=event.touches[0].screenX;"
-				+ "this.mPreviousY=event.touches[0].screenY;"
+				+ "this.mPreviousY=event.touches[0].screenY;"          +
+                    "if((new Date())-touchpad.czas>500)" +
+                            "{" +
+                           // "touchpad.typ=TCP_Data.touchedTYPE.LONG;" +
+                            "touchpad.czas=new Date(10000000000000)" +
+                            "}"
 				+"var data=new TCP_Data();data.mouse = touchpad.typ;data.touchpadX = dx;data.touchpadY =dy;"
 				+ "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
 				+ "return false;};"
@@ -248,23 +274,24 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
                  "function mapa(skala)" +
                  "{" +
                  "document.getElementById('przycMapa').innerHTML='" +
-                 "<area href=\"#\" shape=\"rect\" coords=\"0,0,'+(skala*160)+','+(skala*160)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.OFF);\"/>" +
-                 "<area href=\"#\" shape=\"rect\" coords=\"'+(skala*560)+',0,'+(skala*720)+','+(skala*160)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.MUTE);\"/>" +
-                 "<area href=\"#\" shape=\"rect\" coords=\"'+(skala*120)+','+(skala*160)+','+(skala*360)+','+(skala*390)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.PLAYPAUSE);\"/>" +
-                 "<area href=\"#\" shape=\"rect\" coords=\"'+(skala*360)+','+(skala*160)+','+(skala*600)+','+(skala*390)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.STOP);\"/>" +
-                 "<area href=\"#\" shape=\"rect\" coords=\"0,'+(skala*1040)+','+(skala*240)+','+(skala*1280)+'\" onclick=\"\"/>" +
-                 "<area href=\"#\" shape=\"rect\" coords=\"'+(skala*240)+','+(skala*1040)+','+(skala*480)+','+(skala*1280)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.MULTIMEDIA);\"/>" +
-                 "<area href=\"#\" shape=\"rect\" coords=\"'+(skala*480)+','+(skala*1040)+','+(skala*720)+','+(skala*1280)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.MUSIC);\"/>" +
+                 "<area  shape=\"rect\" coords=\"0,0,'+(skala*160)+','+(skala*160)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.OFF);\"/>" +
+                 "<area  shape=\"rect\" coords=\"'+(skala*560)+',0,'+(skala*720)+','+(skala*160)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.MUTE);\"/>" +
+                 "<area shape=\"rect\" coords=\"'+(skala*120)+','+(skala*160)+','+(skala*360)+','+(skala*390)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.PLAYPAUSE);\"/>" +
+                 "<area shape=\"rect\" coords=\"'+(skala*360)+','+(skala*160)+','+(skala*600)+','+(skala*390)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.STOP);\"/>" +
+                 "<area  shape=\"rect\" coords=\"0,'+(skala*1040)+','+(skala*240)+','+(skala*1280)+'\" onclick=\"\"/>" +
+                 "<area shape=\"rect\" coords=\"'+(skala*240)+','+(skala*1040)+','+(skala*480)+','+(skala*1280)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.MULTIMEDIA);\"/>" +
+                 "<area shape=\"rect\" coords=\"'+(skala*480)+','+(skala*1040)+','+(skala*720)+','+(skala*1280)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.MUSIC);\"/>" +
 
-                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*40)+','+(skala*390)+','+(skala*320)+','+(skala*390)+','+(skala*40)+','+(skala*670)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.VOLDOWN);\"/>" +
-                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*670)+','+(skala*390)+','+(skala*400)+','+(skala*390)+','+(skala*670)+','+(skala*670)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.VOLUP);\"/>" +
-                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*40)+','+(skala*1020)+','+(skala*320)+','+(skala*1020)+','+(skala*40)+','+(skala*730)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.PERV);\"/>" +
-                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*670)+','+(skala*1020)+','+(skala*400)+','+(skala*1020)+','+(skala*670)+','+(skala*730)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.NEXT);\"/>" +
+                 "<area shape=\"poly\" coords=\"'+(skala*40)+','+(skala*390)+','+(skala*320)+','+(skala*390)+','+(skala*40)+','+(skala*670)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLDOWN); return false;\" onmouseup=\"pilot.trzymaj=null; return false;\" ontouchstart=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLDOWN); return false;\" ontouchend=\"pilot.trzymaj=null; return false;\" />" +
+                 "<area shape=\"poly\" coords=\"'+(skala*670)+','+(skala*390)+','+(skala*400)+','+(skala*390)+','+(skala*670)+','+(skala*670)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLUP);\" onmouseup=\"pilot.trzymaj=null\"  ontouchstart=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLUP); return false;\" ontouchend=\"pilot.trzymaj=null; return false;\" />" +
+                 "<area shape=\"poly\" coords=\"'+(skala*40)+','+(skala*1020)+','+(skala*320)+','+(skala*1020)+','+(skala*40)+','+(skala*730)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.PERV);\" />" +
+                 "<area shape=\"poly\" coords=\"'+(skala*670)+','+(skala*1020)+','+(skala*400)+','+(skala*1020)+','+(skala*670)+','+(skala*730)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.NEXT);\"  />" +
 
-                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*180)+','+(skala*530)+','+(skala*320)+','+(skala*390)+','+(skala*400)+','+(skala*390)+','+(skala*540)+','+(skala*530)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.UP);\"/>" +
-                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*540)+','+(skala*870)+','+(skala*670)+','+(skala*730)+','+(skala*670)+','+(skala*670)+','+(skala*540)+','+(skala*530)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.RIGHT);\"/>" +
-                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*540)+','+(skala*870)+','+(skala*400)+','+(skala*1010)+','+(skala*320)+','+(skala*1010)+','+(skala*180)+','+(skala*870)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.DOWN);\"/>" +
-                 "<area href=\"#\" shape=\"poly\" coords=\"'+(skala*180)+','+(skala*530)+','+(skala*50)+','+(skala*660)+','+(skala*50)+','+(skala*730)+','+(skala*180)+','+(skala*870)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.LEFT);\"/>" +
+                 "<area shape=\"poly\" coords=\"'+(skala*180)+','+(skala*530)+','+(skala*320)+','+(skala*390)+','+(skala*400)+','+(skala*390)+','+(skala*540)+','+(skala*530)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.UP);\" onmouseup=\"pilot.trzymaj=null\"  ontouchstart=\"pilot.clickTrzymaj(TCP_Data.pilotButton.UP); return false;\" ontouchend=\"pilot.trzymaj=null; return false;\" />" +
+                 "<area shape=\"poly\" coords=\"'+(skala*540)+','+(skala*870)+','+(skala*670)+','+(skala*730)+','+(skala*670)+','+(skala*670)+','+(skala*540)+','+(skala*530)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.RIGHT);\" onmouseup=\"pilot.trzymaj=null\" ontouchstart=\"pilot.clickTrzymaj(TCP_Data.pilotButton.RIGHT); return false;\" ontouchend=\"pilot.trzymaj=null; return false;\"  />" +
+                 "<area shape=\"poly\" coords=\"'+(skala*540)+','+(skala*870)+','+(skala*400)+','+(skala*1010)+','+(skala*320)+','+(skala*1010)+','+(skala*180)+','+(skala*870)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.DOWN);\" onmouseup=\"pilot.trzymaj=null\" ontouchstart=\"pilot.clickTrzymaj(TCP_Data.pilotButton.DOWN); return false;\" ontouchend=\"pilot.trzymaj=null; return false;\"  />" +
+                 "<area shape=\"poly\" coords=\"'+(skala*180)+','+(skala*530)+','+(skala*50)+','+(skala*660)+','+(skala*50)+','+(skala*730)+','+(skala*180)+','+(skala*870)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.LEFT);\" onmouseup=\"pilot.trzymaj=null\" ontouchstart=\"pilot.clickTrzymaj(TCP_Data.pilotButton.LEFT); return false;\" ontouchend=\"pilot.trzymaj=null; return false;\"  />" +
+                 "<area shape=\"poly\" coords=\"'+(skala*180)+','+(skala*870)+','+(skala*180)+','+(skala*1010)+','+(skala*670)+','+(skala*1010)+','+(skala*670)+','+(skala*870)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.OK);\"/>" +
                  "'" +
                  "}"
 				+ "/*]]>*/</script>"
@@ -280,9 +307,9 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				//+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" onmousemove=\"return touchpad.onMouseMove(event)\" ontouchdown=\"touchpad.onTouchDown(event)\" onmousedown=\"touchpad.onTouchDown(event)\" ontouchup=\"touchpad.onTouchUp(event)\" onmouseup=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" onmouseleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
 				//+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\"  id=\"touchpad\"></div>"
 				//+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"touchpad.onTouchDown(event)\" ontouchend=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\"  id=\"touchpad\"></div>"
-				+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"touchpad.onTouchDown(event)\" ontouchend=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
-				+"<ul id=\"menu\"><li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li><li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img title=\"pilot\" src=\""+pilotBase64+"\"/></li><li onclick='kartaPokaz(\"klawiatura\")'><img title=\"klawiatura\" src=\""+klawiaturaBase64+"\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img title=\"touchpad\" src=\""+touchpadBase64+"\"/></li><li onclick=\"if(document.getElementById('menu').style.top=='5%')document.getElementById('menu').style.top='';else document.getElementById('menu').style.top='5%';\">menu</li>" +
-                 "<div><h2>Informacje</h2>" +
+				+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"return touchpad.onTouchDown(event)\" ontouchend=\"return touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
+				+"<ul id=\"menu\"><li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li><li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img title=\"pilot\" src=\""+pilotBase64+"\"/></li><li onclick='kartaPokaz(\"klawiatura\")'><img title=\"klawiatura\" src=\""+klawiaturaBase64+"\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img title=\"touchpad\" src=\""+touchpadBase64+"\"/></li><li onclick=\"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='';document.getElementById('menu').getElementsByTagName('div')[0].style.display='none';}else{document.getElementById('menu').style.top='5%';document.getElementById('menu').getElementsByTagName('div')[0].style.display='block';}\">menu</li>" +
+                 "<div style=\"display:none;\"><h2>Informacje</h2>" +
                  "CODER<br />" +
                  "-FranQy<br />" +
                  "-Matrix0123456789<br />" +
