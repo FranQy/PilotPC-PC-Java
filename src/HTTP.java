@@ -46,7 +46,7 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 		else
 		{
 			wysylanie="HTTP/1.1 403	Forbidden\r\nSet-Cookie: id="+i+"; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\nKod błędny";
-			
+
 		}
 		os.write(wysylanie.getBytes());
 		os.close();
@@ -169,7 +169,8 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
                  "pilot.click(pilot.trzymaj);" +
                  "},50);\n"
 				+ " var touchpad=new Object();touchpad.czas=new Date(0);touchpad.wcisniete=false;touchpad.mPreviousX=0; touchpad.mPreviousY=0;touchpad.oldX =0;touchpad.oldY=0;touchpad.longClicked = false;touchpad.returnState = true;"
-				+"touchpad.onTouchDown=function(event){"
+				+"touchpad.onTouchDown=function(event){"                   +
+                    "touchpad.longClicked=false;touchpad.czas=new Date(0);"
 				+ "touchpad.czas=new Date();" +
                  "touchpad.mPreviousX=touchpad.oldX=event.touches[0].screenX;"
 				+ "touchpad.mPreviousY=touchpad.oldY=event.touches[0].screenY;"
@@ -181,6 +182,8 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
                  "return false;"
 				+ "};"
 				+"touchpad.onMouseDown=function(event){" +
+
+                 "touchpad.longClicked=false;touchpad.czas=new Date(0);"+
                  "touchpad.czas=new Date();"
 				+ "touchpad.mPreviousX=touchpad.oldX=event.screenX;"
 				+ "touchpad.mPreviousY=touchpad.oldY=event.screenY;"
@@ -194,36 +197,55 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+"touchpad.onTouchUp=function(event){"
 				
 				+ "touchpad.wcisniete=false;"
-                 +"if(event.changedTouches[0].screenX>touchpad.oldX-2&&event.changedTouches[0].screenX<touchpad.oldX+2&&event.changedTouches[0].screenY>touchpad.oldY-2&&event.changedTouches[0].screenY<touchpad.oldY+2)"
+                                               +
+                    "if(touchpad.longClicked)" +
+                            "{" +
+                            "data.mouse = TCP_Data.touchedTYPE.UP;" +
+                            "touchpad.longClicked=false;" +
+                            "}\n" +"if(event.changedTouches[0].screenX>touchpad.oldX-2&&event.changedTouches[0].screenX<touchpad.oldX+2&&event.changedTouches[0].screenY>touchpad.oldY-2&&event.changedTouches[0].screenY<touchpad.oldY+2)"
 				
 				//+ "if(event.screenX>touchpad.oldX-10)"
-				+ "{"
-				+"var data=new TCP_Data();data.mouse = touchpad.typ;data.touchpadX = 0;data.touchpadY =0;"
-				+ "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
-				+ "}" +
+                 + "{"
+                 +"var data=new TCP_Data();" +
+                 "data.mouse = TCP_Data.touchedTYPE.LPM;" +
+                 "data.touchpadX = 0;data.touchpadY =0;"
+                 + "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
+                 + "}" +
+                 "touchpad.longClicked=false;touchpad.czas=new Date(0);"+
                  "return false;"
 				+ "};"
-				+"touchpad.onMouseUp=function(event){\n"
+				+"touchpad.onMouseUp=function(event){\n"   +
+                    "touchpad.czas=new Date(0);"
 				
 				+ "touchpad.wcisniete=false;\n"
-				+ "if(event.screenX>touchpad.oldX-2&&event.screenX<touchpad.oldX+2&&event.screenY>touchpad.oldY-2&&event.screenY<touchpad.oldY+2)"
+				+
+                 "if(touchpad.longClicked)" +
+                 "{" +
+                 "data.mouse = TCP_Data.touchedTYPE.UP;" +
+                 "" +
+                 "}" +
+                 " if(event.screenX>touchpad.oldX-2&&event.screenX<touchpad.oldX+2&&event.screenY>touchpad.oldY-2&&event.screenY<touchpad.oldY+2)"
 				
 				//+ "if(event.screenX>touchpad.oldX-10)"
 				+ "{"
-				+"var data=new TCP_Data();data.mouse = TCP_Data.touchedTYPE.LPM;data.touchpadX = 0;data.touchpadY =0;"
+				+"var data=new TCP_Data();" +
+                 "data.mouse = TCP_Data.touchedTYPE.LPM;" +
+                 "data.touchpadX = 0;data.touchpadY =0;"
 				+ "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
 				+ "}" +
-                 ""
+                 "touchpad.longClicked=false;touchpad.czas=new Date(0);"
 				+ "};"
-				+ "touchpad.onMouseMove=function(event){"
+				+ "touchpad.onMouseMove=function(event){"    +
+                    "touchpad.czas=new Date(0);"
 				+ "if(touchpad.wcisniete){"
 				+ "var dx = event.screenX - this.mPreviousX;var dy = event.screenY - this.mPreviousY;"
 				+ "this.mPreviousX=event.screenX;"
 				+ "this.mPreviousY=event.screenY;" +
-                 "if((new Date())-touchpad.czas>500)" +
+                 "if((new Date())-touchpad.czas>500&&touchpad.czas!=0)" +
                  "{" +
                  //"touchpad.typ=TCP_Data.touchedTYPE.LONG;" +
-                 "touchpad.czas=new Date(10000000000000)" +
+                 "touchpad.longClicked=true;" +
+                 "touchpad.typ=TCP_Data.touchedTYPE.LONG;" +
                  "}"
 				+"var data=new TCP_Data();data.mouse = touchpad.typ;data.touchpadX = dx;data.touchpadY =dy;"
 				+ "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
@@ -232,10 +254,12 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+ "var dx = event.touches[0].screenX - this.mPreviousX;var dy = event.touches[0].screenY - this.mPreviousY;"
 				+ "this.mPreviousX=event.touches[0].screenX;"
 				+ "this.mPreviousY=event.touches[0].screenY;"          +
-                    "if((new Date())-touchpad.czas>500)" +
+                    "if((new Date())-touchpad.czas>500&&touchpad.czas!=0)" +
                             "{" +
+                 "touchpad.longClicked=true;" +
                            // "touchpad.typ=TCP_Data.touchedTYPE.LONG;" +
-                            "touchpad.czas=new Date(10000000000000)" +
+                            "touchpad.czas=new Date(0);" +
+                 "touchpad.typ=TCP_Data.touchedTYPE.LONG;" +
                             "}"
 				+"var data=new TCP_Data();data.mouse = touchpad.typ;data.touchpadX = dx;data.touchpadY =dy;"
 				+ "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
@@ -243,11 +267,11 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+"function send(data){"
 				+ "var socket=new XMLHttpRequest();"
 				+ "var czas=new Date();"
-				+ "data.czas=czas.getTime()*1000+czas.getMilliseconds();"
+				+ "data.czas=czas.getTime();"
 				//+ "alert(data);"
 				+ "socket.open('get', '?'+JSON.stringify(data))\n"
 				//+ "alert('?'+JSON.stringify(data));"
-				+ "socket.onloadend=function(){\n"
+				+ "socket.onload=function(){\n"
 				+ "if(socket.responseText=='ok')\n"
 				+ "{czasPrzesylu=czas;"
 				+ "polaczono=true;"
@@ -263,12 +287,12 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+ "document.getElementById(id).style.display='block';"
 				+ "}"
 				+ "var timer=setInterval(function(){"
-				+ "if(new Date()-czasPrzesylu>3000&&polaczono)"
+				+ "if((new Date()).getTime()-(czasPrzesylu).getTime()>3000&&polaczono)"
 				+ "{"
 				+ "polaczono=false;"
 				+ "alert('Rozłączono!');"
 				+ "}"
-				+ "if(new Date()-czasPrzesylu>1000)"
+				+ "if((new Date()).getTime()-czasPrzesylu.getTime()>1000)"
 				+ "send(new Object());"
 				+ "},250);" +
                  "function mapa(skala)" +
