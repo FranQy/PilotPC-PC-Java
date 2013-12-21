@@ -66,7 +66,9 @@ GNU/Linux (dla procesorów x86 i x64)
 </ul></td></tr><tr><td>0.1.19</td><td>16.12.2013r.</td><td><ul>
 <li>Poprawki błędów</li>
 </ul></td></tr><tr><td>0.1.20</td><td>18.12.2013r.</td><td><ul>
-<li>Poprawki błędów</li>
+</ul></td></tr><tr><td>0.1.21</td><td>19.12.2013r.</td><td><ul>
+<li>Wersja WWW:menu</li>
+<li>Wersja WWW:scroll (prawe 10% szerokości touchpada)</li>
 </ul></td></tr>
 </table>
 <h2>Linki</h2>
