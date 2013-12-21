@@ -19,6 +19,7 @@ public class MouseRobot {
 	Robot robot;
 	static double pozostalex=0;//liczby po przecinku pozostałe po wyliczeniu ostetecznego ruchu myszy
 	static double pozostaley=0;
+    static boolean wcisniete=false;
 	public MouseRobot()
 	{
 
@@ -58,7 +59,10 @@ public class MouseRobot {
 	}
 	public void move(boolean LONG, int mx, int my)
 	{
-		robot.mousePress(InputEvent.BUTTON1_MASK);
+		if(!wcisniete)
+        {robot.mousePress(InputEvent.BUTTON1_MASK);
+            wcisniete=true;
+        }
 		 move(mx,  my);
 			
 	}
