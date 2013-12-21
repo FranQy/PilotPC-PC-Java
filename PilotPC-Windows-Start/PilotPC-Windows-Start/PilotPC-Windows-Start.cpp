@@ -11,7 +11,16 @@ int _tmain(const int argc, _TCHAR* argv[])
 	if (argc == 1)
 	{
 
-		HINSTANCE hInst = ShellExecute(0,
+		HINSTANCE hInst;
+		if (argv[0][1] == L':')
+			hInst = ShellExecute(0,
+			L"open",                      // Operation to perform
+			L"javaw.exe",  // Application name
+			L"-jar PilotPC-PC-Java.jar",           // Additional parameters
+			wstring(argv[0]).substr(0,wstring(argv[0]).find_last_of(L'\\')).c_str(),                           // Default directory
+			SW_SHOW);
+		else
+			hInst = ShellExecute(0,
 			L"open",                      // Operation to perform
 			L"javaw.exe",  // Application name
 			L"-jar PilotPC-PC-Java.jar",           // Additional parameters
@@ -33,7 +42,7 @@ int _tmain(const int argc, _TCHAR* argv[])
 	}
 	else if (wstring(argv[1]) == wstring(L"/a"))
 	{
-		
+
 		wstring folder;
 		if (argv[0][1] == L':')
 			folder = wstring(L"\"") + wstring(argv[0]) + wstring(L"\"");
@@ -41,7 +50,7 @@ int _tmain(const int argc, _TCHAR* argv[])
 		{
 			WCHAR curDir[1024];
 			GetCurrentDirectory(2048, curDir);
-			folder = wstring(L"\"") + curDir + wstring(L"\\") + wstring(argv[0])+wstring(L"\"");
+			folder = wstring(L"\"") + curDir + wstring(L"\\") + wstring(argv[0]) + wstring(L"\"");
 
 		}
 		wprintf(folder.c_str());

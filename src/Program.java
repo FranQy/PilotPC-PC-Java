@@ -22,7 +22,7 @@ public class Program {
     static Polaczenie polaczenia;
     static TypWyswietlania wyswietlanie;
     static Ustawienia ustawienia = Ustawienia.importuj();
-    static public String wersja = "0.1.21";
+    static public String wersja = "0.1.22";
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
