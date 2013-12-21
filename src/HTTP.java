@@ -263,7 +263,15 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
                             "}"
 				+"var data=new TCP_Data();data.mouse = touchpad.typ;data.touchpadX = dx;data.touchpadY =dy;"
 				+ "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
-				+ "return false;};"
+				+ "return false;};" +
+                 "var klawiatura=new Object();" +
+                 "klawiatura.press=function(event)" +
+                 "{"
+                 +"var data=new TCP_Data();data.button = event.keyCode;"
+                 + "data.type=TCP_Data.typ.KEYBOARD;send(data);"
+
+                 +"return false;" +
+                 "};"
 				+"function send(data){"
 				+ "var socket=new XMLHttpRequest();"
 				+ "var czas=new Date();"
@@ -326,7 +334,7 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
                  "<map id=\"przycMapa\" name=\"przycMapa\">" +
                  "</map>" 
 				+ "</div>"
-				+ "<div class=\"karta\" id=\"klawiatura\">Klawiatura wkrodce</div>"
+				+ "<div class=\"karta\" id=\"klawiatura\"><textarea onkeypress=\"return klawiatura.press(event)\"></textarea></div>"
 				//Tu były problemy ze zdarzeniami
 				//+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" onmousemove=\"return touchpad.onMouseMove(event)\" ontouchdown=\"touchpad.onTouchDown(event)\" onmousedown=\"touchpad.onTouchDown(event)\" ontouchup=\"touchpad.onTouchUp(event)\" onmouseup=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" onmouseleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
 				//+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\"  id=\"touchpad\"></div>"

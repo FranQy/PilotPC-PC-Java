@@ -69,6 +69,10 @@ GNU/Linux (dla procesorów x86 i x64)
 </ul></td></tr><tr><td>0.1.21</td><td>19.12.2013r.</td><td><ul>
 <li>Wersja WWW:menu</li>
 <li>Wersja WWW:scroll (prawe 10% szerokości touchpada)</li>
+</ul></td></tr><tr><td>0.1.23</td><td>21.12.2013r.</td><td><ul>
+<li>Wersja WWW:głośność przez przytrzymanie</li>
+<li>Wersja WWW:naprawa błędu z menu</li>
+<li>Wersja WWW:zalążek klawiatury</li>
 </ul></td></tr>
 </table>
 <h2>Linki</h2>
