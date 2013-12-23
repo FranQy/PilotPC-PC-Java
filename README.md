@@ -75,6 +75,13 @@ GNU/Linux (dla procesorów x86 i x64)
 <li>Wersja WWW:głośność przez przytrzymanie</li>
 <li>Wersja WWW:naprawa błędu z menu</li>
 <li>Wersja WWW:zalążek klawiatury</li>
+</ul></td></tr><tr><td>0.1.24</td><td>23.12.2013r.</td><td><ul>
+<li>Wsparcie dla komuniakcji z innymi programami (np. z dodatkiem dla Firefoksa)</li>
+<li>Dodanie dodatku dla Firefoksa obsługującego przyciski play/pauza, następny i poprzedni na YouTube.com</li>
+<li></li>
+<li>Wersja WWW:informacje o połączeniu</li>
+<li>Wersja WWW:przycisk utwierający menu i animacja</li>
+<li>Wersja WWW:usunięcie gamepada</li>
 </ul></td></tr>
 </table>
 <h2>Linki</h2>

@@ -13,12 +13,15 @@ int _tmain(const int argc, _TCHAR* argv[])
 
 		HINSTANCE hInst;
 		if (argv[0][1] == L':')
+		{
 			hInst = ShellExecute(0,
-			L"open",                      // Operation to perform
-			L"javaw.exe",  // Application name
-			L"-jar PilotPC-PC-Java.jar",           // Additional parameters
-			wstring(argv[0]).substr(0,wstring(argv[0]).find_last_of(L'\\')).c_str(),                           // Default directory
-			SW_SHOW);
+				L"open",                      // Operation to perform
+				L"javaw.exe",  // Application name
+				L"-jar PilotPC-PC-Java.jar",           // Additional parameters
+				wstring(argv[0]).substr(0, wstring(argv[0]).find_last_of(L'\\')).c_str(),                           // Default directory
+				SW_SHOW);
+			wprintf(wstring(argv[0]).substr(0, wstring(argv[0]).find_last_of(L'\\')).c_str());
+		}
 		else
 			hInst = ShellExecute(0,
 			L"open",                      // Operation to perform
