@@ -113,6 +113,17 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
                         touchpadBase64="data:image/png;base64,"+DatatypeConverter.printBase64Binary(touchpadBytes);
                     }
                     catch ( IOException e ) { touchpadBase64=""; }
+                    String menuBase64;
+                    try
+                    {
+                        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                        InputStream input = classLoader.getResourceAsStream(
+                                "resources/opcje.png");
+                        byte[] menuBytes = new byte[3000];
+                        input.read(menuBytes);
+                        menuBase64="data:image/png;base64,"+DatatypeConverter.printBase64Binary(menuBytes);
+                    }
+                    catch ( IOException e ) { menuBase64=""; }
                     String przyciskiBase64;
                     try
                     {
@@ -372,7 +383,7 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"return touchpad.onTouchDown(event)\" ontouchend=\"return touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
 				+"<ul id=\"menu\">" +
                  //"<li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li>" +
-                 "<li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img title=\"pilot\" src=\""+pilotBase64+"\"/></li><li onclick='kartaPokaz(\"klawiatura\")'><img title=\"klawiatura\" src=\""+klawiaturaBase64+"\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img title=\"touchpad\" src=\""+touchpadBase64+"\"/></li><li onclick=\"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';}else{document.getElementById('menu').style.top='5%';document.getElementById('menur').style.top='15%';}\">menu</li>" +
+                 "<li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img alt=\"pilot\" src=\""+pilotBase64+"\"/></li><li onclick='kartaPokaz(\"klawiatura\")'><img alt=\"klawiatura\" src=\""+klawiaturaBase64+"\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img alt=\"touchpad\" src=\""+touchpadBase64+"\"/></li><li onclick=\"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';}else{document.getElementById('menu').style.top='5%';document.getElementById('menur').style.top='15%';}\"><img style=\"float:right\" alt=\"menu\" src=\""+menuBase64+"\"/></li>" +
                  "</ul><div id=\"menur\"><h2>Informacje</h2>" +
                  "<div class=\"podmenu\">" +
                  "POŁĄCZENIE<br/>" +
