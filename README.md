@@ -3,12 +3,13 @@
 <p>
 	Jest to serwer dla programu PilotPC. Program posiada mechanizm automatycznej aktualizacji.
 </p>
-<h2>Zaczynamy!</h2>
+<!--instrukcja-->
+<h2>Instrukcja</h2>
 <p>
-	Aby uruchomić serwer nalerzy rozpakować wszystkie pliki do jednego folderu, a następnie dwukrotnie kliknąć plik PiltPC-PC-Java. Jeśli dostaniesz komunikat z zapory (firewalla) to zezwól na połączenie/dodanie wyjątku.</p>
+	Aby uruchomić serwer nalerzy zapisać plik <b>PilotPC-PC-Java</b>.jar, najlepiej w pustym folderze, a następnie go uruchomić. Jeśli dostaniesz komunikat z zapory (firewalla) to zezwól na połączenie/dodanie wyjątku.
 </p>
 <p>
-	W zasobniku systemowym pokarze się ikona (tymczasowo jest to czarny kwadrat) informująca że serwer jest uruchomiony. Można kliknąć ją 2 razy aby pojawiło się okno serwera. Okno to można dowolnie otwierać i zamykać: nie wpływa to na działanie serwera.
+	W zasobniku systemowym pokarze się ikona (tymczasowo jest to czarny kwadrat) informująca że serwer jest uruchomiony. Można kliknąć ją 2 razy aby pojawiło się okno serwera. Okno to można dowolnie otwierać i zamykać: nie wpływa to na działanie serwera. Aby wyłączyć serwer kliknij prawym przyciskiem myszy na ikonę w zasobniku i wybierz <b>Zamknij</b>
 </p>
 <p>
 	Pierwszą metodą na połączenie się jest skorzystanie z <a href="https://github.com/FranQy/PilotPC-Android">Aplikacji na androida</a>. Nalerzy w niej wpisać adres IP komputera (pokazuje się on w oknie serwera) oraz hasło (równierz pokazuje się w oknie serwera).
@@ -17,8 +18,9 @@
 	Drógą metodą jest zeskanowanie kodu QR wyświetlonego w oknie serwera.
 </p>
 <p>
-	Trzecią metodą (niezalecaną, obecnie działającą tylko prowizorycznie) jest uruchomienie przeglądarki www w telefonie/tablecie i wpisanie numeru IP komputera, dwukropka i liczby <i>12345</i> np. <i>127.127.127.127:12345</i>.
+	Trzecią metodą jest uruchomienie przeglądarki www w telefonie/tablecie i wpisanie numeru IP komputera, dwukropka i liczby <i>8753</i> np. <i>127.127.127.127:8753</i>.
 </p>
+<!--/instrukcja-->
 <h2>Pliki</h2>
 <table>
 	<tr><td><b>PilotPC-PC-Java</b>.jar</td><td>Główny plik z programem</td></tr>

@@ -136,12 +136,13 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+"<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
 				+ "<style>"
 				+ "*{-ms-touch-action: none;}" +
-                 "body{background:#26211b;color:white;font-style:non-sherif;}"
-				+ "#menu{height:10%;position: absolute;bottom: 0;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
+                 "body{font-family:\"Segoe UI Light\",\"Segoe UI\",arial;overflow:hidden;background:#26211b;color:white;font-style:non-sherif;}"
+				+ "#menu{transition:all 300ms;-webkit-transition:all 300ms;height:10%;position: absolute;top: 90%;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
 				+ "#menu li{display:inline;}" +
                  ".karta{position:absolute;left:0;top:0;width:100%;bottom:10%;display:none;}"
 				+ "#menu li img{height:100%;padding:0 2%;}" +
-                 "#menu div{background:black;text-aling:left;}"
+                 "#menur{background:#2e2e2e;text-align:left;height:85%;width:100%;position:absolute;top:100%;transition:all 300ms;-webkit-transition:all 300ms;left:0;}" +
+                 "#menur h2{margin:0;}"
 				+ "#pilot #przyciski{height:100%;margin: auto; display: block;}"+
                  "</style>"
 				+"<script>/*<![CDATA[*/\n"
@@ -277,12 +278,13 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+ "var czas=new Date();"
 				+ "data.czas=czas.getTime();"
 				//+ "alert(data);"
-				+ "socket.open('get', '?'+JSON.stringify(data))\n"
+				+ "socket.open('get', '?'+JSON.stringify(data), true)\n"
 				//+ "alert('?'+JSON.stringify(data));"
 				+ "socket.onload=function(){\n"
 				+ "if(socket.responseText=='ok')\n"
 				+ "{czasPrzesylu=czas;"
-				+ "polaczono=true;"
+				+ "polaczono=true;"       +
+                    "document.getElementById('stanPol').textContent='Połączono';"
 				+ "}};\n"
 				+ "socket.send();\n"
 				+ "}"
@@ -297,8 +299,9 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+ "var timer=setInterval(function(){"
 				+ "if((new Date()).getTime()-(czasPrzesylu).getTime()>3000&&polaczono)"
 				+ "{"
-				+ "polaczono=false;"
-				+ "alert('Rozłączono!');"
+				+ "polaczono=false;" +
+                 "document.getElementById('stanPol').textContent='Rozłączono!';"
+				//+ "alert('Rozłączono!');"
 				+ "}"
 				+ "if((new Date()).getTime()-czasPrzesylu.getTime()>1000)"
 				+ "send(new Object());"
@@ -340,15 +343,20 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				//+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\"  id=\"touchpad\"></div>"
 				//+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"touchpad.onTouchDown(event)\" ontouchend=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\"  id=\"touchpad\"></div>"
 				+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"return touchpad.onTouchDown(event)\" ontouchend=\"return touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
-				+"<ul id=\"menu\"><li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li><li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img title=\"pilot\" src=\""+pilotBase64+"\"/></li><li onclick='kartaPokaz(\"klawiatura\")'><img title=\"klawiatura\" src=\""+klawiaturaBase64+"\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img title=\"touchpad\" src=\""+touchpadBase64+"\"/></li><li onclick=\"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='';document.getElementById('menu').getElementsByTagName('div')[0].style.display='none';}else{document.getElementById('menu').style.top='5%';document.getElementById('menu').getElementsByTagName('div')[0].style.display='block';}\">menu</li>" +
-                 "<div style=\"display:none;\"><h2>Informacje</h2>" +
+				+"<ul id=\"menu\"><li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li><li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img title=\"pilot\" src=\""+pilotBase64+"\"/></li><li onclick='kartaPokaz(\"klawiatura\")'><img title=\"klawiatura\" src=\""+klawiaturaBase64+"\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img title=\"touchpad\" src=\""+touchpadBase64+"\"/></li><li onclick=\"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';}else{document.getElementById('menu').style.top='5%';document.getElementById('menur').style.top='15%';}\">menu</li>" +
+                 "</ul><div id=\"menur\"><h2>Informacje</h2>" +
+                 "<div class=\"podmenu\">" +
+                 "POŁĄCZENIE<br/>" +
+                 "Stan:<span id=\"stanPol\">Połączono</span><br/>" +
+                 "Jakość:<span id=\"jakosc\">Brak Danych</span><br/>" +
+                 "Host: " +java.net.InetAddress.getLocalHost().getHostName()+"<br/>"+
                  "CODER<br />" +
                  "-FranQy<br />" +
                  "-Matrix0123456789<br />" +
                  "DESIGNERS<br/>" +
                  "-FranQy<br/>" +
                  "-Wieczur" +
-                 "</div></ul></body></html>";
+                 "</div></div></body></html>";
 		
 				}
 
