@@ -27,7 +27,8 @@
 	<tr><td><b>libpilotpc</b>.so</td><td>Dodatkowa biblioteka dla Linuksa z 32-bitową Javą</td></tr>
 	<tr><td><b>libpilotpc-x64</b>.so</td><td>Dodatkowa biblioteka dla Linuksa z 64-bitową Javą</td></tr>
 	<tr><td><b>pilotpc</b>.dll</td><td>Dodatkowa biblioteka dla Windowsa z 32-bitową Javą</td></tr>
-	<tr><td><b>pilotpc-x64<b>.dll</td><td>Dodatkowa biblioteka dla Windowsa z 64-bitową Javą</td></tr>
+	<tr><td><b>pilotpc-x64</b>.dll</td><td>Dodatkowa biblioteka dla Windowsa z 64-bitową Javą</td></tr>
+	<tr><td><b>windows</b>.exe</td><td>Plik uruchamiający program pod systemem Windows</td></tr>
 </table>
 <h2>Wspierane systemy operacyjne</h2>
 <p>
@@ -78,7 +79,6 @@ GNU/Linux (dla procesorów x86 i x64)
 </ul></td></tr><tr><td>0.1.24</td><td>23.12.2013r.</td><td><ul>
 <li>Wsparcie dla komuniakcji z innymi programami (np. z dodatkiem dla Firefoksa)</li>
 <li>Dodanie dodatku dla Firefoksa obsługującego przyciski play/pauza, następny i poprzedni na YouTube.com</li>
-<li></li>
 <li>Wersja WWW:informacje o połączeniu</li>
 <li>Wersja WWW:przycisk utwierający menu i animacja</li>
 <li>Wersja WWW:usunięcie gamepada</li>
