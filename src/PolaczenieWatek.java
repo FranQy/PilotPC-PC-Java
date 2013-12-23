@@ -216,6 +216,12 @@ oos.flush();
 			}
             else if(data.type == TCP_Data.typ.PILOT )
             {
+                for (byte x = 0; x < HTTP.doWykonania.length; x++) {
+                    if (HTTP.doWykonania[x] == null) {
+                        HTTP.doWykonania[x]=data;
+                        break;
+                    }
+                }
                 pilot.click(data);
                // System.out.println("pilot");
             }else if(data.type == TCP_Data.typ.KEYBOARD )

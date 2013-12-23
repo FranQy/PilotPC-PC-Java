@@ -28,7 +28,7 @@ public class TCP_Data implements Serializable {
 	        touchpadX = 0;
 	        touchpadY = 0;
 	      //  type = null;
-	        button = null;
+	        //button = null;
 	        mouse = null;
 
 	    }

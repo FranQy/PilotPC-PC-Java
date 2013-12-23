@@ -169,7 +169,7 @@ timer1.schedule (timer1_task, 0, 0);
 				break;
 			}
 		   }
-		   data.clean();
+		   //data.clean();
 	   }
 
 }
