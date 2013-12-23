@@ -46,6 +46,8 @@ public class Program {
             //if(wyświetlanie==TypWyświetlania.Okno)
             //Mess
         }
+        else
+            System.out.println("PilotPC wersja " + wersja);
         if (SystemTray.isSupported()) {
             SystemTray tray = SystemTray.getSystemTray();
             PopupMenu popup = new PopupMenu();

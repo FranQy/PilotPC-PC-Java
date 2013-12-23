@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -197,7 +198,6 @@ oos.flush();
 				}
 				case LONG:
 				{
-					// TODO zmiana "algorytmu" ruszania z LPM
 					mouse.move(true, data.touchpadX, data.touchpadY); //ruszanie ze wcisnietym LPM
 					break;
 				}
@@ -214,11 +214,18 @@ oos.flush();
 				}
 					 								
 			}
-			else if(data.type == TCP_Data.typ.PILOT )
-			{
-				pilot.click(data);
-				System.out.println("pilot");
-			}
+            else if(data.type == TCP_Data.typ.PILOT )
+            {
+                pilot.click(data);
+               // System.out.println("pilot");
+            }else if(data.type == TCP_Data.typ.KEYBOARD )
+            {
+                try {
+                    (new Robot()).keyPress(data.touchpadX);     //TODO tymczasowe do zmiany TCP_Data
+                } catch (AWTException e) {
+                    e.printStackTrace();
+                }
+            }
 			data.clean();//czyszczenie zmiennych w TCP_Data
     	}
     	/**

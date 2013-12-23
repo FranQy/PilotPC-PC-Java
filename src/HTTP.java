@@ -16,7 +16,7 @@ public class HTTP {
 static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOException
 {
 	
-	System.out.print(wyj);
+	//System.out.print(wyj);
 	if(wyj.indexOf("/")==0&&wyj.indexOf("?")>0)
 	{
 		
@@ -38,6 +38,12 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 		ret.touchpadY=klasaObjekt.getInt("touchpadY");
 		ret.type=typ.values()[klasaObjekt.getInt("type")];
 		ret.mouse=touchedTYPE.values()[klasaObjekt.getInt("mouse")];
+                if(ret.type==typ.KEYBOARD)             //TODO tymczasowe, do zmiany TCP_Data
+                {
+                             ret.touchpadX=klasaObjekt.getInt("button");
+
+                }
+                else
 		ret.button=pilotButton.values()[klasaObjekt.getInt("button")];
 			}
 		catch(Exception e){ret=null;}
@@ -148,7 +154,8 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
                  "</style>"
 				+"<script>/*<![CDATA[*/\n"
 				+ "var czasPrzesylu=new Date();"
-				+ "var polaczono=false;"
+				+ "var polaczono=false;" +
+                 "var jakosc=[];"
 				+ "var pilot=new Object();\n"
                  + "pilot.trzymajLicz=0;" +
                  "pilot.trzymaj=null;" +
@@ -279,14 +286,16 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+ "var czas=new Date();"
 				+ "data.czas=czas.getTime();"
 				//+ "alert(data);"
-				+ "socket.open('get', '?'+JSON.stringify(data), true)\n"
 				//+ "alert('?'+JSON.stringify(data));"
 				+ "socket.onload=function(){\n"
 				+ "if(socket.responseText=='ok')\n"
-				+ "{czasPrzesylu=czas;"
+				+ "{czasPrzesylu=czas;\n" +
+                 "jakosc[jakosc.length]=(new Date()).getTime()-data.czas;\n"
 				+ "polaczono=true;"       +
-                    "document.getElementById('stanPol').textContent='Połączono';"
+                    "document.getElementById('stanPol').textContent='Połączono';"  +
+                 "document.getElementById('jakosc').textContent=Math.ceil(jakoscLicz());"
 				+ "}};\n"
+                 + "socket.open('get', '?'+JSON.stringify(data), true)\n"
 				+ "socket.send();\n"
 				+ "}"
 				+ "function TCP_Data(){this.touchpadX=0;this.touchpadY=0;this.button=0;this.type=0;this.mouse=0;};"
@@ -296,12 +305,15 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
 				+ "function kartaPokaz(id){"
 				//+ "document.getElementById('gamepad').style.display="
                  +"document.getElementById('pilot').style.display=document.getElementById('klawiatura').style.display=document.getElementById('touchpad').style.display='none';"
-				+ "document.getElementById(id).style.display='block';"
+				+ "document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';" +
+                 "document.getElementById(id).style.display='block';"
 				+ "}"
 				+ "var timer=setInterval(function(){"
 				+ "if((new Date()).getTime()-(czasPrzesylu).getTime()>3000&&polaczono)"
 				+ "{"
 				+ "polaczono=false;" +
+                 "jakosc=[];" +
+                 "document.getElementById('jakosc').textContent='Brak Danych';"+
                  "document.getElementById('stanPol').textContent='Rozłączono!';"
 				//+ "alert('Rozłączono!');"
 				+ "}"
@@ -330,6 +342,19 @@ static TCP_Data polaczenie(InputStream is, Socket soc,String wyj) throws IOExcep
                  "<area shape=\"poly\" coords=\"'+(skala*180)+','+(skala*530)+','+(skala*50)+','+(skala*660)+','+(skala*50)+','+(skala*730)+','+(skala*180)+','+(skala*870)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.LEFT);\" onmouseup=\"pilot.trzymaj=null\" ontouchstart=\"pilot.clickTrzymaj(TCP_Data.pilotButton.LEFT); return false;\" ontouchend=\"pilot.trzymaj=null; return false;\"  />" +
                  "<area shape=\"poly\" coords=\"'+(skala*180)+','+(skala*870)+','+(skala*180)+','+(skala*1010)+','+(skala*670)+','+(skala*1010)+','+(skala*670)+','+(skala*870)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.OK);\"/>" +
                  "'" +
+                 "}" +
+                 "function jakoscLicz()\n" +
+                 "{\n" +
+                 "if(jakosc.length>4)\n" +
+                 "return (jakosc[jakosc.length-5]+jakosc[jakosc.length-4]+jakosc[jakosc.length-3]*2+jakosc[jakosc.length-2]*2+jakosc[jakosc.length-1]*3)/9;\n" +
+                 "else if(jakosc.length==4)\n" +
+                 "return (jakosc[jakosc.length-4]+jakosc[jakosc.length-3]*2+jakosc[jakosc.length-2]*2+jakosc[jakosc.length-1]*3)/8;\n" +
+                 "else if(jakosc.length==3)\n" +
+                 "return (jakosc[jakosc.length-3]*2+jakosc[jakosc.length-2]*2+jakosc[jakosc.length-1]*3)/7;\n" +
+                 "else if(jakosc.length==2)\n" +
+                 "return (jakosc[jakosc.length-2]*2+jakosc[jakosc.length-1]*3)/5;\n" +
+                 "else\n" +
+                 "return jakosc[jakosc.length-1];\n" +
                  "}"
 				+ "/*]]>*/</script>"
 				+"</head><body onload=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onresize=\"mapa(document.getElementById('przyciski').clientHeight/1280)\">"
