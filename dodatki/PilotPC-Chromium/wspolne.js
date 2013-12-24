@@ -66,6 +66,20 @@ uri=karta.document.URL
 			karta.document.getElementsByClassName('skipControl__next')[0].click()
 		}
 	}
+	else if(karta.document.getElementsByTagName('video').length>0)
+			{
+				if(karta.document.getElementsByTagName('video')[0].paused)
+				karta.document.getElementsByTagName('video')[0].play()
+				else
+				karta.document.getElementsByTagName('video')[0].pause()
+			}
+	else if(karta.document.getElementsByTagName('audio').length>0)
+			{
+				if(karta.document.getElementsByTagName('audio')[0].paused)
+				karta.document.getElementsByTagName('audio')[0].play()
+				else
+				karta.document.getElementsByTagName('audio')[0].pause()
+			}
 }
 pilotpc.http=function()
 {

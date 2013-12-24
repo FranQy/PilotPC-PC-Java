@@ -14,6 +14,11 @@ pilotpc.szukajMultimedialne=function(d,f)
 	})
 	})*/
 	//console.log(ret);
+	
+	/*chrome.tabs.getCurrent(function(tabA){
+	if(pilotpc.szukajMultimedialneSpr(tabA))
+	chrome.tabs.sendMessage(tabA.id,[f,d])
+	else*/
 	chrome.windows.getAll(function(okna){
 	for(var x=0;x<okna.length;x++)
 	{
@@ -29,7 +34,7 @@ pilotpc.szukajMultimedialne=function(d,f)
 	}
 	}
 	})
-	}});
+	}});//});
 }
 
 pilotpc.szukajMultimedialneSpr=function(tab)

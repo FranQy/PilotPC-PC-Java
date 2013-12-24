@@ -62,6 +62,6 @@ pilotpc.szukajMultimedialne=function(d,f)
 
 pilotpc.szukajMultimedialneSpr=function(tab)
 {
-return ((tab.uri.host=="youtube.com"||tab.uri.host=="www.youtube.com")&&tab.uri.path.substr(1,5)=="watch")||tab.uri.host=="soundcloud.com";
+return ((tab.uri.host=="youtube.com"||tab.uri.host=="www.youtube.com")&&tab.uri.path.substr(1,5)=="watch")||tab.uri.host=="soundcloud.com"||tab.document.getElementsByTagName('video').length>0||tab.document.getElementsByTagName('audio').length>0;
 }
 window.addEventListener("load", function () { pilotpc_firefox.onFirefoxLoad(); }, false);
