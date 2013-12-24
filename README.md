@@ -6,16 +6,16 @@
 <!--instrukcja-->
 <h2>Instrukcja</h2>
 <p>
-	Aby uruchomić serwer nalerzy zapisać plik <b>PilotPC-PC-Java</b>.jar, najlepiej w pustym folderze, a następnie go uruchomić. Jeśli dostaniesz komunikat z zapory (firewalla) to zezwól na połączenie/dodanie wyjątku.
+	Aby uruchomić serwer należy zapisać plik <b>PilotPC-PC-Java</b>.jar, najlepiej w pustym folderze, a następnie go uruchomić. Jeśli dostaniesz komunikat z zapory (firewalla) to zezwól na połączenie/dodanie wyjątku.
 </p>
 <p>
 	W zasobniku systemowym pokarze się ikona (tymczasowo jest to czarny kwadrat) informująca że serwer jest uruchomiony. Można kliknąć ją 2 razy aby pojawiło się okno serwera. Okno to można dowolnie otwierać i zamykać: nie wpływa to na działanie serwera. Aby wyłączyć serwer kliknij prawym przyciskiem myszy na ikonę w zasobniku i wybierz <b>Zamknij</b>
 </p>
 <p>
-	Pierwszą metodą na połączenie się jest skorzystanie z <a href="https://github.com/FranQy/PilotPC-Android">Aplikacji na androida</a>. Nalerzy w niej wpisać adres IP komputera (pokazuje się on w oknie serwera) oraz hasło (równierz pokazuje się w oknie serwera).
+	Pierwszą metodą na połączenie się jest skorzystanie z <a href="https://github.com/FranQy/PilotPC-Android">Aplikacji na androida</a>. należy w niej wpisać adres IP komputera (pokazuje się on w oknie serwera) oraz hasło (również pokazuje się w oknie serwera).
 </p>
 <p>
-	Drógą metodą jest zeskanowanie kodu QR wyświetlonego w oknie serwera.
+	Drugą metodą jest zeskanowanie kodu QR wyświetlonego w oknie serwera.
 </p>
 <p>
 	Trzecią metodą jest uruchomienie przeglądarki www w telefonie/tablecie i wpisanie numeru IP komputera, dwukropka i liczby <i>8753</i> np. <i>127.127.127.127:8753</i>.
