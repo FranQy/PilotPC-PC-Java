@@ -36,29 +36,32 @@ pilotpc_firefox.showFirefoxContextMenu = function(event) {
 };
 
 
-pilotpc_firefox.szukajMultimedialne=function()
+pilotpc.szukajMultimedialne=function(d,f)
 {
-	if(pilotpc_firefox.szukajMultimedialneSpr(window.Application.activeWindow.activeTab))
-		return window.Application.activeWindow.activeTab;
+	if(pilotpc.szukajMultimedialneSpr(window.Application.activeWindow.activeTab))
+	{
+		return f(d,window.Application.activeWindow.activeTab);
+	}
 	console.log("szukaA");
 	for(var i=0;i<window.Application.windows.length;i++)
 	{
-		if(pilotpc_firefox.szukajMultimedialneSpr(window.Application.windows[i].activeTab))
-			return window.Application.windows[i].activeTab;
+		if(pilotpc.szukajMultimedialneSpr(window.Application.windows[i].activeTab))
+			return f(d,window.Application.windows[i].activeTab);
 	}
 	console.log("szukaB");
 	for(var i=0;i<window.Application.windows.length;i++)
 	{
 		for(var i2=0;i2<window.Application.windows[i].tabs.length;i2++)
 		{
-			if(pilotpc_firefox.szukajMultimedialneSpr(window.Application.windows[i].tabs[i2]))
-				return window.Application.windows[i].tabs[i2];
+			if(pilotpc.szukajMultimedialneSpr(window.Application.windows[i].tabs[i2]))
+				return f(d,window.Application.windows[i].tabs[i2]);
 		}
 	}
 	console.log("szukaC");
 }
-pilotpc_firefox.szukajMultimedialneSpr=function(tab)
+
+pilotpc.szukajMultimedialneSpr=function(tab)
 {
-return ((tab.uri.host=="youtube.com"||tab.uri.host=="www.youtube.com")&&tab.uri.path.substr(1,5)=="watch");
+return ((tab.uri.host=="youtube.com"||tab.uri.host=="www.youtube.com")&&tab.uri.path.substr(1,5)=="watch")||tab.uri.host=="soundcloud.com";
 }
 window.addEventListener("load", function () { pilotpc_firefox.onFirefoxLoad(); }, false);
