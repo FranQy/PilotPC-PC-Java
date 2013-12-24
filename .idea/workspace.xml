@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e646a8c4-e358-4260-b97a-355bcc8df9c4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HTTP.java" afterPath="$PROJECT_DIR$/src/HTTP.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PilotPC-Windows-Start/PilotPC-Windows-Start/PilotPC-Windows-Start.cpp" afterPath="$PROJECT_DIR$/PilotPC-Windows-Start/PilotPC-Windows-Start/PilotPC-Windows-Start.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+    <list default="true" id="e646a8c4-e358-4260-b97a-355bcc8df9c4" name="Default" comment="WWW:usunięcie gamepada, kolory&#10;">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SocketServer.iws" />
@@ -111,7 +109,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/PolaczenieWatek.java" line="177" class="PolaczenieWatek" package="">
+      <breakpoint url="file://$PROJECT_DIR$/src/HTTP.java" line="70" class="HTTP" package="">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -126,7 +124,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/PolaczenieWatek.java" line="127" class="PolaczenieWatek" package="">
+      <breakpoint url="file://$PROJECT_DIR$/src/PolaczenieWatek.java" line="220" class="PolaczenieWatek" package="">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -142,25 +140,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </line_breakpoints>
-    <method_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/src/PolaczenieWatek.java" line="173" class="PolaczenieWatek" package="">
-        <option name="WATCH_ENTRY" value="true" />
-        <option name="WATCH_EXIT" value="true" />
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </method_breakpoints>
+    <method_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -170,22 +150,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="HTTP.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="HTTP.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/HTTP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="292" column="56" selection-start="13397" selection-end="13397" vertical-scroll-proportion="8.137427" vertical-offset="1977" max-vertical-offset="7089">
+            <state line="70" column="0" selection-start="3172" selection-end="3172" vertical-scroll-proportion="0.0" vertical-offset="1080" max-vertical-offset="8211">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PanelQRCode.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/PanelQRCode.java">
+      <file leaf-file-name="Program.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Program.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="59" selection-start="1786" selection-end="1790" vertical-scroll-proportion="-4.5384617" vertical-offset="1157" max-vertical-offset="2193">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="24" column="41" selection-start="653" selection-end="653" vertical-scroll-proportion="0.3180272" vertical-offset="0" max-vertical-offset="1836">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Pilot.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Pilot.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="171" column="13" selection-start="3265" selection-end="3265" vertical-scroll-proportion="0.0" vertical-offset="2594" max-vertical-offset="2975">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TCP_Data.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/example/socketclient/TCP_Data.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="43" selection-start="435" selection-end="435" vertical-scroll-proportion="0.0" vertical-offset="137" max-vertical-offset="748">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -193,7 +189,7 @@
       <file leaf-file-name="PolaczenieWatek.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PolaczenieWatek.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="38" selection-start="2098" selection-end="2147" vertical-scroll-proportion="0.0" vertical-offset="944" max-vertical-offset="4250">
+            <state line="220" column="0" selection-start="4821" selection-end="4821" vertical-scroll-proportion="0.0" vertical-offset="3740" max-vertical-offset="4658">
               <folding />
             </state>
           </provider>
@@ -219,10 +215,12 @@
       <list>
         <option value="$PROJECT_DIR$/src/PanelQRCode.java" />
         <option value="$PROJECT_DIR$/src/Okno.java" />
-        <option value="$PROJECT_DIR$/src/Pilot.java" />
         <option value="$PROJECT_DIR$/src/MouseRobot.java" />
-        <option value="$PROJECT_DIR$/src/Program.java" />
         <option value="$PROJECT_DIR$/src/HTTP.java" />
+        <option value="$PROJECT_DIR$/src/PolaczenieWatek.java" />
+        <option value="$PROJECT_DIR$/src/Pilot.java" />
+        <option value="$PROJECT_DIR$/src/com/example/socketclient/TCP_Data.java" />
+        <option value="$PROJECT_DIR$/src/Program.java" />
       </list>
     </option>
   </component>
@@ -232,7 +230,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
+    <option name="width" value="1378" />
     <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -249,7 +247,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+    <navigator proportions="" version="1" splitterProportion="0.5">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -260,20 +258,7 @@
       <autoscrollFromSource />
       <sortByType />
     </navigator>
-    <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SocketServer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
@@ -300,6 +285,7 @@
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
+    <property name="LayoutCode.rearrangeEntriesJava" value="true" />
   </component>
   <component name="RunManager" selected="Application.Program">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin" singleton="true">
@@ -336,6 +322,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -361,19 +360,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -487,37 +473,45 @@
       <created>1387484232368</created>
       <updated>1387484232368</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Usprawnienia wersji przeglądarkowej&#10;">
+      <created>1387790713542</created>
+      <updated>1387790713542</updated>
+    </task>
+    <task id="LOCAL-00003" summary="WWW:usunięcie gamepada, kolory">
+      <created>1387791045619</created>
+      <updated>1387791045619</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32899022" sideWeight="0.820997" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3990228" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.52443" sideWeight="0.10876133" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39739415" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39739415" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30100334" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29967427" sideWeight="0.820997" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.086858004" sideWeight="0.6501706" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.086363636" sideWeight="0.6501706" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24546827" sideWeight="0.6501706" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33713356" sideWeight="0.8912387" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33713356" sideWeight="0.8912387" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -533,7 +527,9 @@
       <TodoPanelSettings />
     </option>
     <MESSAGE value="Menu wysuwane w przeglądarce" />
-    <option name="LAST_COMMIT_MESSAGE" value="Menu wysuwane w przeglądarce" />
+    <MESSAGE value="Usprawnienia wersji przeglądarkowej&#10;" />
+    <MESSAGE value="WWW:usunięcie gamepada, kolory" />
+    <option name="LAST_COMMIT_MESSAGE" value="WWW:usunięcie gamepada, kolory" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -543,20 +539,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Pilot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="43" selection-start="1446" selection-end="1446" vertical-scroll-proportion="0.0" vertical-offset="1190" max-vertical-offset="3077">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Polaczenie.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="0" selection-start="1364" selection-end="1364" vertical-scroll-proportion="0.0" vertical-offset="952" max-vertical-offset="1037">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/PolaczenieWatek.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="16" column="40" selection-start="498" selection-end="498" vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="4437">
@@ -594,9 +576,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Polaczenie.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="0" selection-start="1364" selection-end="1364" vertical-scroll-proportion="0.0" vertical-offset="952" max-vertical-offset="1037">
-          <folding />
-        </state>
+        <state line="56" column="0" selection-start="1364" selection-end="1364" vertical-scroll-proportion="0.0" vertical-offset="952" max-vertical-offset="1037" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PolaczenieWatek.java">
@@ -798,9 +778,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Polaczenie.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="0" selection-start="1364" selection-end="1364" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
+        <state line="56" column="0" selection-start="1364" selection-end="1364" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Program.java">
@@ -837,20 +815,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Program.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="41" selection-start="653" selection-end="653" vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="2023">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Pilot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="43" selection-start="1446" selection-end="1446" vertical-scroll-proportion="0.0" vertical-offset="918" max-vertical-offset="2975">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MouseRobot.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="48" column="39" selection-start="956" selection-end="956" vertical-scroll-proportion="0.0" vertical-offset="502" max-vertical-offset="1360">
@@ -860,30 +824,54 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Polaczenie.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="0" selection-start="1364" selection-end="1364" vertical-scroll-proportion="0.0" vertical-offset="426" max-vertical-offset="1037">
-          <folding />
-        </state>
+        <state line="56" column="0" selection-start="1364" selection-end="1364" vertical-scroll-proportion="0.0" vertical-offset="426" max-vertical-offset="1037" />
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/src.zip!/java/net/Socket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="781" column="26" selection-start="30221" selection-end="30337" vertical-scroll-proportion="-4.5748034" vertical-offset="14476" max-vertical-offset="27761" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PanelQRCode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="75" column="59" selection-start="1786" selection-end="1790" vertical-scroll-proportion="-4.5384617" vertical-offset="1157" max-vertical-offset="2193">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PolaczenieWatek.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="38" selection-start="2098" selection-end="2147" vertical-scroll-proportion="0.0" vertical-offset="944" max-vertical-offset="4250">
+        <state line="220" column="0" selection-start="4821" selection-end="4821" vertical-scroll-proportion="0.0" vertical-offset="3740" max-vertical-offset="4658">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HTTP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="292" column="56" selection-start="13397" selection-end="13397" vertical-scroll-proportion="8.137427" vertical-offset="1977" max-vertical-offset="7089">
+        <state line="70" column="0" selection-start="3172" selection-end="3172" vertical-scroll-proportion="0.0" vertical-offset="1080" max-vertical-offset="8211">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/socketclient/TCP_Data.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="43" selection-start="435" selection-end="435" vertical-scroll-proportion="0.0" vertical-offset="137" max-vertical-offset="748">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Pilot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="171" column="13" selection-start="3265" selection-end="3265" vertical-scroll-proportion="0.0" vertical-offset="642" max-vertical-offset="2975">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Program.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="41" selection-start="653" selection-end="653" vertical-scroll-proportion="0.3180272" vertical-offset="0" max-vertical-offset="1836">
           <folding />
         </state>
       </provider>
