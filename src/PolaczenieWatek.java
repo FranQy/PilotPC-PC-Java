@@ -95,6 +95,7 @@ oos.flush();
 					{
 						UI.ramka.remove(UI);
 						UI=null;
+                        Okno.potrzebneOdswierzenie=true;
 					}
 				  this.infoPrzyPolaczeniu=null;
 					this.pokazane=false;
@@ -150,6 +151,7 @@ oos.flush();
 				  this.infoPrzyPolaczeniu=null;
 					this.pokazane=false;
 				  System.out.print("Rozłączono. \n\r\r\n");
+                  Okno.potrzebneOdswierzenie=true;
 					
 				  
 			  }catch(Exception e)
@@ -158,6 +160,7 @@ oos.flush();
 					{
 						UI.ramka.remove(UI);
 						UI=null;
+                        Okno.potrzebneOdswierzenie=true;
 					}
 				  this.infoPrzyPolaczeniu=null;
 					this.pokazane=false;

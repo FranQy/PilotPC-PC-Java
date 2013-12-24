@@ -169,7 +169,8 @@ timer1.schedule (timer1_task, 100, 100);
 protected void finalize() throws Throwable {
 	Program.wyswietlanie=TypWyswietlania.Konsola;
 }
-class Odswierz extends TimerTask
+    public static boolean potrzebneOdswierzenie=false;
+public class Odswierz extends TimerTask
 {
 	int licznik=0;
  public void run()
@@ -187,13 +188,12 @@ if(Aktualizacja.zaktualizowano)
 else if(Aktualizacja.trwa)
 		statusTxt+=" Trwa aktualizacja do nowej wersji...";
    status.setText(statusTxt);
-   boolean potrzebneOdswierzenie=false;
    for(byte i=0;i<Polaczenie.watki.length;i++)
    {
 	   if(Polaczenie.watki[i]!=null)
 		   if(Polaczenie.watki[i].czyPolaczono())
 		   {
-			   if(!Polaczenie.watki[i].pokazane)
+			   if(!Polaczenie.watki[i].pokazane&&Polaczenie.watki[i].infoPrzyPolaczeniu!=null)
 				 //  if(!Polaczenie.watki[i].pokazane&&Polaczenie.watki[i].infoPrzyPolaczeniu!=null)
 			   {
 				   Polaczenie.watki[i].pokazane=true;
@@ -219,8 +219,9 @@ for(int i=0;i<telefony.countComponents();i++)
 {
 	telefony.getComponent(i).paint(telefony.getComponent(i).getGraphics());
 }}*/
-   if(potrzebneOdswierzenie||licznik++%100==0)
+   if(potrzebneOdswierzenie)
 	   okno.paintAll(okno.getGraphics());
+     potrzebneOdswierzenie=false;
  }
  public Okno okno;
 }
