@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Date;
 
 public class HTTP {
     public static TCP_Data[] doWykonania = new TCP_Data[16];
@@ -472,6 +473,8 @@ public class HTTP {
             Polaczenie.polaczeniaHttp[i] = new HttpPolaczenie();
             Polaczenie.polaczeniaHttp[i].UserAgent = new UserAgent(wyj.substring(wyj.indexOf("User-Agent:") + 11, wyj.indexOf('\r', wyj.indexOf("User-Agent:"))));
         }
+        else
+        Polaczenie.polaczeniaHttp[i].czas=new Date();
         return i;
     }
 }

@@ -1,16 +1,5 @@
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.Label;
-import java.awt.LayoutManager;
-import java.awt.LayoutManager2;
-import java.awt.Panel;
-import java.awt.Point;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -18,320 +7,316 @@ import java.awt.event.MouseListener;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 public class Okno extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	public Tekst status=new Tekst("Inicjowanie", new Point(230,2));
-	Tekst kod=new Tekst("Kod do połączenia: "+Program.ustawienia.haslo, new Point(0,26));
-	Urzadzenia telefony;
-	PanelQRCode qr;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    public static boolean potrzebneOdswierzenie = false;
+    public Tekst status = new Tekst("Inicjowanie", new Point(230, 2));
+    Tekst kod = new Tekst("Kod do połączenia: " + Program.ustawienia.haslo, new Point(0, 26));
+    Urzadzenia telefony;
+    PanelQRCode qr;
     Przycisk przyciskInformacje;
     Przycisk przyciskAutostart;
-	private MouseListener zmienKodClick=new MouseListener() {
-		
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
-			Program.ustawienia.haslo=Ustawienia.generujHaslo();
-			kod.setText("Kod do połączenia: "+Program.ustawienia.haslo);
-			qr.odswierz();
-			Program.ustawienia.eksportuj();
-			
-			
-		}
-	};
-public Okno()
-{
-	super("PilotPC");
-this.setSize(750,550);
-//setBackground(new Color(38,33,27));
-setMinimumSize(new Dimension(500,300));
-//setLayout(new GridLayout());
-Panel lewy=new Panel();
-lewy.setBackground(new Color(38,33,27));
-qr=new PanelQRCode(lewy);
-telefony=new Urzadzenia(lewy);
-    przyciskInformacje=new Przycisk("Informacje",new Dimension(100, 20),new Point(0,0));
-    przyciskInformacje.setMargin(new Insets(0, 0, 0, 0));
-    ActionListener przyciskInformacjeListener=new ActionListener() {
+    private MouseListener zmienKodClick = new MouseListener() {
 
         @Override
-        public void actionPerformed(ActionEvent arg0) {
+        public void mouseReleased(MouseEvent arg0) {
             // TODO Auto-generated method stub
-            new OProgramie();
+
         }
-    };
-    przyciskInformacje.addActionListener(przyciskInformacjeListener);
-    przyciskInformacje.setSize(100, 20);
-    przyciskInformacje.setMaximumSize(new Dimension(100, 20));
-    przyciskInformacje.setLocation(0,0);
-    lewy.add(przyciskInformacje);
-    przyciskAutostart=new Przycisk("Start z systemem",new Dimension(120, 20),new Point(105,0));
-    przyciskAutostart.setMargin(new Insets(0, 0, 0, 0));
-    ActionListener przyciskAutostartListener=new ActionListener() {
 
         @Override
-        public void actionPerformed(ActionEvent arg0) {
-            Program.autostart();
+        public void mousePressed(MouseEvent arg0) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent arg0) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent arg0) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent arg0) {
+            Program.ustawienia.haslo = Ustawienia.generujHaslo();
+            kod.setText("Kod do połączenia: " + Program.ustawienia.haslo);
+            qr.odswierz();
+            Program.ustawienia.eksportuj();
+
+
         }
     };
-    przyciskAutostart.addActionListener(przyciskAutostartListener);
-    przyciskAutostart.setSize(120, 20);
-    przyciskAutostart.setMaximumSize(new Dimension(120, 20));
-    przyciskAutostart.setLocation(105,0);
-    lewy.add(przyciskAutostart);
-status.setLocation(230, 0);
-lewy.add(status);
 
-JLabel info=new Tekst(null, new Point(0,50));
-String tekstIP="Twoje IP to:<br/>";
-Enumeration<NetworkInterface> n;
-try {
-	n = NetworkInterface.getNetworkInterfaces();
 
-for (; n.hasMoreElements();)
-{
-        NetworkInterface e = n.nextElement();
-       // System.out.println("Interface: " + e.getName());
-        Enumeration<InetAddress> a = e.getInetAddresses();
-        for (; a.hasMoreElements();)
-        {
-                InetAddress addr = a.nextElement();
-               if(!addr.isLoopbackAddress()&&addr.getAddress().length==4)
-                	tekstIP+=addr.getHostAddress()+"<br/>";
+    public Okno() {
+        super("PilotPC");
+        this.setSize(750, 550);
+//setBackground(new Color(38,33,27));
+        setMinimumSize(new Dimension(500, 300));
+//setLayout(new GridLayout());
+        Panel lewy = new Panel();
+        lewy.setBackground(new Color(38, 33, 27));
+        qr = new PanelQRCode(lewy);
+        telefony = new Urzadzenia(lewy);
+        przyciskInformacje = new Przycisk("Informacje", new Dimension(100, 20), new Point(0, 0));
+        przyciskInformacje.setMargin(new Insets(0, 0, 0, 0));
+        ActionListener przyciskInformacjeListener = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                // TODO Auto-generated method stub
+                new OProgramie();
+            }
+        };
+        przyciskInformacje.addActionListener(przyciskInformacjeListener);
+        przyciskInformacje.setSize(100, 20);
+        przyciskInformacje.setMaximumSize(new Dimension(100, 20));
+        przyciskInformacje.setLocation(0, 0);
+        lewy.add(przyciskInformacje);
+        przyciskAutostart = new Przycisk("Start z systemem", new Dimension(120, 20), new Point(105, 0));
+        przyciskAutostart.setMargin(new Insets(0, 0, 0, 0));
+        ActionListener przyciskAutostartListener = new
+                ActionListener() {
+
+                    @Override
+                    public void actionPerformed(ActionEvent arg0) {
+                        Program.autostart();
+                    }
+                };
+        przyciskAutostart.addActionListener(przyciskAutostartListener);
+        przyciskAutostart.setSize(120, 20);
+        przyciskAutostart.setMaximumSize(new Dimension(120, 20));
+        przyciskAutostart.setLocation(105, 0);
+        lewy.add(przyciskAutostart);
+        status.setLocation(230, 0);
+        lewy.add(status);
+
+        JLabel info = new Tekst(null, new Point(0, 50));
+        String tekstIP = "Twoje IP to:<br/>";
+        Enumeration<NetworkInterface> n;
+        try {
+            n = NetworkInterface.getNetworkInterfaces();
+
+            for (; n.hasMoreElements(); ) {
+                NetworkInterface e = n.nextElement();
+                // System.out.println("Interface: " + e.getName());
+                Enumeration<InetAddress> a = e.getInetAddresses();
+                for (; a.hasMoreElements(); ) {
+                    InetAddress addr = a.nextElement();
+                    if (!addr.isLoopbackAddress() && addr.getAddress().length == 4)
+                        tekstIP += addr.getHostAddress() + "<br/>";
+                }
+            }
+        } catch (SocketException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
         }
-}} catch (SocketException e1) {
-	// TODO Auto-generated catch block
-	e1.printStackTrace();
-}
-info.setText("<html>"+tekstIP+"</html>");
-lewy.add(info);
+        info.setText("<html>" + tekstIP + "</html>");
+        lewy.add(info);
 
-lewy.add(telefony);
-lewy.add(kod);
-Przycisk zmienKod=new Przycisk("Zmień kod", new Dimension(100,20), new Point(190,23));
-zmienKod.addMouseListener(zmienKodClick);
-zmienKod.setMargin(new Insets(0, 0, 0, 0));
-lewy.add(zmienKod);
+        lewy.add(telefony);
+        lewy.add(kod);
+        Przycisk zmienKod = new Przycisk("Zmień kod", new Dimension(100, 20), new Point(190, 23));
+        zmienKod.addMouseListener(zmienKodClick);
+        zmienKod.setMargin(new Insets(0, 0, 0, 0));
+        lewy.add(zmienKod);
 /*JLabel link=new JLabel();
 link.setText("http://"+java.net.InetAddress.getLocalHost().getHostAddress()+":12345/");
 System.out.println();
 link.setForeground(Color.BLUE);
 lewy.add(link);*/
-lewy.add(qr);
-add(lewy);
-setVisible(true);
-Timer timer1 = new Timer();
-Odswierz timer1_task = new Odswierz();
-timer1_task.okno=this;
-timer1.schedule (timer1_task, 100, 100);
-}
+        lewy.add(qr);
+        add(lewy);
+        setVisible(true);
+        Timer timer1 = new Timer();
+        Odswierz timer1_task = new Odswierz();
+        timer1_task.okno = this;
+        timer1.schedule(timer1_task, 100, 100);
+    }
 
+    protected void finalize() throws Throwable {
+        Program.wyswietlanie = TypWyswietlania.Konsola;
+    }
 
+    public class Odswierz extends TimerTask {
+        public Okno okno;
+        int licznik = 0;
 
+        public void run() {
+            String statusTxt = "";
+            if (Polaczenie.nasluchiwanie) {
+                if (Polaczenie.watki[0].gotowe)
+                    statusTxt = "Gotowe!";
+                else
+                    statusTxt = "Inicjowanie...";
+            }
+            if (Aktualizacja.zaktualizowano)
+                statusTxt += " Zaktualizowano do nowej wersji!";
+            else if (Aktualizacja.trwa)
+                statusTxt += " Trwa aktualizacja do nowej wersji...";
+            status.setText(statusTxt);
+            for (byte i = 0; i < Polaczenie.watki.length; i++) {
+                if (Polaczenie.watki[i] != null)
+                    if (Polaczenie.watki[i].czyPolaczono()) {
+                        if (!Polaczenie.watki[i].pokazane && Polaczenie.watki[i].infoPrzyPolaczeniu != null)
+                        //  if(!Polaczenie.watki[i].pokazane&&Polaczenie.watki[i].infoPrzyPolaczeniu!=null)
+                        {
+                            Polaczenie.watki[i].pokazane = true;
+                            telefony.add(Polaczenie.watki[i].UI = new Urzadzenie(Polaczenie.watki[i], telefony));
+                            potrzebneOdswierzenie = true;
+                        }
+                    }
+            }
+            for (byte i = 0; i < Polaczenie.polaczeniaHttp.length; i++) {
+                if (Polaczenie.polaczeniaHttp[i] != null)
+                {
+                    long rozn=(new Date()).getTime() - Polaczenie.polaczeniaHttp[i].czas.getTime();
+                    if (!Polaczenie.polaczeniaHttp[i].pokazane && rozn < 5000) {
+                        Polaczenie.polaczeniaHttp[i].pokazane = true;
+                        telefony.add(Polaczenie.polaczeniaHttp[i].UI = new Okno.Urzadzenie(Polaczenie.polaczeniaHttp[i], telefony));
+                        potrzebneOdswierzenie = true;
+                    } else if (Polaczenie.polaczeniaHttp[i].pokazane&&rozn > 5000) {
+                        telefony.remove(Polaczenie.polaczeniaHttp[i].UI);
+                        Polaczenie.polaczeniaHttp[i].pokazane = false;
+                        potrzebneOdswierzenie = true;
 
-protected void finalize() throws Throwable {
-	Program.wyswietlanie=TypWyswietlania.Konsola;
-}
-    public static boolean potrzebneOdswierzenie=false;
-public class Odswierz extends TimerTask
-{
-	int licznik=0;
- public void run()
- {
-	 String statusTxt="";
-   if(Polaczenie.nasluchiwanie)
-   {
-	   if(Polaczenie.watki[0].gotowe)
-		   statusTxt="Gotowe!";
-	   else
-		   statusTxt="Inicjowanie...";
-   }
-if(Aktualizacja.zaktualizowano)
-	statusTxt+=" Zaktualizowano do nowej wersji!";
-else if(Aktualizacja.trwa)
-		statusTxt+=" Trwa aktualizacja do nowej wersji...";
-   status.setText(statusTxt);
-   for(byte i=0;i<Polaczenie.watki.length;i++)
-   {
-	   if(Polaczenie.watki[i]!=null)
-		   if(Polaczenie.watki[i].czyPolaczono())
-		   {
-			   if(!Polaczenie.watki[i].pokazane&&Polaczenie.watki[i].infoPrzyPolaczeniu!=null)
-				 //  if(!Polaczenie.watki[i].pokazane&&Polaczenie.watki[i].infoPrzyPolaczeniu!=null)
-			   {
-				   Polaczenie.watki[i].pokazane=true;
-				   telefony.add(Polaczenie.watki[i].UI=new Urzadzenie(Polaczenie.watki[i],telefony));
-				   potrzebneOdswierzenie=true;
-			   }
-		   }
-   }
-   for(byte i=0;i<Polaczenie.polaczeniaHttp.length;i++)
-   {
-	   if(Polaczenie.polaczeniaHttp[i]!=null)
-		   if(!Polaczenie.polaczeniaHttp[i].pokazane)
-		   {
-			   Polaczenie.polaczeniaHttp[i].pokazane=true;
-		   telefony.add(Polaczenie.polaczeniaHttp[i].UI=new Okno.Urzadzenie(Polaczenie.polaczeniaHttp[i],telefony));
-		   potrzebneOdswierzenie=true;
-		   }
-   }
-   //if(potrzebneOdswierzenie)
+                    }    }
+            }
+            //if(potrzebneOdswierzenie)
 /*{telefony.repaint();//(telefony.getGraphics());
-	   //telefony.paintImmediately(0, 0, 2000, 2000);
+       //telefony.paintImmediately(0, 0, 2000, 2000);
 for(int i=0;i<telefony.countComponents();i++)
 {
 	telefony.getComponent(i).paint(telefony.getComponent(i).getGraphics());
 }}*/
-   if(potrzebneOdswierzenie)
-	   okno.paintAll(okno.getGraphics());
-     potrzebneOdswierzenie=false;
- }
- public Okno okno;
-}
-class Przycisk extends JButton
-{
-	public Przycisk(String string, Dimension dimension, Point point) {
-		super(string);
-		
-		wymiary=dimension;
-		lokacja=point;
-		setBackground(Color.white);
-}
-	    @Override
-	    protected void paintComponent(Graphics g) {
-	    	
-	    setLocation(lokacja);
-	    setSize(wymiary);
+            if (potrzebneOdswierzenie)
+                okno.paintAll(okno.getGraphics());
+            potrzebneOdswierzenie = false;
+        }
+    }
 
-super.paintComponent(g);
-	    }
+    class Przycisk extends JButton {
+        public Dimension wymiary;
+        public Point lokacja;
 
-	public Dimension wymiary;
-	public Point lokacja;
-	
-}
-class Tekst extends JLabel
-{
-	public Tekst(String string, Point point) {
-		super(string);
-		//wymiary=dimension;
-		lokacja=point;
-setForeground(Color.white);
-	}
-	    @Override
-	    protected void paintComponent(Graphics g) {
-	    	
-	    setLocation(lokacja);
-	    //setSize(wymiary);
+        public Przycisk(String string, Dimension dimension, Point point) {
+            super(string);
 
-super.paintComponent(g);
-	    }
+            wymiary = dimension;
+            lokacja = point;
+            setBackground(Color.white);
+        }
 
-	public Dimension wymiary;
-	public Point lokacja;
-	
-}
-class Urzadzenia extends JPanel
-{
-	Panel okno;
-	public Urzadzenia(Panel lewy)
-		{
-		super();
-			this.okno=lewy;
-			   setBackground(new Color(46,46,46));
-			   setLayout(new GridLayout(200,1));
-			   Label tytul=new Label("Podłączone urządzenia:");
-			   tytul.setForeground(Color.white);
-			   add(tytul);
-		}
-	@Override
-	protected void paintComponent(Graphics g)
-	{
-		
-int liczPolaczenia=countComponents();
-		   setSize(okno.getWidth()/2,liczPolaczenia*36);
-		   setLocation(0,okno.getHeight()-liczPolaczenia*36);
-		   Component[] test=getComponents();
-		  // setLocation(0,50);
-		super.paintComponent(g);
-		   
-	}
-}
-class Urzadzenie extends JPanel
-{
-	JButton rozlacz=new JButton("Rozłącz");
+        @Override
+        protected void paintComponent(Graphics g) {
 
-	JLabel tekst=new JLabel();
-	public PolaczenieInfo zrodlo;
-	Urzadzenia ramka;
-	public Urzadzenie(PolaczenieInfo z, Urzadzenia telefony)
-	{
-		   setBackground(new Color(46,46,46));
-	tekst.setForeground(Color.white);
-	rozlacz.setBackground(Color.white);
-		zrodlo=z;
-		ramka=telefony;
-		rozlacz.setLocation(0, 0);
-		rozlacz.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				zrodlo.rozlacz();
-			}
-		});
-		add(rozlacz);
-		tekst.setText(z.toString());
-		setToolTipText(zrodlo.opis());
-		tekst.setToolTipText(zrodlo.opis());
-		add(tekst);
-		
-	}
-	@Override
-	protected void paintComponent(Graphics g)
-	{
-		String nowaNazwa=zrodlo.toString();
-		if(tekst.getText().compareTo(nowaNazwa)!=0)
-			tekst.setText(nowaNazwa);
-		super.paintComponent(g);
-	   
-}
-}
+            setLocation(lokacja);
+            setSize(wymiary);
+
+            super.paintComponent(g);
+        }
+
+    }
+
+    class Tekst extends JLabel {
+        public Dimension wymiary;
+        public Point lokacja;
+
+        public Tekst(String string, Point point) {
+            super(string);
+            //wymiary=dimension;
+            lokacja = point;
+            setForeground(Color.white);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+
+            setLocation(lokacja);
+            //setSize(wymiary);
+
+            super.paintComponent(g);
+        }
+
+    }
+
+    class Urzadzenia extends JPanel {
+        Panel okno;
+
+        public Urzadzenia(Panel lewy) {
+            super();
+            this.okno = lewy;
+            setBackground(new Color(46, 46, 46));
+            setLayout(new GridLayout(200, 1));
+            Label tytul = new Label("Podłączone urządzenia:");
+            tytul.setForeground(Color.white);
+            add(tytul);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+
+            int liczPolaczenia = countComponents();
+            setSize(okno.getWidth() / 2, liczPolaczenia * 36);
+            setLocation(0, okno.getHeight() - liczPolaczenia * 36);
+            Component[] test = getComponents();
+            // setLocation(0,50);
+            super.paintComponent(g);
+
+        }
+    }
+
+    class Urzadzenie extends JPanel {
+        public PolaczenieInfo zrodlo;
+        JButton rozlacz = new JButton("Rozłącz");
+        JLabel tekst = new JLabel();
+        Urzadzenia ramka;
+
+        public Urzadzenie(PolaczenieInfo z, Urzadzenia telefony) {
+            setBackground(new Color(46, 46, 46));
+            tekst.setForeground(Color.white);
+            rozlacz.setBackground(Color.white);
+            zrodlo = z;
+            ramka = telefony;
+            rozlacz.setLocation(0, 0);
+            rozlacz.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent arg0) {
+                    // TODO Auto-generated method stub
+                    zrodlo.rozlacz();
+                }
+            });
+            add(rozlacz);
+            tekst.setText(z.toString());
+            setToolTipText(zrodlo.opis());
+            tekst.setToolTipText(zrodlo.opis());
+            add(tekst);
+
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            String nowaNazwa = zrodlo.toString();
+            if (tekst.getText().compareTo(nowaNazwa) != 0)
+                tekst.setText(nowaNazwa);
+            super.paintComponent(g);
+
+        }
+    }
 }

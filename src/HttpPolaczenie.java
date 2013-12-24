@@ -1,3 +1,4 @@
+import java.util.Date;
 
 public class HttpPolaczenie implements PolaczenieInfo {
 public boolean zablokowane=false;
@@ -5,6 +6,7 @@ public UserAgent UserAgent;
 public Okno.Urzadzenie UI=null;
 public Okno.Urzadzenie getUI(){return UI;}
 public boolean pokazane=false;
+    public Date czas=new Date();
 public void rozlacz()
 {
 	zablokowane=true;
