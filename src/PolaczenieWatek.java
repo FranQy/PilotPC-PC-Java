@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +12,7 @@ import java.net.Socket;
 
 import com.example.socketclient.Connect;
 import com.example.socketclient.TCP_Data;
+import javafx.scene.input.KeyCode;
 
 public class PolaczenieWatek
     extends Thread  implements PolaczenieInfo{
@@ -78,6 +80,7 @@ ObjectOutputStream oos= new ObjectOutputStream(soc.getOutputStream());
 oos.writeObject(odpowiedz);
 oos.flush();
 				 // dataObject =  in.readObject();
+                      System.out.println("Połączono "+toString());
 				  }
 				  else
 				  {
@@ -150,7 +153,7 @@ oos.flush();
 					}
 				  this.infoPrzyPolaczeniu=null;
 					this.pokazane=false;
-				  System.out.print("Rozłączono. \n\r\r\n");
+				  System.out.println("Rozłączono "+toString());
                   Okno.potrzebneOdswierzenie=true;
 					
 				  
@@ -164,7 +167,7 @@ oos.flush();
 					}
 				  this.infoPrzyPolaczeniu=null;
 					this.pokazane=false;
-					System.out.print("Błąd, rozłączono. \n\r\r\n");
+					System.out.println("Błąd, rozłączono "+toString());
 				  
 			  }
 					
@@ -230,7 +233,12 @@ oos.flush();
             }else if(data.type == TCP_Data.typ.KEYBOARD )
             {
                 try {
-                    (new Robot()).keyPress(data.touchpadX);     //TODO tymczasowe do zmiany TCP_Data
+                    if(data.shift)
+                    (new Robot()).keyPress(KeyEvent.VK_SHIFT);
+                    (new Robot()).keyPress(data.key);
+                    (new Robot()).keyRelease(data.key);
+                    if(data.shift)
+                    (new Robot()).keyRelease(KeyEvent.VK_SHIFT);     //TODO tymczasowe do zmiany TCP_Data
                 } catch (AWTException e) {
                     e.printStackTrace();
                 }

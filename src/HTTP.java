@@ -37,12 +37,17 @@ public class HTTP {
                     ret.touchpadY = klasaObjekt.getInt("touchpadY");
                     ret.type = typ.values()[klasaObjekt.getInt("type")];
                     ret.mouse = touchedTYPE.values()[klasaObjekt.getInt("mouse")];
-                    if (ret.type == typ.KEYBOARD)             //TODO tymczasowe, do zmiany TCP_Data
+                    try
                     {
-                        ret.touchpadX = klasaObjekt.getInt("button");
+                        ret.key = klasaObjekt.getInt("key");
+                        ret.shift = klasaObjekt.getBoolean("shift");
 
-                    } else
+                    }
+                    catch(Exception e)
+                    {}
+
                         ret.button = pilotButton.values()[klasaObjekt.getInt("button")];
+
                 } catch (Exception e) {
                     ret = null;
                 }
@@ -300,7 +305,7 @@ public class HTTP {
                         "var klawiatura=new Object();" +
                         "klawiatura.press=function(event)" +
                         "{"
-                        + "var data=new TCP_Data();data.button = event.keyCode;"
+                        + "var data=new TCP_Data();data.key = event.keyCode;data.shift=event.shiftKey;"
                         + "data.type=TCP_Data.typ.KEYBOARD;send(data);"
 
                         + "return false;" +
@@ -388,7 +393,7 @@ public class HTTP {
                         "<map id=\"przycMapa\" name=\"przycMapa\">" +
                         "</map>"
                         + "</div>"
-                        + "<div class=\"karta\" id=\"klawiatura\"><textarea onkeypress=\"return klawiatura.press(event)\"></textarea></div>"
+                        + "<div class=\"karta\" id=\"klawiatura\"><textarea onkeydown=\"return klawiatura.press(event)\"></textarea></div>"
                         //Tu były problemy ze zdarzeniami
                         //+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" onmousemove=\"return touchpad.onMouseMove(event)\" ontouchdown=\"touchpad.onTouchDown(event)\" onmousedown=\"touchpad.onTouchDown(event)\" ontouchup=\"touchpad.onTouchUp(event)\" onmouseup=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" onmouseleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
                         //+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\"  id=\"touchpad\"></div>"
