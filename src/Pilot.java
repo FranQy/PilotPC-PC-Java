@@ -52,19 +52,12 @@ Aktualizacja.wymus=true;
 timer1.schedule (timer1_task, 0, 0);
 				}
 	}
-	   private native void click(int i);
+	   static private native void click(int i);
 	   
 		   static Robot robot=null;
-	   public Pilot()
-	   {
-			try {
-				robot = new Robot();
-			} catch (AWTException e2) {
-				e2.printStackTrace();
-				return;
-			}//klasa do emulowania klawiatury itp.
-	   }
-	   public void click(TCP_Data data)
+	   Pilot()
+	   {}
+	   static public void click(TCP_Data data)
 	   {
 		   switch(data.button)
 		   {

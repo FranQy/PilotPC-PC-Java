@@ -40,8 +40,6 @@ public class HTTP {
                     try
                     {
                         ret.key = klasaObjekt.getInt("key");
-                        ret.shift = klasaObjekt.getBoolean("shift");
-
                     }
                     catch(Exception e)
                     {}
@@ -301,15 +299,20 @@ public class HTTP {
                         "}"
                         + "var data=new TCP_Data();data.mouse = touchpad.typ;data.touchpadX = dx;data.touchpadY =dy;"
                         + "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
-                        + "return false;};" +
+                        + "return false;};\n" +
                         "var klawiatura=new Object();" +
-                        "klawiatura.press=function(event)" +
+                        "klawiatura.i=0;" +
+                        "klawiatura.t=function()\n" +
                         "{"
-                        + "var data=new TCP_Data();data.key = event.keyCode;data.shift=event.shiftKey;"
-                        + "data.type=TCP_Data.typ.KEYBOARD;send(data);"
-
-                        + "return false;" +
-                        "};"
+                        + "var txt=document.getElementsByTagName('textarea')[0];" +
+                        "for(;klawiatura.i<txt.value.length;klawiatura.i++)\n" +
+                        "{" +
+                        "var data=new TCP_Data();data.key = txt.value.charCodeAt(klawiatura.i);\n"
+                        + "data.type=TCP_Data.typ.KEYBOARD;send(data);\n"
+                       + "}" +
+                       // "txt.value='';\n" +
+                        "};\n"
+                        +"klawiatura.timer=setInterval(klawiatura.t,10);\n"
                         + "function send(data){"
                         + "var socket=new XMLHttpRequest();"
                         + "var czas=new Date();"
@@ -393,7 +396,7 @@ public class HTTP {
                         "<map id=\"przycMapa\" name=\"przycMapa\">" +
                         "</map>"
                         + "</div>"
-                        + "<div class=\"karta\" id=\"klawiatura\"><textarea onkeydown=\"return klawiatura.press(event)\"></textarea></div>"
+                        + "<div class=\"karta\" id=\"klawiatura\"><textarea style=\"width:1px;height:1px;opacity:0;\"></textarea></div>"
                         //Tu były problemy ze zdarzeniami
                         //+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" onmousemove=\"return touchpad.onMouseMove(event)\" ontouchdown=\"touchpad.onTouchDown(event)\" onmousedown=\"touchpad.onTouchDown(event)\" ontouchup=\"touchpad.onTouchUp(event)\" onmouseup=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" onmouseleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
                         //+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\"  id=\"touchpad\"></div>"
@@ -401,7 +404,7 @@ public class HTTP {
                         + "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"return touchpad.onTouchDown(event)\" ontouchend=\"return touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
                         + "<ul id=\"menu\">" +
                         //"<li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li>" +
-                        "<li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img alt=\"pilot\" src=\"" + pilotBase64 + "\"/></li><li onclick='kartaPokaz(\"klawiatura\")'><img alt=\"klawiatura\" src=\"" + klawiaturaBase64 + "\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img alt=\"touchpad\" src=\"" + touchpadBase64 + "\"/></li><li onclick=\"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';}else{document.getElementById('menu').style.top='5%';document.getElementById('menur').style.top='15%';}\"><img style=\"float:right\" alt=\"menu\" src=\"" + menuBase64 + "\"/></li>" +
+                        "<li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img alt=\"pilot\" src=\"" + pilotBase64 + "\"/></li><li onclick='kartaPokaz(\"klawiatura\");document.getElementsByTagName(\"textarea\")[0].focus()'><img alt=\"klawiatura\" src=\"" + klawiaturaBase64 + "\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img alt=\"touchpad\" src=\"" + touchpadBase64 + "\"/></li><li onclick=\"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';}else{document.getElementById('menu').style.top='5%';document.getElementById('menur').style.top='15%';}\"><img style=\"float:right\" alt=\"menu\" src=\"" + menuBase64 + "\"/></li>" +
                         "</ul><div id=\"menur\"><h2>Informacje</h2>" +
                         "<div class=\"podmenu\">" +
                         "POŁĄCZENIE<br/>" +

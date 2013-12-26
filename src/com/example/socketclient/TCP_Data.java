@@ -23,8 +23,6 @@ public class TCP_Data implements Serializable {
 	    public pilotButton button;
 	    public touchedTYPE mouse;
     public int key;//kalwiatura
-    public boolean shift;
-    public boolean alt;
 	    public void clean()
 	    {
 	        touchpadX = 0;

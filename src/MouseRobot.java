@@ -32,18 +32,18 @@ public class MouseRobot {
 		}
 	}
 	
-	public void PPM()
+	static public void PPM()
 	{
-		robot.mousePress(InputEvent.BUTTON3_MASK);
-		robot.mouseRelease(InputEvent.BUTTON3_MASK);
+		Program.robot.mousePress(InputEvent.BUTTON3_MASK);
+		Program.robot.mouseRelease(InputEvent.BUTTON3_MASK);
 	}
-	public void LPM()
+	static public void LPM()
 	{
-		robot.mousePress(InputEvent.BUTTON1_MASK);
-		robot.mouseRelease(InputEvent.BUTTON1_MASK);
+		Program.robot.mousePress(InputEvent.BUTTON1_MASK);
+		Program.robot.mouseRelease(InputEvent.BUTTON1_MASK);
 	}
 	
-	public void move(int mx, int my)
+	static public void move(int mx, int my)
 	{
 		PointerInfo a = MouseInfo.getPointerInfo();
 		Point b = a.getLocation();
@@ -55,25 +55,25 @@ public class MouseRobot {
 		double my2=my*odleglosc/15+pozostaley;
 		pozostalex=mx2-Math.floor(mx2);//zapisuje liczby pozostałe po przecinku, żeby jeśli kursor przesuwa się powoli to nie stał w miejscu
 		pozostaley=my2-Math.floor(my2);
-		robot.mouseMove(x+(int)Math.floor(mx2), y+(int)Math.floor(my2));
+		Program.robot.mouseMove(x+(int)Math.floor(mx2), y+(int)Math.floor(my2));
 	}
-	public void move(boolean LONG, int mx, int my)
+	static public void move(boolean LONG, int mx, int my)
 	{
 		if(!wcisniete)
-        {robot.mousePress(InputEvent.BUTTON1_MASK);
+        {Program.robot.mousePress(InputEvent.BUTTON1_MASK);
             wcisniete=true;
         }
 		 move(mx,  my);
 			
 	}
 	
-	public void up()
+	static public void up()
 	{
-		robot.mouseRelease(InputEvent.BUTTON1_MASK);
+		Program.robot.mouseRelease(InputEvent.BUTTON1_MASK);
 	}
-	public void scroll(int y)
+	static public void scroll(int y)
 	{
-		robot.mouseWheel(y);
+		Program.robot.mouseWheel(y);
 	}
 
 }

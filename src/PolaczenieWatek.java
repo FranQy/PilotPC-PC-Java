@@ -19,8 +19,6 @@ public class PolaczenieWatek
 	public ServerSocket socServ;
 	public boolean gotowe=false;
 	Socket soc;
-    	Pilot pilot = new Pilot();
-    	MouseRobot mouse = new MouseRobot();
     	InputStream is;
     	public Okno.Urzadzenie UI=null;
     	public Okno.Urzadzenie getUI(){return UI;}
@@ -43,7 +41,16 @@ public class PolaczenieWatek
     		is=null;
 			  try {
           		   gotowe=true;;     	
-			soc=socServ.accept();	
+			soc=socServ.accept();
+                  byte ileGotowe=0;
+                  for(byte i=0;i<100;i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
+                  {
+                      if(Polaczenie.watki[i]!=null){
+                          if(!Polaczenie.watki[i].czyPolaczono()&&Polaczenie.watki[i].socServ==socServ)
+                              ileGotowe++;
+                      }
+                  }
+                  if(ileGotowe<2)
 			for(byte i=0;i<100;i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
 			{
 				if(Polaczenie.watki[i]==null){
@@ -170,13 +177,31 @@ oos.flush();
 					System.out.println("Błąd, rozłączono "+toString());
 				  
 			  }
-					
-				 
-		
-			
-			
-			
-		
+
+
+
+
+
+
+            byte ileGotowe=0;
+            for(byte i=0;i<100;i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
+            {
+                if(Polaczenie.watki[i]!=null){
+                    if(!Polaczenie.watki[i].czyPolaczono()&&Polaczenie.watki[i].socServ==socServ)
+                        ileGotowe++;
+                }
+            }
+            if(ileGotowe>1)
+            {
+                for(byte i=0;i<100;i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
+                {
+                    if(Polaczenie.watki[i]!=this){
+                        Polaczenie.watki[i]=null;
+                        break;
+                    }
+                }
+                break;
+            }
     	}}
     	void wykonuj(TCP_Data data)
     	{
@@ -187,34 +212,34 @@ oos.flush();
 				case LPM:
 				{
 				
-					mouse.LPM();
+					MouseRobot.LPM();
 					
 					break;
 				}
 				case PPM:
 				{
 					
-					mouse.PPM();
+					MouseRobot.PPM();
 					break;
 				}
 				case NORMAL:
 				{
-					mouse.move(data.touchpadX, data.touchpadY); //ruszanie myszka
+                    MouseRobot.move(data.touchpadX, data.touchpadY); //ruszanie myszka
 					break;
 				}
 				case LONG:
 				{
-					mouse.move(true, data.touchpadX, data.touchpadY); //ruszanie ze wcisnietym LPM
+                    MouseRobot.move(true, data.touchpadX, data.touchpadY); //ruszanie ze wcisnietym LPM
 					break;
 				}
 				case UP:
 				{
-					mouse.up(); //podniesienie LPM
+                    MouseRobot.up(); //podniesienie LPM
 					break;
 				}
 				case SCROLL:
 				{
-					mouse.scroll(data.touchpadY);
+                    MouseRobot.scroll(data.touchpadY);
 					break;
 				}
 				}
@@ -228,20 +253,45 @@ oos.flush();
                         break;
                     }
                 }
-                pilot.click(data);
+                Pilot.click(data);
                // System.out.println("pilot");
             }else if(data.type == TCP_Data.typ.KEYBOARD )
             {
-                try {
-                    if(data.shift)
-                    (new Robot()).keyPress(KeyEvent.VK_SHIFT);
-                    (new Robot()).keyPress(data.key);
-                    (new Robot()).keyRelease(data.key);
-                    if(data.shift)
-                    (new Robot()).keyRelease(KeyEvent.VK_SHIFT);     //TODO tymczasowe do zmiany TCP_Data
-                } catch (AWTException e) {
-                    e.printStackTrace();
-                }
+
+                    if(data.key>=65&&data.key<=90)
+                    {
+                        Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                        Program.robot.keyPress(data.key);
+                        Program.robot.keyRelease(data.key);
+                        Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+                    }
+                    else if(data.key>=97&&data.key<=122)
+                    {
+                        Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+                        Program.robot.keyPress(data.key-32);
+                        Program.robot.keyRelease(data.key-32);
+                    }
+                    else  if(data.key>=45&&data.key<57||data.key==32||data.key==59||data.key==61||data.key==91||data.key==92||data.key==93)
+                    {
+                        Program.robot.keyPress(data.key);
+                        Program.robot.keyRelease(data.key);
+
+                    }
+                    else
+                    {
+                        Program.robot.keyPress(KeyEvent.VK_ALT);
+                        int kod=data.key;
+                        int dz=1000000000;
+                        while(dz>0)
+                        {
+                            Program.robot.keyPress(KeyEvent.VK_NUMPAD0+(kod/dz)%10);
+                            Program.robot.keyRelease(KeyEvent.VK_NUMPAD0+(kod/dz)%10);
+                            dz=dz/10;
+                        }
+                        Program.robot.keyRelease(KeyEvent.VK_ALT);
+
+                    }
+
             }
 			data.clean();//czyszczenie zmiennych w TCP_Data
     	}

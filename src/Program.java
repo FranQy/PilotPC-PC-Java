@@ -1,10 +1,6 @@
 import org.omg.CORBA.Environment;
 
-import java.awt.AWTException;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
-import java.awt.SystemTray;
-import java.awt.TrayIcon;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -23,10 +19,10 @@ public class Program {
     static TypWyswietlania wyswietlanie;
     static Ustawienia ustawienia = Ustawienia.importuj();
     static public String wersja = "0.1.25";
-
-    public static void main(String[] args) {
+    static public Robot robot;
+    public static void main(String[] args) throws AWTException {
         // TODO Auto-generated method stub
-
+        robot=new Robot();
         wyswietlanie = TypWyswietlania.Konsola;
         boolean pomoc = false;
         for (int i = 0; i < args.length; i++) {
