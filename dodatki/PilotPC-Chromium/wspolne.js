@@ -1,6 +1,7 @@
 var pilotpc=new Object();
 pilotpc.dzialaj=function(dane, karta)
 {
+console.log('a');
 if(karta==null)
 return;
 console.log(dane);
@@ -10,6 +11,8 @@ if(karta.uri)
 uri=karta.uri.host
 else
 uri=karta.document.URL
+
+	console.log(uri);
 	if(uri.search("youtube.com")>=0)
 	{
 	//console.log(karta.uri.path);
@@ -43,14 +46,40 @@ uri=karta.document.URL
 		}
 		else if(dane.akcja==4)//poprzedni
 		{
+		if(karta.document.getElementById('watch7-playlist-bar-prev-button'))
 		karta.document.getElementById('watch7-playlist-bar-prev-button').click()
 		}
 		else if(dane.akcja==5)//następny
 		{
+		if(karta.document.getElementById('watch7-playlist-bar-next-button'))
 		karta.document.getElementById('watch7-playlist-bar-next-button').click()
 		}
+		else if(dane.akcja==17)
+		{
+		
+			if(karta.document.getElementsByTagName('video').length>0)
+			{
+				karta.document.getElementsByTagName('video')[0].currentTime+=-5;
+			}
+			else
+			{
+				karta.document.getElementsByTagName('embed')[0].seekTo(karta.document.getElementsByTagName('embed')[0].getCurrentTime()-5)
+			}
+		}
+		else if(dane.akcja==18)
+		{
+		
+			if(karta.document.getElementsByTagName('video').length>0)
+			{
+				karta.document.getElementsByTagName('video')[0].currentTime+=5;
+			}
+			else
+			{
+				karta.document.getElementsByTagName('embed')[0].seekTo(karta.document.getElementsByTagName('embed')[0].getCurrentTime()+5)
+			}
+		}
 	}
-	if(uri.search("soundcloud.com")>=0)
+	else if(uri.search("soundcloud.com")>=0)
 	{
 	console.log('play');
 		if(dane.akcja==3)//play/pauza
@@ -102,5 +131,5 @@ for(var i=0;i<dane.polecenia.length;i++)
 pilotpc.szukajMultimedialne(dane.polecenia[i],pilotpc.dzialaj);
 
 }
-setTimeout(pilotpc.http,50);//czas do zmiany
+
 }

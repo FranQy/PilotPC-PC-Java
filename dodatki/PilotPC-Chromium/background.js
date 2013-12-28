@@ -41,4 +41,4 @@ pilotpc.szukajMultimedialneSpr=function(tab)
 {
 return ((tab.url.search("youtube.com")>6&&tab.url.search("youtube.com")<13)&&tab.url.search("watch")>=0||(tab.url.search("soundcloud.com")>6&&tab.url.search("soundcloud.com")<13));
 }
-pilotpc.http()
+pilotpc.intervel=setInterval(pilotpc.http,50);

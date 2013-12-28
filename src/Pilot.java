@@ -161,6 +161,16 @@ timer1.schedule (timer1_task, 0, 0);
 				robot.keyRelease(KeyEvent.VK_UP);
 				break;
 			}
+               case REWIND:
+               {
+                   click(data.button.ordinal());
+                   break;
+               }
+               case FORWARD:
+               {
+                   click(data.button.ordinal());
+                   break;
+               }
 		   }
 		   //data.clean();
 	   }

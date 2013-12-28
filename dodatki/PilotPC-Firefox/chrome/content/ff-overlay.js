@@ -4,7 +4,7 @@ var pilotpc_firefox = {
     this.initialized = true;
     this.strings = document.getElementById("pilotpc_firefox-strings");
     //console.log(1);
-  pilotpc.http();
+  pilotpc_firefox.interval=setInterval(pilotpc.http,50);//czas do zmiany
   },
 
   onMenuItemCommand: function(e) {

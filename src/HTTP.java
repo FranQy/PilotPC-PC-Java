@@ -193,9 +193,13 @@ public class HTTP {
                         + "data.button=przycisk;"
                         + "send(data);"
                         + "};\n"
-                        + "pilot.clickTrzymaj=function(przycisk)"
-                        + "{"
+                        + "pilot.clickTrzymaj=function(przycisk, przycisk2)"
+                        + "{" +
+                        "if(przycisk2==undefined)"
                         + "pilot.trzymaj=przycisk;" +
+                        "else " +
+                         "pilot.trzymaj=przycisk2;" +
+                        "" +
                         "pilot.trzymajLicz=-10;" +
                         "" +
                         "pilot.click(przycisk);"
@@ -327,13 +331,13 @@ public class HTTP {
                         "document.getElementById('stanPol').textContent='Połączono';" +
                         "document.getElementById('jakosc').textContent=Math.ceil(jakoscLicz());"
                         + "}};\n"
-                        + "socket.open('get', '?'+JSON.stringify(data), true)\n"
+                        + "socket.open('get', '?'+JSON.stringify(data), false)\n"
                         + "socket.send();\n"
                         + "}"
                         + "function TCP_Data(){this.touchpadX=0;this.touchpadY=0;this.button=0;this.type=0;this.mouse=0;};"
                         + "TCP_Data.touchedTYPE={NORMAL:0, LONG:1, UP:2, SCROLL:3, LPM:4, PPM:5};"
                         + "TCP_Data.typ={GAMEPAD:0, PILOT:1, KEYBOARD:2, TOUCHPAD:3};"
-                        + "TCP_Data.pilotButton={OFF:0, MUSIC:1, MULTIMEDIA:2, PLAYPAUSE:3, PERV:4, NEXT:5, STOP:6, EXIT:7, BACK:8, VOLDOWN:9, VOLUP:10, MUTE:11,UP:12, DOWN:13, RIGHT:14, LEFT:15, RETTURN:16};"
+                        + "TCP_Data.pilotButton={OFF:0, MUSIC:1, MULTIMEDIA:2, PLAYPAUSE:3, PERV:4, NEXT:5, STOP:6, EXIT:7, BACK:8, VOLDOWN:9, VOLUP:10, MUTE:11,UP:12, DOWN:13, RIGHT:14, LEFT:15, RETTURN:16, REWIND:17, FORWARD:18};"
                         + "function kartaPokaz(id){"
                         //+ "document.getElementById('gamepad').style.display="
                         + "document.getElementById('pilot').style.display=document.getElementById('klawiatura').style.display=document.getElementById('touchpad').style.display='none';"
@@ -364,9 +368,9 @@ public class HTTP {
                         "<area shape=\"rect\" coords=\"'+(skala*480)+','+(skala*1040)+','+(skala*720)+','+(skala*1280)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.MUSIC);\"/>" +
 
                         "<area shape=\"poly\" coords=\"'+(skala*40)+','+(skala*390)+','+(skala*320)+','+(skala*390)+','+(skala*40)+','+(skala*670)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLDOWN); return false;\" onmouseup=\"pilot.trzymaj=null; return false;\" ontouchstart=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLDOWN); return false;\" ontouchend=\"pilot.trzymaj=null; return false;\" />" +
-                        "<area shape=\"poly\" coords=\"'+(skala*670)+','+(skala*390)+','+(skala*400)+','+(skala*390)+','+(skala*670)+','+(skala*670)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLUP);\" onmouseup=\"pilot.trzymaj=null\"  ontouchstart=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLUP); return false;\" ontouchend=\"pilot.trzymaj=null; return false;\" />" +
-                        "<area shape=\"poly\" coords=\"'+(skala*40)+','+(skala*1020)+','+(skala*320)+','+(skala*1020)+','+(skala*40)+','+(skala*730)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.PERV);\" />" +
-                        "<area shape=\"poly\" coords=\"'+(skala*670)+','+(skala*1020)+','+(skala*400)+','+(skala*1020)+','+(skala*670)+','+(skala*730)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.NEXT);\"  />" +
+                        "<area shape=\"poly\" coords=\"'+(skala*670)+','+(skala*390)+','+(skala*400)+','+(skala*390)+','+(skala*670)+','+(skala*670)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLUP); return false;\" onmouseup=\"pilot.trzymaj=null\"  ontouchstart=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLUP); return false;\" ontouchend=\"pilot.trzymaj=null; return false;\" />" +
+                        "<area shape=\"poly\" coords=\"'+(skala*40)+','+(skala*1020)+','+(skala*320)+','+(skala*1020)+','+(skala*40)+','+(skala*730)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.PERV,TCP_Data.pilotButton.REWIND); return false;\"  ontouchstart=\"pilot.clickTrzymaj(null,TCP_Data.pilotButton.REWIND); return false;\"  ontouchend=\"pilot.trzymaj=null;if(pilot.trzymajLicz<0)pilot.click(TCP_Data.pilotButton.PERV); return false;\"  onmouseup=\"pilot.trzymaj=null;if(pilot.trzymajLicz<0)pilot.click(TCP_Data.pilotButton.PERV);\" />" +
+                        "<area shape=\"poly\" coords=\"'+(skala*670)+','+(skala*1020)+','+(skala*400)+','+(skala*1020)+','+(skala*670)+','+(skala*730)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.NEXT, TCP_Data.pilotButton.FORWARD); return false;\" ontouchstart=\"pilot.clickTrzymaj(null, TCP_Data.pilotButton.FORWARD); return false;\"  ontouchend=\"pilot.trzymaj=null;if(pilot.trzymajLicz<0)pilot.click(TCP_Data.pilotButton.NEXT); return false;\"  onmouseup=\"pilot.trzymaj=null;if(pilot.trzymajLicz<0)pilot.click(TCP_Data.pilotButton.NEXT);\" />" +
 
                         "<area shape=\"poly\" coords=\"'+(skala*180)+','+(skala*530)+','+(skala*320)+','+(skala*390)+','+(skala*400)+','+(skala*390)+','+(skala*540)+','+(skala*530)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.UP);\" onmouseup=\"pilot.trzymaj=null\"  ontouchstart=\"pilot.clickTrzymaj(TCP_Data.pilotButton.UP); return false;\" ontouchend=\"pilot.trzymaj=null; return false;\" />" +
                         "<area shape=\"poly\" coords=\"'+(skala*540)+','+(skala*870)+','+(skala*670)+','+(skala*730)+','+(skala*670)+','+(skala*670)+','+(skala*540)+','+(skala*530)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.RIGHT);\" onmouseup=\"pilot.trzymaj=null\" ontouchstart=\"pilot.clickTrzymaj(TCP_Data.pilotButton.RIGHT); return false;\" ontouchend=\"pilot.trzymaj=null; return false;\"  />" +

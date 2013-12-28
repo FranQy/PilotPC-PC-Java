@@ -50,7 +50,7 @@ public class PolaczenieWatek
                               ileGotowe++;
                       }
                   }
-                  if(ileGotowe<2)
+                  //if(ileGotowe<2)
 			for(byte i=0;i<100;i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
 			{
 				if(Polaczenie.watki[i]==null){
@@ -191,7 +191,7 @@ oos.flush();
                         ileGotowe++;
                 }
             }
-            if(ileGotowe>1)
+            /*if(ileGotowe>22)
             {
                 for(byte i=0;i<100;i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
                 {
@@ -201,7 +201,7 @@ oos.flush();
                     }
                 }
                 break;
-            }
+            }      */
     	}}
     	void wykonuj(TCP_Data data)
     	{
