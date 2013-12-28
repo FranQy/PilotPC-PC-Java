@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e646a8c4-e358-4260-b97a-355bcc8df9c4" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/PilotPC-Windows.v12.suo" afterPath="$PROJECT_DIR$/lib/PilotPC-Windows.v12.suo" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SocketServer.iws" />
@@ -89,19 +90,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TCP_Data.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="TCP_Data.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/example/socketclient/TCP_Data.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="17" selection-start="412" selection-end="419" vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="748">
+            <state line="14" column="53" selection-start="372" selection-end="444" vertical-scroll-proportion="0.39534885" vertical-offset="85" max-vertical-offset="748">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HTTP.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="HTTP.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/HTTP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="337" column="63" selection-start="18621" selection-end="18621" vertical-scroll-proportion="0.6034483" vertical-offset="5519" max-vertical-offset="8466">
+            <state line="337" column="63" selection-start="18621" selection-end="18621" vertical-scroll-proportion="-8.076923" vertical-offset="5519" max-vertical-offset="8466">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -479,10 +480,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32736155" sideWeight="0.820997" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32736155" sideWeight="0.820997" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
@@ -830,13 +831,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/socketclient/TCP_Data.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="17" selection-start="412" selection-end="419" vertical-scroll-proportion="0.0" vertical-offset="158" max-vertical-offset="748">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Program.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="95" column="18" selection-start="3902" selection-end="3902" vertical-scroll-proportion="0.0" vertical-offset="867" max-vertical-offset="1836">
@@ -853,10 +847,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HTTP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="337" column="63" selection-start="18621" selection-end="18621" vertical-scroll-proportion="0.6034483" vertical-offset="5519" max-vertical-offset="8466">
+        <state line="337" column="63" selection-start="18621" selection-end="18621" vertical-scroll-proportion="-8.076923" vertical-offset="5519" max-vertical-offset="8466">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/socketclient/TCP_Data.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="53" selection-start="372" selection-end="444" vertical-scroll-proportion="0.39534885" vertical-offset="85" max-vertical-offset="748">
+          <folding />
         </state>
       </provider>
     </entry>

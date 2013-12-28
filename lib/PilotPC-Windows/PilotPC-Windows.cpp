@@ -8,7 +8,9 @@ using namespace std;
 #pragma comment (lib,"Advapi32.lib")
 enum  pilotButton{
 	OFF, MUSIC, MULTIMEDIA, PLAYPAUSE, PERV, NEXT, STOP, EXIT, BACK, VOLDOWN, VOLUP, MUTE,
-	UP, DOWN, RIGHT, LEFT, RETTURN
+	UP, DOWN, RIGHT, LEFT, RETTURN,
+	REWIND,//Przewijanie do ty³u
+	FORWARD//przewijanie do przodu
 };
 JNIEXPORT void JNICALL Java_Pilot_click(JNIEnv *env, jobject jobj, jint a) {
 	pilotButton przycisk = (pilotButton)a;
