@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e646a8c4-e358-4260-b97a-355bcc8df9c4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dodatki/PilotPC-Firefox.xpi" afterPath="$PROJECT_DIR$/dodatki/PilotPC-Firefox.xpi" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HTTP.java" afterPath="$PROJECT_DIR$/src/HTTP.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Pilot.java" afterPath="$PROJECT_DIR$/src/Pilot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PolaczenieWatek.java" afterPath="$PROJECT_DIR$/src/PolaczenieWatek.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dodatki/PilotPC-Chromium/background.js" afterPath="$PROJECT_DIR$/dodatki/PilotPC-Chromium/background.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dodatki/PilotPC-Firefox/chrome/content/ff-overlay.js" afterPath="$PROJECT_DIR$/dodatki/PilotPC-Firefox/chrome/content/ff-overlay.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dodatki/PilotPC-Chromium/wspolne.js" afterPath="$PROJECT_DIR$/dodatki/PilotPC-Chromium/wspolne.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dodatki/PilotPC-Firefox/chrome/content/wspolne.js" afterPath="$PROJECT_DIR$/dodatki/PilotPC-Firefox/chrome/content/wspolne.js" />
     </list>
     <ignored path="SocketServer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -474,7 +466,11 @@
       <created>1388226951784</created>
       <updated>1388226951784</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Dodatki">
+      <created>1388250709433</created>
+      <updated>1388250709433</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -527,7 +523,8 @@
     <MESSAGE value="Dodanie klawiatury" />
     <MESSAGE value="Dodanie klawiatury&#10;" />
     <MESSAGE value="Zmiana TCP_Data" />
-    <option name="LAST_COMMIT_MESSAGE" value="Zmiana TCP_Data" />
+    <MESSAGE value="Dodatki" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dodatki" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
