@@ -35,8 +35,8 @@ public class PanelQRCode extends JPanel{
 	private static final long serialVersionUID = 1L;
 	ByteMatrix macierz;
 Dimension rozmiar;
-Panel okno;
-	public PanelQRCode(Panel lewy)
+JPanel okno;
+	public PanelQRCode(JPanel lewy)
 	{
 		okno=lewy;
 		setBackground(Color.white);
@@ -97,8 +97,8 @@ String adres2="";
         int wielkosc;
         //double test1=(double)okno.getSize().width/(double)macierz.getWidth();
         //double test2=Math.floor((double)okno.getSize().width/(double)macierz.getWidth());
-        if(okno.getSize().height>okno.getSize().width/2)
-        	wielkosc=(int)Math.floor((double)okno.getSize().width/((double)macierz.getWidth()+2)/2.0);
+        if(okno.getSize().height>okno.getSize().width)
+        	wielkosc=(int)Math.floor((double)okno.getSize().width/((double)macierz.getWidth()+2));
         else
         	wielkosc=(int)Math.floor((double)okno.getSize().height/((double)macierz.getWidth()+2));
 

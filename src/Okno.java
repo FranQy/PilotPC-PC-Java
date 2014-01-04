@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,106 +8,54 @@ import java.awt.event.MouseListener;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
-public class Okno extends JFrame {
+/**
+ * Created by Mateusz on 04.01.14.
+ */
+public class Okno {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+    private JButton zmieńKodButton;
+    private JButton informacjeButton;
+    private JButton startZSystememButton;
     public static boolean potrzebneOdswierzenie = false;
-    public Tekst status = new Tekst("Inicjowanie", new Point(230, 2));
-    Tekst kod = new Tekst("Kod do połączenia: " + Program.ustawienia.haslo, new Point(0, 26));
-    Urzadzenia telefony;
+    private JLabel kod;
+    private JLabel info;
+    private JPanel telefony;
+    private JPanel zawartosc;
+    private JPanel QRPanel;
     PanelQRCode qr;
-    Przycisk przyciskInformacje;
-    Przycisk przyciskAutostart;
-    private MouseListener zmienKodClick = new MouseListener() {
+    public JFrame frame  ;
 
-        @Override
-        public void mouseReleased(MouseEvent arg0) {
-            // TODO Auto-generated method stub
+    public Okno(){
 
-        }
-
-        @Override
-        public void mousePressed(MouseEvent arg0) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void mouseExited(MouseEvent arg0) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent arg0) {
-            // TODO Auto-generated method stub
-
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent arg0) {
-            Program.ustawienia.haslo = Ustawienia.generujHaslo();
-            kod.setText("Kod do połączenia: " + Program.ustawienia.haslo);
-            qr.odswierz();
-            Program.ustawienia.eksportuj();
-
-
-        }
-    };
-
-
-    public Okno() {
-        super("PilotPC");
-        this.setSize(750, 550);
-//setBackground(new Color(38,33,27));
-        setMinimumSize(new Dimension(500, 300));
-//setLayout(new GridLayout());
-        Panel lewy = new Panel();
-        lewy.setBackground(new Color(38, 33, 27));
-        qr = new PanelQRCode(lewy);
-        telefony = new Urzadzenia(lewy);
-        przyciskInformacje = new Przycisk("Informacje", new Dimension(100, 20), new Point(0, 0));
-        przyciskInformacje.setMargin(new Insets(0, 0, 0, 0));
-        ActionListener przyciskInformacjeListener = new ActionListener() {
-
+        frame= new JFrame("Okno");
+        frame.setContentPane(zawartosc);
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+       kod.setText("Kod do połączenia: " + Program.ustawienia.haslo);
+        zmieńKodButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent arg0) {
-                // TODO Auto-generated method stub
+            public void actionPerformed(ActionEvent e) {
+
+                Program.ustawienia.haslo = Ustawienia.generujHaslo();
+                kod.setText("Kod do połączenia: " + Program.ustawienia.haslo);
+                qr.odswierz();
+                Program.ustawienia.eksportuj();
+            }
+        });
+        informacjeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 new OProgramie();
             }
-        };
-        przyciskInformacje.addActionListener(przyciskInformacjeListener);
-        przyciskInformacje.setSize(100, 20);
-        przyciskInformacje.setMaximumSize(new Dimension(100, 20));
-        przyciskInformacje.setLocation(0, 0);
-        lewy.add(przyciskInformacje);
-        przyciskAutostart = new Przycisk("Start z systemem", new Dimension(120, 20), new Point(105, 0));
-        przyciskAutostart.setMargin(new Insets(0, 0, 0, 0));
-        ActionListener przyciskAutostartListener = new
-                ActionListener() {
-
-                    @Override
-                    public void actionPerformed(ActionEvent arg0) {
-                        Program.autostart();
-                    }
-                };
-        przyciskAutostart.addActionListener(przyciskAutostartListener);
-        przyciskAutostart.setSize(120, 20);
-        przyciskAutostart.setMaximumSize(new Dimension(120, 20));
-        przyciskAutostart.setLocation(105, 0);
-        lewy.add(przyciskAutostart);
-        status.setLocation(230, 0);
-        lewy.add(status);
-
-        JLabel info = new Tekst(null, new Point(0, 50));
+        });
+        startZSystememButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Program.autostart();
+            }
+        });
         String tekstIP = "Twoje IP to:<br/>";
         Enumeration<NetworkInterface> n;
         try {
@@ -127,33 +76,18 @@ public class Okno extends JFrame {
             e1.printStackTrace();
         }
         info.setText("<html>" + tekstIP + "</html>");
-        lewy.add(info);
 
-        lewy.add(telefony);
-        lewy.add(kod);
-        Przycisk zmienKod = new Przycisk("Zmień kod", new Dimension(100, 20), new Point(190, 23));
-        zmienKod.addMouseListener(zmienKodClick);
-        zmienKod.setMargin(new Insets(0, 0, 0, 0));
-        lewy.add(zmienKod);
-/*JLabel link=new JLabel();
-link.setText("http://"+java.net.InetAddress.getLocalHost().getHostAddress()+":12345/");
-System.out.println();
-link.setForeground(Color.BLUE);
-lewy.add(link);*/
-        lewy.add(qr);
-        add(lewy);
-        setVisible(true);
-        Timer timer1 = new Timer();
+
+        //QRPanel.add(new JPanel(),0);
+        qr = new PanelQRCode(QRPanel);
+        QRPanel.add(qr);
+        java.util.Timer timer1 = new java.util.Timer();
         Odswierz timer1_task = new Odswierz();
         timer1_task.okno = this;
         timer1.schedule(timer1_task, 100, 100);
-    }
 
-    protected void finalize() throws Throwable {
-        Program.wyswietlanie = TypWyswietlania.Konsola;
-    }
-
-    public class Odswierz extends TimerTask {
+        frame.setVisible(true);
+    }     public class Odswierz extends TimerTask {
         public Okno okno;
         int licznik = 0;
 
@@ -169,12 +103,11 @@ lewy.add(link);*/
                 statusTxt += " Zaktualizowano do nowej wersji!";
             else if (Aktualizacja.trwa)
                 statusTxt += " Trwa aktualizacja do nowej wersji...";
-            status.setText(statusTxt);
+           // status.setText(statusTxt);
             for (byte i = 0; i < Polaczenie.watki.length; i++) {
                 if (Polaczenie.watki[i] != null)
                     if (Polaczenie.watki[i].czyPolaczono()) {
                         if (!Polaczenie.watki[i].pokazane && Polaczenie.watki[i].infoPrzyPolaczeniu != null)
-                        //  if(!Polaczenie.watki[i].pokazane&&Polaczenie.watki[i].infoPrzyPolaczeniu!=null)
                         {
                             Polaczenie.watki[i].pokazane = true;
                             telefony.add(Polaczenie.watki[i].UI = new Urzadzenie(Polaczenie.watki[i], telefony));
@@ -204,90 +137,17 @@ for(int i=0;i<telefony.countComponents();i++)
 {
 	telefony.getComponent(i).paint(telefony.getComponent(i).getGraphics());
 }}*/
-            if (potrzebneOdswierzenie)
-                okno.paintAll(okno.getGraphics());
+            //if (potrzebneOdswierzenie)
+            //    okno.paintAll(okno.getGraphics());
             potrzebneOdswierzenie = false;
         }
-    }
-
-    class Przycisk extends JButton {
-        public Dimension wymiary;
-        public Point lokacja;
-
-        public Przycisk(String string, Dimension dimension, Point point) {
-            super(string);
-
-            wymiary = dimension;
-            lokacja = point;
-            setBackground(Color.white);
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-
-            setLocation(lokacja);
-            setSize(wymiary);
-
-            super.paintComponent(g);
-        }
-
-    }
-
-    class Tekst extends JLabel {
-        public Dimension wymiary;
-        public Point lokacja;
-
-        public Tekst(String string, Point point) {
-            super(string);
-            //wymiary=dimension;
-            lokacja = point;
-            setForeground(Color.white);
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-
-            setLocation(lokacja);
-            //setSize(wymiary);
-
-            super.paintComponent(g);
-        }
-
-    }
-
-    class Urzadzenia extends JPanel {
-        Panel okno;
-
-        public Urzadzenia(Panel lewy) {
-            super();
-            this.okno = lewy;
-            setBackground(new Color(46, 46, 46));
-            setLayout(new GridLayout(200, 1));
-            Label tytul = new Label("Podłączone urządzenia:");
-            tytul.setForeground(Color.white);
-            add(tytul);
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-
-            int liczPolaczenia = countComponents();
-            setSize(okno.getWidth() / 2, liczPolaczenia * 36);
-            setLocation(0, okno.getHeight() - liczPolaczenia * 36);
-            Component[] test = getComponents();
-            // setLocation(0,50);
-            super.paintComponent(g);
-
-        }
-    }
-
-    class Urzadzenie extends JPanel {
+    }            class Urzadzenie extends JPanel {
         public PolaczenieInfo zrodlo;
         JButton rozlacz = new JButton("Rozłącz");
         JLabel tekst = new JLabel();
-        Urzadzenia ramka;
+        JPanel ramka;
 
-        public Urzadzenie(PolaczenieInfo z, Urzadzenia telefony) {
+        public Urzadzenie(PolaczenieInfo z, JPanel telefony) {
             setBackground(new Color(46, 46, 46));
             tekst.setForeground(Color.white);
             rozlacz.setBackground(Color.white);

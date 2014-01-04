@@ -56,7 +56,7 @@ public class Program {
                     if (glowneOkno == null)
                         glowneOkno = new Okno();
                     else
-                        glowneOkno.show();
+                        glowneOkno.frame.setVisible(true);
                 }
             });
             MenuItem zakoncz = new MenuItem("Zakończ"); //tworzymy obiekt menuItem
@@ -87,7 +87,7 @@ public class Program {
                     if (glowneOkno == null)
                         glowneOkno = new Okno();
                     else
-                        glowneOkno.show();
+                       glowneOkno.frame.setVisible(true);
                 }
             });
             try {
