@@ -15,6 +15,13 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_Pilot_click
 		(JNIEnv *, jobject, jint);
 
+	/*
+	* Class:     Program
+	* Method:    autostart
+	* Signature: (ZZLjava/lang/String;)V
+	*/
+	JNIEXPORT void JNICALL Java_Program_autostart
+		(JNIEnv *, jclass, jboolean, jboolean, jstring);
 #ifdef __cplusplus
 }
 #endif

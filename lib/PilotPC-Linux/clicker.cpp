@@ -52,3 +52,7 @@ switch (przycisk)
    XTestFakeKeyEvent(display, keycode, False, 0);
    XFlush(display);
 }
+JNIEXPORT void JNICALL Java_Program_autostart
+		(JNIEnv *env, jclass klasa, jboolean wlacz, jboolean wszyscy, jstring folder)
+		{
+		}
