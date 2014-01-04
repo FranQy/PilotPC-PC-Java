@@ -33,6 +33,7 @@ public class Okno {
         frame.setContentPane(zawartosc);
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        telefony.setLayout(new GridLayout(0,1));
        kod.setText("Kod do połączenia: " + Program.ustawienia.haslo);
         zmieńKodButton.addActionListener(new ActionListener() {
             @Override
@@ -137,8 +138,11 @@ for(int i=0;i<telefony.countComponents();i++)
 {
 	telefony.getComponent(i).paint(telefony.getComponent(i).getGraphics());
 }}*/
-            //if (potrzebneOdswierzenie)
-            //    okno.paintAll(okno.getGraphics());
+            if (potrzebneOdswierzenie)
+            {
+                telefony.paintAll(telefony.getGraphics());
+                zawartosc.paintAll(zawartosc.getGraphics());
+            }
             potrzebneOdswierzenie = false;
         }
     }            class Urzadzenie extends JPanel {
