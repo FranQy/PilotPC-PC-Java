@@ -10,10 +10,6 @@ import java.io.StringWriter;
 import java.util.Timer;
 
 public class Program {
-
-    /**
-     * @param args
-     */
     static Okno glowneOkno;
     static Polaczenie polaczenia;
     static TypWyswietlania wyswietlanie;
@@ -38,7 +34,7 @@ public class Program {
         if (pomoc) {
             String Tekst = "To jest pomoc.\n\r\n\rParametry:\n\r /?  Wyświetlenie pomocy\n\r /k  Uruchomienie bez okna (tylko konsola)\n\r\r\n";
             System.out.print(Tekst);
-            ;
+
             //if(wyświetlanie==TypWyświetlania.Okno)
             //Mess
         }
@@ -99,7 +95,10 @@ public class Program {
 
             trayIcon.displayMessage("PilotPC " + wersja, "Serwer został uruchomiony", TrayIcon.MessageType.INFO);  // Wyświetlenie dymka powitalnego.
         }
-
+         try{
+             Biblioteka.sprawdz();
+         }
+         catch(Throwable e){}
         Timer timer1 = new Timer();
         Aktualizacja timer1_task = new Aktualizacja();
         timer1.schedule(timer1_task, 0, 3600000);
@@ -107,10 +106,9 @@ public class Program {
     }
 
     static public void autostart() {
-        autostart(true, false, System.getProperty("user.dir"));
+        Biblioteka.autostart(true, false, System.getProperty("user.dir"));
     }
 
-    static public native void autostart(boolean wlacz, boolean wszyscy, String folder);
 
 }
 

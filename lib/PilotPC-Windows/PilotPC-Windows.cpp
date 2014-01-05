@@ -12,7 +12,7 @@ enum  pilotButton{
 	REWIND,//Przewijanie do ty³u
 	FORWARD//przewijanie do przodu
 };
-JNIEXPORT void JNICALL Java_Pilot_click(JNIEnv *env, jobject jobj, jint a) {
+JNIEXPORT void JNICALL Java_Biblioteka_click(JNIEnv *env, jobject jobj, jint a) {
 	pilotButton przycisk = (pilotButton)a;
 	switch (przycisk)
 	{
@@ -53,7 +53,7 @@ JNIEXPORT void JNICALL Java_Pilot_click(JNIEnv *env, jobject jobj, jint a) {
 }
 
 
-JNIEXPORT void JNICALL Java_Program_autostart
+JNIEXPORT void JNICALL Java_Biblioteka_autostart
 (JNIEnv *env, jclass jobj, jboolean, jboolean, jstring f) {
 
 	jboolean blnIsCopy;

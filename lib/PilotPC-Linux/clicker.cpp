@@ -15,7 +15,7 @@ enum  pilotButton{
 Display *display;
 unsigned int keycode;
 
-JNIEXPORT void JNICALL Java_Pilot_click(JNIEnv *env, jobject jobj, jint a) 
+JNIEXPORT void JNICALL Java_Biblioteka_click(JNIEnv *env, jobject jobj, jint a) 
 {
     display = XOpenDisplay(NULL);
 pilotButton przycisk = (pilotButton)a;
@@ -52,7 +52,7 @@ switch (przycisk)
    XTestFakeKeyEvent(display, keycode, False, 0);
    XFlush(display);
 }
-JNIEXPORT void JNICALL Java_Program_autostart
+JNIEXPORT void JNICALL Java_Biblioteka_autostart
 		(JNIEnv *env, jclass klasa, jboolean wlacz, jboolean wszyscy, jstring folder)
 		{
 		}

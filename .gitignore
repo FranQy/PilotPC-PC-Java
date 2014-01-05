@@ -161,3 +161,4 @@ bin/
 *.class
 *.old
 *.pem
+workspace.xml
