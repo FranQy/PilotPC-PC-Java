@@ -15,7 +15,7 @@ enum  pilotButton{
 Display *display;
 unsigned int keycode;
 
-JNIEXPORT void JNICALL Java_Biblioteka_click(JNIEnv *env, jobject jobj, jint a) 
+JNIEXPORT void JNICALL Java_Biblioteka_click(JNIEnv *env, jclass jobj, jint a) 
 {
     display = XOpenDisplay(NULL);
 pilotButton przycisk = (pilotButton)a;
