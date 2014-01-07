@@ -1,0 +1,8 @@
+<!ENTITY pilotpc_firefox.label "Your localized menuitem">
+<!ENTITY pilotpc_firefoxContext.label "Your Menuitem">
+<!ENTITY pilotpc_firefoxContext.accesskey "Y">
+<!ENTITY pilotpc_firefoxToolbarButton.label "Your Toolbar Button">
+<!ENTITY pilotpc_firefoxToolbarButton.tooltip "This is your toolbar button!">
+<!ENTITY pilotpc_firefoxSidebar.label "Your Sidebar">
+<!ENTITY pilotpc_firefoxToolbar.name  "example">
+<!ENTITY pilotpc_firefoxToolbar.label "This is an example toolbar. You can hide it under View &gt; toolbars &gt; &pilotpc_firefoxToolbar.name;">

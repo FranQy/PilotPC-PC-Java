@@ -1,1 +1,1 @@
-java -jar PilotPC-PC-Java.jar
+javaw -jar PilotPC-PC-Java.jar
