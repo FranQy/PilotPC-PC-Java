@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include <Windows.h>
+#include <io.h>
 #include <string>
 using namespace std;
 #pragma comment (lib,"Advapi32.lib")
@@ -12,6 +13,9 @@ int _tmain(const int argc, _TCHAR* argv[])
 	{
 
 		HINSTANCE hInst;
+
+		
+		//	if (!access("PilotPC-PC-Java.jar.new", 0))
 		if (argv[0][1] == L':')
 		{
 			hInst = ShellExecute(0,

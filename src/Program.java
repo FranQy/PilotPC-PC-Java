@@ -16,20 +16,37 @@ public class Program {
     static Polaczenie polaczenia;
     static TypWyswietlania wyswietlanie;
     static Ustawienia ustawienia = Ustawienia.importuj();
-    static public String wersja = "0.1.27";
+    static public String wersja = "0.1.28";
     static public Robot robot;
     public static void main(String[] args) throws AWTException {
+        if(ustawienia.jezyk==null)
+        {
+            ustawienia.jezyk= Jezyk.jezyki.Polski;
+            ustawienia.eksportuj();
+        }
         // TODO Auto-generated method stub
         robot=new Robot();
         wyswietlanie = TypWyswietlania.Konsola;
         boolean pomoc = false;
+        Jezyk.jezyki lang= ustawienia.jezyk;
         for (int i = 0; i < args.length; i++) {
             if (args[i].equalsIgnoreCase("/o"))
                 wyswietlanie = TypWyswietlania.Okno;
             else if (args[i].equals("/?"))
                 pomoc = true;
+            else if (args[i].equals("/l")||args[i].equals("-l"))
+            {
+                i++;
+                if (args[i].equalsIgnoreCase("pl"))
+                    lang = Jezyk.jezyki.Polski;
+                else if (args[i].equalsIgnoreCase("en"))
+                    lang = Jezyk.jezyki.Angielski;
+                else if (args[i].equalsIgnoreCase("ru"))
+                    lang = Jezyk.jezyki.Rosyjski;
+            }
 
         }
+        Jezyk.laduj(lang);
         if (wyswietlanie == TypWyswietlania.Okno) {
             glowneOkno = new Okno();
         }
@@ -41,11 +58,11 @@ public class Program {
             //Mess
         }
         else
-            System.out.println("PilotPC wersja " + wersja);
+            System.out.println(Jezyk.napisy[Jezyk.n.PilotPCWersja.ordinal()] + wersja);
         if (SystemTray.isSupported()) {
             SystemTray tray = SystemTray.getSystemTray();
             PopupMenu popup = new PopupMenu();
-            MenuItem pokaz = new MenuItem("Pokaż"); //tworzymy obiekt menuItem
+            MenuItem pokaz = new MenuItem(Jezyk.napisy[Jezyk.n.Pokaz.ordinal()]); //tworzymy obiekt menuItem
             popup.add(pokaz);                //dodajemy objekt do menu
 
             pokaz.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
@@ -57,7 +74,7 @@ public class Program {
                         glowneOkno.frame.setVisible(true);
                 }
             });
-            MenuItem zakoncz = new MenuItem("Zakończ"); //tworzymy obiekt menuItem
+            MenuItem zakoncz = new MenuItem(Jezyk.napisy[Jezyk.n.Zakoncz.ordinal()]); //tworzymy obiekt menuItem
             popup.add(zakoncz);                //dodajemy objekt do menu
             zakoncz.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
                 public void actionPerformed(ActionEvent e) {    // tworzymy funkcję zamykającą naszą aplikację
@@ -121,11 +138,11 @@ public class Program {
             try {
                 tray.add(trayIcon);   // dodanie naszej ikony do zasobnika systemowego
             } catch (AWTException e) {
-                javax.swing.JOptionPane.showMessageDialog(null, "Błąd podczas dodawania ikony do zasobnika systemowego.");            // Wyświetl komunikat
+                javax.swing.JOptionPane.showMessageDialog(null, Jezyk.napisy[Jezyk.n.BladPodczasDodawaniaIkony.ordinal()]);            // Wyświetl komunikat
 
             }
 
-            trayIcon.displayMessage("PilotPC " + wersja, "Serwer został uruchomiony", TrayIcon.MessageType.INFO);  // Wyświetlenie dymka powitalnego.
+            trayIcon.displayMessage("PilotPC " + wersja, Jezyk.napisy[Jezyk.n.SerwerZostalUruchomiony.ordinal()], TrayIcon.MessageType.INFO);  // Wyświetlenie dymka powitalnego.
         }
          try{
              Biblioteka.sprawdz();

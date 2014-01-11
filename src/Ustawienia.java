@@ -85,14 +85,15 @@ public class Ustawienia implements Serializable {
 			ret.eksportuj();
 			return ret;
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();Ustawienia ret=new Ustawienia();
-			ret.eksportuj();
-			return ret;
-		}
+            // TODO Auto-generated catch block
+            e.printStackTrace();Ustawienia ret=new Ustawienia();
+            ret.eksportuj();
+            return ret;
+        }
 	}
 	/**
 	 * Hasło urzywane do łączenia się
 	 */
 	public  String haslo=generujHaslo();
+    public Jezyk.jezyki jezyk= Jezyk.jezyki.Polski;
 }
