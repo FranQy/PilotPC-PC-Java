@@ -16,7 +16,7 @@ public class Program {
     static Polaczenie polaczenia;
     static TypWyswietlania wyswietlanie;
     static Ustawienia ustawienia = Ustawienia.importuj();
-    static public String wersja = "0.1.28";
+    static public String wersja = "0.1.29";
     static public Robot robot;
     static public TrayIcon trayIcon;
     public static void main(String[] args) throws AWTException {
@@ -151,8 +151,8 @@ public class Program {
                 javax.swing.JOptionPane.showMessageDialog(null, Jezyk.napisy[Jezyk.n.BladPodczasDodawaniaIkony.ordinal()]);            // Wyświetl komunikat
 
             }
-             if(nowy)
-            trayIcon.displayMessage("PilotPC " + wersja, Jezyk.napisy[Jezyk.n.SerwerZostalUruchomiony.ordinal()], TrayIcon.MessageType.INFO);  // Wyświetlenie dymka powitalnego.
+            // if(nowy)
+           // trayIcon.displayMessage("PilotPC " + wersja, Jezyk.napisy[Jezyk.n.SerwerZostalUruchomiony.ordinal()], TrayIcon.MessageType.INFO);  // Wyświetlenie dymka powitalnego.
     }
 
     try{

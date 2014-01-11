@@ -25,6 +25,7 @@ public class Okno {
     private JPanel zawartosc;
     private JPanel QRPanel;
     private JComboBox WybierzJezyk;
+    private JLabel PodlaczoneUrzadzenia;
     PanelQRCode qr;
     public JFrame frame  ;
 
@@ -102,7 +103,12 @@ public class Okno {
     }
 
     public void ustawJezyk() {
-
+        (new Start()).start();
+        zmieńKodButton.setText(Jezyk.napisy[Jezyk.n.ZmienKod.ordinal()]);
+        informacjeButton.setText(Jezyk.napisy[Jezyk.n.Infromacje.ordinal()]);
+        startZSystememButton.setText(Jezyk.napisy[Jezyk.n.StartZSystemem.ordinal()]);
+        kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()]+": " + Program.ustawienia.haslo);
+        PodlaczoneUrzadzenia.setText(Jezyk.napisy[Jezyk.n.PodlaczoneUrzadzenia.ordinal()]);
     }
 
     public class Odswierz extends TimerTask {

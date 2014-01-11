@@ -15,7 +15,8 @@ Program.tray(false);
     public enum jezyki { Polski, Angielski, Rosyjski };
     public enum n { PilotPCWersja,Pokaz, Zakoncz, BladPodczasDodawaniaIkony,
         SerwerZostalUruchomiony, OProgramiePilotPc,Programisci,Nieznane,Wersja,
-        Rozlaczono, Polaczono,Nazwa,BladZPolaczeniem,KodDoPolaczenia,Rozlacz,TwojeIPTo };
+        Rozlaczono, Polaczono,Nazwa,BladZPolaczeniem,KodDoPolaczenia,Rozlacz,TwojeIPTo,
+    ZmienKod,Infromacje,StartZSystemem,PodlaczoneUrzadzenia};
     public static void laduj(jezyki a)
     {
         switch (a)
@@ -37,12 +38,10 @@ Program.tray(false);
                 napisy[n.KodDoPolaczenia.ordinal()]="Kod do połączenia";
                 napisy[n.Rozlacz.ordinal()]="Rozłącz";
                 napisy[n.TwojeIPTo.ordinal()]="Twoje IP to";
-                napisy[n.BladZPolaczeniem.ordinal()]="Błąd z połączeniem";
-                napisy[n.BladZPolaczeniem.ordinal()]="Błąd z połączeniem";
-                napisy[n.BladZPolaczeniem.ordinal()]="Błąd z połączeniem";
-                napisy[n.BladZPolaczeniem.ordinal()]="Błąd z połączeniem";
-                napisy[n.BladZPolaczeniem.ordinal()]="Błąd z połączeniem";
-                napisy[n.BladZPolaczeniem.ordinal()]="Błąd z połączeniem";
+                napisy[n.ZmienKod.ordinal()]="Zmień kod";
+                napisy[n.Infromacje.ordinal()]="Informacje";
+                napisy[n.StartZSystemem.ordinal()]="Start z systemem";
+                napisy[n.PodlaczoneUrzadzenia.ordinal()]="Podłączone urządzenia";
                 break;
             case Angielski:
                 napisy[n.PilotPCWersja.ordinal()]="PilotPC version ";
@@ -61,6 +60,33 @@ Program.tray(false);
                 napisy[n.KodDoPolaczenia.ordinal()]="Autentication code";
                 napisy[n.Rozlacz.ordinal()]="Disconnect";
                 napisy[n.TwojeIPTo.ordinal()]="Your IP";
+                napisy[n.ZmienKod.ordinal()]="New code";
+                napisy[n.Infromacje.ordinal()]="Information";
+                napisy[n.StartZSystemem.ordinal()]="Start with system boot";
+                napisy[n.PodlaczoneUrzadzenia.ordinal()]="Connected devices";
+                break;
+
+            case Rosyjski:
+                napisy[n.PilotPCWersja.ordinal()]="PilotPC версия ";
+                napisy[n.Pokaz.ordinal()]="Покажите";
+                napisy[n.Zakoncz.ordinal()]="Выключи";
+                napisy[n.BladPodczasDodawaniaIkony.ordinal()]="Błąd podczas dodawania ikony do zasobnika systemowego.";
+                napisy[n.SerwerZostalUruchomiony.ordinal()]="Serwer został uruchomiony";
+                napisy[n.OProgramiePilotPc.ordinal()]="О программе PilotPC";
+                napisy[n.Programisci.ordinal()]="Разработчики:";
+                napisy[n.Nieznane.ordinal()]="неизвестный";
+                napisy[n.Wersja.ordinal()]="версия";
+                napisy[n.Rozlaczono.ordinal()]="Отсоединен";
+                napisy[n.Polaczono.ordinal()]="Połączono";
+                napisy[n.Nazwa.ordinal()]="название";
+                napisy[n.BladZPolaczeniem.ordinal()]="Błąd z połączeniem";
+                napisy[n.KodDoPolaczenia.ordinal()]="Kod do połączenia";
+                napisy[n.Rozlacz.ordinal()]="Rozłącz";
+                napisy[n.TwojeIPTo.ordinal()]="ваш IP это";
+                napisy[n.ZmienKod.ordinal()]="Изменение кода";
+                napisy[n.Infromacje.ordinal()]="О программе";
+                napisy[n.StartZSystemem.ordinal()]="Start z systemem";
+                napisy[n.PodlaczoneUrzadzenia.ordinal()]="Подключенные устройства";
                 break;
         }
     }
