@@ -51,7 +51,7 @@ public Polaczenie()
 	}catch(IOException e)
 	{
 
-		System.out.print("Błąd z połączeniem\r\n");	
+		System.out.print(Jezyk.napisy[Jezyk.n.PilotPCWersja.ordinal()]+"\r\n");
 	
 	}
 }

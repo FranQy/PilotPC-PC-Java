@@ -118,7 +118,7 @@ public UserAgent(String UA)
 		urzadzenie="PC";
 	}
 	else
-		urzadzenie="Nieznane";
+		urzadzenie=Jezyk.napisy[Jezyk.n.Nieznane.ordinal()];
 }
 public String toString()
 {

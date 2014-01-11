@@ -18,6 +18,7 @@ public class Program {
     static Ustawienia ustawienia = Ustawienia.importuj();
     static public String wersja = "0.1.28";
     static public Robot robot;
+    static public TrayIcon trayIcon;
     public static void main(String[] args) throws AWTException {
         if(ustawienia.jezyk==null)
         {
@@ -59,6 +60,10 @@ public class Program {
         }
         else
             System.out.println(Jezyk.napisy[Jezyk.n.PilotPCWersja.ordinal()] + wersja);
+        tray(true);
+        }
+
+    public static void tray(boolean nowy) {
         if (SystemTray.isSupported()) {
             SystemTray tray = SystemTray.getSystemTray();
             PopupMenu popup = new PopupMenu();
@@ -94,21 +99,25 @@ public class Program {
 
             BufferedImage imgObrazek;
             imgObrazek = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
-
-            TrayIcon trayIcon = new TrayIcon(imgObrazek, "PilotPC-PC-Java", popup);
+                try{
+            if(!nowy)
+                    tray.remove(trayIcon);
+                }
+                catch(NullPointerException e){}
+            trayIcon = new TrayIcon(imgObrazek, "PilotPC-PC-Java", popup);
             trayIcon.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                      if(e.getButton()==1)  {
-                    wyswietlanie = TypWyswietlania.Okno;
-                    if (glowneOkno == null)
-                    {
-                        glowneOkno = new Okno();
-                    }
-                    else
-                    {
-                        glowneOkno.frame.setVisible(true);
-                    }   }
+                    if(e.getButton()==1)  {
+                        wyswietlanie = TypWyswietlania.Okno;
+                        if (glowneOkno == null)
+                        {
+                            glowneOkno = new Okno();
+                        }
+                        else
+                        {
+                            glowneOkno.frame.setVisible(true);
+                        }   }
                 }
 
                 @Override
@@ -137,14 +146,16 @@ public class Program {
             });
             try {
                 tray.add(trayIcon);   // dodanie naszej ikony do zasobnika systemowego
+
             } catch (AWTException e) {
                 javax.swing.JOptionPane.showMessageDialog(null, Jezyk.napisy[Jezyk.n.BladPodczasDodawaniaIkony.ordinal()]);            // Wyświetl komunikat
 
             }
-
+             if(nowy)
             trayIcon.displayMessage("PilotPC " + wersja, Jezyk.napisy[Jezyk.n.SerwerZostalUruchomiony.ordinal()], TrayIcon.MessageType.INFO);  // Wyświetlenie dymka powitalnego.
-        }
-         try{
+    }
+
+    try{
              Biblioteka.sprawdz();
          }
          catch(Throwable e){}

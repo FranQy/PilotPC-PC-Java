@@ -87,7 +87,7 @@ ObjectOutputStream oos= new ObjectOutputStream(soc.getOutputStream());
 oos.writeObject(odpowiedz);
 oos.flush();
 				 // dataObject =  in.readObject();
-                      System.out.println("Połączono "+toString());
+                      System.out.println(Jezyk.napisy[Jezyk.n.Polaczono.ordinal()]+" "+toString());
 				  }
 				  else
 				  {
@@ -160,7 +160,7 @@ oos.flush();
 					}
 				  this.infoPrzyPolaczeniu=null;
 					this.pokazane=false;
-				  System.out.println("Rozłączono "+toString());
+				  System.out.println(Jezyk.napisy[Jezyk.n.Rozlaczono.ordinal()]+" "+toString());
                   Okno.potrzebneOdswierzenie=true;
 					
 				  
@@ -323,7 +323,7 @@ oos.flush();
     		String ret="<html>IP:"+soc.getRemoteSocketAddress().toString();
 
     		if(infoPrzyPolaczeniu!=null)
-    		ret+="<br/>Nazwa:"+infoPrzyPolaczeniu.nazwa;
+    		ret+="<br/>"+Jezyk.napisy[Jezyk.n.Nazwa.ordinal()]+":"+infoPrzyPolaczeniu.nazwa;
     		return ret+"</html>";
     		
     	}

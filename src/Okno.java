@@ -24,6 +24,7 @@ public class Okno {
     private JPanel telefony;
     private JPanel zawartosc;
     private JPanel QRPanel;
+    private JComboBox WybierzJezyk;
     PanelQRCode qr;
     public JFrame frame  ;
 
@@ -32,20 +33,37 @@ public class Okno {
     }
         public Okno(boolean wyswietl){
 
-        frame= new JFrame("Okno");
+        frame= new JFrame("PilotPC");
 
         //System.out.println("1");
         frame.setContentPane(zawartosc);
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         telefony.setLayout(new GridLayout(0,1));
-       kod.setText("Kod do połączenia: " + Program.ustawienia.haslo);
+            Jezyk.jezyki[] langs=Jezyk.jezyki.values();
+            for(short i=0;i<langs.length;i++)
+            {
+                WybierzJezyk.addItem(langs[i].toString());
+
+                if(Program.ustawienia.jezyk==langs[i])
+                WybierzJezyk.setSelectedIndex(i);
+            }
+            WybierzJezyk.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                   Program.ustawienia.jezyk = Jezyk.jezyki.values()[WybierzJezyk.getSelectedIndex()];
+                    Jezyk.przeladuj(Program.ustawienia.jezyk);
+                    Program.ustawienia.eksportuj();
+                }
+            });
+       kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()]+": " + Program.ustawienia.haslo);
+            ustawJezyk();
         zmieńKodButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 Program.ustawienia.haslo = Ustawienia.generujHaslo();
-                kod.setText("Kod do połączenia: " + Program.ustawienia.haslo);
+                kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()]+": " + Program.ustawienia.haslo);
                 qr.odswierz();
                 Program.ustawienia.eksportuj();
             }
@@ -81,7 +99,13 @@ public class Okno {
             if(wyswietl)
         frame.setVisible(true);
         //System.out.println("5");
-    }     public class Odswierz extends TimerTask {
+    }
+
+    public void ustawJezyk() {
+
+    }
+
+    public class Odswierz extends TimerTask {
         public Okno okno;
         int licznik = 0;
 
@@ -140,7 +164,7 @@ for(int i=0;i<telefony.countComponents();i++)
         }
     }            class Urzadzenie extends JPanel {
         public PolaczenieInfo zrodlo;
-        JButton rozlacz = new JButton("Rozłącz");
+        JButton rozlacz = new JButton(Jezyk.napisy[Jezyk.n.Rozlacz.ordinal()]);
         JLabel tekst = new JLabel();
         JPanel ramka;
 
@@ -181,7 +205,7 @@ for(int i=0;i<telefony.countComponents();i++)
 
         @Override
         public void run() {
-            String tekstIP = "Twoje IP to:<br/>";
+            String tekstIP = Jezyk.napisy[Jezyk.n.TwojeIPTo.ordinal()]+":<br/>";
             Enumeration<NetworkInterface> n;
             try {
                 n = NetworkInterface.getNetworkInterfaces();
