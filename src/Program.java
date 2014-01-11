@@ -3,6 +3,8 @@ import org.omg.CORBA.Environment;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +16,7 @@ public class Program {
     static Polaczenie polaczenia;
     static TypWyswietlania wyswietlanie;
     static Ustawienia ustawienia = Ustawienia.importuj();
-    static public String wersja = "0.1.25";
+    static public String wersja = "0.1.27";
     static public Robot robot;
     public static void main(String[] args) throws AWTException {
         // TODO Auto-generated method stub
@@ -77,13 +79,43 @@ public class Program {
             imgObrazek = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
 
             TrayIcon trayIcon = new TrayIcon(imgObrazek, "PilotPC-PC-Java", popup);
-            trayIcon.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
-                public void actionPerformed(ActionEvent e) {
+            trayIcon.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                      if(e.getButton()==1)  {
                     wyswietlanie = TypWyswietlania.Okno;
                     if (glowneOkno == null)
+                    {
                         glowneOkno = new Okno();
+                    }
                     else
-                       glowneOkno.frame.setVisible(true);
+                    {
+                        glowneOkno.frame.setVisible(true);
+                    }   }
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+            })     ;
+            trayIcon.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
+                public void actionPerformed(ActionEvent e) {
                 }
             });
             try {

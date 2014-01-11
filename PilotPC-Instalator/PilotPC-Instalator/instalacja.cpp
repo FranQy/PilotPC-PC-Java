@@ -19,6 +19,7 @@
 #include "shlguid.h"
 #include <process.h>
 #include <Shobjidl.h>
+#include "jezyk.h"
 using namespace std;
 
 /*WCHAR* lacz(LPCWSTR a, string b)
@@ -54,7 +55,7 @@ instalacja::instalacja(bool _systemStart, bool _wszyscy, LPWSTR _folder, bool _s
 void __cdecl watekStart(void * Args)
 {
 	((instalacja*)Args)[0].start();
-	MessageBox(((instalacja*)Args)[0].okno, L"Zainstalowano", L"Zainstalowano", MB_ICONINFORMATION);
+	MessageBox(((instalacja*)Args)[0].okno, jezyk::napisy[Zainstalowano], jezyk::napisy[Zainstalowano], MB_ICONINFORMATION);
 	exit(0);
 }
 void instalacja::start()
@@ -246,7 +247,7 @@ void instalacja::pobierz(string nazwa)
 	//WCHAR* test = c +L"\\"+ b;
 	HANDLE  hPlik = CreateFile(c + L"\\" + b, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, 0, NULL);
 	if (hPlik == INVALID_HANDLE_VALUE) {
-		MessageBox(NULL, L"B³¹d podczas instalacji",L"Nie mo¿na utworzyæ pliku.", MB_ICONEXCLAMATION);
+		MessageBox(NULL, jezyk::napisy[BladPodczasInstalacji], jezyk::napisy[NieMoznaUtworzycPliku], MB_ICONEXCLAMATION);
 		PostQuitMessage(0); // Zakoñcz program
 	}
 	int zapisane = 0;
@@ -292,7 +293,7 @@ void instalacja::pobierz(string nazwa)
 				//MessageBox(NULL, L"B", L"3b", MB_ICONEXCLAMATION);
 				if (!WriteFile(hPlik, buff + i, n - i, 0, NULL)) {
 
-					MessageBox(NULL, L"B³¹d podczas instalacji", L"B³¹d zapisu do pliku", MB_ICONEXCLAMATION);
+					MessageBox(NULL, jezyk::napisy[BladPodczasInstalacji], jezyk::napisy[BladZapisuDoPliku], MB_ICONEXCLAMATION);
 					PostQuitMessage(0); // Zakoñcz program
 				}
 				else
@@ -302,7 +303,10 @@ void instalacja::pobierz(string nazwa)
 			}
 		}}
 		catch (exception e){
-			MessageBoxA(NULL, "B³¹d podczas instalacji", e.what(), MB_ICONEXCLAMATION); }
+			string co = e.what();
+			
+			MessageBox(NULL, jezyk::napisy[BladPodczasInstalacji], wstring(co.begin(), co.end()).c_str() , MB_ICONEXCLAMATION);
+		}
 	
 	
 	CloseHandle(hPlik);
@@ -412,6 +416,6 @@ void instalacja::odinstaluj(HINSTANCE hInstance, HWND progressbar)
 	RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", 0, KEY_ALL_ACCESS, &uninstall);
 	RegDeleteKey(uninstall, L"PilotPC");
 	SendMessage(progressbar, PBM_SETPOS, (WPARAM)32 * 1024, 0);
-	MessageBox(0, L"Usuniêto", L"", MB_ICONINFORMATION);
+	MessageBox(0, jezyk::napisy[Usunieto], L"", MB_ICONINFORMATION);
 	exit(0);
 }

@@ -82,7 +82,12 @@ trwa=false;
 				            is = u.openStream();
 				            FileOutputStream strumien;
 				            if(linie[i2].split("=")[1].compareTo("PilotPC-PC-Java.jar")==0)
-					            strumien=new FileOutputStream(linie[i2].split("=")[1]);
+                            {
+                                if (Program.glowneOkno == null)
+                                    Program.glowneOkno = new Okno(false);  //otwiera okno, bo potem będzie problem, ale go nie pokazuje
+                                strumien=new FileOutputStream(linie[i2].split("=")[1]);
+                               // strumien=new FileOutputStream(linie[i2].split("=")[1]+".new");
+                            }
 				            else
 				            	strumien=new FileOutputStream(linie[i2].split("=")[1]+".new");
 							//while(is.available()>0)

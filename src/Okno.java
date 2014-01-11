@@ -28,8 +28,13 @@ public class Okno {
     public JFrame frame  ;
 
     public Okno(){
+        this(true);
+    }
+        public Okno(boolean wyswietl){
 
         frame= new JFrame("Okno");
+
+        //System.out.println("1");
         frame.setContentPane(zawartosc);
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
@@ -58,27 +63,10 @@ public class Okno {
                 Program.autostart();
             }
         });
-        String tekstIP = "Twoje IP to:<br/>";
-        Enumeration<NetworkInterface> n;
-        try {
-            n = NetworkInterface.getNetworkInterfaces();
+        //System.out.println("2");
 
-            for (; n.hasMoreElements(); ) {
-                NetworkInterface e = n.nextElement();
-                // System.out.println("Interface: " + e.getName());
-                Enumeration<InetAddress> a = e.getInetAddresses();
-                for (; a.hasMoreElements(); ) {
-                    InetAddress addr = a.nextElement();
-                    if (!addr.isLoopbackAddress() && addr.getAddress().length == 4)
-                        tekstIP += addr.getHostAddress() + "<br/>";
-                }
-            }
-        } catch (SocketException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        info.setText("<html>" + tekstIP + "</html>");
-
+        (new Start()).start();
+        //System.out.println("3");
 
         //QRPanel.add(new JPanel(),0);
         qr = new PanelQRCode(QRPanel);
@@ -88,7 +76,11 @@ public class Okno {
         timer1_task.okno = this;
         timer1.schedule(timer1_task, 100, 100);
 
+       // System.out.println("4");
+        frame.setSize(500,300);
+            if(wyswietl)
         frame.setVisible(true);
+        //System.out.println("5");
     }     public class Odswierz extends TimerTask {
         public Okno okno;
         int licznik = 0;
@@ -182,6 +174,35 @@ for(int i=0;i<telefony.countComponents();i++)
                 tekst.setText(nowaNazwa);
             super.paintComponent(g);
 
+        }
+    }
+    class Start extends Thread
+    {
+
+        @Override
+        public void run() {
+            String tekstIP = "Twoje IP to:<br/>";
+            Enumeration<NetworkInterface> n;
+            try {
+                n = NetworkInterface.getNetworkInterfaces();
+
+                //System.out.println("2a");
+                for (; n.hasMoreElements(); ) {
+                    NetworkInterface e = n.nextElement();
+                    // System.out.println("Interface: " + e.getName());
+                    Enumeration<InetAddress> a = e.getInetAddresses();
+                    for (; a.hasMoreElements(); ) {
+                        InetAddress addr = a.nextElement();
+                        if (!addr.isLoopbackAddress() && addr.getAddress().length == 4)
+                            tekstIP += addr.getHostAddress() + "<br/>";
+                    }
+                }
+               // System.out.println("2b");
+            } catch (SocketException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            info.setText("<html>" + tekstIP + "</html>");
         }
     }
 }
