@@ -209,7 +209,8 @@ oos.flush();
 				{
 				case LPM:
 				{
-				
+				    if(data.touchpadX!=0||data.touchpadY!=0)
+                        MouseRobot.moveTo(data.touchpadX, data.touchpadY);
 					MouseRobot.LPM();
 					
 					break;
