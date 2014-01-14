@@ -1,6 +1,5 @@
 import com.example.socketclient.TCP_Data;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 

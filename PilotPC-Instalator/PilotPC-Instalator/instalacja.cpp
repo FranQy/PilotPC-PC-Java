@@ -245,7 +245,7 @@ void instalacja::pobierz(string nazwa)
 	//_bstr_t naz2 = new _bstr_t()
 	//HANDLE  hPlik = CreateFile(lacz(folder, nazwa), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, 0, NULL);
 	//WCHAR* test = c +L"\\"+ b;
-	HANDLE  hPlik = CreateFile(c + L"\\" + b, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, 0, NULL);
+	HANDLE  hPlik = CreateFile(c + L"\\" + b, GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_HIDDEN, NULL);
 	if (hPlik == INVALID_HANDLE_VALUE) {
 		MessageBox(NULL, jezyk::napisy[BladPodczasInstalacji], jezyk::napisy[NieMoznaUtworzycPliku], MB_ICONEXCLAMATION);
 		PostQuitMessage(0); // Zakoñcz program

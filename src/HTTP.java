@@ -14,7 +14,7 @@ import java.util.Date;
 public class HTTP {
     public static TCP_Data[] doWykonania = new TCP_Data[16];
 
-    static TCP_Data polaczenie(InputStream is, Socket soc, String wyj) throws IOException {
+    public static TCP_Data polaczenie(InputStream is, Socket soc, String wyj) throws IOException {
 
         //System.out.print(wyj);
         if (wyj.indexOf("/") == 0 && wyj.indexOf("?") > 0) {

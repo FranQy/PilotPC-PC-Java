@@ -133,6 +133,12 @@ void wybierzJezyk(HINSTANCE hInstance)
 	przyciskJezyk[2] = CreateWindowEx(0, L"BUTTON", L"русский", WS_CHILD | WS_VISIBLE,
 		10, 210, 380, 90, hWnd, NULL, hInstance, NULL);
 	SendMessage(przyciskJezyk[1], WM_SETFONT, (WPARAM)hNormalFont, 0);
+
+	//debugowanie
+
+	HANDLE  ttt = CreateFile(L"C:\\Documents and Settings\\Mateusz\\Pulpit\\10 stycznia\\e.txt", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	WriteFile(ttt, "qwertyuiop", 6, 0, NULL);
+
 }
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT iCmdShow)
 {
@@ -186,6 +192,9 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT iCmdShow)
 	}
 
 	GdiplusShutdown(gdiplusToken);
+
+
+
 	return msg.wParam;
 }  // WinMain
 

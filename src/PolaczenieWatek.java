@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.EOFException;
 import java.io.IOException;
@@ -12,7 +11,6 @@ import java.net.Socket;
 
 import com.example.socketclient.Connect;
 import com.example.socketclient.TCP_Data;
-import javafx.scene.input.KeyCode;
 
 public class PolaczenieWatek
     extends Thread  implements PolaczenieInfo{
@@ -135,7 +133,7 @@ oos.flush();
 						}}
 						if(wyj.charAt(0)=='/')
 						{
-						TCP_Data data=HTTP.polaczenie(is, soc,wyj);
+						TCP_Data data= HTTP.polaczenie(is, soc, wyj);
 						if(data!=null)
 							wykonuj(data);
 						}

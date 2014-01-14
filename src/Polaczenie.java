@@ -4,7 +4,6 @@ import java.net.BindException;
 import java.net.ServerSocket;
 
 
-
 public class Polaczenie {
 	ServerSocket socServ;
 	Robot robot;

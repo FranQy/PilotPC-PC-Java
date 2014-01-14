@@ -1,10 +1,7 @@
 import javax.swing.*;
-import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -168,7 +165,7 @@ for(int i=0;i<telefony.countComponents();i++)
             }
             potrzebneOdswierzenie = false;
         }
-    }            class Urzadzenie extends JPanel {
+    }            public class Urzadzenie extends JPanel {
         public PolaczenieInfo zrodlo;
         JButton rozlacz = new JButton(Jezyk.napisy[Jezyk.n.Rozlacz.ordinal()]);
         JLabel tekst = new JLabel();
