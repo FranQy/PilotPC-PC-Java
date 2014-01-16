@@ -174,15 +174,15 @@ public class HTTP {
                         + "<style>"
                         + "*{-ms-touch-action: none;}" +
                         "body{font-family:\"Segoe UI Light\",\"Segoe UI\",arial;overflow:hidden;background:#26211b;color:white;font-style:non-sherif;}"
-                        + "#menu{transition:all 300ms;-webkit-transition:all 300ms;height:10%;position: absolute;top: 90%;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
+                        + "#menu{z-index:10;transition:all 300ms;-webkit-transition:all 300ms;height:10%;position: absolute;top: 90%;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
                         + "#menu li{display:inline;}" +
                         ".karta{position:absolute;left:0;top:0;width:100%;bottom:10%;display:none;}"
                         + "#menu li img{height:100%;padding:0 2%;}" +
-                        "#menur{background:#2e2e2e;text-align:left;height:85%;width:100%;position:absolute;top:100%;transition:all 300ms;-webkit-transition:all 300ms;left:0;padding-left:5px;}" +
+                        "#menur{z-index:10;background:#2e2e2e;text-align:left;height:85%;width:100%;position:absolute;top:100%;transition:all 300ms;-webkit-transition:all 300ms;left:0;padding-left:5px;}" +
                         "#menur h2{margin:0;}" +
                         "#menur .podmenu{background:#5a555a;padding:5px 0 5px 5px;margin:5px 0 5px -5px;}"
                         + "#pilot #przyciski{height:100%;margin: auto; display: block;}" +
-                        "#pulpit img{max-width:100%;max-height:100%;}" +
+                        "#pulpit img{max-width:100%;max-height:100%;width:100%;height:100%;position:absolute;}" +
                         "</style>"
                         + "<script>/*<![CDATA[*/\n"
                         + "var czasPrzesylu=new Date();"
@@ -401,10 +401,27 @@ public class HTTP {
                         "var pulpit=new Object();" +
                         "pulpit.width="+(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+";\n" +
                         "pulpit.height="+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+";\n" +
+                        "pulpit.jakosc=1;" +
                         "pulpit.laduj=function(thi){\n" +
                         "if(thi.parentNode.clientHeight!=0)" +
-                        "thi.src='pulpit/0/0/'+pulpit.width+'/'+pulpit.height+'/'+thi.parentNode.clientWidth+'/'+thi.parentNode.clientHeight+'/'+(new Date()).getTime();\n" +
-                        "};" +
+                        "if(pulpit.jakosc==0)\n" +
+                        "thi.src='/"+Program.ustawienia.haslo+"/pulpit/0/0/'+Math.floor(pulpit.width/pulpit.zoom)+'/'+Math.floor(pulpit.height/pulpit.zoom)+'/'+thi.parentNode.clientWidth+'/'+thi.parentNode.clientHeight+'/'+(new Date()).getTime();\n" +
+                        "else \n" +
+                        "thi.src='/"+Program.ustawienia.haslo+"/pulpit/0/0/'+Math.floor(pulpit.width/pulpit.zoom)+'/'+Math.floor(pulpit.height/pulpit.zoom)+'/'+(Math.floor(thi.parentNode.clientWidth/pulpit.jakosc))+'/'+(Math.floor(thi.parentNode.clientHeight/pulpit.jakosc))+'/'+(new Date()).getTime();\n" +
+                        "};\n" +
+                        "pulpit.zoom=1;" +
+                        "pulpit.punkty=null;" +
+                        "pulpit.move=function(eve){" +
+                        "if(eve.touches.length>=2)" +
+                        "{" +
+                            "if(pulpit.punkty!=null)" +
+                            "{" +
+                                "pulpit.zoom=pulpit.zoom*Math.sqrt((eve.touches[0].screenX-eve.touches[1].screenX)*(eve.touches[0].screenX-eve.touches[1].screenX)+(eve.touches[0].screenY-eve.touches[1].screenY)*(eve.touches[0].screenY-eve.touches[1].screenY))/Math.sqrt((pulpit.punkty[0].screenX-pulpit.punkty[1].screenX)*(pulpit.punkty[0].screenX-pulpit.punkty[1].screenX)+(pulpit.punkty[0].screenY-pulpit.punkty[1].screenY)*(pulpit.punkty[0].screenY-pulpit.punkty[1].screenY));\n" +
+                            "}" +
+                            "pulpit.punkty=eve.touches;" +
+                        "document.title=pulpit.zoom;" +
+                        "}" +
+                        "};\n" +
                         "pulpit.click=function(eve,thi)\n" +
                         "{" +
                          "var data=new TCP_Data();" +
@@ -427,10 +444,13 @@ public class HTTP {
                         //+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\"  id=\"touchpad\"></div>"
                         //+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"touchpad.onTouchDown(event)\" ontouchend=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\"  id=\"touchpad\"></div>"
                         + "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"return touchpad.onTouchDown(event)\" ontouchend=\"return touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
-                        + "<div class=\"karta\" id=\"pulpit\"><img src=\"pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/64)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/64)+"/\" onload=\"pulpit.laduj(this)\" onclick=\"pulpit.click(event,this);return false;\" alt=\"Błąd\" /></div>"
+                        + "<div class=\"karta\" id=\"pulpit\" ontouchmove=\"pulpit.move(event)\">" +
+                        "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/64)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/64)+"/\" onload=\"this.style.zIndex=2;this.parentNode.children[1].style.zIndex=1;pulpit.laduj(this)\" onclick=\"pulpit.click(event,this);return false;\" ontouchend=\"pulpit.punkty=null\" ontouchleave=\"pulpit.punkty=null\" alt=\"Błąd\" />" +
+                        "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/64)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/64)+"/\" onload=\"this.style.zIndex=2;this.parentNode.children[0].style.zIndex=1;pulpit.laduj(this)\" onclick=\"pulpit.click(event,this);return false;\" ontouchend=\"pulpit.punkty=null\" ontouchleave=\"pulpit.punkty=null\" alt=\"\" />" +
+                        "</div>"
                         + "<ul id=\"menu\">" +
                         //"<li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li>" +
-                        "<li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img alt=\"pilot\" src=\"" + pilotBase64 + "\"/></li><li onclick='kartaPokaz(\"klawiatura\");document.getElementsByTagName(\"textarea\")[0].focus()'><img alt=\"klawiatura\" src=\"" + klawiaturaBase64 + "\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img alt=\"touchpad\" src=\"" + touchpadBase64 + "\"/></li><li onclick='kartaPokaz(\"pulpit\");pulpit.laduj(document.getElementById(\"pulpit\").children[0])'><img alt=\"Pulpit\" src=\"" + touchpadBase64 + "\"/></li><li onclick=\"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';}else{document.getElementById('menu').style.top='5%';document.getElementById('menur').style.top='15%';}\"><img style=\"float:right\" alt=\"menu\" src=\"" + menuBase64 + "\"/></li>" +
+                        "<li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img alt=\"pilot\" src=\"" + pilotBase64 + "\"/></li><li onclick='kartaPokaz(\"klawiatura\");document.getElementsByTagName(\"textarea\")[0].focus()'><img alt=\"klawiatura\" src=\"" + klawiaturaBase64 + "\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img alt=\"touchpad\" src=\"" + touchpadBase64 + "\"/></li><li onclick='kartaPokaz(\"pulpit\");pulpit.laduj(document.getElementById(\"pulpit\").children[0]);pulpit.laduj(document.getElementById(\"pulpit\").children[1])'><img alt=\"Pulpit\" src=\"" + touchpadBase64 + "\"/></li><li onclick=\"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';}else{document.getElementById('menu').style.top='5%';document.getElementById('menur').style.top='15%';}\"><img style=\"float:right\" alt=\"menu\" src=\"" + menuBase64 + "\"/></li>" +
                         "</ul><div id=\"menur\"><h2>Informacje</h2>" +
                         "<div class=\"podmenu\">" +
                         "POŁĄCZENIE<br/>" +
@@ -443,7 +463,13 @@ public class HTTP {
                         "DESIGNERS<br/>" +
                         "-FranQy<br/>" +
                         "-Wieczur" +
-                        "</div></div></body></html>";
+                        "</div><h2>Jakość obrazu</h2><div class=\"podmenu\">" +
+                        "<button onclick='pulpit.jakosc=3'>Niska</button>" +
+                        "<button onclick='pulpit.jakosc=2'>Średnia</button>" +
+                        "<button onclick='pulpit.jakosc=1'>Wysoka</button>" +
+                        "<button onclick='pulpit.jakosc=0'>Ultra</button>" +
+                        "</div>" +
+                        "</div></body></html>";
 
             } else if (wyj.indexOf("/ ") == 0) {
                 String typ;

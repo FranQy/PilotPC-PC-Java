@@ -160,7 +160,7 @@ oos.flush();
 					this.pokazane=false;
 				  System.out.println(Jezyk.napisy[Jezyk.n.Rozlaczono.ordinal()]+" "+toString());
                   Okno.potrzebneOdswierzenie=true;
-					
+
 				  
 			  }catch(Exception e)
 			  {
