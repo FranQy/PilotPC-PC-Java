@@ -1,6 +1,7 @@
 #pragma once
 #include <CommCtrl.h>
 #include "instalacja.h"
+#include <Shobjidl.h> // dla ITaskbarList3
 int WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine,
