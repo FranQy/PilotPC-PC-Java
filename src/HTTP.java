@@ -170,7 +170,7 @@ public class HTTP {
                 }
                 wysylanie = "HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
                         + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
-                        + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, user-scalable=no\" />"
+                        + "<meta name=\"viewport\" content=\"width=220px, initial-scale=1, user-scalable=no\" />"
                         + "<style>"
                         + "*{-ms-touch-action: none;}" +
                         "body{font-family:\"Segoe UI Light\",\"Segoe UI\",arial;overflow:hidden;background:#26211b;color:white;font-style:non-sherif;}"
@@ -182,7 +182,7 @@ public class HTTP {
                         "#menur h2{margin:0;}" +
                         "#menur .podmenu{background:#5a555a;padding:5px 0 5px 5px;margin:5px 0 5px -5px;}"
                         + "#pilot #przyciski{height:100%;margin: auto; display: block;}" +
-                        "#pulpit img{max-width:100%;max-height:100%;width:100%;height:100%;position:absolute;}" +
+                        "#pulpit img{width:100%;height:100%;position:absolute;}" +
                         "</style>"
                         + "<script>/*<![CDATA[*/\n"
                         + "var czasPrzesylu=new Date();"
@@ -405,22 +405,36 @@ public class HTTP {
                         "pulpit.laduj=function(thi){\n" +
                         "if(thi.parentNode.clientHeight!=0)" +
                         "if(pulpit.jakosc==0)\n" +
-                        "thi.src='/"+Program.ustawienia.haslo+"/pulpit/0/0/'+Math.floor(pulpit.width/pulpit.zoom)+'/'+Math.floor(pulpit.height/pulpit.zoom)+'/'+thi.parentNode.clientWidth+'/'+thi.parentNode.clientHeight+'/'+(new Date()).getTime();\n" +
+                        "thi.src='/"+Program.ustawienia.haslo+"/pulpit/'+Math.floor(pulpit.x/pulpit.zoom)+'/'+Math.floor(pulpit.y/pulpit.zoom)+'/'+Math.floor(pulpit.width/pulpit.zoom)+'/'+Math.floor(pulpit.height/pulpit.zoom)+'/'+thi.parentNode.clientWidth+'/'+thi.parentNode.clientHeight+'/BMP/'+(new Date()).getTime();\n" +
                         "else \n" +
-                        "thi.src='/"+Program.ustawienia.haslo+"/pulpit/0/0/'+Math.floor(pulpit.width/pulpit.zoom)+'/'+Math.floor(pulpit.height/pulpit.zoom)+'/'+(Math.floor(thi.parentNode.clientWidth/pulpit.jakosc))+'/'+(Math.floor(thi.parentNode.clientHeight/pulpit.jakosc))+'/'+(new Date()).getTime();\n" +
+                        "thi.src='/"+Program.ustawienia.haslo+"/pulpit/'+Math.floor(pulpit.x/pulpit.zoom)+'/'+Math.floor(pulpit.y/pulpit.zoom)+'/'+Math.floor(pulpit.width/pulpit.zoom)+'/'+Math.floor(pulpit.height/pulpit.zoom)+'/'+(Math.floor(thi.parentNode.clientWidth/pulpit.jakosc))+'/'+(Math.floor(thi.parentNode.clientHeight/pulpit.jakosc))+'/JPEG/'+(new Date()).getTime();\n" +
+                        "thi.style.width='100%';" +
+                        "thi.style.height='100%';" +
+                        "thi.style.marginLeft='0';" +
+                        "thi.style.marginTop='0';" +
                         "};\n" +
                         "pulpit.zoom=1;" +
-                        "pulpit.punkty=null;" +
+                        "pulpit.x=pulpit.y=0;" +
+                        "pulpit.punkty=[];" +
                         "pulpit.move=function(eve){" +
                         "if(eve.touches.length>=2)" +
                         "{" +
-                            "if(pulpit.punkty!=null)" +
+                            "if(pulpit.punkty.length>=2)" +
                             "{" +
                                 "pulpit.zoom=pulpit.zoom*Math.sqrt((eve.touches[0].screenX-eve.touches[1].screenX)*(eve.touches[0].screenX-eve.touches[1].screenX)+(eve.touches[0].screenY-eve.touches[1].screenY)*(eve.touches[0].screenY-eve.touches[1].screenY))/Math.sqrt((pulpit.punkty[0].screenX-pulpit.punkty[1].screenX)*(pulpit.punkty[0].screenX-pulpit.punkty[1].screenX)+(pulpit.punkty[0].screenY-pulpit.punkty[1].screenY)*(pulpit.punkty[0].screenY-pulpit.punkty[1].screenY));\n" +
                             "}" +
-                            "pulpit.punkty=eve.touches;" +
-                        "document.title=pulpit.zoom;" +
-                        "}" +
+                        "}\n" +
+                        "else if(eve.touches.length==1)"   +
+                        "{" +
+                            "if(pulpit.punkty.length==1)" +
+                            "{" +
+                                "pulpit.x+=pulpit.punkty[0].screenX-eve.touches[0].screenX;\n" +
+                                "pulpit.y+=pulpit.punkty[0].screenY-eve.touches[0].screenY;\n" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=document.getElementById(\"pulpit\").children[1].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginLeft)-pulpit.punkty[0].screenX+eve.touches[0].screenX)+'px';" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=document.getElementById(\"pulpit\").children[1].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginTop)-pulpit.punkty[0].screenY+eve.touches[0].screenY)+'px';" +
+                            "}" +
+                        "}\n" +
+                        "pulpit.punkty=eve.touches;" +
                         "};\n" +
                         "pulpit.click=function(eve,thi)\n" +
                         "{" +
@@ -444,9 +458,9 @@ public class HTTP {
                         //+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\"  id=\"touchpad\"></div>"
                         //+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"touchpad.onTouchDown(event)\" ontouchend=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\"  id=\"touchpad\"></div>"
                         + "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"return touchpad.onTouchDown(event)\" ontouchend=\"return touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
-                        + "<div class=\"karta\" id=\"pulpit\" ontouchmove=\"pulpit.move(event)\">" +
-                        "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/64)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/64)+"/\" onload=\"this.style.zIndex=2;this.parentNode.children[1].style.zIndex=1;pulpit.laduj(this)\" onclick=\"pulpit.click(event,this);return false;\" ontouchend=\"pulpit.punkty=null\" ontouchleave=\"pulpit.punkty=null\" alt=\"Błąd\" />" +
-                        "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/64)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/64)+"/\" onload=\"this.style.zIndex=2;this.parentNode.children[0].style.zIndex=1;pulpit.laduj(this)\" onclick=\"pulpit.click(event,this);return false;\" ontouchend=\"pulpit.punkty=null\" ontouchleave=\"pulpit.punkty=null\" alt=\"\" />" +
+                        + "<div class=\"karta\" id=\"pulpit\" ontouchmove=\"pulpit.move(event);return false;\" ontouchend=\"pulpit.punkty=[]\" ontouchleave=\"pulpit.punkty=[]\">" +
+                        "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[1].style.zIndex=1;pulpit.laduj(this)\" onclick=\"pulpit.click(event,this);return false;\" alt=\"Błąd\" />" +
+                        "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[0].style.zIndex=1;pulpit.laduj(this)\" onclick=\"pulpit.click(event,this);return false;\" alt=\"\" />" +
                         "</div>"
                         + "<ul id=\"menu\">" +
                         //"<li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li>" +

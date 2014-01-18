@@ -14,18 +14,18 @@ public class Pulpit {
     public static String HTTP(String wyj, int i, OutputStream os)
     {
         try {
+            String[] wymiary= wyj.split("/");
             String wysylanie = "HTTP/1.1 200 OK\n" +
                 "Server: PilotPC\n" +
                 "Set-Cookie: id="+i+"; path=/\n" +
-                "Content-Type: image/jpeg; charset=UTF-8\n" +
+                "Content-Type: image/"+wymiary[9]+"; charset=UTF-8\n" +
                 "\n";
             os.write(wysylanie.getBytes());
-            String[] wymiary= wyj.split("/");
         BufferedImage obr=Program.robot.createScreenCapture(new Rectangle(Integer.parseInt(wymiary[3]), Integer.parseInt(wymiary[4]), Integer.parseInt(wymiary[5]), Integer.parseInt(wymiary[6])));
-            Image obraz2= obr.getScaledInstance(Integer.parseInt(wymiary[7]),Integer.parseInt(wymiary[8]),BufferedImage.SCALE_DEFAULT) ;
+            Image obraz2= obr.getScaledInstance(Integer.parseInt(wymiary[7]),Integer.parseInt(wymiary[8]),BufferedImage.SCALE_SMOOTH) ;
             BufferedImage obrazout = new BufferedImage(Integer.parseInt(wymiary[7]),Integer.parseInt(wymiary[8]), obr.TYPE_3BYTE_BGR);
             obrazout.getGraphics().drawImage(obraz2, 0 , 0, null);  //pseudo rzutowanie Image na BufferedImge 
-            ImageIO.write(obrazout, "JPEG", os);
+            ImageIO.write(obrazout, wymiary[9], os);
 
         return wysylanie; } catch (IOException e) {
         e.printStackTrace();
