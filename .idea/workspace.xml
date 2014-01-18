@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ccfadf02-1a63-4fe6-80b6-93b2a1c9bd2a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HTTP.java" afterPath="$PROJECT_DIR$/src/HTTP.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Pulpit.java" afterPath="$PROJECT_DIR$/src/Pulpit.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SocketServer.iws" />
@@ -103,10 +102,8 @@
       <file leaf-file-name="Pulpit.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Pulpit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="132" selection-start="979" selection-end="979" vertical-scroll-proportion="-15.5" vertical-offset="5" max-vertical-offset="697">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="24" column="132" selection-start="979" selection-end="979" vertical-scroll-proportion="0.0" vertical-offset="5" max-vertical-offset="697">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -123,7 +120,7 @@
       <file leaf-file-name="HTTP.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/HTTP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="433" column="153" selection-start="29993" selection-end="29993" vertical-scroll-proportion="0.41860464" vertical-offset="7199" max-vertical-offset="9520">
+            <state line="444" column="134" selection-start="30663" selection-end="30663" vertical-scroll-proportion="0.46134022" vertical-offset="7369" max-vertical-offset="9554">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -333,19 +330,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -371,6 +355,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -484,7 +481,11 @@
       <created>1389901164030</created>
       <updated>1389901164030</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Lepsze przesówanie/powiększanie pulpitu, jakość ultra jako BMP">
+      <created>1390042740510</created>
+      <updated>1390042740510</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -492,7 +493,7 @@
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26384366" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.262215" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32899022" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -513,8 +514,8 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -534,7 +535,8 @@
     <MESSAGE value="Początek tłumaczenia" />
     <MESSAGE value="Pulpit: podgląd bez skalowania i klikanie" />
     <MESSAGE value="Różne z pulpitem" />
-    <option name="LAST_COMMIT_MESSAGE" value="Różne z pulpitem" />
+    <MESSAGE value="Lepsze przesówanie/powiększanie pulpitu, jakość ultra jako BMP" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lepsze przesówanie/powiększanie pulpitu, jakość ultra jako BMP" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -554,9 +556,7 @@
     <entry file="file://$PROJECT_DIR$/src/Pulpit.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="41" selection-start="508" selection-end="508" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="697">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -593,9 +593,7 @@
     <entry file="file://$PROJECT_DIR$/src/Pulpit.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="41" selection-start="508" selection-end="508" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="697">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -847,16 +845,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Pulpit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="132" selection-start="979" selection-end="979" vertical-scroll-proportion="-15.5" vertical-offset="5" max-vertical-offset="697">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="24" column="132" selection-start="979" selection-end="979" vertical-scroll-proportion="0.0" vertical-offset="5" max-vertical-offset="697">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/HTTP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="433" column="153" selection-start="29993" selection-end="29993" vertical-scroll-proportion="0.41860464" vertical-offset="7199" max-vertical-offset="9520">
+        <state line="444" column="134" selection-start="30663" selection-end="30663" vertical-scroll-proportion="0.46134022" vertical-offset="7369" max-vertical-offset="9554">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

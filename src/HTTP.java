@@ -408,13 +408,15 @@ public class HTTP {
                         "thi.src='/"+Program.ustawienia.haslo+"/pulpit/'+Math.floor(pulpit.x/pulpit.zoom)+'/'+Math.floor(pulpit.y/pulpit.zoom)+'/'+Math.floor(pulpit.width/pulpit.zoom)+'/'+Math.floor(pulpit.height/pulpit.zoom)+'/'+thi.parentNode.clientWidth+'/'+thi.parentNode.clientHeight+'/BMP/'+(new Date()).getTime();\n" +
                         "else \n" +
                         "thi.src='/"+Program.ustawienia.haslo+"/pulpit/'+Math.floor(pulpit.x/pulpit.zoom)+'/'+Math.floor(pulpit.y/pulpit.zoom)+'/'+Math.floor(pulpit.width/pulpit.zoom)+'/'+Math.floor(pulpit.height/pulpit.zoom)+'/'+(Math.floor(thi.parentNode.clientWidth/pulpit.jakosc))+'/'+(Math.floor(thi.parentNode.clientHeight/pulpit.jakosc))+'/JPEG/'+(new Date()).getTime();\n" +
+                        "pulpit.xs=pulpit.x;" +
+                        "pulpit.ys=pulpit.y;" +
                         "thi.style.width='100%';" +
                         "thi.style.height='100%';" +
                         "thi.style.marginLeft='0';" +
                         "thi.style.marginTop='0';" +
                         "};\n" +
                         "pulpit.zoom=1;" +
-                        "pulpit.x=pulpit.y=0;" +
+                        "pulpit.x=pulpit.y=pulpit.xs=pulpit.ys=0;" +
                         "pulpit.punkty=[];" +
                         "pulpit.move=function(eve){" +
                         "if(eve.touches.length>=2)" +
@@ -430,8 +432,8 @@ public class HTTP {
                             "{" +
                                 "pulpit.x+=pulpit.punkty[0].screenX-eve.touches[0].screenX;\n" +
                                 "pulpit.y+=pulpit.punkty[0].screenY-eve.touches[0].screenY;\n" +
-                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=document.getElementById(\"pulpit\").children[1].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginLeft)-pulpit.punkty[0].screenX+eve.touches[0].screenX)+'px';" +
-                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=document.getElementById(\"pulpit\").children[1].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginTop)-pulpit.punkty[0].screenY+eve.touches[0].screenY)+'px';" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=document.getElementById(\"pulpit\").children[1].style.marginLeft=((pulpit.xs-pulpit.x)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginTop=document.getElementById(\"pulpit\").children[1].style.marginTop=((pulpit.ys-pulpit.y)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
                             "}" +
                         "}\n" +
                         "pulpit.punkty=eve.touches;" +
@@ -440,8 +442,8 @@ public class HTTP {
                         "{" +
                          "var data=new TCP_Data();" +
                         "data.mouse = TCP_Data.touchedTYPE.LPM;" +
-                        "data.touchpadX = Math.floor((eve.clientX-thi.clientLeft)*pulpit.width/thi.clientWidth);\n" +
-                        "data.touchpadY = Math.floor((eve.clientY-thi.clientTop)*pulpit.height/thi.clientHeight);\n"
+                        "data.touchpadX = Math.floor(((eve.clientX-thi.clientLeft)*pulpit.width/thi.clientWidth+pulpit.x)/pulpit.zoom);\n" +
+                        "data.touchpadY = Math.floor(((eve.clientY-thi.clientTop)*pulpit.height/thi.clientHeight+pulpit.y)/pulpit.zoom);\n"
                         + "data.type=TCP_Data.typ.TOUCHPAD;send(data);\n"
                         +"}\n"
                         + "/*]]>*/</script>"
@@ -459,8 +461,8 @@ public class HTTP {
                         //+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"touchpad.onTouchDown(event)\" ontouchend=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\"  id=\"touchpad\"></div>"
                         + "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"return touchpad.onTouchDown(event)\" ontouchend=\"return touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
                         + "<div class=\"karta\" id=\"pulpit\" ontouchmove=\"pulpit.move(event);return false;\" ontouchend=\"pulpit.punkty=[]\" ontouchleave=\"pulpit.punkty=[]\">" +
-                        "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[1].style.zIndex=1;pulpit.laduj(this)\" onclick=\"pulpit.click(event,this);return false;\" alt=\"Błąd\" />" +
-                        "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[0].style.zIndex=1;pulpit.laduj(this)\" onclick=\"pulpit.click(event,this);return false;\" alt=\"\" />" +
+                        "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[1].style.zIndex=1;pulpit.laduj(this);\" onclick=\"pulpit.click(event,this);return false;\" alt=\"Błąd\" />" +
+                        "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[0].style.zIndex=1;pulpit.laduj(this);\" onclick=\"pulpit.click(event,this);return false;\" alt=\"\" />" +
                         "</div>"
                         + "<ul id=\"menu\">" +
                         //"<li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li>" +
