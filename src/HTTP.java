@@ -172,7 +172,7 @@ public class HTTP {
                         + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
                         + "<meta name=\"viewport\" content=\"width=220px, initial-scale=1, user-scalable=no\" />"
                         + "<style>"
-                        + "*{-ms-touch-action: none;}" +
+                        + "*{-ms-touch-action: none;touch-action: none;}" +
                         "body{font-family:\"Segoe UI Light\",\"Segoe UI\",arial;overflow:hidden;background:#26211b;color:white;font-style:non-sherif;}"
                         + "#menu{z-index:10;transition:all 300ms;-webkit-transition:all 300ms;height:10%;position: absolute;top: 90%;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
                         + "#menu li{display:inline;}" +
@@ -418,25 +418,48 @@ public class HTTP {
                         "pulpit.zoom=1;" +
                         "pulpit.x=pulpit.y=pulpit.xs=pulpit.ys=0;" +
                         "pulpit.punkty=[];" +
-                        "pulpit.move=function(eve){" +
+                        "pulpit.punktyP=[];" +
+                        "pulpit.move=function(eve){\n" +
                         "if(eve.touches.length>=2)" +
                         "{" +
-                            "if(pulpit.punkty.length>=2)" +
-                            "{" +
-                                "pulpit.zoom=pulpit.zoom*Math.sqrt((eve.touches[0].screenX-eve.touches[1].screenX)*(eve.touches[0].screenX-eve.touches[1].screenX)+(eve.touches[0].screenY-eve.touches[1].screenY)*(eve.touches[0].screenY-eve.touches[1].screenY))/Math.sqrt((pulpit.punkty[0].screenX-pulpit.punkty[1].screenX)*(pulpit.punkty[0].screenX-pulpit.punkty[1].screenX)+(pulpit.punkty[0].screenY-pulpit.punkty[1].screenY)*(pulpit.punkty[0].screenY-pulpit.punkty[1].screenY));\n" +
-                            "}" +
-                        "}\n" +
-                        "else if(eve.touches.length==1)"   +
+                        "if(pulpit.punkty.length>=2)\n" +
                         "{" +
-                            "if(pulpit.punkty.length==1)" +
-                            "{" +
-                                "pulpit.x+=pulpit.punkty[0].screenX-eve.touches[0].screenX;\n" +
-                                "pulpit.y+=pulpit.punkty[0].screenY-eve.touches[0].screenY;\n" +
-                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=document.getElementById(\"pulpit\").children[1].style.marginLeft=((pulpit.xs-pulpit.x)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
-                        "document.getElementById(\"pulpit\").children[0].style.marginTop=document.getElementById(\"pulpit\").children[1].style.marginTop=((pulpit.ys-pulpit.y)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
-                            "}" +
+                        "pulpit.zoom=pulpit.zoom*Math.sqrt((eve.touches[0].screenX-eve.touches[1].screenX)*(eve.touches[0].screenX-eve.touches[1].screenX)+(eve.touches[0].screenY-eve.touches[1].screenY)*(eve.touches[0].screenY-eve.touches[1].screenY))/Math.sqrt((pulpit.punkty[0].screenX-pulpit.punkty[1].screenX)*(pulpit.punkty[0].screenX-pulpit.punkty[1].screenX)+(pulpit.punkty[0].screenY-pulpit.punkty[1].screenY)*(pulpit.punkty[0].screenY-pulpit.punkty[1].screenY));\n" +
+                        "}" +
                         "}\n" +
-                        "pulpit.punkty=eve.touches;" +
+                        "else if(eve.touches.length==1)\n"   +
+                        "{" +
+                        "if(pulpit.punkty.length==1)\n" +
+                        "{" +
+                        "pulpit.x+=pulpit.punkty[0].screenX-eve.touches[0].screenX;\n" +
+                        "pulpit.y+=pulpit.punkty[0].screenY-eve.touches[0].screenY;\n" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.touches[0].screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
+                        "document.getElementById(\"pulpit\").children[1].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.touches[0].screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginTop)+(-pulpit.punkty[0].screenY+eve.touches[0].screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
+                        "document.getElementById(\"pulpit\").children[1].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginTop)+(-pulpit.punkty[0].screenY+eve.touches[0].screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
+                        "}" +
+                        "}\n" +
+                        "};\n" +
+                        "pulpit.moveP=function(eve){" +
+                        "if(eve.pointerType=='touch')\n" +
+                        "{" +
+                        "" +
+                        "pulpit.moveE(eve)" +
+                        "}" +
+                        "};\n" +
+                        "pulpit.moveM=function(eve){" +
+                        "};" +
+                        "pulpit.moveE=function(eve){" +
+                        "if(pulpit.punkty.length==1)\n" +
+                        "{\n" +
+                        "pulpit.x+=pulpit.punkty[0].screenX-eve.screenX;\n" +
+                        "pulpit.y+=pulpit.punkty[0].screenY-eve.screenY;\n" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
+                        "document.getElementById(\"pulpit\").children[1].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginTop)+(-pulpit.punkty[0].screenY+eve.screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
+                        "document.getElementById(\"pulpit\").children[1].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginTop)+(-pulpit.punkty[0].screenY+eve.screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
+                        "}" +
+                        "pulpit.punkty=[{screenX:eve.screenX,screenY:eve.screenY}];" +
                         "};\n" +
                         "pulpit.click=function(eve,thi)\n" +
                         "{" +
@@ -445,7 +468,13 @@ public class HTTP {
                         "data.touchpadX = Math.floor(((eve.clientX-thi.clientLeft)*pulpit.width/thi.clientWidth+pulpit.x)/pulpit.zoom);\n" +
                         "data.touchpadY = Math.floor(((eve.clientY-thi.clientTop)*pulpit.height/thi.clientHeight+pulpit.y)/pulpit.zoom);\n"
                         + "data.type=TCP_Data.typ.TOUCHPAD;send(data);\n"
-                        +"}\n"
+                        +"}\n" +
+                        "document.getElementById('pulpit').addEventListener(\"MSGestureChange\", onDivGestureChange, false);\n" +
+                        "document.getElementById('pulpit').addEventListener(\"GestureChange\", onDivGestureChange, false);\n" +
+                        "\n" +
+                        "      function onDivGestureChange(e) {\n" +
+                        "        pulpit.zoom=pulpit.zoom*e.scale;"+
+                        "      }\n"
                         + "/*]]>*/</script>"
                         + "</head><body onload=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onresize=\"mapa(document.getElementById('przyciski').clientHeight/1280)\">"
                         //+ "<div class=\"karta\" id=\"gamepad\">Gamepad wkrodce</div>"
@@ -460,7 +489,12 @@ public class HTTP {
                         //+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\"  id=\"touchpad\"></div>"
                         //+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"touchpad.onTouchDown(event)\" ontouchend=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\"  id=\"touchpad\"></div>"
                         + "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"return touchpad.onTouchDown(event)\" ontouchend=\"return touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
-                        + "<div class=\"karta\" id=\"pulpit\" ontouchmove=\"pulpit.move(event);return false;\" ontouchend=\"pulpit.punkty=[]\" ontouchleave=\"pulpit.punkty=[]\">" +
+                        + "<div class=\"karta\" id=\"pulpit\" " +
+                        "ontouchmove=\"pulpit.move(event);return false;\" ontouchend=\"pulpit.punkty=[]\" ontouchleave=\"pulpit.punkty=[]\" " +
+                        "onMSPointerMove=\"pulpit.moveP(event);return false;\" onMSPointerup=\"pulpit.punkty=[]\" onMSPointerleave=\"pulpit.punkty=[]\" " +
+                        "onPointerMove=\"pulpit.moveP(event);return false;\" onPointerup=\"pulpit.punkty=[]\" onPointerleave=\"pulpit.punkty=[]\" " +
+                        //"onmousemove=\"pulpit.moveM(event);return false;\" onmouserup=\"pulpit.punkty=[]\" onmouseleave=\"pulpit.punkty=[]\" " +
+                        "\">" +
                         "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[1].style.zIndex=1;pulpit.laduj(this);\" onclick=\"pulpit.click(event,this);return false;\" alt=\"Błąd\" />" +
                         "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[0].style.zIndex=1;pulpit.laduj(this);\" onclick=\"pulpit.click(event,this);return false;\" alt=\"\" />" +
                         "</div>"
