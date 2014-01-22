@@ -134,14 +134,11 @@ void wybierzJezyk(HINSTANCE hInstance)
 		10, 210, 380, 90, hWnd, NULL, hInstance, NULL);
 	SendMessage(przyciskJezyk[1], WM_SETFONT, (WPARAM)hNormalFont, 0);
 
-	//debugowanie
-
-	HANDLE  ttt = CreateFile(L"C:\\Documents and Settings\\Mateusz\\Pulpit\\10 stycznia\\e.txt", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-	WriteFile(ttt, "qwertyuiop", 6, 0, NULL);
 
 }
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, INT iCmdShow)
 {
+	
 	hinstance = hInstance;
 	MSG                 msg;
 	WNDCLASS            wndClass;
@@ -204,7 +201,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 {
 	HDC          hdc;
 	PAINTSTRUCT  ps;
-
+	
 	switch (message)
 	{
 	case WM_PAINT:

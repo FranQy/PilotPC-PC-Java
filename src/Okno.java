@@ -93,7 +93,7 @@ public class Okno {
         timer1.schedule(timer1_task, 100, 100);
 
        // System.out.println("4");
-        frame.setSize(500,300);
+        frame.setSize(750,400);
             if(wyswietl)
         frame.setVisible(true);
         //System.out.println("5");
