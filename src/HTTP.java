@@ -146,6 +146,28 @@ public class HTTP {
                 } catch (IOException e) {
                     menuBase64 = "";
                 }
+                String plusBase64;
+                try {
+                    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                    InputStream input = classLoader.getResourceAsStream(
+                            "resources/plus.png");
+                    byte[] plusBytes = new byte[2000];
+                    input.read(plusBytes);
+                    plusBase64 = "data:image/png;base64," + DatatypeConverter.printBase64Binary(plusBytes);
+                } catch (IOException e) {
+                    plusBase64 = "";
+                }
+                String minusBase64;
+                try {
+                    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                    InputStream input = classLoader.getResourceAsStream(
+                            "resources/minus.png");
+                    byte[] minusBytes = new byte[2000];
+                    input.read(minusBytes);
+                    minusBase64 = "data:image/png;base64," + DatatypeConverter.printBase64Binary(minusBytes);
+                } catch (IOException e) {
+                    minusBase64 = "";
+                }
                 String przyciskiBase64;
                 try {
                     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -172,7 +194,8 @@ public class HTTP {
                         + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
                         + "<meta name=\"viewport\" content=\"width=220px, initial-scale=1, user-scalable=no\" />"
                         + "<style>"
-                        //+ "*{-ms-touch-action: none;touch-action: none;}"
+                        + "*{-ms-touch-action: none;touch-action: none;}" +
+                        "a img{border:none;}"
                         +"body{font-family:\"Segoe UI Light\",\"Segoe UI\",arial;overflow:hidden;background:#26211b;color:white;font-style:non-sherif;}"
                         + "#menu{z-index:10;transition:all 300ms;-webkit-transition:all 300ms;height:10%;position: absolute;top: 90%;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
                         + "#menu li{display:inline;}" +
@@ -183,6 +206,9 @@ public class HTTP {
                         "#menur .podmenu{background:#5a555a;padding:5px 0 5px 5px;margin:5px 0 5px -5px;}"
                         + "#pilot #przyciski{height:100%;margin: auto; display: block;}" +
                         "#pulpit img{width:100%;height:100%;position:absolute;}" +
+                        "#zoom{position:absolute;bottom:12%;right:2%;width:20% !important;height:10% !important;min-width:1.6cm;min-height:0.8cm;z-index:5;}" +
+                        "#powieksz, #pomniejsz{width:50% !important;height:100% !important;position:static !important;}" +
+                        "" +
                         "</style>"
                         + "<script>/*<![CDATA[*/\n"
                         + "var czasPrzesylu=new Date();"
@@ -405,9 +431,21 @@ public class HTTP {
                         "pulpit.laduj=function(thi){\n" +
                         "if(thi.parentNode.clientHeight!=0)" +
                         "if(pulpit.jakosc==0)\n" +
-                        "thi.src='/"+Program.ustawienia.haslo+"/pulpit/'+Math.floor(pulpit.x/pulpit.zoom)+'/'+Math.floor(pulpit.y/pulpit.zoom)+'/'+Math.floor(pulpit.width/pulpit.zoom)+'/'+Math.floor(pulpit.height/pulpit.zoom)+'/'+thi.parentNode.clientWidth+'/'+thi.parentNode.clientHeight+'/BMP/'+(new Date()).getTime();\n" +
+                        "{" +
+                        "var wymWid=thi.parentNode.clientWidth;\n" +
+                        "if(wymWid>Math.floor(pulpit.width/pulpit.zoom))\n wymWid=Math.floor(pulpit.width/pulpit.zoom);\n" +
+                        "var wymHei=thi.parentNode.clientWidth;\n" +
+                        "if(wymHei>Math.floor(pulpit.height/pulpit.zoom))\n wymHei=Math.floor(pulpit.height/pulpit.zoom);\n" +
+                        "thi.src='/"+Program.ustawienia.haslo+"/pulpit/'+Math.floor(pulpit.x/pulpit.zoom)+'/'+Math.floor(pulpit.y/pulpit.zoom)+'/'+Math.floor(pulpit.width/pulpit.zoom)+'/'+Math.floor(pulpit.height/pulpit.zoom)+'/'+wymWid+'/'+wymHei+'/BMP/'+(new Date()).getTime();\n" +
+                        "}" +
                         "else \n" +
-                        "thi.src='/"+Program.ustawienia.haslo+"/pulpit/'+Math.floor(pulpit.x/pulpit.zoom)+'/'+Math.floor(pulpit.y/pulpit.zoom)+'/'+Math.floor(pulpit.width/pulpit.zoom)+'/'+Math.floor(pulpit.height/pulpit.zoom)+'/'+(Math.floor(thi.parentNode.clientWidth/pulpit.jakosc))+'/'+(Math.floor(thi.parentNode.clientHeight/pulpit.jakosc))+'/JPEG/'+(new Date()).getTime();\n" +
+                        "{\n" +
+                        "var wymWid=(Math.floor(thi.parentNode.clientWidth/pulpit.jakosc));\n" +
+                        "if(wymWid>Math.floor(pulpit.width/pulpit.zoom))\n wymWid=Math.floor(pulpit.width/pulpit.zoom);\n" +
+                        "var wymHei=(Math.floor(thi.parentNode.clientHeight/pulpit.jakosc));\n" +
+                        "if(wymHei>Math.floor(pulpit.height/pulpit.zoom))\n wymHei=Math.floor(pulpit.height/pulpit.zoom);\n" +
+                        "thi.src='/"+Program.ustawienia.haslo+"/pulpit/'+Math.floor(pulpit.x/pulpit.zoom)+'/'+Math.floor(pulpit.y/pulpit.zoom)+'/'+Math.floor(pulpit.width/pulpit.zoom)+'/'+Math.floor(pulpit.height/pulpit.zoom)+'/'+wymWid+'/'+wymHei+'/JPEG/'+(new Date()).getTime();\n" +
+                        "}" +
                         "pulpit.xs=pulpit.x;" +
                         "pulpit.ys=pulpit.y;" +
                         "thi.style.width='100%';" +
@@ -433,12 +471,26 @@ public class HTTP {
                         "{" +
                         "pulpit.x+=pulpit.punkty[0].screenX-eve.touches[0].screenX;\n" +
                         "pulpit.y+=pulpit.punkty[0].screenY-eve.touches[0].screenY;\n" +
-                        //"document.getElementById(\"pulpit\").children[0].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.touches[0].screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
-                        //"document.getElementById(\"pulpit\").children[1].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.touches[0].screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
-                        //"document.getElementById(\"pulpit\").children[0].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginTop)+(-pulpit.punkty[0].screenY+eve.touches[0].screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
-                        //"document.getElementById(\"pulpit\").children[1].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginTop)+(-pulpit.punkty[0].screenY+eve.touches[0].screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.touches[0].screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
+                        "document.getElementById(\"pulpit\").children[1].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.touches[0].screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginTop)+(-pulpit.punkty[0].screenY+eve.touches[0].screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
+                        "document.getElementById(\"pulpit\").children[1].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginTop)+(-pulpit.punkty[0].screenY+eve.touches[0].screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
                         "}" +
                         "}\n" +
+                        "pulpit.punkty=eve.touches;"+
+                        "};\n"
+                        +"pulpit.moveM=function(eve){\n" +
+                        "if(pulpit.punktX!=undefined)\n"   +
+                        "{" +
+                        "pulpit.x+=pulpit.punktX-eve.screenX;\n" +
+                        "pulpit.y+=pulpit.punktY-eve.screenY;\n" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginLeft)+(-pulpit.punktX+eve.screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';\n" +
+                        "document.getElementById(\"pulpit\").children[1].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginLeft)+(-pulpit.punktX+eve.screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';\n" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginTop)+(-pulpit.punktY+eve.screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';\n" +
+                        "document.getElementById(\"pulpit\").children[1].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginTop)+(-pulpit.punktY+eve.screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';\n" +
+                        "pulpit.punktX=eve.screenX;\n"+
+                        "pulpit.punktY=eve.screenY;\n"+
+                        "}" +
                         "};\n" +
                         /*"pulpit.moveP=function(eve){" +
                         "if(eve.pointerType=='touch')\n" +
@@ -478,7 +530,7 @@ public class HTTP {
                         + "/*]]>*/</script>"
                         + "</head><body onload=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onresize=\"mapa(document.getElementById('przyciski').clientHeight/1280)\">"
                         //+ "<div class=\"karta\" id=\"gamepad\">Gamepad wkrodce</div>"
-                        + "<div class=\"karta\" id=\"pilot\">"
+                        + "<div class=\"karta\" style=\\\"display:block\\\" id=\"pilot\">"
                         + "<img id=\"przyciski\" src=\"" + przyciskiBase64 + "\" usemap=\"#przycMapa\" />" +
                         "<map id=\"przycMapa\" name=\"przycMapa\">" +
                         "</map>"
@@ -488,15 +540,17 @@ public class HTTP {
                         //+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" onmousemove=\"return touchpad.onMouseMove(event)\" ontouchdown=\"touchpad.onTouchDown(event)\" onmousedown=\"touchpad.onTouchDown(event)\" ontouchup=\"touchpad.onTouchUp(event)\" onmouseup=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" onmouseleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
                         //+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\"  id=\"touchpad\"></div>"
                         //+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"touchpad.onTouchDown(event)\" ontouchend=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\"  id=\"touchpad\"></div>"
-                        + "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"return touchpad.onTouchDown(event)\" ontouchend=\"return touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
+                        + "<div class=\"karta\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"return touchpad.onTouchDown(event)\" ontouchend=\"return touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
                         + "<div class=\"karta\" id=\"pulpit\" " +
                         "ontouchmove=\"pulpit.move(event);return false;\" ontouchend=\"pulpit.punkty=[]\" ontouchleave=\"pulpit.punkty=[]\" " +
                         //"onMSPointerMove=\"pulpit.moveP(event);return false;\" onMSPointerup=\"pulpit.punkty=[]\" onMSPointerleave=\"pulpit.punkty=[]\" " +
                         //"onPointerMove=\"pulpit.moveP(event);return false;\" onPointerup=\"pulpit.punkty=[]\" onPointerleave=\"pulpit.punkty=[]\" " +
-                        //"onmousemove=\"pulpit.moveM(event);return false;\" onmouserup=\"pulpit.punkty=[]\" onmouseleave=\"pulpit.punkty=[]\" " +
+                        "onmousemove=\"pulpit.moveM(event);return false;\" onmousedown=\"pulpit.punktX=event.screenX;pulpit.punktY=event.screenY;\" onmouseup=\"pulpit.punktX=undefined;\" onmouseleave=\"pulpit.punktX=undefined;\" " +
                         "\">" +
                         "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[1].style.zIndex=1;pulpit.laduj(this);\" onclick=\"pulpit.click(event,this);return false;\" alt=\"Błąd\" />" +
                         "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[0].style.zIndex=1;pulpit.laduj(this);\" onclick=\"pulpit.click(event,this);return false;\" alt=\"\" />" +
+                        "<div id=\"zoom\"><img class=\"zoom\" id=\"powieksz\" src=\"\"+plusBase64+\"\" onclick=\"pulpit.zoom=pulpit.zoom*1.5\">"       +
+                        "<img class=\"zoom\" id=\"pomniejsz\" src=\""+minusBase64+"\" onclick=\"pulpit.zoom=pulpit.zoom*0.666666666\"></div>" +
                         "</div>"
                         + "<ul id=\"menu\">" +
                         //"<li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li>" +
