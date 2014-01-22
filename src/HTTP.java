@@ -549,7 +549,7 @@ public class HTTP {
                         "\">" +
                         "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[1].style.zIndex=1;pulpit.laduj(this);\" onclick=\"pulpit.click(event,this);return false;\" alt=\"Błąd\" />" +
                         "<img src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[0].style.zIndex=1;pulpit.laduj(this);\" onclick=\"pulpit.click(event,this);return false;\" alt=\"\" />" +
-                        "<div id=\"zoom\"><img class=\"zoom\" id=\"powieksz\" src=\"\"+plusBase64+\"\" onclick=\"pulpit.zoom=pulpit.zoom*1.5\">"       +
+                        "<div id=\"zoom\"><img class=\"zoom\" id=\"powieksz\" src=\""+plusBase64+"\" onclick=\"pulpit.zoom=pulpit.zoom*1.5\">"       +
                         "<img class=\"zoom\" id=\"pomniejsz\" src=\""+minusBase64+"\" onclick=\"pulpit.zoom=pulpit.zoom*0.666666666\"></div>" +
                         "</div>"
                         + "<ul id=\"menu\">" +
