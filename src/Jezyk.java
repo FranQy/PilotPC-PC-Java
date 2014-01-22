@@ -23,7 +23,7 @@ Program.tray(false);
         {
             case Polski:
                 napisy[n.PilotPCWersja.ordinal()]="PilotPC wersja ";
-                napisy[n.Pokaz.ordinal()]="Pokarz";
+                napisy[n.Pokaz.ordinal()]="Pokaż";
                 napisy[n.Zakoncz.ordinal()]="Zakończ";
                 napisy[n.BladPodczasDodawaniaIkony.ordinal()]="Błąd podczas dodawania ikony do zasobnika systemowego.";
                 napisy[n.SerwerZostalUruchomiony.ordinal()]="Serwer został uruchomiony";
