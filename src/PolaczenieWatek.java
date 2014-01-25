@@ -32,12 +32,13 @@ public class PolaczenieWatek
 					}
     			}
     public void run() {  //klasa do sterowania myszka
-    	while(true){	
-    		
-		
-			
+    	while(true){
+    		               boolean nowe=true;
+
     		is=null;
 			  try {
+                  if(nowe)
+                  {
           		   gotowe=true;
 			soc=socServ.accept();
                   byte ileGotowe=0;
@@ -57,8 +58,9 @@ public class PolaczenieWatek
 					Polaczenie.watki[i].start();
 					break;
 				}
-			}
-          		is = soc.getInputStream();
+			}       }
+                       nowe=true;
+          			is = soc.getInputStream();
           		
 			try{
 			  ObjectInputStream in = new ObjectInputStream(soc.getInputStream());	
@@ -99,14 +101,14 @@ oos.flush();
 			  catch(StreamCorruptedException e)
 				{
 
-					if(UI!=null)
+					/*if(UI!=null)
 					{
 						UI.ramka.remove(UI);
 						UI=null;
                         Okno.potrzebneOdswierzenie=true;
 					}
 				  this.infoPrzyPolaczeniu=null;
-					this.pokazane=false;
+					this.pokazane=false;*/
 				  try {
 					  String wyj="";
 						byte liczbaNowychLinii=0;
@@ -143,6 +145,7 @@ oos.flush();
 							OutputStream os =soc.getOutputStream();
 							os.write(wyj.getBytes());
 							os.close();
+                            nowe=false;
 						}
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
