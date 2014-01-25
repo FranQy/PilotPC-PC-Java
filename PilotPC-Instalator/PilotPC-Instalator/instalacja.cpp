@@ -183,7 +183,7 @@ void instalacja::start()
 	if (skrotPulpit)
 	{
 		string Pulpit = userprofile + (string)"\\Desktop\\PilotPC.lnk";
-		CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), Pulpit.c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu", folderStr.c_str());
+		CreateLink((folderStr + (L"\\Windows.exe")).c_str(), Pulpit.c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu", folderStr.c_str());
 	}
 	if (skrotMenuStart)
 	{

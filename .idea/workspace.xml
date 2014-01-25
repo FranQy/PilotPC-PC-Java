@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="SocketServer:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="ccfadf02-1a63-4fe6-80b6-93b2a1c9bd2a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Jezyk.java" afterPath="$PROJECT_DIR$/src/Jezyk.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/OProgramie.java" afterPath="$PROJECT_DIR$/src/OProgramie.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Okno.form" afterPath="$PROJECT_DIR$/src/Okno.form" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Okno.java" afterPath="$PROJECT_DIR$/src/Okno.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Polaczenie.java" afterPath="$PROJECT_DIR$/src/Polaczenie.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MouseRobot.java" afterPath="$PROJECT_DIR$/src/MouseRobot.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PolaczenieWatek.java" afterPath="$PROJECT_DIR$/src/PolaczenieWatek.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Program.java" afterPath="$PROJECT_DIR$/src/Program.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/UserAgent.java" afterPath="$PROJECT_DIR$/src/UserAgent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PilotPC-Instalator/PilotPC-Instalator/instalacja.cpp" afterPath="$PROJECT_DIR$/PilotPC-Instalator/PilotPC-Instalator/instalacja.cpp" />
+    </list>
+    <list id="586604c7-594f-43c3-a852-2587c820421e" name="New changelist" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SocketServer.iws" />
     <ignored path=".idea/workspace.xml" />
+    <file path="$PROJECT_DIR$/.idea/workspace.xml" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +33,7 @@
   </component>
   <component name="DebuggerManager">
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/src/Pilot.java" line="15" class="Pilot" package="">
+      <breakpoint url="file://$PROJECT_DIR$/src/Pilot.java" line="14" class="Pilot" package="">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -44,7 +48,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/Jezyk.java" line="20" class="Jezyk" package="">
+      <breakpoint url="file://$PROJECT_DIR$/src/Jezyk.java" line="21" class="Jezyk" package="">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -117,14 +121,16 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
-    <favorites_list name="SocketServer" />
+    <favorites_list name="SocketServer">
+      <favorite_root url="file://$PROJECT_DIR$/src/Jezyk.java" type="psiFile" klass="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+    </favorites_list>
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Program.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Program.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Program.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="31" selection-start="2160" selection-end="2205" vertical-scroll-proportion="0.0" vertical-offset="714" max-vertical-offset="2822">
+            <state line="13" column="41" selection-start="457" selection-end="457" vertical-scroll-proportion="0.3371105" vertical-offset="0" max-vertical-offset="2822">
               <folding />
             </state>
           </provider>
@@ -133,16 +139,73 @@
       <file leaf-file-name="Jezyk.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Jezyk.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="53" selection-start="278" selection-end="278" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1241">
+            <state line="33" column="89" selection-start="1517" selection-end="1517" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1683">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Okno.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PolaczenieWatek.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/PolaczenieWatek.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="215" column="29" selection-start="7681" selection-end="7681" vertical-scroll-proportion="0.0" vertical-offset="3526" max-vertical-offset="5763">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#getUI#0;class#PolaczenieWatek#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MouseRobot.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MouseRobot.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="84" column="0" selection-start="2292" selection-end="2292" vertical-scroll-proportion="0.0" vertical-offset="891" max-vertical-offset="1445">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Okno.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Okno.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="103" column="10" selection-start="3360" selection-end="3360" vertical-scroll-proportion="0.33066666" vertical-offset="1219" max-vertical-offset="3570">
+            <state line="143" column="58" selection-start="5436" selection-end="5436" vertical-scroll-proportion="0.0" vertical-offset="2431" max-vertical-offset="4097">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Polaczenie.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Polaczenie.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="4" selection-start="398" selection-end="398" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="1071">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HttpPolaczenie.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/HttpPolaczenie.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="20" selection-start="268" selection-end="268" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="646">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HTTP.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/HTTP.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="62" column="12" selection-start="2498" selection-end="2498" vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="8466">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Biblioteka.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Biblioteka.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="23" selection-start="23" selection-end="23" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
               <folding />
             </state>
           </provider>
@@ -161,25 +224,30 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/Biblioteka.java" />
         <option value="$PROJECT_DIR$/src/Pilot.java" />
         <option value="$PROJECT_DIR$/src/Aktualizacja.java" />
         <option value="$PROJECT_DIR$/src/Ustawienia.java" />
         <option value="$PROJECT_DIR$/src/Okno.form" />
-        <option value="$PROJECT_DIR$/src/Program.java" />
         <option value="$PROJECT_DIR$/src/OProgramie.java" />
         <option value="$PROJECT_DIR$/src/UserAgent.java" />
-        <option value="$PROJECT_DIR$/src/PolaczenieWatek.java" />
         <option value="$PROJECT_DIR$/src/Polaczenie.java" />
+        <option value="$PROJECT_DIR$/src/HTTP/HttpPolaczenie.java" />
+        <option value="$PROJECT_DIR$/src/Serwer/Okno.java" />
+        <option value="$PROJECT_DIR$/src/HTTP/HTTP.java" />
+        <option value="$PROJECT_DIR$/src/Serwer/Biblioteka.java" />
+        <option value="$PROJECT_DIR$/src/Biblioteka.java" />
+        <option value="$PROJECT_DIR$/src/Serwer/Program.java" />
         <option value="$PROJECT_DIR$/src/Okno.java" />
         <option value="$PROJECT_DIR$/src/Jezyk.java" />
+        <option value="$PROJECT_DIR$/src/PolaczenieWatek.java" />
+        <option value="$PROJECT_DIR$/src/MouseRobot.java" />
+        <option value="$PROJECT_DIR$/src/Program.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
+    <option name="width" value="1378" />
     <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -216,48 +284,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SocketServer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PilotPC-PC-Java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SocketServer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PilotPC-PC-Java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Okno" />
-              <option name="myItemType" value="com.intellij.uiDesigner.projectView.FormNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SocketServer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PilotPC-PC-Java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
@@ -280,6 +306,12 @@
     <property name="FullScreen" value="false" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Mateusz\Documents\GitHub\PilotPC-PC-Java\src" />
+      <recent name="C:\Users\Mateusz\Documents\GitHub\PilotPC-PC-Java\src\Serwer" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.Program">
     <configuration default="false" name="Program" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -450,9 +482,27 @@
       <AnalysisUIOptions />
     </option>
   </component>
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="ccfadf02-1a63-4fe6-80b6-93b2a1c9bd2a" name="Default" comment="" />
+      <changelist id="586604c7-594f-43c3-a852-2587c820421e" name="New changelist" comment="" />
       <created>1388915583766</created>
       <updated>1388915583766</updated>
     </task>
@@ -468,16 +518,35 @@
       <created>1389402314576</created>
       <updated>1389402314576</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Tłumaczenia ciąg dalszy">
+      <created>1389439156683</created>
+      <updated>1389439156684</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Wersja Rosyjska">
+      <created>1389441206469</created>
+      <updated>1389441206469</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Drobne">
+      <created>1389720198536</created>
+      <updated>1389720198536</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Powiększenie okna">
+      <created>1389901909008</created>
+      <updated>1389901909008</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Ort.">
+      <created>1390418667778</created>
+      <updated>1390418667778</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="0" width="1378" height="744" extended-state="1" />
     <editor active="false" />
     <layout>
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3257329" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32247558" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32899022" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -493,12 +562,13 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.49638554" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32736155" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32736155" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -516,7 +586,12 @@
     <MESSAGE value="Porządek z bibliotekami" />
     <MESSAGE value="Poprawienie otwierania okna (szybkość, otwiera nawet po aktualizacji)" />
     <MESSAGE value="Początek tłumaczenia" />
-    <option name="LAST_COMMIT_MESSAGE" value="Początek tłumaczenia" />
+    <MESSAGE value="Tłumaczenia ciąg dalszy" />
+    <MESSAGE value="Wersja Rosyjska" />
+    <MESSAGE value="Drobne" />
+    <MESSAGE value="Powiększenie okna" />
+    <MESSAGE value="Ort." />
+    <option name="LAST_COMMIT_MESSAGE" value="Ort." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -526,6 +601,91 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/Biblioteka.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="23" selection-start="23" selection-end="23" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Program.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="62" selection-start="804" selection-end="804" vertical-scroll-proportion="0.0" vertical-offset="391" max-vertical-offset="2992">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PolaczenieWatek.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="135" column="49" selection-start="3648" selection-end="3648" vertical-scroll-proportion="0.0" vertical-offset="2295" max-vertical-offset="5661">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getUI#0;class#PolaczenieWatek#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Okno.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="167" column="24" selection-start="6495" selection-end="6495" vertical-scroll-proportion="0.0" vertical-offset="2839" max-vertical-offset="4097">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Polaczenie.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="4" selection-start="398" selection-end="398" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="1071">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HttpPolaczenie.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="20" selection-start="268" selection-end="268" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="646">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HTTP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="12" selection-start="2498" selection-end="2498" vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="8466">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Biblioteka.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="23" selection-start="23" selection-end="23" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Program.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="41" selection-start="570" selection-end="570" vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="2890">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Okno.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="24" selection-start="1628" selection-end="1633" vertical-scroll-proportion="0.0" vertical-offset="918" max-vertical-offset="4148">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Okno.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Jezyk.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="22" selection-start="745" selection-end="745" vertical-scroll-proportion="0.0" vertical-offset="24" max-vertical-offset="1683">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Program.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="14" selection-start="587" selection-end="587" vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="2703">
@@ -556,15 +716,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Aktualizacja.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="135" selection-start="2752" selection-end="2752" vertical-scroll-proportion="0.0" vertical-offset="1462" max-vertical-offset="2312">
-          <folding />
-        </state>
+        <state line="86" column="135" selection-start="2752" selection-end="2752" vertical-scroll-proportion="0.0" vertical-offset="1462" max-vertical-offset="2312" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PolaczenieWatek.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="44" selection-start="819" selection-end="819" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5695">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getUI#0;class#PolaczenieWatek#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -599,7 +760,10 @@
     <entry file="file://$PROJECT_DIR$/src/PolaczenieWatek.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="134" column="0" selection-start="3594" selection-end="3594" vertical-scroll-proportion="0.0" vertical-offset="2278" max-vertical-offset="5457">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getUI#0;class#PolaczenieWatek#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -634,7 +798,10 @@
     <entry file="file://$PROJECT_DIR$/src/PolaczenieWatek.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="138" column="35" selection-start="3714" selection-end="3714" vertical-scroll-proportion="0.0" vertical-offset="2346" max-vertical-offset="5695">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getUI#0;class#PolaczenieWatek#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -647,9 +814,7 @@
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/src.zip!/java/lang/System.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="704" column="0" selection-start="28951" selection-end="28951" vertical-scroll-proportion="0.0" vertical-offset="11968" max-vertical-offset="20689">
-          <folding />
-        </state>
+        <state line="704" column="0" selection-start="28951" selection-end="28951" vertical-scroll-proportion="0.0" vertical-offset="11968" max-vertical-offset="20689" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.classpath">
@@ -659,9 +824,7 @@
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/src.zip!/java/lang/System.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="704" column="0" selection-start="28951" selection-end="28951" vertical-scroll-proportion="0.0" vertical-offset="11157" max-vertical-offset="19992">
-          <folding />
-        </state>
+        <state line="704" column="0" selection-start="28951" selection-end="28951" vertical-scroll-proportion="0.0" vertical-offset="11157" max-vertical-offset="19992" />
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/jre/lib/rt.jar!/sun/misc/Unsafe.class">
@@ -669,25 +832,14 @@
         <state line="327" column="23" selection-start="10259" selection-end="10259" vertical-scroll-proportion="0.5377644" vertical-offset="5364" max-vertical-offset="5695" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Biblioteka.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="32" selection-start="585" selection-end="585" vertical-scroll-proportion="0.33728814" vertical-offset="226" max-vertical-offset="816">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Aktualizacja.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="135" selection-start="2752" selection-end="2752" vertical-scroll-proportion="0.0" vertical-offset="1462" max-vertical-offset="2312">
-          <folding />
-        </state>
+        <state line="86" column="135" selection-start="2752" selection-end="2752" vertical-scroll-proportion="0.0" vertical-offset="1462" max-vertical-offset="2312" />
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/src.zip!/javax/swing/AbstractButton.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1921" column="16" selection-start="68055" selection-end="68055" vertical-scroll-proportion="-0.55813956" vertical-offset="31438" max-vertical-offset="51408">
-          <folding />
-        </state>
+        <state line="1921" column="16" selection-start="68055" selection-end="68055" vertical-scroll-proportion="-0.55813956" vertical-offset="31438" max-vertical-offset="51408" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Ustawienia.java">
@@ -697,37 +849,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Okno.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/OProgramie.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="51" selection-start="323" selection-end="323" vertical-scroll-proportion="0.45454547" vertical-offset="119" max-vertical-offset="493">
-          <folding />
-        </state>
+        <state line="17" column="51" selection-start="323" selection-end="323" vertical-scroll-proportion="0.45454547" vertical-offset="119" max-vertical-offset="493" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/UserAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="120" column="48" selection-start="2877" selection-end="2877" vertical-scroll-proportion="0.42894056" vertical-offset="1840" max-vertical-offset="2227">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PolaczenieWatek.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="71" selection-start="2800" selection-end="2800" vertical-scroll-proportion="-10.181818" vertical-offset="5083" max-vertical-offset="5457">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Polaczenie.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="25" selection-start="1335" selection-end="1335" vertical-scroll-proportion="0.7260982" vertical-offset="569" max-vertical-offset="1037">
-          <folding />
-        </state>
+        <state line="120" column="48" selection-start="2877" selection-end="2877" vertical-scroll-proportion="0.42894056" vertical-offset="1840" max-vertical-offset="2227" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Pilot.java">
@@ -737,23 +866,85 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Program.java">
+    <entry file="file://$PROJECT_DIR$/src/Okno.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Polaczenie.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="31" selection-start="2160" selection-end="2205" vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="2822">
+        <state line="15" column="4" selection-start="398" selection-end="398" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1071">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Jezyk.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/src.zip!/java/net/URLClassLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="53" selection-start="278" selection-end="278" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1241">
+        <state line="370" column="33" selection-start="13788" selection-end="13788" vertical-scroll-proportion="6.4392767" vertical-offset="2948" max-vertical-offset="12359" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Biblioteka.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="23" selection-start="23" selection-end="23" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HttpPolaczenie.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="20" selection-start="268" selection-end="268" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="646">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HTTP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="12" selection-start="2498" selection-end="2498" vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="8466">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Okno.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="10" selection-start="3360" selection-end="3360" vertical-scroll-proportion="0.33066666" vertical-offset="1219" max-vertical-offset="3570">
+        <state line="143" column="58" selection-start="5436" selection-end="5436" vertical-scroll-proportion="0.0" vertical-offset="2431" max-vertical-offset="4097">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="27" selection-start="430" selection-end="430" vertical-scroll-proportion="0.3567073" vertical-offset="70" max-vertical-offset="1598">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Jezyk.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="89" selection-start="1517" selection-end="1517" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1683">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PolaczenieWatek.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="215" column="29" selection-start="7681" selection-end="7681" vertical-scroll-proportion="0.0" vertical-offset="3526" max-vertical-offset="5763">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getUI#0;class#PolaczenieWatek#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MouseRobot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="84" column="0" selection-start="2292" selection-end="2292" vertical-scroll-proportion="0.0" vertical-offset="891" max-vertical-offset="1445">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Program.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="41" selection-start="457" selection-end="457" vertical-scroll-proportion="0.3371105" vertical-offset="0" max-vertical-offset="2822">
           <folding />
         </state>
       </provider>
