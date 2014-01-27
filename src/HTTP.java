@@ -168,6 +168,18 @@ public class HTTP {
                 } catch (IOException e) {
                     minusBase64 = "";
                 }
+
+                String pulpitBase64;
+                try {
+                    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                    InputStream input = classLoader.getResourceAsStream(
+                            "resources/pulpit.png");
+                    byte[] pulpitBytes = new byte[10000];
+                    input.read(pulpitBytes);
+                    pulpitBase64 = "data:image/png;base64," + DatatypeConverter.printBase64Binary(pulpitBytes);
+                } catch (IOException e) {
+                    pulpitBase64 = "";
+                }
                 String przyciskiBase64;
                 try {
                     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -585,7 +597,7 @@ public class HTTP {
                         "</div>"
                         + "<ul id=\"menu\">" +
                         //"<li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li>" +
-                        "<li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img alt=\"pilot\" src=\"" + pilotBase64 + "\"/></li><li onclick='kartaPokaz(\"klawiatura\");document.getElementsByTagName(\"textarea\")[0].focus()'><img alt=\"klawiatura\" src=\"" + klawiaturaBase64 + "\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img alt=\"touchpad\" src=\"" + touchpadBase64 + "\"/></li><li onclick='kartaPokaz(\"pulpit\");pulpit.laduj(document.getElementById(\"pulpit\").children[0]);pulpit.laduj(document.getElementById(\"pulpit\").children[1])'><img alt=\"Pulpit\" src=\"" + touchpadBase64 + "\"/></li><li onclick=\"" +
+                        "<li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img alt=\"pilot\" src=\"" + pilotBase64 + "\"/></li><li onclick='kartaPokaz(\"klawiatura\");document.getElementsByTagName(\"textarea\")[0].focus()'><img alt=\"klawiatura\" src=\"" + klawiaturaBase64 + "\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img alt=\"touchpad\" src=\"" + touchpadBase64 + "\"/></li><li onclick='kartaPokaz(\"pulpit\");pulpit.laduj(document.getElementById(\"pulpit\").children[0]);pulpit.laduj(document.getElementById(\"pulpit\").children[1])'><img alt=\"Pulpit\" src=\"" + pulpitBase64 + "\"/></li><li onclick=\"" +
                         //"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';}else{document.getElementById('menu').style.top='5%';document.getElementById('menur').style.top='15%';}" +
                         "if(window.scrollY>0)window.scroll(0,0); else window.scroll(0,document.body.clientHeight*0.85);"+
                         "\"><img style=\"float:right\" alt=\"menu\" src=\"" + menuBase64 + "\"/></li>" +
