@@ -5,6 +5,7 @@ import com.example.socketclient.TCP_Data.typ;
 import org.json.JSONObject;
 
 import javax.xml.bind.DatatypeConverter;
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -86,7 +87,10 @@ public class HTTP {
 
                 }
                 wysylanie += "]}";
-            } else if (wyj.indexOf("/" + Program.ustawienia.haslo) == 0) {
+            } else if (wyj.indexOf("/" + Program.ustawienia.haslo+"/pulpit/") == 0) {
+            wysylanie=Pulpit.HTTP(wyj,i, os);
+            }
+                else if (wyj.indexOf("/" + Program.ustawienia.haslo) == 0) {
                 String gamepadBase64;
                 try {
                     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -142,6 +146,40 @@ public class HTTP {
                 } catch (IOException e) {
                     menuBase64 = "";
                 }
+                String plusBase64;
+                try {
+                    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                    InputStream input = classLoader.getResourceAsStream(
+                            "resources/plus.png");
+                    byte[] plusBytes = new byte[2000];
+                    input.read(plusBytes);
+                    plusBase64 = "data:image/png;base64," + DatatypeConverter.printBase64Binary(plusBytes);
+                } catch (IOException e) {
+                    plusBase64 = "";
+                }
+                String minusBase64;
+                try {
+                    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                    InputStream input = classLoader.getResourceAsStream(
+                            "resources/minus.png");
+                    byte[] minusBytes = new byte[2000];
+                    input.read(minusBytes);
+                    minusBase64 = "data:image/png;base64," + DatatypeConverter.printBase64Binary(minusBytes);
+                } catch (IOException e) {
+                    minusBase64 = "";
+                }
+
+                String pulpitBase64;
+                try {
+                    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                    InputStream input = classLoader.getResourceAsStream(
+                            "resources/pulpit.png");
+                    byte[] pulpitBytes = new byte[10000];
+                    input.read(pulpitBytes);
+                    pulpitBase64 = "data:image/png;base64," + DatatypeConverter.printBase64Binary(pulpitBytes);
+                } catch (IOException e) {
+                    pulpitBase64 = "";
+                }
                 String przyciskiBase64;
                 try {
                     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -166,18 +204,23 @@ public class HTTP {
                 }
                 wysylanie = "HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
                         + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
-                        + "<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
+                        + "<meta name=\"viewport\" content=\"width=220px, initial-scale=1, user-scalable=no\" />"
                         + "<style>"
-                        + "*{-ms-touch-action: none;}" +
-                        "body{font-family:\"Segoe UI Light\",\"Segoe UI\",arial;overflow:hidden;background:#26211b;color:white;font-style:non-sherif;}"
-                        + "#menu{transition:all 300ms;-webkit-transition:all 300ms;height:10%;position: absolute;top: 90%;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
+                        + "*{-ms-touch-action: none;touch-action: none;}" +
+                        "a img{border:none;}"
+                        +"body{font-family:\"Segoe UI Light\",\"Segoe UI\",arial;overflow:hidden;background:#26211b;color:white;font-style:non-sherif;}"
+                        + "#menu{z-index:10;transition:all 300ms;-webkit-transition:all 300ms;height:10%;position: absolute;top: 90%;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
                         + "#menu li{display:inline;}" +
                         ".karta{position:absolute;left:0;top:0;width:100%;bottom:10%;display:none;}"
                         + "#menu li img{height:100%;padding:0 2%;}" +
-                        "#menur{background:#2e2e2e;text-align:left;height:85%;width:100%;position:absolute;top:100%;transition:all 300ms;-webkit-transition:all 300ms;left:0;padding-left:5px;}" +
+                        "#menur{z-index:10;background:#2e2e2e;text-align:left;height:85%;width:100%;position:absolute;top:100%;transition:all 300ms;-webkit-transition:all 300ms;left:0;padding-left:5px;}" +
                         "#menur h2{margin:0;}" +
                         "#menur .podmenu{background:#5a555a;padding:5px 0 5px 5px;margin:5px 0 5px -5px;}"
                         + "#pilot #przyciski{height:100%;margin: auto; display: block;}" +
+                        "#pulpit img{width:100%;height:100%;position:absolute;}" +
+                        "#zoom{position:absolute;bottom:12%;right:2%;width:20% !important;height:10% !important;min-width:1.6cm;min-height:0.8cm;z-index:5;}" +
+                        "#powieksz, #pomniejsz{width:50% !important;height:100% !important;position:static !important;}" +
+                        "" +
                         "</style>"
                         + "<script>/*<![CDATA[*/\n"
                         + "var czasPrzesylu=new Date();"
@@ -340,7 +383,7 @@ public class HTTP {
                         + "TCP_Data.pilotButton={OFF:0, MUSIC:1, MULTIMEDIA:2, PLAYPAUSE:3, PERV:4, NEXT:5, STOP:6, EXIT:7, BACK:8, VOLDOWN:9, VOLUP:10, MUTE:11,UP:12, DOWN:13, RIGHT:14, LEFT:15, RETTURN:16, REWIND:17, FORWARD:18};"
                         + "function kartaPokaz(id){"
                         //+ "document.getElementById('gamepad').style.display="
-                        + "document.getElementById('pilot').style.display=document.getElementById('klawiatura').style.display=document.getElementById('touchpad').style.display='none';"
+                        + "document.getElementById('pulpit').style.display=document.getElementById('pilot').style.display=document.getElementById('klawiatura').style.display=document.getElementById('touchpad').style.display='none';"
                         + "document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';" +
                         "document.getElementById(id).style.display='block';"
                         + "}"
@@ -391,11 +434,144 @@ public class HTTP {
                         "return (jakosc[jakosc.length-2]*2+jakosc[jakosc.length-1]*3)/5;\n" +
                         "else\n" +
                         "return jakosc[jakosc.length-1];\n" +
-                        "}"
+                        "}" +
+                        "" +
+                        "var pulpit=new Object();" +
+                        "pulpit.width="+(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+";\n" +
+                        "pulpit.height="+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+";\n" +
+                        "pulpit.jakosc=1;" +
+                        "pulpit.laduj=function(thi){\n" +
+                        "if(pulpit.zoom<0.5)" +
+                        "pulpit.zoom=0.5;" +
+                        "var proporcje=pulpit.width*thi.parentNode.clientHeight/pulpit.height/thi.parentNode.clientWidth;" +
+                        "if(proporcje>1)" +
+                        "{" +
+                        "pulpit.zoomX=pulpit.zoom;" +
+                        "pulpit.zoomY=pulpit.zoom/proporcje;" +
+                        "}\n" +
+                        "else" +
+                        "{" +
+                        "pulpit.zoomY=pulpit.zoom;" +
+                        "pulpit.zoomX=pulpit.zoom*proporcje;" +
+                        "}" +
+                        "if(thi.parentNode.clientHeight!=0)" +
+                        "if(pulpit.jakosc==0)\n" +
+                        "{" +
+                        "var wymWid=thi.parentNode.clientWidth;\n" +
+                        "if(wymWid>Math.floor(pulpit.width/pulpit.zoomX))\n wymWid=Math.floor(pulpit.width/pulpit.zoomX);\n" +
+                        "var wymHei=thi.parentNode.clientHeight;\n" +
+                        "if(wymHei>Math.floor(pulpit.height/pulpit.zoomY))\n wymHei=Math.floor(pulpit.height/pulpit.zoomY);\n" +
+                        "thi.src='/"+Program.ustawienia.haslo+"/pulpit/'+Math.floor(pulpit.x/pulpit.zoomX)+'/'+Math.floor(pulpit.y/pulpit.zoomY)+'/'+Math.floor(pulpit.width/pulpit.zoomX)+'/'+Math.floor(pulpit.height/pulpit.zoomY)+'/'+wymWid+'/'+wymHei+'/BMP/'+(new Date()).getTime();\n" +
+                        "}" +
+                        "else \n" +
+                        "{\n" +
+                        "var wymWid=(Math.floor(thi.parentNode.clientWidth/pulpit.jakosc));\n" +
+                        "if(wymWid>Math.floor(pulpit.width/pulpit.zoomX))\n wymWid=Math.floor(pulpit.width/pulpit.zoomX);\n" +
+                        "var wymHei=(Math.floor(thi.parentNode.clientHeight/pulpit.jakosc));\n" +
+                        "if(wymHei>Math.floor(pulpit.height/pulpit.zoomY))\n wymHei=Math.floor(pulpit.height/pulpit.zoomY);\n" +
+                        "thi.src='/"+Program.ustawienia.haslo+"/pulpit/'+Math.floor(pulpit.x/pulpit.zoomX)+'/'+Math.floor(pulpit.y/pulpit.zoomY)+'/'+Math.floor(pulpit.width/pulpit.zoomX)+'/'+Math.floor(pulpit.height/pulpit.zoomY)+'/'+wymWid+'/'+wymHei+'/JPEG/'+(new Date()).getTime();\n" +
+                        "}" +
+                        "pulpit.xs=pulpit.x;" +
+                        "pulpit.ys=pulpit.y;" +
+                        "thi.style.width='100%';" +
+                        "thi.style.height='100%';" +
+                        "thi.style.marginLeft='0';" +
+                        "thi.style.marginTop='0';" +
+                        "};\n" +
+                        "pulpit.zoom=1;" +
+                        "pulpit.x=pulpit.y=pulpit.xs=pulpit.ys=0;" +
+                        "pulpit.punkty=[];" +
+                        "pulpit.punktyP=[];" +
+                        "pulpit.move=function(eve){\n" +
+                        "if(eve.touches.length>=2)" +
+                        "{" +
+                        "if(pulpit.punkty.length>=2)\n" +
+                        "{" +
+                        "pulpit.zoom=pulpit.zoom*Math.sqrt((eve.touches[0].screenX-eve.touches[1].screenX)*(eve.touches[0].screenX-eve.touches[1].screenX)+(eve.touches[0].screenY-eve.touches[1].screenY)*(eve.touches[0].screenY-eve.touches[1].screenY))/Math.sqrt((pulpit.punkty[0].screenX-pulpit.punkty[1].screenX)*(pulpit.punkty[0].screenX-pulpit.punkty[1].screenX)+(pulpit.punkty[0].screenY-pulpit.punkty[1].screenY)*(pulpit.punkty[0].screenY-pulpit.punkty[1].screenY));\n" +
+                        "}" +
+                        "}\n" +
+                        "else if(eve.touches.length==1)\n"   +
+                        "{" +
+                        "if(pulpit.punkty.length==1)\n" +
+                        "{" +
+                        "pulpit.x+=pulpit.punkty[0].screenX-eve.touches[0].screenX;\n" +
+                        "pulpit.y+=pulpit.punkty[0].screenY-eve.touches[0].screenY;\n" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.touches[0].screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
+                        //"document.getElementById(\"pulpit\").children[1].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.touches[0].screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginTop)+(-pulpit.punkty[0].screenY+eve.touches[0].screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
+                        //"document.getElementById(\"pulpit\").children[1].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginTop)+(-pulpit.punkty[0].screenY+eve.touches[0].screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
+                        "}" +
+                        "}\n" +
+                        "pulpit.punkty=eve.touches;"+
+                        "};\n"
+                        +"pulpit.moveM=function(eve){\n" +
+                        "if(pulpit.punktXs-eve.screenX>-5&&pulpit.punktXs-eve.screenX<5&&pulpit.punktYs-eve.screenY>-5&&pulpit.punktYs-eve.screenY<5)" +
+                        "clearTimeout(pulpit.timeout);" +
+                        "if(pulpit.punktX!=undefined)\n"   +
+                        "{" +
+                        "pulpit.x+=pulpit.punktX-eve.screenX;\n" +
+                        "pulpit.y+=pulpit.punktY-eve.screenY;\n" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginLeft)+(-pulpit.punktX+eve.screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';\n" +
+                        //"document.getElementById(\"pulpit\").children[1].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginLeft)+(-pulpit.punktX+eve.screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';\n" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginTop)+(-pulpit.punktY+eve.screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';\n" +
+                        //"document.getElementById(\"pulpit\").children[1].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginTop)+(-pulpit.punktY+eve.screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';\n" +
+                        "pulpit.punktX=eve.screenX;\n"+
+                        "pulpit.punktY=eve.screenY;\n"+
+                        "}" +
+                        "};\n" +
+                        /*"pulpit.moveP=function(eve){" +
+                        "if(eve.pointerType=='touch')\n" +
+                        "{" +
+                        "" +
+                        "pulpit.moveE(eve)" +
+                        "}" +
+                        "};\n" +
+                        "pulpit.moveM=function(eve){" +
+                        "};" +
+                        "pulpit.moveE=function(eve){" +
+                        "if(pulpit.punkty.length==1)\n" +
+                        "{\n" +
+                        "pulpit.x+=pulpit.punkty[0].screenX-eve.screenX;\n" +
+                        "pulpit.y+=pulpit.punkty[0].screenY-eve.screenY;\n" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
+                        "document.getElementById(\"pulpit\").children[1].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginTop)+(-pulpit.punkty[0].screenY+eve.screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
+                        "document.getElementById(\"pulpit\").children[1].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginTop)+(-pulpit.punkty[0].screenY+eve.screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
+                        "}" +
+                        "pulpit.punkty=[{screenX:eve.screenX,screenY:eve.screenY}];" +
+                        "};\n" + */
+                        "pulpit.clickD=function(eve,thi)\n" +
+                        "{" +
+                        "pulpit.timeout=setTimeout(\"pulpit.punktXs=-1000;" +
+                        "var dataA=new TCP_Data();" +
+                        "dataA.mouse = TCP_Data.touchedTYPE.PPM;" +
+                        "dataA.touchpadX = Math.floor(((\"+eve.clientX+\"-document.getElementById('pulpit').clientLeft)*pulpit.width/document.getElementById('pulpit').clientWidth+pulpit.x)/pulpit.zoomX);" +
+                        "dataA.touchpadY = Math.floor(((\"+eve.clientY+\"-document.getElementById('pulpit').clientTop)*pulpit.height/document.getElementById('pulpit').clientHeight+pulpit.y)/pulpit.zoomY);"
+                        + "dataA.type=TCP_Data.typ.TOUCHPAD;send(dataA);" +
+
+                        "\",500);" +
+                        "};" +
+                        "pulpit.clickU=function(eve,thi)\n" +
+                        "{" +
+                        "clearTimeout(pulpit.timeout);\n" +
+                        "if(pulpit.punktXs-eve.screenX>-5 &&pulpit.punktXs-eve.screenX<5 &&pulpit.punktYs-eve.screenY>-5&& pulpit.punktYs-eve.screenY<5 )" +
+                        "{\n" +
+                        "var data=new TCP_Data();" +
+                        "data.mouse = TCP_Data.touchedTYPE.LPM;\n" +
+                        "data.touchpadX = Math.floor(((eve.clientX-thi.clientLeft)*pulpit.width/thi.clientWidth+pulpit.x)/pulpit.zoomX);\n" +
+                        "data.touchpadY = Math.floor(((eve.clientY-thi.clientTop)*pulpit.height/thi.clientHeight+pulpit.y)/pulpit.zoomY);\n"
+                        + "data.type=TCP_Data.typ.TOUCHPAD;send(data);\n"
+                        +"}}\n" +
+                        "document.getElementById('pulpit').addEventListener(\"MSGestureChange\", onDivGestureChange, false);\n" +
+                        "document.getElementById('pulpit').addEventListener(\"GestureChange\", onDivGestureChange, false);\n" +
+                        "\n" +
+                        "      function onDivGestureChange(e) {\n" +
+                        "        pulpit.zoom=pulpit.zoom*e.scale;"+
+                        "      }\n"
                         + "/*]]>*/</script>"
                         + "</head><body onload=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onresize=\"mapa(document.getElementById('przyciski').clientHeight/1280)\">"
                         //+ "<div class=\"karta\" id=\"gamepad\">Gamepad wkrodce</div>"
-                        + "<div class=\"karta\" id=\"pilot\">"
+                        + "<div class=\"karta\" style=\\\"display:block\\\" id=\"pilot\">"
                         + "<img id=\"przyciski\" src=\"" + przyciskiBase64 + "\" usemap=\"#przycMapa\" />" +
                         "<map id=\"przycMapa\" name=\"przycMapa\">" +
                         "</map>"
@@ -405,10 +581,26 @@ public class HTTP {
                         //+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" onmousemove=\"return touchpad.onMouseMove(event)\" ontouchdown=\"touchpad.onTouchDown(event)\" onmousedown=\"touchpad.onTouchDown(event)\" ontouchup=\"touchpad.onTouchUp(event)\" onmouseup=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" onmouseleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
                         //+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\"  id=\"touchpad\"></div>"
                         //+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"touchpad.onTouchDown(event)\" ontouchend=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\"  id=\"touchpad\"></div>"
-                        + "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"return touchpad.onTouchDown(event)\" ontouchend=\"return touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
+                        + "<div class=\"karta\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\" ontouchmove=\"return touchpad.onTouchMove(event)\" ontouchstart=\"return touchpad.onTouchDown(event)\" ontouchend=\"return touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
+                        + "<div class=\"karta\" id=\"pulpit\" " +
+                        //"onMSPointerMove=\"pulpit.moveP(event);return false;\" onMSPointerup=\"pulpit.punkty=[]\" onMSPointerleave=\"pulpit.punkty=[]\" " +
+                        //"onPointerMove=\"pulpit.moveP(event);return false;\" onPointerup=\"pulpit.punkty=[]\" onPointerleave=\"pulpit.punkty=[]\" " +
+                        "ontouchmove=\"pulpit.move(event);return false;\" ontouchend=\"pulpit.punkty=[]\" ontouchleave=\"pulpit.punkty=[]\" " +
+                        "onmousemove=\"pulpit.moveM(event);return false;\" onmousedown=\"if(event.target.className!='zoom'){pulpit.punktXs=pulpit.punktX=event.screenX;pulpit.punktYs=pulpit.punktY=event.screenY;pulpit.clickD(event,this);return false;}\" onmouseup=\"if(event.target.className!='zoom'){pulpit.punktX=undefined;pulpit.clickU(event,this);}\" onmouseleave=\"pulpit.punktX=undefined;\" " +
+                        "\">" +
+                        "<img " +
+                        " src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;pulpit.laduj(this);\" alt=\"Błąd\" />" +
+                        //"<img " +
+                       // " src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[0].style.zIndex=1;pulpit.laduj(this);\" alt=\"\" />" +
+                        "<div id=\"zoom\"><img class=\"zoom\" id=\"powieksz\" src=\""+plusBase64+"\" onclick=\"pulpit.zoom=pulpit.zoom*1.5\">"       +
+                        "<img class=\"zoom\" id=\"pomniejsz\" src=\""+minusBase64+"\" onclick=\"pulpit.zoom=pulpit.zoom*0.666666666\"></div>" +
+                        "</div>"
                         + "<ul id=\"menu\">" +
                         //"<li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li>" +
-                        "<li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img alt=\"pilot\" src=\"" + pilotBase64 + "\"/></li><li onclick='kartaPokaz(\"klawiatura\");document.getElementsByTagName(\"textarea\")[0].focus()'><img alt=\"klawiatura\" src=\"" + klawiaturaBase64 + "\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img alt=\"touchpad\" src=\"" + touchpadBase64 + "\"/></li><li onclick=\"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';}else{document.getElementById('menu').style.top='5%';document.getElementById('menur').style.top='15%';}\"><img style=\"float:right\" alt=\"menu\" src=\"" + menuBase64 + "\"/></li>" +
+                        "<li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img alt=\"pilot\" src=\"" + pilotBase64 + "\"/></li><li onclick='kartaPokaz(\"klawiatura\");document.getElementsByTagName(\"textarea\")[0].focus()'><img alt=\"klawiatura\" src=\"" + klawiaturaBase64 + "\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img alt=\"touchpad\" src=\"" + touchpadBase64 + "\"/></li><li onclick='kartaPokaz(\"pulpit\");pulpit.laduj(document.getElementById(\"pulpit\").children[0]);'><img alt=\"Pulpit\" src=\"" + pulpitBase64 + "\"/></li><li onclick=\"" +
+                        //"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';}else{document.getElementById('menu').style.top='5%';document.getElementById('menur').style.top='15%';}" +
+                        "if(window.scrollY>0)window.scroll(0,0); else window.scroll(0,document.body.clientHeight*0.85);"+
+                        "\"><img style=\"float:right\" alt=\"menu\" src=\"" + menuBase64 + "\"/></li>" +
                         "</ul><div id=\"menur\"><h2>Informacje</h2>" +
                         "<div class=\"podmenu\">" +
                         "POŁĄCZENIE<br/>" +
@@ -421,7 +613,13 @@ public class HTTP {
                         "DESIGNERS<br/>" +
                         "-FranQy<br/>" +
                         "-Wieczur" +
-                        "</div></div></body></html>";
+                        "</div><h2>Jakość obrazu</h2><div class=\"podmenu\">" +
+                        "<button onclick='pulpit.jakosc=3'>Niska</button>" +
+                        "<button onclick='pulpit.jakosc=2'>Średnia</button>" +
+                        "<button onclick='pulpit.jakosc=1'>Wysoka</button>" +
+                        "<button onclick='pulpit.jakosc=0'>Ultra</button>" +
+                        "</div>" +
+                        "</div></body></html>";
 
             } else if (wyj.indexOf("/ ") == 0) {
                 String typ;

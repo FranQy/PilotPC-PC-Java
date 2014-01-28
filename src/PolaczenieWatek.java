@@ -32,6 +32,7 @@ public class PolaczenieWatek
         }
     }
     public void run() {  //klasa do sterowania myszka
+<<<<<<< HEAD
         while(true){
             boolean nowe=true;
 
@@ -92,6 +93,42 @@ public class PolaczenieWatek
                         else
                         {
                             TCP_Data data=(TCP_Data) dataObject;
+=======
+    	while(true){
+    		               boolean nowe=true;
+
+    		is=null;
+			  try {
+                  if(nowe)
+                  {
+          		   gotowe=true;
+			soc=socServ.accept();
+                  byte ileGotowe=0;
+                  for(byte i=0;i<100;i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
+                  {
+                      if(Polaczenie.watki[i]!=null){
+                          if(!Polaczenie.watki[i].czyPolaczono()&&Polaczenie.watki[i].socServ==socServ)
+                              ileGotowe++;
+                      }
+                  }
+                  if(ileGotowe<4)
+			for(byte i=0;i<100;i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
+			{
+				if(Polaczenie.watki[i]==null){
+					Polaczenie.watki[i]=new PolaczenieWatek();
+					Polaczenie.watki[i].socServ=socServ;
+					Polaczenie.watki[i].start();
+					break;
+				}
+			}       }
+                       nowe=true;
+          			is = soc.getInputStream();
+          		
+			try{
+			  ObjectInputStream in = new ObjectInputStream(soc.getInputStream());	
+			  while(true)
+        		{
+>>>>>>> Pulpit
 
                             //TCP_Data data = (TCP_Data) in.readObject();
                             wykonuj(data);
@@ -109,12 +146,21 @@ public class PolaczenieWatek
 					}
 				  this.infoPrzyPolaczeniu=null;
 					this.pokazane=false;*/
+<<<<<<< HEAD
                     try {
                         String wyj="";
                         byte liczbaNowychLinii=0;
                         while (true) {
                             int n = is.read();
                             if (n == -1){
+=======
+				  try {
+					  String wyj="";
+						byte liczbaNowychLinii=0;
+						while (true) {
+					int n = is.read();
+						if (n == -1){
+>>>>>>> Pulpit
 
                                 break;
                             }
@@ -164,6 +210,7 @@ public class PolaczenieWatek
                 System.out.println(Jezyk.napisy[Jezyk.n.Rozlaczono.ordinal()]+" "+toString());
                 Okno.potrzebneOdswierzenie=true;
 
+<<<<<<< HEAD
 
             }catch(Exception e)
             {
@@ -178,6 +225,55 @@ public class PolaczenieWatek
                 System.out.println("Błąd, rozłączono "+toString());
 
             }
+=======
+							break;
+						}}
+						if(wyj.charAt(0)=='/')
+						{
+						TCP_Data data= HTTP.polaczenie(is, soc, wyj);
+						if(data!=null)
+							wykonuj(data);
+						}
+						else
+						{
+							//pinguje
+							OutputStream os =soc.getOutputStream();
+							os.write(wyj.getBytes());
+							os.close();
+                            nowe=false;
+						}
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			  }catch(EOFException e)
+			  {
+					if(UI!=null)
+					{
+						UI.ramka.remove(UI);
+						UI=null;
+					}
+				  this.infoPrzyPolaczeniu=null;
+					this.pokazane=false;
+				  System.out.println(Jezyk.napisy[Jezyk.n.Rozlaczono.ordinal()]+" "+toString());
+                  Okno.potrzebneOdswierzenie=true;
+
+				  
+			  }catch(Exception e)
+			  {
+					if(UI!=null)
+					{
+						UI.ramka.remove(UI);
+						UI=null;
+                        Okno.potrzebneOdswierzenie=true;
+					}
+				  this.infoPrzyPolaczeniu=null;
+					this.pokazane=false;
+					System.out.println("Błąd, rozłączono "+toString());
+				  
+			  }
+>>>>>>> Pulpit
 
 
 
@@ -203,6 +299,7 @@ public class PolaczenieWatek
                 }
                 break;
             }
+<<<<<<< HEAD
         }}
     void wykonuj(TCP_Data data)
     {
@@ -228,6 +325,33 @@ public class PolaczenieWatek
                 }
                 case NORMAL:
                 {
+=======
+    	}}
+    	void wykonuj(TCP_Data data)
+    	{
+    		if(data.type == TCP_Data.typ.TOUCHPAD )
+			{							
+				switch(data.mouse)
+				{
+				case LPM:
+				{
+				    if(data.touchpadX!=0||data.touchpadY!=0)
+                        MouseRobot.moveTo(data.touchpadX, data.touchpadY);
+					MouseRobot.LPM();
+					
+					break;
+				}
+				case PPM:
+				{
+
+                    if(data.touchpadX!=0||data.touchpadY!=0)
+                        MouseRobot.moveTo(data.touchpadX, data.touchpadY);
+					MouseRobot.PPM();
+					break;
+				}
+				case NORMAL:
+				{
+>>>>>>> Pulpit
                     MouseRobot.move(data.touchpadX, data.touchpadY); //ruszanie myszka
                     break;
                 }

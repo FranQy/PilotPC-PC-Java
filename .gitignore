@@ -162,3 +162,5 @@ bin/
 *.old
 *.pem
 workspace.xml
+/workspace.xml
+.idea/workspace.xml

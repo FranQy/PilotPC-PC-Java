@@ -20,6 +20,7 @@ public class MouseRobot {
     static double pozostalex=0;//liczby po przecinku pozostałe po wyliczeniu ostetecznego ruchu myszy
     static double pozostaley=0;
     static boolean wcisniete=false;
+<<<<<<< HEAD
     public MouseRobot()
     {
 
@@ -42,6 +43,30 @@ public class MouseRobot {
         Program.robot.mousePress(InputEvent.BUTTON1_MASK);
         Program.robot.mouseRelease(InputEvent.BUTTON1_MASK);
     }
+=======
+	public MouseRobot()
+	{
+
+		//System.out.println(System.getProperty("java.library.path"));
+		try {
+			 robot = new Robot();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	static public void PPM()
+	{
+		Program.robot.mousePress(InputEvent.BUTTON3_MASK);
+		Program.robot.mouseRelease(InputEvent.BUTTON3_MASK);
+	}
+	static public void LPM()
+	{
+		Program.robot.mousePress(InputEvent.BUTTON1_MASK);
+		Program.robot.mouseRelease(InputEvent.BUTTON1_MASK);
+	}
+>>>>>>> Pulpit
 
     static public void move(int mx, int my)
     {
@@ -62,9 +87,15 @@ public class MouseRobot {
 
         Program.robot.mouseMove(mx,my);
     }
+<<<<<<< HEAD
     static public void move(boolean LONG, int mx, int my)
     {
         if(!wcisniete)
+=======
+	static public void move(boolean LONG, int mx, int my)
+	{
+		if(!wcisniete)
+>>>>>>> Pulpit
         {Program.robot.mousePress(InputEvent.BUTTON1_MASK);
             wcisniete=true;
         }
