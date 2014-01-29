@@ -220,7 +220,12 @@ public class HTTP {
                         "#pulpit img{width:100%;height:100%;position:absolute;}" +
                         "#zoom{position:absolute;bottom:12%;right:2%;width:20% !important;height:10% !important;min-width:1.6cm;min-height:0.8cm;z-index:5;}" +
                         "#powieksz, #pomniejsz{width:50% !important;height:100% !important;position:static !important;}" +
-                        "" +
+                        "#klawiatura div{text-align:center;}" +
+                        "#klawiatura button{border:none;width:10%;height:25%;}" +
+                        "#klawiatura button.nor{background:red;}" +
+                        "#klawiatura button.gr{background:green;width:15%;}" +
+                        "#klawiatura button.spacja{background:orange;width:55%}" +
+
                         "</style>"
                         + "<script>/*<![CDATA[*/\n"
                         + "var czasPrzesylu=new Date();"
@@ -359,7 +364,17 @@ public class HTTP {
                        + "}" +
                        // "txt.value='';\n" +
                         "};\n"
-                        +"klawiatura.timer=setInterval(klawiatura.t,10);\n"
+                        +"klawiatura.timer=setInterval(klawiatura.t,10);\n" +
+                        "klawiatura.char=function(key){" +
+                        "" +
+                        "var data=new TCP_Data();data.key = key.charCodeAt(0);\n"
+                        + "data.type=TCP_Data.typ.KEYBOARD;send(data);\n"+
+                        "};\n"  +
+                        "klawiatura.num=function(key){" +
+                        "" +
+                        "var data=new TCP_Data();data.key = key;\n"
+                        + "data.type=TCP_Data.typ.KEYBOARD;send(data);\n"+
+                        "};\n"
                         + "function send(data){"
                         + "var socket=new XMLHttpRequest();"
                         + "var czas=new Date();"
@@ -576,7 +591,46 @@ public class HTTP {
                         "<map id=\"przycMapa\" name=\"przycMapa\">" +
                         "</map>"
                         + "</div>"
-                        + "<div class=\"karta\" id=\"klawiatura\"><textarea style=\"width:1px;height:1px;opacity:0;\"></textarea></div>"
+                        +
+                        "<div class=\"karta\" id=\"klawiatura\">" +
+                        "<DIV>" +
+                        "<button onclick=\"klawiatura.char('q')\" class=\"nor\">Q</button>" +
+                        "<button onclick=\"klawiatura.char('w')\" class=\"nor\">W</button>" +
+                        "<button onclick=\"klawiatura.char('e')\" class=\"nor\">E</button>" +
+                        "<button onclick=\"klawiatura.char('r')\" class=\"nor\">R</button>" +
+                        "<button onclick=\"klawiatura.char('t')\" class=\"nor\">T</button>" +
+                        "<button onclick=\"klawiatura.char('y')\" class=\"nor\">Y</button>" +
+                        "<button onclick=\"klawiatura.char('u')\" class=\"nor\">U</button>" +
+                        "<button onclick=\"klawiatura.char('i')\" class=\"nor\">I</button>" +
+                        "<button onclick=\"klawiatura.char('o')\" class=\"nor\">O</button>" +
+                        "<button onclick=\"klawiatura.char('p')\" class=\"nor\">P</button>" +
+                        "</DIV><DIV>" +
+                        "<button onclick=\"klawiatura.char('a')\" class=\"nor\">A</button>" +
+                        "<button onclick=\"klawiatura.char('s')\" class=\"nor\">S</button>" +
+                        "<button onclick=\"klawiatura.char('d')\" class=\"nor\">D</button>" +
+                        "<button onclick=\"klawiatura.char('f')\" class=\"nor\">F</button>" +
+                        "<button onclick=\"klawiatura.char('g')\" class=\"nor\">G</button>" +
+                        "<button onclick=\"klawiatura.char('h')\" class=\"nor\">H</button>" +
+                        "<button onclick=\"klawiatura.char('j')\" class=\"nor\">J</button>" +
+                        "<button onclick=\"klawiatura.char('k')\" class=\"nor\">K</button>" +
+                        "<button onclick=\"klawiatura.char('l')\" class=\"nor\">L</button>" +
+                        "</DIV><DIV>" +
+                        "<button onclick=\"\" class=\"gr\">Shift</button>" +
+                        "<button onclick=\"klawiatura.char('z')\" class=\"nor\">Z</button>" +
+                        "<button onclick=\"klawiatura.char('x')\" class=\"nor\">X</button>" +
+                        "<button onclick=\"klawiatura.char('c')\" class=\"nor\">C</button>" +
+                        "<button onclick=\"klawiatura.char('v')\" class=\"nor\">V</button>" +
+                        "<button onclick=\"klawiatura.char('b')\" class=\"nor\">B</button>" +
+                        "<button onclick=\"klawiatura.char('n')\" class=\"nor\">N</button>" +
+                        "<button onclick=\"klawiatura.char('m')\" class=\"nor\">M</button>" +
+                        "<button onclick=\"klawiatura.num(8)\" class=\"gr\">Usuń</button>" +
+                        "</DIV><DIV>" +
+                        "<button onclick=\"\" class=\"gr\">123</button>" +
+                        "<button onclick=\"\" class=\"gr\">Specjalne</button>" +
+                        "<button onclick=\"klawiatura.char(' ')\" class=\"spacja\">Spacja</button>" +
+                        "<button onclick=\"klawiatura.num(10)\" class=\"gr\">Enter</button>" +
+                        "</DIV>" +
+                        "<textarea style=\"width:1px;height:1px;opacity:0;\"></textarea></div>"
                         //Tu były problemy ze zdarzeniami
                         //+ "<div class=\"karta\" style=\"display:block\" ontouchmove=\"return touchpad.onTouchMove(event)\" onmousemove=\"return touchpad.onMouseMove(event)\" ontouchdown=\"touchpad.onTouchDown(event)\" onmousedown=\"touchpad.onTouchDown(event)\" ontouchup=\"touchpad.onTouchUp(event)\" onmouseup=\"touchpad.onTouchUp(event)\" ontouchleave=\"touchpad.onTouchUp(event)\" onmouseleave=\"touchpad.onTouchUp(event)\" id=\"touchpad\"></div>"
                         //+ "<div class=\"karta\" style=\"display:block\" onmousemove=\"return touchpad.onMouseMove(event)\" onmousedown=\"touchpad.onMouseDown(event)\" onmouseup=\"touchpad.onMouseUp(event)\" onmouseleave=\"touchpad.onMouseUp(event)\"  id=\"touchpad\"></div>"
@@ -597,7 +651,7 @@ public class HTTP {
                         "</div>"
                         + "<ul id=\"menu\">" +
                         //"<li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li>" +
-                        "<li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img alt=\"pilot\" src=\"" + pilotBase64 + "\"/></li><li onclick='kartaPokaz(\"klawiatura\");document.getElementsByTagName(\"textarea\")[0].focus()'><img alt=\"klawiatura\" src=\"" + klawiaturaBase64 + "\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img alt=\"touchpad\" src=\"" + touchpadBase64 + "\"/></li><li onclick='kartaPokaz(\"pulpit\");pulpit.laduj(document.getElementById(\"pulpit\").children[0]);'><img alt=\"Pulpit\" src=\"" + pulpitBase64 + "\"/></li><li onclick=\"" +
+                        "<li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img alt=\"pilot\" src=\"" + pilotBase64 + "\"/></li><li onclick='kartaPokaz(\"klawiatura\");'><img alt=\"klawiatura\" src=\"" + klawiaturaBase64 + "\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img alt=\"touchpad\" src=\"" + touchpadBase64 + "\"/></li><li onclick='kartaPokaz(\"pulpit\");pulpit.laduj(document.getElementById(\"pulpit\").children[0]);'><img alt=\"Pulpit\" src=\"" + pulpitBase64 + "\"/></li><li onclick=\"" +
                         //"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';}else{document.getElementById('menu').style.top='5%';document.getElementById('menur').style.top='15%';}" +
                         "if(window.scrollY>0)window.scroll(0,0); else window.scroll(0,document.body.clientHeight*0.85);"+
                         "\"><img style=\"float:right\" alt=\"menu\" src=\"" + menuBase64 + "\"/></li>" +

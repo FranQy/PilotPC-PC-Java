@@ -281,6 +281,18 @@ public class PolaczenieWatek
                 Program.robot.keyRelease(data.key);
 
             }
+            else  if(data.key==8)
+            {
+                Program.robot.keyPress(KeyEvent.VK_BACK_SPACE);
+                Program.robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+
+            }
+            else  if(data.key==10)
+            {
+                Program.robot.keyPress(KeyEvent.VK_ENTER);
+                Program.robot.keyRelease(KeyEvent.VK_ENTER);
+
+            }
             else
             {
                 Program.robot.keyPress(KeyEvent.VK_ALT);
