@@ -281,16 +281,86 @@ public class PolaczenieWatek
                 Program.robot.keyRelease(data.key);
 
             }
+            else  if(data.key==-1)
+            {
+                Program.robot.keyPress(KeyEvent.VK_PRINTSCREEN);
+                Program.robot.keyRelease(KeyEvent.VK_PRINTSCREEN);
+            }
+            else  if(data.key==-2)
+            {
+                Program.robot.keyPress(KeyEvent.VK_SCROLL_LOCK);
+                Program.robot.keyRelease(KeyEvent.VK_SCROLL_LOCK);
+            }
+            else  if(data.key==-3)
+            {
+                Program.robot.keyPress(KeyEvent.VK_PAUSE);
+                Program.robot.keyRelease(KeyEvent.VK_PAUSE);
+            }
+            else  if(data.key==-4)
+            {
+                Program.robot.keyPress(KeyEvent.VK_INSERT);
+                Program.robot.keyRelease(KeyEvent.VK_INSERT);
+            }
+            else  if(data.key==-5)
+            {
+                Program.robot.keyPress(KeyEvent.VK_HOME);
+                Program.robot.keyRelease(KeyEvent.VK_HOME);
+            }
+            else  if(data.key==-6)
+            {
+                Program.robot.keyPress(KeyEvent.VK_PAGE_UP);
+                Program.robot.keyRelease(KeyEvent.VK_PAGE_UP);
+            }
+            else  if(data.key==-7)
+            {
+                Program.robot.keyPress(KeyEvent.VK_DELETE);
+                Program.robot.keyRelease(KeyEvent.VK_DELETE);
+            }
+            else  if(data.key==-8)
+            {
+                Program.robot.keyPress(KeyEvent.VK_END);
+                Program.robot.keyRelease(KeyEvent.VK_END);
+            }
+            else  if(data.key==-9)
+            {
+                Program.robot.keyPress(KeyEvent.VK_PAGE_DOWN);
+                Program.robot.keyRelease(KeyEvent.VK_PAGE_DOWN);
+            }
+            else  if(data.key==-10)
+            {
+                Program.robot.keyPress(KeyEvent.VK_UP);
+                Program.robot.keyRelease(KeyEvent.VK_UP);
+            }
+            else  if(data.key==-11)
+            {
+                Program.robot.keyPress(KeyEvent.VK_LEFT);
+                Program.robot.keyRelease(KeyEvent.VK_LEFT);
+            }
+            else  if(data.key==-12)
+            {
+                Program.robot.keyPress(KeyEvent.VK_DOWN);
+                Program.robot.keyRelease(KeyEvent.VK_DOWN);
+            }
+            else  if(data.key==-13)
+            {
+                Program.robot.keyPress(KeyEvent.VK_RIGHT);
+                Program.robot.keyRelease(KeyEvent.VK_RIGHT);
+            }
             else  if(data.key==8)
             {
                 Program.robot.keyPress(KeyEvent.VK_BACK_SPACE);
                 Program.robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-
             }
             else  if(data.key==10)
             {
                 Program.robot.keyPress(KeyEvent.VK_ENTER);
                 Program.robot.keyRelease(KeyEvent.VK_ENTER);
+
+            }
+            else  if(data.key==27)
+            {
+                Program.robot.keyPress(KeyEvent.VK_ESCAPE);
+                Program.robot.keyRelease(KeyEvent.VK_ESCAPE);
 
             }
             else

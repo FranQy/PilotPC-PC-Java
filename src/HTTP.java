@@ -224,7 +224,10 @@ public class HTTP {
                         "#klawiatura button{border:none;width:10%;height:25%;}" +
                         "#klawiatura button.nor{background:red;}" +
                         "#klawiatura button.gr{background:green;width:15%;}" +
+                        "#klawiatura button.shift1{background:#1a1;}" +
+                        "#klawiatura button.shift2{background:#2c2;}" +
                         "#klawiatura button.spacja{background:orange;width:55%}" +
+                        "#klawiaturaCyfry, #klawiaturaSpecjalne{display:none;}" +
 
                         "</style>"
                         + "<script>/*<![CDATA[*/\n"
@@ -354,6 +357,8 @@ public class HTTP {
                         + "return false;};\n" +
                         "var klawiatura=new Object();" +
                         "klawiatura.i=0;" +
+                        "klawiatura.shiftTeraz=false;" +
+                        "klawiatura.shift=0;" +
                         "klawiatura.t=function()\n" +
                         "{"
                         + "var txt=document.getElementsByTagName('textarea')[0];" +
@@ -367,8 +372,15 @@ public class HTTP {
                         +"klawiatura.timer=setInterval(klawiatura.t,10);\n" +
                         "klawiatura.char=function(key){" +
                         "" +
-                        "var data=new TCP_Data();data.key = key.charCodeAt(0);\n"
-                        + "data.type=TCP_Data.typ.KEYBOARD;send(data);\n"+
+                        "var data=new TCP_Data();" +
+                        "if(klawiatura.shiftTeraz||klawiatura.shift!=0)" +
+                        "data.key = key.charCodeAt(0)-32;\n" +
+                        "else "+
+                        "data.key = key.charCodeAt(0);\n" +
+                        "if(klawiatura.shift!=2)" +
+                        "klawiatura.shift=0;" +
+                        "document.getElementsByClassName('shift')[0].className='gr shift shift'+klawiatura.shift;" +
+                        "data.type=TCP_Data.typ.KEYBOARD;send(data);\n"+
                         "};\n"  +
                         "klawiatura.num=function(key){" +
                         "" +
@@ -593,7 +605,7 @@ public class HTTP {
                         + "</div>"
                         +
                         "<div class=\"karta\" id=\"klawiatura\">" +
-                        "<DIV>" +
+                        "<div id=\"klawiaturaLitery\"><DIV>" +
                         "<button onclick=\"klawiatura.char('q')\" class=\"nor\">Q</button>" +
                         "<button onclick=\"klawiatura.char('w')\" class=\"nor\">W</button>" +
                         "<button onclick=\"klawiatura.char('e')\" class=\"nor\">E</button>" +
@@ -615,7 +627,7 @@ public class HTTP {
                         "<button onclick=\"klawiatura.char('k')\" class=\"nor\">K</button>" +
                         "<button onclick=\"klawiatura.char('l')\" class=\"nor\">L</button>" +
                         "</DIV><DIV>" +
-                        "<button onclick=\"\" class=\"gr\">Shift</button>" +
+                        "<button onmousedown=\"klawiatura.shiftTeraz=true;if(klawiatura.shift==0)klawiatura.shift=1; else if(klawiatura.shift==1)klawiatura.shift=2; else klawiatura.shift=0; this.className='gr shift shift'+klawiatura.shift;\" onmouseup=\"klawiatura.shiftTeraz=false;\" class=\"gr shift shift0\">Shift</button>" +
                         "<button onclick=\"klawiatura.char('z')\" class=\"nor\">Z</button>" +
                         "<button onclick=\"klawiatura.char('x')\" class=\"nor\">X</button>" +
                         "<button onclick=\"klawiatura.char('c')\" class=\"nor\">C</button>" +
@@ -623,10 +635,77 @@ public class HTTP {
                         "<button onclick=\"klawiatura.char('b')\" class=\"nor\">B</button>" +
                         "<button onclick=\"klawiatura.char('n')\" class=\"nor\">N</button>" +
                         "<button onclick=\"klawiatura.char('m')\" class=\"nor\">M</button>" +
-                        "<button onclick=\"klawiatura.num(8)\" class=\"gr\">Usuń</button>" +
+                        "<button onclick=\"klawiatura.num(8)\" class=\"gr\">Usuń</button>"+
+                        "</div></div>" +
+                        "<div id=\"klawiaturaCyfry\"><DIV>" +
+                        "<button onclick=\"klawiatura.char('1')\" class=\"nor\">1</button>" +
+                        "<button onclick=\"klawiatura.char('2')\" class=\"nor\">2</button>" +
+                        "<button onclick=\"klawiatura.char('3')\" class=\"nor\">3</button>" +
+                        "<button onclick=\"klawiatura.char('4')\" class=\"nor\">4</button>" +
+                        "<button onclick=\"klawiatura.char('5')\" class=\"nor\">5</button>" +
+                        "<button onclick=\"klawiatura.char('6')\" class=\"nor\">6</button>" +
+                        "<button onclick=\"klawiatura.char('7')\" class=\"nor\">7</button>" +
+                        "<button onclick=\"klawiatura.char('8')\" class=\"nor\">8</button>" +
+                        "<button onclick=\"klawiatura.char('9')\" class=\"nor\">9</button>" +
+                        "<button onclick=\"klawiatura.char('0')\" class=\"nor\">0</button>" +
                         "</DIV><DIV>" +
-                        "<button onclick=\"\" class=\"gr\">123</button>" +
-                        "<button onclick=\"\" class=\"gr\">Specjalne</button>" +
+                        "<button onclick=\"klawiatura.char('!')\" class=\"nor\">!</button>" +
+                        "<button onclick=\"klawiatura.char('@')\" class=\"nor\">@</button>" +
+                        "<button onclick=\"klawiatura.char('#')\" class=\"nor\">#</button>" +
+                        "<button onclick=\"klawiatura.char('$')\" class=\"nor\">$</button>" +
+                        "<button onclick=\"klawiatura.char('%')\" class=\"nor\">%</button>" +
+                        "<button onclick=\"klawiatura.char('^')\" class=\"nor\">^</button>" +
+                        "<button onclick=\"klawiatura.char('&')\" class=\"nor\">&</button>" +
+                        "<button onclick=\"klawiatura.char('*')\" class=\"nor\">*</button>" +
+                        "<button onclick=\"klawiatura.char('=')\" class=\"nor\">=</button>" +
+                        "</DIV><DIV>" +
+                        "<button onclick=\"klawiatura.char('{')\" class=\"nor\">{</button>" +
+                        "<button onclick=\"klawiatura.char('[')\" class=\"nor\">[</button>" +
+                        "<button onclick=\"klawiatura.char('(')\" class=\"nor\">(</button>" +
+                        "<button onclick=\"klawiatura.char(')')\" class=\"nor\">)</button>" +
+                        "<button onclick=\"klawiatura.char(']')\" class=\"nor\">]</button>" +
+                        "<button onclick=\"klawiatura.char('}')\" class=\"nor\">}</button>" +
+                        "<button onclick=\"klawiatura.char('-')\" class=\"nor\">-</button>" +
+                        "<button onclick=\"klawiatura.char('+')\" class=\"nor\">+</button>" +
+                        "<button onclick=\"klawiatura.num(8)\" class=\"gr\">Usuń</button>" +
+                        "</DIV></DIV>" +
+                        "<div id=\"klawiaturaSpecjalne\"><DIV>" +
+                        "<button onclick=\"klawiatura.num(-1)\" class=\"nor\">Prt Sc</button>" +
+                        "<button onclick=\"klawiatura.num(-2)\" class=\"nor\">Scr LK</button>" +
+                        "<button onclick=\"klawiatura.num(-3)\" class=\"nor\">Pause</button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "</DIV><DIV>" +
+                        "<button onclick=\"klawiatura.num(-4)\" class=\"nor\">Ins</button>" +
+                        "<button onclick=\"klawiatura.num(-5)\" class=\"nor\">Home</button>" +
+                        "<button onclick=\"klawiatura.num(-6)\" class=\"nor\">PgUP</button>" +
+                        "<button onclick=\"klawiatura.num(-14)\" class=\"nor\">Win</button>" +
+                        "<button onclick=\"klawiatura.num(-10)\" class=\"nor\">↑</button>" +
+                        "<button onclick=\"klawiatura.num(-15)\" class=\"nor\">Menu</button>" +
+                        "<button onclick=\"klawiatura.num(27)\" class=\"nor\">Esc</button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "</DIV><DIV>" +
+                        "<button onclick=\"klawiatura.num(-7)\" class=\"nor\">Del</button>" +
+                        "<button onclick=\"klawiatura.num(-8)\" class=\"nor\">End</button>" +
+                        "<button onclick=\"klawiatura.num(-9)\" class=\"nor\">PgDn</button>" +
+                        "<button onclick=\"klawiatura.num(-11)\" class=\"nor\">←</button>" +
+                        "<button onclick=\"klawiatura.num(-12)\" class=\"nor\">↓</button>" +
+                        "<button onclick=\"klawiatura.num(-13)\" class=\"nor\">→</button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "</DIV></div><DIV>" +
+                        "<button id=\"klLit\" onclick=\"document.getElementById('klLit').style.display='none';document.getElementById('klCyfry').style.display='inline';document.getElementById('klSpec').style.display='inline';document.getElementById('klawiaturaLitery').style.display='block';document.getElementById('klawiaturaCyfry').style.display='none';document.getElementById('klawiaturaSpecjalne').style.display='none';\" class=\"gr\" style=\"display:none\">ABC</button>" +
+                        "<button id=\"klCyfry\" onclick=\"document.getElementById('klLit').style.display='inline';document.getElementById('klCyfry').style.display='none';document.getElementById('klSpec').style.display='inline';document.getElementById('klawiaturaLitery').style.display='none';document.getElementById('klawiaturaCyfry').style.display='block';document.getElementById('klawiaturaSpecjalne').style.display='none';\" class=\"gr\">123</button>" +
+                        "<button id=\"klSpec\" onclick=\"document.getElementById('klLit').style.display='inline';document.getElementById('klCyfry').style.display='inline';document.getElementById('klSpec').style.display='none';document.getElementById('klawiaturaLitery').style.display='none';document.getElementById('klawiaturaCyfry').style.display='none';document.getElementById('klawiaturaSpecjalne').style.display='block';\" class=\"gr\">Spec</button>" +
                         "<button onclick=\"klawiatura.char(' ')\" class=\"spacja\">Spacja</button>" +
                         "<button onclick=\"klawiatura.num(10)\" class=\"gr\">Enter</button>" +
                         "</DIV>" +
