@@ -221,7 +221,8 @@ public class HTTP {
                         "#zoom{position:absolute;bottom:12%;right:2%;width:20% !important;height:10% !important;min-width:1.6cm;min-height:0.8cm;z-index:5;}" +
                         "#powieksz, #pomniejsz{width:50% !important;height:100% !important;position:static !important;}" +
                         "#klawiatura div{text-align:center;}" +
-                        "#klawiatura button{border:none;width:10%;height:25%;}" +
+                        "#klawiatura button{border:none;width:10%;height:25%;\n" +
+                        "vertical-align: bottom;}" +
                         "#klawiatura button.nor{background:red;}" +
                         "#klawiatura button.gr{background:green;width:15%;}" +
                         "#klawiatura button.shift1{background:#1a1;}" +
@@ -673,13 +674,13 @@ public class HTTP {
                         "<button onclick=\"klawiatura.num(-1)\" class=\"nor\">Prt Sc</button>" +
                         "<button onclick=\"klawiatura.num(-2)\" class=\"nor\">Scr LK</button>" +
                         "<button onclick=\"klawiatura.num(-3)\" class=\"nor\">Pause</button>" +
-                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
-                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
-                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
-                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
-                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
-                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
-                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
                         "</DIV><DIV>" +
                         "<button onclick=\"klawiatura.num(-4)\" class=\"nor\">Ins</button>" +
                         "<button onclick=\"klawiatura.num(-5)\" class=\"nor\">Home</button>" +
@@ -688,9 +689,9 @@ public class HTTP {
                         "<button onclick=\"klawiatura.num(-10)\" class=\"nor\">↑</button>" +
                         "<button onclick=\"klawiatura.num(-15)\" class=\"nor\">Menu</button>" +
                         "<button onclick=\"klawiatura.num(27)\" class=\"nor\">Esc</button>" +
-                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
-                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
-                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
                         "</DIV><DIV>" +
                         "<button onclick=\"klawiatura.num(-7)\" class=\"nor\">Del</button>" +
                         "<button onclick=\"klawiatura.num(-8)\" class=\"nor\">End</button>" +
@@ -698,10 +699,10 @@ public class HTTP {
                         "<button onclick=\"klawiatura.num(-11)\" class=\"nor\">←</button>" +
                         "<button onclick=\"klawiatura.num(-12)\" class=\"nor\">↓</button>" +
                         "<button onclick=\"klawiatura.num(-13)\" class=\"nor\">→</button>" +
-                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
-                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
-                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
-                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
                         "</DIV></div><DIV>" +
                         "<button id=\"klLit\" onclick=\"document.getElementById('klLit').style.display='none';document.getElementById('klCyfry').style.display='inline';document.getElementById('klSpec').style.display='inline';document.getElementById('klawiaturaLitery').style.display='block';document.getElementById('klawiaturaCyfry').style.display='none';document.getElementById('klawiaturaSpecjalne').style.display='none';\" class=\"gr\" style=\"display:none\">ABC</button>" +
                         "<button id=\"klCyfry\" onclick=\"document.getElementById('klLit').style.display='inline';document.getElementById('klCyfry').style.display='none';document.getElementById('klSpec').style.display='inline';document.getElementById('klawiaturaLitery').style.display='none';document.getElementById('klawiaturaCyfry').style.display='block';document.getElementById('klawiaturaSpecjalne').style.display='none';\" class=\"gr\">123</button>" +
