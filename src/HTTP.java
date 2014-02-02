@@ -261,9 +261,15 @@ public class HTTP {
                         "if(pilot.trzymajLicz++>0&&pilot.trzymaj!=null)" +
                         "pilot.click(pilot.trzymaj);" +
                         "},50);\n"
-                        + " var touchpad=new Object();touchpad.czas=new Date(0);touchpad.wcisniete=false;touchpad.mPreviousX=0; touchpad.mPreviousY=0;touchpad.oldX =0;touchpad.oldY=0;touchpad.longClicked = false;touchpad.returnState = true;"
+                        + " var touchpad=new Object();touchpad.czas=new Date(0);touchpad.wcisniete=false;touchpad.mPreviousX=0; touchpad.mPreviousY=0;touchpad.oldX =0;touchpad.oldY=0;touchpad.returnState = true;"
                         + "touchpad.onTouchDown=function(event){" +
-                        "touchpad.longClicked=false;touchpad.czas=new Date(0);"
+                        "setInterval(function(){if((new Date())-touchpad.czas>450){" +
+
+                         "var data=new TCP_Data();" +
+                        "data.mouse = TCP_Data.touchedTYPE.LONG;" +
+                        "data.touchpadX = 0;data.touchpadY =0;"
+                        + "data.type=TCP_Data.typ.TOUCHPAD;send(data);" +
+                        "}},500);"
                         + "touchpad.czas=new Date();" +
                         "touchpad.mPreviousX=touchpad.oldX=event.touches[0].screenX;"
                         + "touchpad.mPreviousY=touchpad.oldY=event.touches[0].screenY;"
@@ -276,7 +282,6 @@ public class HTTP {
                         + "};"
                         + "touchpad.onMouseDown=function(event){" +
 
-                        "touchpad.longClicked=false;touchpad.czas=new Date(0);" +
                         "touchpad.czas=new Date();"
                         + "touchpad.mPreviousX=touchpad.oldX=event.screenX;"
                         + "touchpad.mPreviousY=touchpad.oldY=event.screenY;"
@@ -290,12 +295,8 @@ public class HTTP {
                         + "touchpad.onTouchUp=function(event){"
 
                         + "touchpad.wcisniete=false;"
-                        +
-                        "if(touchpad.longClicked)" +
-                        "{" +
-                        "data.mouse = TCP_Data.touchedTYPE.UP;" +
-                        "touchpad.longClicked=false;" +
-                        "}\n" + "if(event.changedTouches[0].screenX>touchpad.oldX-2&&event.changedTouches[0].screenX<touchpad.oldX+2&&event.changedTouches[0].screenY>touchpad.oldY-2&&event.changedTouches[0].screenY<touchpad.oldY+2)"
+
+                         + "if(event.changedTouches[0].screenX>touchpad.oldX-2&&event.changedTouches[0].screenX<touchpad.oldX+2&&event.changedTouches[0].screenY>touchpad.oldY-2&&event.changedTouches[0].screenY<touchpad.oldY+2)"
 
                         //+ "if(event.screenX>touchpad.oldX-10)"
                         + "{"
@@ -304,19 +305,13 @@ public class HTTP {
                         "data.touchpadX = 0;data.touchpadY =0;"
                         + "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
                         + "}" +
-                        "touchpad.longClicked=false;touchpad.czas=new Date(0);" +
                         "return false;"
                         + "};"
                         + "touchpad.onMouseUp=function(event){\n" +
-                        "touchpad.czas=new Date(0);"
+                        "touchpad.czas=new Date();"
 
                         + "touchpad.wcisniete=false;\n"
                         +
-                        "if(touchpad.longClicked)" +
-                        "{" +
-                        "data.mouse = TCP_Data.touchedTYPE.UP;" +
-                        "" +
-                        "}" +
                         " if(event.screenX>touchpad.oldX-2&&event.screenX<touchpad.oldX+2&&event.screenY>touchpad.oldY-2&&event.screenY<touchpad.oldY+2)"
 
                         //+ "if(event.screenX>touchpad.oldX-10)"
@@ -325,11 +320,17 @@ public class HTTP {
                         "data.mouse = TCP_Data.touchedTYPE.LPM;" +
                         "data.touchpadX = 0;data.touchpadY =0;"
                         + "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
-                        + "}" +
-                        "touchpad.longClicked=false;touchpad.czas=new Date(0);"
+                        + "}\n" +
+                        "else " +
+                        "{" +
+                        "var data=new TCP_Data();" +
+                        "data.mouse = TCP_Data.touchedTYPE.UP;" +
+                        "data.touchpadX = 0;data.touchpadY =0;"
+                        + "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
+                        +"}"
                         + "};"
                         + "touchpad.onMouseMove=function(event){" +
-                        "touchpad.czas=new Date(0);"
+                        "touchpad.czas=new Date();"
                         + "if(touchpad.wcisniete){"
                         + "var dx = event.screenX - this.mPreviousX;var dy = event.screenY - this.mPreviousY;"
                         + "this.mPreviousX=event.screenX;"
@@ -337,8 +338,6 @@ public class HTTP {
                         "if((new Date())-touchpad.czas>500&&touchpad.czas!=0)" +
                         "{" +
                         //"touchpad.typ=TCP_Data.touchedTYPE.LONG;" +
-                        "touchpad.longClicked=true;" +
-                        "touchpad.typ=TCP_Data.touchedTYPE.LONG;" +
                         "}"
                         + "var data=new TCP_Data();data.mouse = touchpad.typ;data.touchpadX = dx;data.touchpadY =dy;"
                         + "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
@@ -346,15 +345,8 @@ public class HTTP {
                         + "touchpad.onTouchMove=function(event){"
                         + "var dx = event.touches[0].screenX - this.mPreviousX;var dy = event.touches[0].screenY - this.mPreviousY;"
                         + "this.mPreviousX=event.touches[0].screenX;"
-                        + "this.mPreviousY=event.touches[0].screenY;" +
-                        "if((new Date())-touchpad.czas>500&&touchpad.czas!=0)" +
-                        "{" +
-                        "touchpad.longClicked=true;" +
-                        // "touchpad.typ=TCP_Data.touchedTYPE.LONG;" +
-                        "touchpad.czas=new Date(0);" +
-                        "touchpad.typ=TCP_Data.touchedTYPE.LONG;" +
-                        "}"
-                        + "var data=new TCP_Data();data.mouse = touchpad.typ;data.touchpadX = dx;data.touchpadY =dy;"
+                        + "this.mPreviousY=event.touches[0].screenY;"
+                        + "var data=new TCP_Data();data.mouse = TCP_Data.touchedTYPE.NORMAL;data.touchpadX = dx;data.touchpadY =dy;"
                         + "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
                         + "return false;};\n" +
                         "var klawiatura=new Object();" +
@@ -603,7 +595,7 @@ public class HTTP {
                         "data.key = event.charCode;\n" +
                         "data.type=TCP_Data.typ.KEYBOARD;send(data);\n"+"return false;\">"
                         //+ "<div class=\"karta\" id=\"gamepad\">Gamepad wkrodce</div>"
-                        + "<div class=\"karta\" style=\\\"display:block\\\" id=\"pilot\">"
+                        + "<div class=\"karta\" style=\"display:block\" id=\"pilot\">"
                         + "<img id=\"przyciski\" src=\"" + przyciskiBase64 + "\" usemap=\"#przycMapa\" />" +
                         "<map id=\"przycMapa\" name=\"przycMapa\">" +
                         "</map>"
