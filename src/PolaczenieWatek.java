@@ -27,17 +27,16 @@ public class PolaczenieWatek
         try {
             soc.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
     public void run() {  //klasa do sterowania myszka
         while(true){
-            boolean nowe=true;
+            //boolean nowe=true;
 
             is=null;
             try {
-                if(nowe)
+                //if(nowe)
                 {
                     gotowe=true;
                     soc=socServ.accept();
@@ -59,7 +58,7 @@ public class PolaczenieWatek
                                 break;
                             }
                         }       }
-                nowe=true;
+                //nowe=true;
                 is = soc.getInputStream();
 
                 try{
@@ -145,10 +144,9 @@ public class PolaczenieWatek
                             OutputStream os =soc.getOutputStream();
                             os.write(wyj.getBytes());
                             os.close();
-                            nowe=false;
+                            //nowe=false;
                         }
                     } catch (IOException e1) {
-                        // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
                 }
@@ -403,7 +401,7 @@ public class PolaczenieWatek
     {
         if(is!=null)
             return true;
-        else
+
             return false;
     }
     @Override

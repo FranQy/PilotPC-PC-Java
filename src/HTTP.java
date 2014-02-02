@@ -812,6 +812,7 @@ public class HTTP {
                         + "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\"><label>wpisz kod<input type=\"" + typ + "\"/></label><input type=\"submit\" value=\"ok\"/></form>"
                         + "</body></html>";
             }
+
             os.write(wysylanie.getBytes());
             os.close();
             is.close();
