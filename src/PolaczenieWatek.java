@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.StreamCorruptedException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 import com.example.socketclient.Connect;
 import com.example.socketclient.TCP_Data;
@@ -60,44 +61,45 @@ public class PolaczenieWatek
                         }       }
                 //nowe=true;
                 is = soc.getInputStream();
+                if(getInt(is)==4){//sprawdza czy jest to pilot czy coś innego np. http
 
-                try{
-                    ObjectInputStream in = new ObjectInputStream(soc.getInputStream());
-                    while(true)
+                    TCP_Data data=new TCP_Data();
+                    switch(getInt(is))
                     {
-
-                        Object dataObject =  in.readObject();
-                        if(dataObject.getClass()==Connect.class)
-                        {
-                            infoPrzyPolaczeniu=(Connect)dataObject;
-                            Connect odpowiedz=new Connect();
-                            if(infoPrzyPolaczeniu.haslo.length()==0)
-                                odpowiedz.status=Connect.Status.ok;
-                            else if(infoPrzyPolaczeniu.haslo.compareTo(Program.ustawienia.haslo)==0)
-                                odpowiedz.status=Connect.Status.ok;
-                            else
+                        case 2:
+                            data.type= TCP_Data.typ.PILOT;
+                            break;
+                        case 3:
+                            data.type= TCP_Data.typ.KEYBOARD;
+                            break;
+                        case 4:
+                            data.type= TCP_Data.typ.TOUCHPAD;
+                            data.touchpadX=getInt(is);
+                            data.touchpadY=getInt(is);
+                            switch (getInt(is))
                             {
-                                odpowiedz.status=Connect.Status.zlyKod;
-                                is.close();
-                                break;
+                                case 0:
+                                    data.mouse= TCP_Data.touchedTYPE.NORMAL;
+                                case 1:
+                                    data.mouse= TCP_Data.touchedTYPE.LONG;
+                                case 2:
+                                    data.mouse= TCP_Data.touchedTYPE.UP;
+                                case 3:
+                                    data.mouse= TCP_Data.touchedTYPE.SCROLL;
+                                case 4:
+                                    data.mouse= TCP_Data.touchedTYPE.LPM;
+                                case 5:
+                                    data.mouse= TCP_Data.touchedTYPE.PPM;
                             }
-                            odpowiedz.nazwa=java.net.InetAddress.getLocalHost().getHostName();
-                            ObjectOutputStream oos= new ObjectOutputStream(soc.getOutputStream());
-                            oos.writeObject(odpowiedz);
-                            oos.flush();
-                            // dataObject =  in.readObject();
-                            System.out.println(Jezyk.napisy[Jezyk.n.Polaczono.ordinal()]+" "+toString());
-                        }
-                        else
-                        {
-                            TCP_Data data=(TCP_Data) dataObject;
+                            break;
 
-                            //TCP_Data data = (TCP_Data) in.readObject();
-                            wykonuj(data);
-                        }
                     }
+
+                    wykonuj(data);
+
+
                 }
-                catch(StreamCorruptedException e)
+                else
                 {
 
                                         /*if(UI!=null)
@@ -420,5 +422,30 @@ public class PolaczenieWatek
             ret+="<br/>"+Jezyk.napisy[Jezyk.n.Nazwa.ordinal()]+":"+infoPrzyPolaczeniu.nazwa;
         return ret+"</html>";
 
+    }
+    static int getInt(InputStream is) throws IOException {
+        int a= is.read();
+        if(a<128)
+        return a*16777216+is.read()*65536+is.read()*256+is.read();
+        else
+
+            return -((a-128)*16777216+is.read()*65536+is.read()*256+is.read());
+    }
+    static void setInt(OutputStream os, int l) throws IOException {
+        if(l>0)
+        {
+            os.write((l/16777216)%128);
+            os.write((l/65536)%256);
+            os.write((l/256)%256);
+            os.write(l%256);
+        }
+        else
+        {
+            l=-l;
+            os.write((l/16777216)%128+128);
+            os.write((l/65536)%256);
+            os.write((l/256)%256);
+            os.write(l%256);
+        }
     }
 }
