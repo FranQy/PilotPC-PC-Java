@@ -227,8 +227,9 @@ public class HTTP {
                         "#klawiatura button.gr{background:green;width:15%;}" +
                         "#klawiatura button.shift1{background:#1a1;}" +
                         "#klawiatura button.shift2{background:#2c2;}" +
-                        "#klawiatura button.spacja{background:orange;width:55%}" +
-                        "#klawiaturaCyfry, #klawiaturaSpecjalne{display:none;}" +
+                        "#klawiatura button.spacja{background:orange;width:40%}" +
+                        "#klawiatura button.spacjaGrube{width:55%}" +
+                        "#klawiaturaCyfry,#klawiaturaLiteryAlt, #klawiaturaSpecjalne{display:none;}" +
 
                         "</style>"
                         + "<script>/*<![CDATA[*/\n"
@@ -597,7 +598,10 @@ public class HTTP {
                         "        pulpit.zoom=pulpit.zoom*e.scale;"+
                         "      }\n"
                         + "/*]]>*/</script>"
-                        + "</head><body onload=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onresize=\"mapa(document.getElementById('przyciski').clientHeight/1280)\">"
+                        + "</head><body onload=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onresize=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onkeypress=\"console.log(event);" +
+                        "var data=new TCP_Data();" +
+                        "data.key = event.charCode;\n" +
+                        "data.type=TCP_Data.typ.KEYBOARD;send(data);\n"+"return false;\">"
                         //+ "<div class=\"karta\" id=\"gamepad\">Gamepad wkrodce</div>"
                         + "<div class=\"karta\" style=\\\"display:block\\\" id=\"pilot\">"
                         + "<img id=\"przyciski\" src=\"" + przyciskiBase64 + "\" usemap=\"#przycMapa\" />" +
@@ -636,6 +640,37 @@ public class HTTP {
                         "<button onclick=\"klawiatura.char('b')\" class=\"nor\">B</button>" +
                         "<button onclick=\"klawiatura.char('n')\" class=\"nor\">N</button>" +
                         "<button onclick=\"klawiatura.char('m')\" class=\"nor\">M</button>" +
+                        "<button onclick=\"klawiatura.num(8)\" class=\"gr\">Usuń</button>"+
+                        "</div></div>" +"<div id=\"klawiaturaLiteryAlt\"><DIV>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('ę')\" class=\"nor\">Ę</button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('ó')\" class=\"nor\">Ó</button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "</DIV><DIV>" +
+                        "<button onclick=\"klawiatura.char('ą')\" class=\"nor\">Ą</button>" +
+                        "<button onclick=\"klawiatura.char('ś')\" class=\"nor\">Ś</button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('ł')\" class=\"nor\">Ł</button>" +
+                        "</DIV><DIV>" +
+                        "<button onmousedown=\"klawiatura.shiftTeraz=true;if(klawiatura.shift==0)klawiatura.shift=1; else if(klawiatura.shift==1)klawiatura.shift=2; else klawiatura.shift=0; this.className='gr shift shift'+klawiatura.shift;\" onmouseup=\"klawiatura.shiftTeraz=false;\" class=\"gr shift shift0\">Shift</button>" +
+                        "<button onclick=\"klawiatura.char('ż')\" class=\"nor\">Ż</button>" +
+                        "<button onclick=\"klawiatura.char('ź')\" class=\"nor\">Ź</button>" +
+                        "<button onclick=\"klawiatura.char('ć')\" class=\"nor\">Ć</button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
+                        "<button onclick=\"klawiatura.char('ń')\" class=\"nor\">Ń</button>" +
+                        "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
                         "<button onclick=\"klawiatura.num(8)\" class=\"gr\">Usuń</button>"+
                         "</div></div>" +
                         "<div id=\"klawiaturaCyfry\"><DIV>" +
@@ -704,10 +739,11 @@ public class HTTP {
                         "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
                         "<button onclick=\"klawiatura.char('')\" class=\"nor\"> </button>" +
                         "</DIV></div><DIV>" +
-                        "<button id=\"klLit\" onclick=\"document.getElementById('klLit').style.display='none';document.getElementById('klCyfry').style.display='inline';document.getElementById('klSpec').style.display='inline';document.getElementById('klawiaturaLitery').style.display='block';document.getElementById('klawiaturaCyfry').style.display='none';document.getElementById('klawiaturaSpecjalne').style.display='none';\" class=\"gr\" style=\"display:none\">ABC</button>" +
-                        "<button id=\"klCyfry\" onclick=\"document.getElementById('klLit').style.display='inline';document.getElementById('klCyfry').style.display='none';document.getElementById('klSpec').style.display='inline';document.getElementById('klawiaturaLitery').style.display='none';document.getElementById('klawiaturaCyfry').style.display='block';document.getElementById('klawiaturaSpecjalne').style.display='none';\" class=\"gr\">123</button>" +
-                        "<button id=\"klSpec\" onclick=\"document.getElementById('klLit').style.display='inline';document.getElementById('klCyfry').style.display='inline';document.getElementById('klSpec').style.display='none';document.getElementById('klawiaturaLitery').style.display='none';document.getElementById('klawiaturaCyfry').style.display='none';document.getElementById('klawiaturaSpecjalne').style.display='block';\" class=\"gr\">Spec</button>" +
+                        "<button id=\"klLit\" onclick=\"document.getElementById('klLit').style.display='none';document.getElementById('klCyfry').style.display='inline';document.getElementById('klSpec').style.display='inline';document.getElementById('klAlt').style.display='inline';document.getElementById('klawiaturaLitery').style.display='block';document.getElementById('klawiaturaLiteryAlt').style.display='none';document.getElementById('klawiaturaCyfry').style.display='none';document.getElementById('klawiaturaSpecjalne').style.display='none';document.getElementsByClassName('spacja')[0].className='spacja';\" class=\"gr\" style=\"display:none\">ABC</button>" +
+                        "<button id=\"klCyfry\" onclick=\"document.getElementById('klLit').style.display='inline';document.getElementById('klCyfry').style.display='none';document.getElementById('klSpec').style.display='inline';document.getElementById('klAlt').style.display='none';document.getElementById('klawiaturaLitery').style.display='none';document.getElementById('klawiaturaLiteryAlt').style.display='none';document.getElementById('klawiaturaCyfry').style.display='block';document.getElementById('klawiaturaSpecjalne').style.display='none';document.getElementsByClassName('spacja')[0].className='spacja spacjaGrube';\" class=\"gr\">123</button>" +
+                        "<button id=\"klSpec\" onclick=\"document.getElementById('klLit').style.display='inline';document.getElementById('klCyfry').style.display='inline';document.getElementById('klSpec').style.display='none';document.getElementById('klAlt').style.display='none';document.getElementById('klawiaturaLitery').style.display='none';document.getElementById('klawiaturaLiteryAlt').style.display='none';document.getElementById('klawiaturaCyfry').style.display='none';document.getElementById('klawiaturaSpecjalne').style.display='block';document.getElementsByClassName('spacja')[0].className='spacja spacjaGrube';\" class=\"gr\">Spec</button>" +
                         "<button onclick=\"klawiatura.char(' ')\" class=\"spacja\">Spacja</button>" +
+                        "<button id=\"klAlt\" onclick=\"if(document.getElementById('klawiaturaLitery').style.display=='none'){document.getElementById('klawiaturaLitery').style.display='block';document.getElementById('klawiaturaLiteryAlt').style.display='none';} else {document.getElementById('klawiaturaLitery').style.display='none';document.getElementById('klawiaturaLiteryAlt').style.display='block';}document.getElementById('klawiaturaCyfry').style.display='none';document.getElementById('klawiaturaSpecjalne').style.display='none';\" class=\"gr\">Alt</button>" +
                         "<button onclick=\"klawiatura.num(10)\" class=\"gr\">Enter</button>" +
                         "</DIV>" +
                         "<textarea style=\"width:1px;height:1px;opacity:0;\"></textarea></div>"
