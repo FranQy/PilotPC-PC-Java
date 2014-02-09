@@ -62,7 +62,7 @@ public class PolaczenieWatek
                 //nowe=true;
                 is = soc.getInputStream();
                 if(getInt(is)==4){//sprawdza czy jest to pilot czy coś innego np. http
-
+                    do{
                     TCP_Data data=new TCP_Data();
                     switch(getInt(is))
                     {
@@ -80,16 +80,22 @@ public class PolaczenieWatek
                             {
                                 case 0:
                                     data.mouse= TCP_Data.touchedTYPE.NORMAL;
+                                    break;
                                 case 1:
                                     data.mouse= TCP_Data.touchedTYPE.LONG;
+                                    break;
                                 case 2:
                                     data.mouse= TCP_Data.touchedTYPE.UP;
+                                    break;
                                 case 3:
                                     data.mouse= TCP_Data.touchedTYPE.SCROLL;
+                                    break;
                                 case 4:
                                     data.mouse= TCP_Data.touchedTYPE.LPM;
+                                    break;
                                 case 5:
                                     data.mouse= TCP_Data.touchedTYPE.PPM;
+                                    break;
                             }
                             break;
 
@@ -97,7 +103,7 @@ public class PolaczenieWatek
 
                     wykonuj(data);
 
-
+                    }while(getInt(is)==4)  ;
                 }
                 else
                 {
@@ -423,6 +429,7 @@ public class PolaczenieWatek
         return ret+"</html>";
 
     }
+
     static int getInt(InputStream is) throws IOException {
         int a= is.read();
         if(a<128)
