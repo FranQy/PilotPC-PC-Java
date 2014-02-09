@@ -17,6 +17,13 @@ Program.tray(false);
         SerwerZostalUruchomiony, OProgramiePilotPc,Programisci,Nieznane,Wersja,
         Rozlaczono, Polaczono,Nazwa,BladZPolaczeniem,KodDoPolaczenia,Rozlacz,TwojeIPTo,
     ZmienKod,Infromacje,StartZSystemem,PodlaczoneUrzadzenia};
+
+    public enum nHTTP{ZostalesRozlaczony,KodBledny,Usun,Informacje,Polaczenie,Stan,Jakosc,Host,Coder,Designers, JakoscObrazu, Niska,Srednia,Wysoka,Ultra, Spacja, Polaczono, BrakDanych, Rozlaczono};
+    public static String[][] nhttp={
+            {"Zostałeś Rozłączony", "Kod błędny", "Usuń", "Informacje", "POŁĄCZENIE", "Stan","Jakość","Host", "CODER", "DESIGNERS","Jakość obrazu","Niska","Średnia","Wysoka","Ultra","Spacja","Połączono", "Brak danych", "Rozłączono"} ,
+            {"You have been disconected", "Invalid code", "Backspace", "Information", "Connection", "Condition","Quality","Host", "CODERS", "DESIGNERS","Image quality","Low","Medium","High","Ultra","Space","Connected", "No data", "Disconected"} ,
+            {"Вы отсоединили", "Неверный код", "бекспейс", "информации", "ПОДКЛЮЧЕНИЕ", "состояние","Качество","Хост", "ПРОГРАММИСТУ", "ДИЗАЙНЕРЫ","Качество изображения","низкой","среднее","высокое","ультра","Пробел","комбинированный ","нет данных","отключен" }
+    };
     public static void laduj(jezyki a)
     {
         switch (a)

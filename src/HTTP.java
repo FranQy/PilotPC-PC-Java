@@ -18,6 +18,12 @@ public class HTTP {
     public static TCP_Data polaczenie(InputStream is, Socket soc, String wyj) throws IOException {
 
         //System.out.print(wyj);
+        Jezyk.jezyki lang= Program.ustawienia.jezyk;
+        int AcceptLanguage =wyj.indexOf("Accept-Language") ;
+        int[] jezykiHttp={wyj.indexOf("pl", AcceptLanguage),wyj.indexOf("en",AcceptLanguage),wyj.indexOf("ru",AcceptLanguage)};
+        int jezykHttp=max(jezykiHttp);
+        if(jezykHttp!=-1)
+            lang=Jezyk.jezyki.values()[jezykHttp];
         if (wyj.indexOf("/") == 0 && wyj.indexOf("?") > 0) {
 
             OutputStream os = soc.getOutputStream();
@@ -26,7 +32,7 @@ public class HTTP {
             String wysylanie;
             TCP_Data ret = new TCP_Data();
             if (Polaczenie.polaczeniaHttp[i].zablokowane)
-                wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\nZostałeś rozłączony";
+                wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.ZostalesRozlaczony.ordinal()];
             else if (wyj.indexOf("/" + Program.ustawienia.haslo) == 0) {
                 wysylanie = "HTTP/1.1 200 OK\r\nSet-Cookie: id=" + i + "; path=/\r\n\r\nok";
                 String klasaString = wyj.substring(wyj.indexOf("?") + 1, wyj.indexOf(" HTTP"));
@@ -52,7 +58,7 @@ public class HTTP {
                 }
 
             } else {
-                wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\nKod błędny";
+                wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.KodBledny.ordinal()];
 
             }
             os.write(wysylanie.getBytes());
@@ -65,7 +71,7 @@ public class HTTP {
             byte i = id(wyj);
             String wysylanie;
             if (Polaczenie.polaczeniaHttp[i].zablokowane)
-                wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\nZostałeś rozłączony";
+                wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.ZostalesRozlaczony.ordinal()];
             else if (wyj.indexOf("/dodatek") == 0) {
                 wysylanie = "HTTP/1.1 200 OK\n" +
                         "Server: PilotPC\n" +
@@ -392,7 +398,7 @@ public class HTTP {
                         + "{czasPrzesylu=czas;\n" +
                         "jakosc[jakosc.length]=(new Date()).getTime()-data.czas;\n"
                         + "polaczono=true;" +
-                        "document.getElementById('stanPol').textContent='Połączono';" +
+                        "document.getElementById('stanPol').textContent='"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Polaczono.ordinal()]+"';" +
                         "document.getElementById('jakosc').textContent=Math.ceil(jakoscLicz());"
                         + "}};\n"
                         + "socket.open('get', '?'+JSON.stringify(data), false)\n"
@@ -413,8 +419,8 @@ public class HTTP {
                         + "{"
                         + "polaczono=false;" +
                         "jakosc=[];" +
-                        "document.getElementById('jakosc').textContent='Brak Danych';" +
-                        "document.getElementById('stanPol').textContent='Rozłączono!';"
+                        "document.getElementById('jakosc').textContent='"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.BrakDanych.ordinal()]+"';" +
+                        "document.getElementById('stanPol').textContent='"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Rozlaczono.ordinal()]+"!';"
                         //+ "alert('Rozłączono!');"
                         + "}"
                         + "if((new Date()).getTime()-czasPrzesylu.getTime()>1000)"
@@ -632,7 +638,7 @@ public class HTTP {
                         "<button onclick=\"klawiatura.char('b')\" class=\"nor\">B</button>" +
                         "<button onclick=\"klawiatura.char('n')\" class=\"nor\">N</button>" +
                         "<button onclick=\"klawiatura.char('m')\" class=\"nor\">M</button>" +
-                        "<button onclick=\"klawiatura.num(8)\" class=\"gr\">Usuń</button>"+
+                        "<button onclick=\"klawiatura.num(8)\" class=\"gr\">"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Usun.ordinal()]+"</button>"+
                         "</div></div>" +"<div id=\"klawiaturaLiteryAlt\"><DIV>" +
                         "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
                         "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
@@ -663,7 +669,7 @@ public class HTTP {
                         "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
                         "<button onclick=\"klawiatura.char('ń')\" class=\"nor\">Ń</button>" +
                         "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
-                        "<button onclick=\"klawiatura.num(8)\" class=\"gr\">Usuń</button>"+
+                        "<button onclick=\"klawiatura.num(8)\" class=\"gr\">"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Usun.ordinal()]+"</button>"+
                         "</div></div>" +
                         "<div id=\"klawiaturaCyfry\"><DIV>" +
                         "<button onclick=\"klawiatura.char('1')\" class=\"nor\">1</button>" +
@@ -734,7 +740,7 @@ public class HTTP {
                         "<button id=\"klLit\" onclick=\"document.getElementById('klLit').style.display='none';document.getElementById('klCyfry').style.display='inline';document.getElementById('klSpec').style.display='inline';document.getElementById('klAlt').style.display='inline';document.getElementById('klawiaturaLitery').style.display='block';document.getElementById('klawiaturaLiteryAlt').style.display='none';document.getElementById('klawiaturaCyfry').style.display='none';document.getElementById('klawiaturaSpecjalne').style.display='none';document.getElementsByClassName('spacja')[0].className='spacja';\" class=\"gr\" style=\"display:none\">ABC</button>" +
                         "<button id=\"klCyfry\" onclick=\"document.getElementById('klLit').style.display='inline';document.getElementById('klCyfry').style.display='none';document.getElementById('klSpec').style.display='inline';document.getElementById('klAlt').style.display='none';document.getElementById('klawiaturaLitery').style.display='none';document.getElementById('klawiaturaLiteryAlt').style.display='none';document.getElementById('klawiaturaCyfry').style.display='block';document.getElementById('klawiaturaSpecjalne').style.display='none';document.getElementsByClassName('spacja')[0].className='spacja spacjaGrube';\" class=\"gr\">123</button>" +
                         "<button id=\"klSpec\" onclick=\"document.getElementById('klLit').style.display='inline';document.getElementById('klCyfry').style.display='inline';document.getElementById('klSpec').style.display='none';document.getElementById('klAlt').style.display='none';document.getElementById('klawiaturaLitery').style.display='none';document.getElementById('klawiaturaLiteryAlt').style.display='none';document.getElementById('klawiaturaCyfry').style.display='none';document.getElementById('klawiaturaSpecjalne').style.display='block';document.getElementsByClassName('spacja')[0].className='spacja spacjaGrube';\" class=\"gr\">Spec</button>" +
-                        "<button onclick=\"klawiatura.char(' ')\" class=\"spacja\">Spacja</button>" +
+                        "<button onclick=\"klawiatura.char(' ')\" class=\"spacja\">"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Spacja.ordinal()]+"</button>" +
                         "<button id=\"klAlt\" onclick=\"if(document.getElementById('klawiaturaLitery').style.display=='none'){document.getElementById('klawiaturaLitery').style.display='block';document.getElementById('klawiaturaLiteryAlt').style.display='none';} else {document.getElementById('klawiaturaLitery').style.display='none';document.getElementById('klawiaturaLiteryAlt').style.display='block';}document.getElementById('klawiaturaCyfry').style.display='none';document.getElementById('klawiaturaSpecjalne').style.display='none';\" class=\"gr\">Alt</button>" +
                         "<button onclick=\"klawiatura.num(10)\" class=\"gr\">Enter</button>" +
                         "</DIV>" +
@@ -763,23 +769,23 @@ public class HTTP {
                         //"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';}else{document.getElementById('menu').style.top='5%';document.getElementById('menur').style.top='15%';}" +
                         "if(window.scrollY>0)window.scroll(0,0); else window.scroll(0,document.body.clientHeight*0.85);"+
                         "\"><img style=\"float:right\" alt=\"menu\" src=\"" + menuBase64 + "\"/></li>" +
-                        "</ul><div id=\"menur\"><h2>Informacje</h2>" +
+                        "</ul><div id=\"menur\"><h2>"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Informacje.ordinal()]+"</h2>" +
                         "<div class=\"podmenu\">" +
-                        "POŁĄCZENIE<br/>" +
-                        "Stan:<span id=\"stanPol\">Połączono</span><br/>" +
-                        "Jakość:<span id=\"jakosc\">Brak Danych</span><br/>" +
-                        "Host: " + java.net.InetAddress.getLocalHost().getHostName() + "<br/>" +
-                        "CODER<br />" +
+                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Polaczenie.ordinal()]+"<br/>" +
+                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Stan.ordinal()]+":<span id=\"stanPol\">"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Polaczono.ordinal()]+"</span><br/>" +
+                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Jakosc.ordinal()]+":<span id=\"jakosc\">"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.BrakDanych.ordinal()]+"</span><br/>" +
+                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Host.ordinal()]+": " + java.net.InetAddress.getLocalHost().getHostName() + "<br/>" +
+                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Coder.ordinal()]+"<br />" +
                         "-FranQy<br />" +
                         "-Matrix0123456789<br />" +
-                        "DESIGNERS<br/>" +
+                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Designers.ordinal()]+"<br/>" +
                         "-FranQy<br/>" +
                         "-Wieczur" +
-                        "</div><h2>Jakość obrazu</h2><div class=\"podmenu\">" +
-                        "<button onclick='pulpit.jakosc=3'>Niska</button>" +
-                        "<button onclick='pulpit.jakosc=2'>Średnia</button>" +
-                        "<button onclick='pulpit.jakosc=1'>Wysoka</button>" +
-                        "<button onclick='pulpit.jakosc=0'>Ultra</button>" +
+                        "</div><h2>"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.JakoscObrazu.ordinal()]+"</h2><div class=\"podmenu\">" +
+                        "<button onclick='pulpit.jakosc=3'>"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Niska.ordinal()]+"</button>" +
+                        "<button onclick='pulpit.jakosc=2'>"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Srednia.ordinal()]+"</button>" +
+                        "<button onclick='pulpit.jakosc=1'>"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Wysoka.ordinal()]+"</button>" +
+                        "<button onclick='pulpit.jakosc=0'>"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Ultra.ordinal()]+"</button>" +
                         "</div>" +
                         "</div></body></html>";
 
@@ -849,5 +855,20 @@ public class HTTP {
         else
         Polaczenie.polaczeniaHttp[i].czas=new Date();
         return i;
+    }
+    static int max(int[] wej)
+    {
+        int ret=-1;
+        int tera=Integer.MAX_VALUE;
+        for(int i=0;i<wej.length;i++)
+        {
+            if(wej[i]<tera&&wej[i]!=-1)
+            {
+                tera=wej[i];
+                ret=i;
+            }
+        }
+        return ret;
+
     }
 }
