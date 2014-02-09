@@ -17,15 +17,15 @@ public class Connect implements Serializable {
 	/**
 	 * Hasło do połączenia (6 cyfr)
 	 */
-public String haslo;
+public String haslo="";
 /**
  * Nazwa telefonu/kompa (może działać w dwie strony)
  */
-public String nazwa;
+public String nazwa="";
 /**
  * Wersja aplikacji/serwera (może działać w dwie strony)
  */
-public String wersja;
+public String wersja="";
 
 /**
  * informuje, czy kod został przyjęty

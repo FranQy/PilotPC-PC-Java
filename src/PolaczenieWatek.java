@@ -64,13 +64,16 @@ public class PolaczenieWatek
                 if(getInt(is)==4){//sprawdza czy jest to pilot czy coś innego np. http
                     do{
                     TCP_Data data=new TCP_Data();
+                        OutputStream os;
                     switch(getInt(is))
                     {
                         case 2:
                             data.type= TCP_Data.typ.PILOT;
+                            data.button=TCP_Data.pilotButton.values()[getInt(is)];
                             break;
                         case 3:
                             data.type= TCP_Data.typ.KEYBOARD;
+                            data.key=getInt(is);
                             break;
                         case 4:
                             data.type= TCP_Data.typ.TOUCHPAD;
@@ -98,7 +101,75 @@ public class PolaczenieWatek
                                     break;
                             }
                             break;
+                        case 5:     //ping
+                            os=soc.getOutputStream();
+                            setInt(os,4);
+                            setInt(os,5);  //odsyła inty 4 i 5 że jest to ping
+                            setInt(os,getInt(is));//odsyła następny int jaki dostanie
+                            break;
+                        case 6://klasa connect
+                            infoPrzyPolaczeniu=new Connect();
+                            infoPrzyPolaczeniu.status=Connect.Status.values()[getInt(is)];//2 pierwsze inty to 4 i 6 oznaczające, że to jest klasa Conneco, a potem enum status
+                            while (true) {//odczytuje string aż dojdzie do bajtu 0, wtedy następny string i tak 3 razy
+                                int n = is.read();
+                                if (n == 0){
 
+                                    break;
+                                }
+                                else
+                                {
+                                    infoPrzyPolaczeniu.nazwa+=(char)n;
+
+                                }
+                            }
+                            while (true) {
+                                int n = is.read();
+                                if (n == 0){
+
+                                    break;
+                                }
+                                else
+                                {
+                                    infoPrzyPolaczeniu.wersja+=(char)n;
+
+                                }
+                            }
+
+                            while (true) {
+                                int n = is.read();
+                                if (n == 0){
+
+                                    break;
+                                }
+                                else
+                                {
+                                    infoPrzyPolaczeniu.haslo+=(char)n;
+
+                                }
+                            }
+                            os=soc.getOutputStream();
+                            setInt(os,4);
+                            setInt(os,6);//klasa connect
+                            if(infoPrzyPolaczeniu.haslo.length()==0)
+                                setInt(os,Connect.Status.ok.ordinal());
+                            else if(infoPrzyPolaczeniu.haslo.compareTo(Program.ustawienia.haslo)==0)
+                                setInt(os,Connect.Status.ok.ordinal());
+                            else
+                            {
+                                setInt(os,Connect.Status.zlyKod.ordinal());
+                                setInt(os,0);
+                                is.close();
+                                break;
+                            }
+                            String odpowiedzNazwa=java.net.InetAddress.getLocalHost().getHostName();
+                            os.write(odpowiedzNazwa.getBytes());
+                            os.write(0);
+                            os.write(Program.wersja.getBytes());
+                            os.write(0);
+                            os.write(0);
+                            // dataObject =  in.readObject();
+                            System.out.println(Jezyk.napisy[Jezyk.n.Polaczono.ordinal()]+" "+toString());
+                            break;
                     }
 
                     wykonuj(data);
