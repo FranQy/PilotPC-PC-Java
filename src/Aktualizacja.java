@@ -1,9 +1,4 @@
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.TimerTask;
 
@@ -32,8 +27,9 @@ public class Aktualizacja
                 content += s+'\n';
                 
             }
-                aktualizuj(content);
-trwa=false;
+            aktualizuj(content);
+            trwa = false;
+            Biblioteka.load();
         } catch (IOException ioe) {
 
             System.out.println("Oops- an IOException happened.");

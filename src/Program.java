@@ -15,6 +15,7 @@ public class Program {
     static public Robot robot;
     static public TrayIcon trayIcon;
     public static void main(String[] args) throws AWTException {
+        Biblioteka.load();
         if(ustawienia.jezyk==null)
         {
             ustawienia.jezyk= Jezyk.jezyki.Polski;

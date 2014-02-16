@@ -1,30 +1,28 @@
-import java.util.Timer;
-
 /**
  * Created by Mateusz on 05.01.14.
  */
 public class Biblioteka {
+    public static boolean zaladowano = false;
 
-    static {
-
-
+    public static void load() {
+        if (zaladowano)
+            return;
         try{
 
             System.loadLibrary("pilotpc");
+            zaladowano = true;
         }
         catch(Throwable e)
         {
             e.printStackTrace();
             try{
                 System.loadLibrary("pilotpc-x64");
+                zaladowano = true;
             }
             catch(UnsatisfiedLinkError f)
             {
                 f.printStackTrace();
-                Timer timer1 = new Timer();
-                Aktualizacja timer1_task = new Aktualizacja();
                 Aktualizacja.wymus=true;
-                timer1.schedule (timer1_task, 0, 0);
             }
             catch(Throwable f)
             {
