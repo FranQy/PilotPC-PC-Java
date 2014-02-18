@@ -1,11 +1,6 @@
-import java.awt.AWTException;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.PointerInfo;
-import java.awt.Robot;
+import java.awt.*;
 import java.awt.event.InputEvent;
-
-
+import java.util.Date;
 
 
 public class MouseRobot {
@@ -16,20 +11,18 @@ public class MouseRobot {
 
 
 
-    Robot robot;
     static double pozostalex=0;//liczby po przecinku pozostałe po wyliczeniu ostetecznego ruchu myszy
     static double pozostaley=0;
     static boolean wcisniete=false;
-    public MouseRobot()
-    {
+    static double gladkieX = 0;
+    static double gladkieY = 0;
+    public static double sredniCzas = 0;
+    static long ostatniCzas = 0;
+    static short gladkiePos = 0;
 
-        //System.out.println(System.getProperty("java.library.path"));
-        try {
-            robot = new Robot();
-        } catch (AWTException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    static {
+        if (Program.ustawienia.plynnaMysz)
+            (new WatekMouseRobot()).start();
     }
 
     static public void PPM()
@@ -45,17 +38,25 @@ public class MouseRobot {
 
     static public void move(int mx, int my)
     {
-        PointerInfo a = MouseInfo.getPointerInfo();
-        Point b = a.getLocation();
-        int x = (int) b.getX();
-        int y = (int) b.getY();
-
         double odleglosc=Math.sqrt(mx*mx+my*my);//liczy odległość
-        double mx2=mx*odleglosc/15+pozostalex;//mnoży współrzędne i odległość, dzięki temu gdy szybko poruszymy palcem to kyrsor przesunie się na drógi koniec ekranu, a jeżeli wolno, to mamy większą dokładność
-        double my2=my*odleglosc/15+pozostaley;
-        pozostalex=mx2-Math.floor(mx2);//zapisuje liczby pozostałe po przecinku, żeby jeśli kursor przesuwa się powoli to nie stał w miejscu
-        pozostaley=my2-Math.floor(my2);
-        Program.robot.mouseMove(x+(int)Math.floor(mx2), y+(int)Math.floor(my2));
+
+        if (Program.ustawienia.plynnaMysz) {
+            gladkieX += mx * odleglosc / 15;//mnoży współrzędne i odległość, dzięki temu gdy szybko poruszymy palcem to kursor przesunie się na drógi koniec ekranu, a jeżeli wolno, to mamy większą dokładność
+            gladkieY += my * odleglosc / 15;
+            long cz = (new Date()).getTime();
+            if (ostatniCzas > 0)
+                sredniCzas = sredniCzas * 0.9 + (cz - ostatniCzas) * 0.1;
+            ostatniCzas = cz;
+        } else {
+            double mx2 = mx * odleglosc / 15 + pozostalex;//mnoży współrzędne i odległość, dzięki temu gdy szybko poruszymy palcem to kursor przesunie się na drógi koniec ekranu, a jeżeli wolno, to mamy większą dokładność
+            double my2 = my * odleglosc / 15 + pozostaley;
+            pozostalex = mx2 - Math.floor(mx2);//zapisuje liczby pozostałe po przecinku, żeby jeśli kursor przesuwa się powoli to nie stał w miejscu
+            pozostaley = my2 - Math.floor(my2);
+            Point b = MouseInfo.getPointerInfo().getLocation();
+            int x = (int) b.getX();
+            int y = (int) b.getY();
+            Program.robot.mouseMove(x+(int)Math.floor(mx2), y+(int)Math.floor(my2));
+        }
     }
     static public void moveTo(int mx, int my)
     {
@@ -80,5 +81,31 @@ public class MouseRobot {
     {
         Program.robot.mouseWheel(y);
     }
+}
 
+class WatekMouseRobot extends Thread {
+    static long ostatniCzas = 0;
+
+    public void run() {
+        while (true) {
+            try {
+
+                Thread.sleep(6);
+
+                long cz = (new Date()).getTime();
+                double dziel = (cz - ostatniCzas) / MouseRobot.sredniCzas;
+                if (dziel > 1)
+                    dziel = 1;
+                ostatniCzas = cz;
+                Point b = MouseInfo.getPointerInfo().getLocation();
+                int x = (int) b.getX();
+                int y = (int) b.getY();
+                Program.robot.mouseMove(x + (int) Math.floor(MouseRobot.gladkieX * dziel), y + (int) Math.floor(MouseRobot.gladkieY * dziel));
+                MouseRobot.gladkieX -= Math.floor(MouseRobot.gladkieX * dziel);
+                MouseRobot.gladkieY -= Math.floor(MouseRobot.gladkieY * dziel);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

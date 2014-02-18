@@ -5,7 +5,9 @@ import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.util.*;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.TimerTask;
 
 /**
  * Created by Mateusz on 04.01.14.
@@ -23,6 +25,7 @@ public class Okno {
     private JPanel QRPanel;
     private JComboBox WybierzJezyk;
     private JLabel PodlaczoneUrzadzenia;
+    private JButton gladkaMysz;
     PanelQRCode qr;
     public JFrame frame  ;
 
@@ -91,8 +94,23 @@ public class Okno {
         Odswierz timer1_task = new Odswierz();
         timer1_task.okno = this;
         timer1.schedule(timer1_task, 100, 100);
+            if (Program.ustawienia.plynnaMysz)
+                gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
+            else
+                gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WlaczWygladzanieMyszy.ordinal()]);
+            gladkaMysz.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Program.ustawienia.plynnaMysz = !Program.ustawienia.plynnaMysz;
+                    if (Program.ustawienia.plynnaMysz)
+                        gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
+                    else
+                        gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WlaczWygladzanieMyszy.ordinal()]);
 
-       // System.out.println("4");
+                    Program.ustawienia.eksportuj();
+                }
+            });
+            // System.out.println("4");
         frame.setSize(750,400);
             if(wyswietl)
         frame.setVisible(true);
@@ -106,6 +124,14 @@ public class Okno {
         startZSystememButton.setText(Jezyk.napisy[Jezyk.n.StartZSystemem.ordinal()]);
         kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()]+": " + Program.ustawienia.haslo);
         PodlaczoneUrzadzenia.setText(Jezyk.napisy[Jezyk.n.PodlaczoneUrzadzenia.ordinal()]);
+        if (Program.ustawienia.plynnaMysz)
+            gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
+        else
+            gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WlaczWygladzanieMyszy.ordinal()]);
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 
     public class Odswierz extends TimerTask {

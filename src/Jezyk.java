@@ -2,7 +2,7 @@
  * Created by Mateusz on 11.01.14.
  */
 public class Jezyk {
-    public static String[] napisy=new String[20];
+    public static String[] napisy = new String[22];
 
     public static void przeladuj(jezyki a) {
          laduj(a);
@@ -16,7 +16,10 @@ Program.tray(false);
     public enum n { PilotPCWersja,Pokaz, Zakoncz, BladPodczasDodawaniaIkony,
         SerwerZostalUruchomiony, OProgramiePilotPc,Programisci,Nieznane,Wersja,
         Rozlaczono, Polaczono,Nazwa,BladZPolaczeniem,KodDoPolaczenia,Rozlacz,TwojeIPTo,
-    ZmienKod,Infromacje,StartZSystemem,PodlaczoneUrzadzenia};
+        ZmienKod, Infromacje, StartZSystemem, PodlaczoneUrzadzenia, WylaczWygladzanieMyszy, WlaczWygladzanieMyszy
+    }
+
+    ;
 
     public enum nHTTP{ZostalesRozlaczony,KodBledny,Usun,Informacje,Polaczenie,Stan,Jakosc,Host,Coder,Designers, JakoscObrazu, Niska,Srednia,Wysoka,Ultra, Spacja, Polaczono, BrakDanych, Rozlaczono};
     public static String[][] nhttp={
@@ -49,6 +52,8 @@ Program.tray(false);
                 napisy[n.Infromacje.ordinal()]="Informacje";
                 napisy[n.StartZSystemem.ordinal()]="Start z systemem";
                 napisy[n.PodlaczoneUrzadzenia.ordinal()]="Podłączone urządzenia";
+                napisy[n.WlaczWygladzanieMyszy.ordinal()] = "Włącz wygładzanie myszy";
+                napisy[n.WylaczWygladzanieMyszy.ordinal()] = "Wyłącz wygładzanie myszy";
                 break;
             case Angielski:
                 napisy[n.PilotPCWersja.ordinal()]="PilotPC version ";
@@ -64,13 +69,15 @@ Program.tray(false);
                 napisy[n.Polaczono.ordinal()]="Connected";
                 napisy[n.Nazwa.ordinal()]="Name";
                 napisy[n.BladZPolaczeniem.ordinal()]="Connecting error";
-                napisy[n.KodDoPolaczenia.ordinal()]="Autentication code";
+                napisy[n.KodDoPolaczenia.ordinal()] = "Authentication code";
                 napisy[n.Rozlacz.ordinal()]="Disconnect";
                 napisy[n.TwojeIPTo.ordinal()]="Your IP";
                 napisy[n.ZmienKod.ordinal()]="New code";
                 napisy[n.Infromacje.ordinal()]="Information";
                 napisy[n.StartZSystemem.ordinal()]="Start with system boot";
                 napisy[n.PodlaczoneUrzadzenia.ordinal()]="Connected devices";
+                napisy[n.WlaczWygladzanieMyszy.ordinal()] = "Turn on smooth mouse";
+                napisy[n.WylaczWygladzanieMyszy.ordinal()] = "Turn off smooth mouse";
                 break;
 
             case Rosyjski:
@@ -94,6 +101,8 @@ Program.tray(false);
                 napisy[n.Infromacje.ordinal()]="О программе";
                 napisy[n.StartZSystemem.ordinal()]="Start z systemem";
                 napisy[n.PodlaczoneUrzadzenia.ordinal()]="Подключенные устройства";
+                napisy[n.WlaczWygladzanieMyszy.ordinal()] = "Włącz wygładzanie myszy";
+                napisy[n.WylaczWygladzanieMyszy.ordinal()] = "Wyłącz wygładzanie myszy";
                 break;
         }
     }
