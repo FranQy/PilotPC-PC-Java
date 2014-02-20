@@ -101,7 +101,8 @@ class WatekMouseRobot extends Thread {
                 Point b = MouseInfo.getPointerInfo().getLocation();
                 int x = (int) b.getX();
                 int y = (int) b.getY();
-                Program.robot.mouseMove(x + (int) Math.floor(MouseRobot.gladkieX * dziel), y + (int) Math.floor(MouseRobot.gladkieY * dziel));
+                if (Math.floor(MouseRobot.gladkieX * dziel) != 0 || Math.floor(MouseRobot.gladkieY * dziel) != 0)
+                    Program.robot.mouseMove(x + (int) Math.floor(MouseRobot.gladkieX * dziel), y + (int) Math.floor(MouseRobot.gladkieY * dziel));
                 MouseRobot.gladkieX -= Math.floor(MouseRobot.gladkieX * dziel);
                 MouseRobot.gladkieY -= Math.floor(MouseRobot.gladkieY * dziel);
             } catch (InterruptedException e) {
