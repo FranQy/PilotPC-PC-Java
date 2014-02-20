@@ -89,5 +89,5 @@ public class Ustawienia implements Serializable {
 	 */
 	public  String haslo=generujHaslo();
     public Jezyk.jezyki jezyk= Jezyk.jezyki.Polski;
-    public boolean plynnaMysz = true;
+    public boolean plynnaMysz = false;
 }

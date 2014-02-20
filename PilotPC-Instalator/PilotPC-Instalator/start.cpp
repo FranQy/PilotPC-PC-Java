@@ -101,7 +101,7 @@ HINSTANCE hinstance;
 void wybor(HINSTANCE hInstance){
 	HKEY r;
 	a = RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\PilotPC", 0, KEY_READ, &r);
-	b = RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\PilotPC", 0, KEY_READ, &r);
+	b = RegOpenKeyEx(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\PilotPC", 0, KEY_READ, &r);
 
 	HFONT hNormalFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 	if (a == 0 || b == 0)

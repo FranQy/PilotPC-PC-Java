@@ -102,9 +102,10 @@ public class Okno {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Program.ustawienia.plynnaMysz = !Program.ustawienia.plynnaMysz;
-                    if (Program.ustawienia.plynnaMysz)
+                    if (Program.ustawienia.plynnaMysz) {
+                        (new WatekMouseRobot()).start();
                         gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
-                    else
+                    } else
                         gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WlaczWygladzanieMyszy.ordinal()]);
 
                     Program.ustawienia.eksportuj();

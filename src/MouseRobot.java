@@ -76,6 +76,7 @@ public class MouseRobot {
     static public void up()
     {
         Program.robot.mouseRelease(InputEvent.BUTTON1_MASK);
+        wcisniete = false;
     }
     static public void scroll(int y)
     {
@@ -87,7 +88,7 @@ class WatekMouseRobot extends Thread {
     static long ostatniCzas = 0;
 
     public void run() {
-        while (true) {
+        while (Program.ustawienia.plynnaMysz) {
             try {
 
                 Thread.sleep(6);

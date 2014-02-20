@@ -154,7 +154,10 @@ void instalacja::start()
 	HKEY hkUninstall;
 	HKEY hkProgram;
 	DWORD dwDisp;
-	RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", 0, KEY_ALL_ACCESS, &hkUninstall);
+	if (wszyscy)
+		RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", 0, KEY_ALL_ACCESS, &hkUninstall);
+	else
+	RegOpenKeyEx(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", 0, KEY_ALL_ACCESS, &hkUninstall);
 	RegCreateKeyEx(hkUninstall, L"PilotPC", 0, NULL, REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS, NULL, &hkProgram, &dwDisp);
 	RegSetValueEx(hkProgram, L"DisplayName", 0, REG_SZ, (byte*)L"PilotPC", 14);
@@ -164,12 +167,15 @@ void instalacja::start()
 	RegSetValueEx(hkProgram, L"Readme", 0, REG_SZ, (byte*)(folderStr + (L"\\readme.html")).c_str(), 24 + 2 * folderStr.length());
 	int rozmiar = 2252;
 	RegSetValueEx(hkProgram, L"EstimatedSize", 0, REG_DWORD, (byte*)&rozmiar, 4);
-	string wersja = "0.1.25";
-	RegSetValueEx(hkProgram, L"DisplayVersion", 0, REG_SZ, (byte*)wersja.c_str(), 2 * wersja.length());
+	//string wersja = "0.1.25";
+	//RegSetValueEx(hkProgram, L"DisplayVersion", 0, REG_SZ, (byte*)wersja.c_str(), 2 * wersja.length());
 
 	if (systemStart)
 	{
 		HKEY hkTest;
+		if (wszyscy)
+			RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
+		else
 		RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
 		wstring polecenie = (L"\"" + folderStr + (L"\\Windows.exe\""));
 		RegSetValueEx(hkTest, L"PilotPC", 0, REG_SZ, (byte*)polecenie.c_str(), 2 * polecenie.length());
@@ -182,26 +188,29 @@ void instalacja::start()
 	GetEnvironmentVariableA("appdata", appdata, 1024);
 	if (skrotPulpit)
 	{
-		string Pulpit = userprofile + (string)"\\Desktop\\PilotPC.lnk";
-		CreateLink((folderStr + (L"\\Windows.exe")).c_str(), Pulpit.c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu", folderStr.c_str());
+		string Pulpit = userprofile + (string)"\\Desktop\\PilotPC";
+		string polecenie = (string)"mklink \"" + Pulpit + (string)"\" \"" + std::string(folderStr.begin(), folderStr.end()) + (string)"\\Windows.exe\"";
+		system(polecenie.c_str());
 	}
 	if (skrotMenuStart)
 	{
 		string folderMS;
 		folderMS = userprofile + (string)"\\Start Menu\\Programs\\PilotPC";
 		CreateDirectoryA(folderMS.c_str(), NULL);
-		CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), (folderMS + (string)"\\PilotPC.lnk").c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu", folderStr.c_str());
-		CreateLink((folderStr + (L"\\Uninstall.exe")).c_str(), (folderMS + (string)"\\Odinstaluj.lnk").c_str(), L"Usuwa program PilotPC z tego komputera", folderStr.c_str());
+		system(((string)"mklink \"" + folderMS + (string)"\\PilotPC\" \"" + std::string(folderStr.begin(), folderStr.end()) + (string)"\\Windows.exe\"").c_str());
+		//CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), (folderMS + (string)"\\PilotPC").c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu", folderStr.c_str());
+		//CreateLink((folderStr + (L"\\Uninstall.exe")).c_str(), (folderMS + (string)"\\Odinstaluj").c_str(), L"Usuwa program PilotPC z tego komputera", folderStr.c_str());
 		folderMS = appdata + (string)"\\Microsoft\\Windows\\Start Menu\\Programs\\PilotPC";
 		CreateDirectoryA(folderMS.c_str(), NULL);
-		CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), (folderMS + (string)"\\PilotPC.lnk").c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu", folderStr.c_str());
-		CreateLink((folderStr + (L"\\Uninstall.exe")).c_str(), (folderMS + (string)"\\Odinstaluj.lnk").c_str(), L"Usuwa program PilotPC z tego komputera", folderStr.c_str());
+		system(((string)"mklink \"" + folderMS + (string)"\\PilotPC\" \"" + std::string(folderStr.begin(), folderStr.end()) + (string)"\\Windows.exe\"").c_str());
+		//CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), (folderMS + (string)"\\PilotPC").c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu", folderStr.c_str());
+		//CreateLink((folderStr + (L"\\Uninstall.exe")).c_str(), (folderMS + (string)"\\Odinstaluj").c_str(), L"Usuwa program PilotPC z tego komputera", folderStr.c_str());
 	}
 
 	SendMessage(progressbar, PBM_SETPOS, (WPARAM)32 * 1024, 0);
 }
 
-HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR workingDir)
+/*HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR workingDir)
 {
 	HRESULT hres;
 	IShellLink* psl;
@@ -241,7 +250,7 @@ HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc, L
 	}
 	return hres;
 
-}
+}*/
 void instalacja::start(HWND hWnd)
 {
 	okno = hWnd;
@@ -439,21 +448,38 @@ void instalacja::odinstaluj(HINSTANCE hInstance, HWND progressbar)
 {
 
 	HKEY r, uninstall, run;
-	RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\PilotPC", 0, KEY_ALL_ACCESS, &r);
+	long blad=RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\PilotPC", 0, KEY_ALL_ACCESS, &r);
+	if (blad != 0)
+		long blad = RegOpenKeyEx(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\PilotPC", 0, KEY_ALL_ACCESS, &r);
 	CHAR folderExe[1024];
 	DWORD rozmiar; //rozmiar odczytanej wartoœci(w bajtach)
 	DWORD typ_danych = REG_SZ; //zmienna na typ danych
 	ULONG ret = RegQueryValueExA(r, "UninstallString", 0, &typ_danych, (LPBYTE)folderExe, &rozmiar);
 	string folder = ((string)folderExe).substr(0, rozmiar - 15);
 	SendMessage(progressbar, PBM_SETPOS, (WPARAM)1 * 1024, 0);
-	system("rd /s /q c:\\test");
 	SendMessage(progressbar, PBM_SETPOS, (WPARAM)9 * 1024, 0);
 	system("rd /s /q %appdata%\\PilotPC-PC-Java");
 	SendMessage(progressbar, PBM_SETPOS, (WPARAM)18 * 1024, 0);
 	system((string("rd /s /q \"") + folder + "\"").c_str());
+	SendMessage(progressbar, PBM_SETPOS, (WPARAM)25 * 1024, 0);
+
+	char userprofile[1024];
+
+	GetEnvironmentVariableA("USERPROFILE", userprofile, 1024);
+	char appdata[1024];
+
+	GetEnvironmentVariableA("appdata", appdata, 1024);
+	string Pulpit = userprofile + (string)"\\Desktop\\PilotPC";
+	DeleteFileA(Pulpit.c_str());
+	system(((string)"rd /s /q \"" + userprofile + (string)"\\Start Menu\\Programs\\PilotPC\"").c_str());
+	system(((string)"rd /s /q \"" + appdata + (string)"\\Microsoft\\Windows\\Start Menu\\Programs\\PilotPC\"").c_str());
 	SendMessage(progressbar, PBM_SETPOS, (WPARAM)27 * 1024, 0);
 
 	RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &run);
+	RegDeleteValue(run, L"PilotPC");
+	RegOpenKeyEx(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", 0, KEY_ALL_ACCESS, &uninstall);
+	RegDeleteKey(uninstall, L"PilotPC");
+	RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &run);
 	RegDeleteValue(run, L"PilotPC");
 	RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", 0, KEY_ALL_ACCESS, &uninstall);
 	RegDeleteKey(uninstall, L"PilotPC");
