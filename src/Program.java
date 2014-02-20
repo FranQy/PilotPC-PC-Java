@@ -11,7 +11,7 @@ public class Program {
     static Polaczenie polaczenia;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
-    static public String wersja = "0.2.1";
+    static public String wersja = "0.2.2";
     static public Robot robot;
     static public TrayIcon trayIcon;
     public static void main(String[] args) throws AWTException {
