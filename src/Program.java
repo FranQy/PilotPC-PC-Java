@@ -4,6 +4,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.util.Timer;
 
 public class Program {
@@ -14,7 +18,8 @@ public class Program {
     static public String wersja = "0.2.2";
     static public Robot robot;
     static public TrayIcon trayIcon;
-    public static void main(String[] args) throws AWTException {
+
+    public static void main(String[] args) throws AWTException, InterruptedException {
         Biblioteka.load();
         if(ustawienia.jezyk==null)
         {
@@ -57,7 +62,21 @@ public class Program {
         else
             System.out.println(Jezyk.napisy[Jezyk.n.PilotPCWersja.ordinal()] + wersja);
         tray(true);
+        try {
+            DatagramSocket socket = new DatagramSocket(8753);
+            socket.setBroadcast(false);
+            String host = java.net.InetAddress.getLocalHost().getHostName();
+            while (true) {
+                DatagramPacket pakiet = new DatagramPacket(host.getBytes(), host.length(), InetAddress.getByName("255.255.255.255"), 8753);
+                socket.connect(InetAddress.getByName("255.255.255.255"), 8753);
+                socket.send(pakiet);
+                Thread.sleep(1000);
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
 
     public static void tray(boolean nowy) {
         if (SystemTray.isSupported()) {

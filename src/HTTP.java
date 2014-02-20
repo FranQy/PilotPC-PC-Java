@@ -792,7 +792,7 @@ public class HTTP {
                         "<button onclick='pulpit.jakosc=2'>"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Srednia.ordinal()]+"</button>" +
                         "<button onclick='pulpit.jakosc=1'>"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Wysoka.ordinal()]+"</button>" +
                         "<button onclick='pulpit.jakosc=0'>"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Ultra.ordinal()]+"</button>" +
-                        "<h2>Motyw</h2><div class=\"podmenu\"><label><input type=\"radio\" name=\"motyw\" onclick=\"document.body.background='#28211b';\" checked>Ciemny motyw</label><label><input type=\"radio\" name=\"motyw\" onclick=\"document.body.background='#e2dd21';\">Jasny motyw</label></div></div>" +
+                        "<h2>Motyw</h2><div class=\"podmenu\"><label><input type=\"radio\" name=\"motyw\" onclick=\"document.body.style.background='#28211b';\" checked>Ciemny motyw</label><label><input type=\"radio\" name=\"motyw\" onclick=\"document.body.style.background='#e2dd21';\">Jasny motyw</label></div></div>" +
                         "</div></body></html>";
 
             } else if (wyj.indexOf("/ ") == 0) {
