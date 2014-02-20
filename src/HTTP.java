@@ -514,7 +514,10 @@ public class HTTP {
                         "{" +
                         "if(pulpit.punkty.length>=2)\n" +
                         "{" +
-                        "pulpit.zoom=pulpit.zoom*Math.sqrt((eve.touches[0].screenX-eve.touches[1].screenX)*(eve.touches[0].screenX-eve.touches[1].screenX)+(eve.touches[0].screenY-eve.touches[1].screenY)*(eve.touches[0].screenY-eve.touches[1].screenY))/Math.sqrt((pulpit.punkty[0].screenX-pulpit.punkty[1].screenX)*(pulpit.punkty[0].screenX-pulpit.punkty[1].screenX)+(pulpit.punkty[0].screenY-pulpit.punkty[1].screenY)*(pulpit.punkty[0].screenY-pulpit.punkty[1].screenY));\n" +
+                        "var mnoznik=Math.sqrt((eve.touches[0].screenX-eve.touches[1].screenX)*(eve.touches[0].screenX-eve.touches[1].screenX)+(eve.touches[0].screenY-eve.touches[1].screenY)*(eve.touches[0].screenY-eve.touches[1].screenY))/Math.sqrt((pulpit.punkty[0].screenX-pulpit.punkty[1].screenX)*(pulpit.punkty[0].screenX-pulpit.punkty[1].screenX)+(pulpit.punkty[0].screenY-pulpit.punkty[1].screenY)*(pulpit.punkty[0].screenY-pulpit.punkty[1].screenY));\n" +
+                        "pulpit.zoom=pulpit.zoom*mnoznik;" +
+                        "document.getElementById(\"pulpit\").children[0].style.width=mnoznik*parseFloat(document.getElementById(\"pulpit\").children[0].style.width)+'%';" +
+                        "document.getElementById(\"pulpit\").children[0].style.height=mnoznik*parseFloat(document.getElementById(\"pulpit\").children[0].style.width)+'%';" +
                         "}" +
                         "}\n" +
                         "else if(eve.touches.length==1)\n"   +
@@ -593,7 +596,10 @@ public class HTTP {
                         "document.getElementById('pulpit').addEventListener(\"GestureChange\", onDivGestureChange, false);\n" +
                         "\n" +
                         "      function onDivGestureChange(e) {\n" +
-                        "        pulpit.zoom=pulpit.zoom*e.scale;"+
+                        "        pulpit.zoom=pulpit.zoom*e.scale;" +
+                        "document.getElementById(\"pulpit\").children[0].style.width=e.scale*parseFloat(document.getElementById(\"pulpit\").children[0].style.width)+'%';" +
+                        "document.getElementById(\"pulpit\").children[0].style.height=e.scale*parseFloat(document.getElementById(\"pulpit\").children[0].style.width)+'%';" +
+                        "" +
                         "      }\n"
                         + "/*]]>*/</script>"
                         + "</head><body onload=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onresize=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onkeypress=\"console.log(event);" +
@@ -757,11 +763,11 @@ public class HTTP {
                         "onmousemove=\"pulpit.moveM(event);return false;\" onmousedown=\"if(event.target.className!='zoom'){pulpit.punktXs=pulpit.punktX=event.screenX;pulpit.punktYs=pulpit.punktY=event.screenY;pulpit.clickD(event,this);return false;}\" onmouseup=\"if(event.target.className!='zoom'){pulpit.punktX=undefined;pulpit.clickU(event,this);}\" onmouseleave=\"pulpit.punktX=undefined;\" " +
                         "\">" +
                         "<img " +
-                        " src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;pulpit.laduj(this);\" alt=\"Błąd\" />" +
+                        " src=\"/" + Program.ustawienia.haslo + "/pulpit/0/0/" + (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() + "/" + (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() + "/" + ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 16) + "/" + ((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 16) + "/JPEG/\" style=\"width:100%;height:100%\" onload=\"this.style.zIndex=2;pulpit.laduj(this);\" alt=\"Błąd\" />" +
                         //"<img " +
                        // " src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[0].style.zIndex=1;pulpit.laduj(this);\" alt=\"\" />" +
-                        "<div id=\"zoom\"><img class=\"zoom\" id=\"powieksz\" src=\""+plusBase64+"\" onclick=\"pulpit.zoom=pulpit.zoom*1.5\">"       +
-                        "<img class=\"zoom\" id=\"pomniejsz\" src=\""+minusBase64+"\" onclick=\"pulpit.zoom=pulpit.zoom*0.666666666\"></div>" +
+                        "<div id=\"zoom\"><img class=\"zoom\" id=\"powieksz\" src=\"" + plusBase64 + "\" onclick=\"pulpit.zoom=pulpit.zoom*1.5;document.getElementById(\'pulpit\').children[0].style.height=document.getElementById(\'pulpit\').children[0].style.width=parseFloat(document.getElementById(\'pulpit\').children[0].style.width)*1.5+'%'\">" +
+                        "<img class=\"zoom\" id=\"pomniejsz\" src=\"" + minusBase64 + "\" onclick=\"pulpit.zoom=pulpit.zoom*0.666666666;document.getElementById(\'pulpit\').children[0].style.height=document.getElementById(\'pulpit\').children[0].style.width=parseFloat(document.getElementById(\'pulpit\').children[0].style.width)*0.6666666+'%'\"></div>" +
                         "</div>"
                         + "<ul id=\"menu\">" +
                         //"<li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li>" +
