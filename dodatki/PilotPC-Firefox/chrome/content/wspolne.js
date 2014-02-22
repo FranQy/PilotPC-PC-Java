@@ -97,31 +97,17 @@ uri=karta.document.URL
 	}
 	else if(karta.document.getElementsByTagName('video').length>0)
 			{
-				if(dane.akcja==3)
-				{
-					if(karta.document.getElementsByTagName('video')[0].paused)
-					karta.document.getElementsByTagName('video')[0].play()
-					else
-					karta.document.getElementsByTagName('video')[0].pause()
-				}
-				else if(dane.akcja==17)
-					karta.document.getElementsByTagName('video')[0].currentTime+=-5;
-				else if(dane.akcja==18)
-					karta.document.getElementsByTagName('video')[0].currentTime+=5;
+				if(karta.document.getElementsByTagName('video')[0].paused)
+				karta.document.getElementsByTagName('video')[0].play()
+				else
+				karta.document.getElementsByTagName('video')[0].pause()
 			}
 	else if(karta.document.getElementsByTagName('audio').length>0)
 			{
-				if(dane.akcja==3)
-				{
-					if(karta.document.getElementsByTagName('audio')[0].paused)
-					karta.document.getElementsByTagName('audio')[0].play()
-					else
-					karta.document.getElementsByTagName('audio')[0].pause()
-				}
-				else if(dane.akcja==17)
-					karta.document.getElementsByTagName('audio')[0].currentTime+=-5;
-				else if(dane.akcja==18)
-					karta.document.getElementsByTagName('audio')[0].currentTime+=5;
+				if(karta.document.getElementsByTagName('audio')[0].paused)
+				karta.document.getElementsByTagName('audio')[0].play()
+				else
+				karta.document.getElementsByTagName('audio')[0].pause()
 			}
 }
 pilotpc.http=function()
@@ -133,17 +119,17 @@ socket.open('GET', 'http://localhost:8753/dodatek', false);
 
 socket.send()
 var dane=JSON.parse(socket.responseText);
-}
-catch(e)
-{
-console.log(e)
-}
 for(var i=0;i<dane.polecenia.length;i++)
 {
 
 //pilotpc.dzialaj(dane.polecenia[i],pilotpc.szukajMultimedialne());
 pilotpc.szukajMultimedialne(dane.polecenia[i],pilotpc.dzialaj);
 
+}
+}
+catch(e)
+{
+console.log(e)
 }
 
 }

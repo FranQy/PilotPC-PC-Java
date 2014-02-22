@@ -38,30 +38,8 @@ pilotpc_firefox.showFirefoxContextMenu = function(event) {
 
 pilotpc.szukajMultimedialne=function(d,f)
 {
-	if(pilotpc.szukajMultimedialneSpr(window.Application.activeWindow.activeTab))
-	{
 		return f(d,window.Application.activeWindow.activeTab);
-	}
-	console.log("szukaA");
-	for(var i=0;i<window.Application.windows.length;i++)
-	{
-		if(pilotpc.szukajMultimedialneSpr(window.Application.windows[i].activeTab))
-			return f(d,window.Application.windows[i].activeTab);
-	}
-	console.log("szukaB");
-	for(var i=0;i<window.Application.windows.length;i++)
-	{
-		for(var i2=0;i2<window.Application.windows[i].tabs.length;i2++)
-		{
-			if(pilotpc.szukajMultimedialneSpr(window.Application.windows[i].tabs[i2]))
-				return f(d,window.Application.windows[i].tabs[i2]);
-		}
-	}
-	console.log("szukaC");
+	
 }
 
-pilotpc.szukajMultimedialneSpr=function(tab)
-{
-return ((tab.uri.host=="youtube.com"||tab.uri.host=="www.youtube.com")&&tab.uri.path.substr(1,5)=="watch")||tab.uri.host=="soundcloud.com"||tab.document.getElementsByTagName('video').length>0||tab.document.getElementsByTagName('audio').length>0;
-}
 window.addEventListener("load", function () { pilotpc_firefox.onFirefoxLoad(); }, false);
