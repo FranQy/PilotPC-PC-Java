@@ -95,6 +95,18 @@ uri=karta.document.URL
 			karta.document.getElementsByClassName('skipControl__next')[0].click()
 		}
 	}
+	else if(uri.search("rmfon.pl")>=0)
+	{
+		karta.document.getElementById('btn-play').click()
+	}
+	else if(uri.search("eskago.pl")>=0)
+	{
+		karta.document.getElementById('_control_play').click()
+	}
+	else if(uri.search("radiozet.pl")>=0)
+	{
+		karta.document.getElementByClassName('playpause')[0].click()
+	}
 	else if(karta.document.getElementsByTagName('video').length>0)
 			{
 				if(karta.document.getElementsByTagName('video')[0].paused)
