@@ -1,4 +1,5 @@
 content   pilotpc_firefox                 chrome/content/
 skin      pilotpc_firefox   classic/1.0   chrome/skin/
 locale    pilotpc_firefox   en-US         chrome/locale/en-US/
+locale    pilotpc_firefox   pl-PL         chrome/locale/pl-PL/
 overlay	chrome://browser/content/browser.xul	chrome://pilotpc_firefox/content/ff-overlay.xul

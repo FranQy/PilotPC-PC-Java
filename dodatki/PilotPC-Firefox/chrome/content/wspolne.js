@@ -127,17 +127,26 @@ pilotpc.http=function()
 try{
 var socket=new XMLHttpRequest();
 
-socket.open('GET', 'http://localhost:8753/dodatek', false);
+socket.open('GET', 'http://localhost:8753/dodatek', true);
+socket.onload=function(){
+	try{
+	var dane=JSON.parse(socket.responseText);
+	for(var i=0;i<dane.polecenia.length;i++)
+	{
+
+	//pilotpc.dzialaj(dane.polecenia[i],pilotpc.szukajMultimedialne());
+	pilotpc.szukajMultimedialne(dane.polecenia[i],pilotpc.dzialaj);
+
+	}
+	}
+	catch(e)
+	{
+	console.log(e)
+	}
+}
 
 socket.send()
-var dane=JSON.parse(socket.responseText);
-for(var i=0;i<dane.polecenia.length;i++)
-{
 
-//pilotpc.dzialaj(dane.polecenia[i],pilotpc.szukajMultimedialne());
-pilotpc.szukajMultimedialne(dane.polecenia[i],pilotpc.dzialaj);
-
-}
 }
 catch(e)
 {

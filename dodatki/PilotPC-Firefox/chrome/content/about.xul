@@ -8,7 +8,7 @@
   <groupbox align="center" orient="horizontal">
     <vbox>
       <label value="PilotPC-Firefox" style="font-weight: bold; font-size: x-large;"/>
-      <label value="&version; 0.1.23"/>
+      <label value="&version; 0.2.3"/>
       <separator class="thin"/>
       <label value="&createdBy;" style="font-weight: bold;"/>
       <label value="matrix0123456789"/>
