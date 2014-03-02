@@ -15,7 +15,7 @@ public class Program {
     static Polaczenie polaczenia;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
-    static public String wersja = "0.2.3";
+    static public String wersja = "0.2.4";
     static public Robot robot;
     static public TrayIcon trayIcon;
 
@@ -64,8 +64,8 @@ public class Program {
         tray(true);
         try {
             DatagramSocket socket = new DatagramSocket(8753);
-            socket.setBroadcast(false);
-            String host = java.net.InetAddress.getLocalHost().getHostName();
+            socket.setBroadcast(true);
+            String host = "aaaa" + java.net.InetAddress.getLocalHost().getHostName();
             while (true) {
                 DatagramPacket pakiet = new DatagramPacket(host.getBytes(), host.length(), InetAddress.getByName("255.255.255.255"), 8753);
                 socket.connect(InetAddress.getByName("255.255.255.255"), 8753);

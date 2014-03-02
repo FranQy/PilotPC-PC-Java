@@ -73,7 +73,8 @@ public class HTTP {
             if (Polaczenie.polaczeniaHttp[i].zablokowane)
                 wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.ZostalesRozlaczony.ordinal()];
             else if (wyj.indexOf("/dodatek") == 0) {
-                wysylanie = "HTTP/1.1 200 OK\n" +
+                if (soc.getInetAddress().isLoopbackAddress()) {
+                    wysylanie = "HTTP/1.1 200 OK\n" +
                         "Server: PilotPC\n" +
                         "Set-Cookie: id="+i+"; path=/\n" +
                         "Content-Type: application/json; charset=UTF-8\n" +
@@ -93,6 +94,14 @@ public class HTTP {
 
                 }
                 wysylanie += "]}";
+                } else {
+                    wysylanie = "HTTP/1.1 403 Forbidden\n" +
+                            "Server: PilotPC\n" +
+                            "Content-Type: application/json; charset=UTF-8\n" +
+                            "Set-Cookie: id=" + i + "; path=/\n" +
+                            "\n" +
+                            "{[\"Połączenie tylko przez localhost\"]}";
+                }
             } else if (wyj.indexOf("/" + Program.ustawienia.haslo+"/pulpit/") == 0) {
             wysylanie=Pulpit.HTTP(wyj,i, os);
             }
@@ -856,7 +865,10 @@ public class HTTP {
             }
         if (Polaczenie.polaczeniaHttp[i] == null) {
             Polaczenie.polaczeniaHttp[i] = new HttpPolaczenie();
+
             Polaczenie.polaczeniaHttp[i].UserAgent = new UserAgent(wyj.substring(wyj.indexOf("User-Agent:") + 11, wyj.indexOf('\r', wyj.indexOf("User-Agent:"))));
+            if (wyj.indexOf("/dodatek") == 0)
+                Polaczenie.polaczeniaHttp[i].UserAgent.urzadzenie = "Dodatek do przeglądarki";
         }
         else
         Polaczenie.polaczeniaHttp[i].czas=new Date();
