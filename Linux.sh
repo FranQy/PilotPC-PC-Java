@@ -1,1 +1,1 @@
-java -jar PilotPC-PC-Java.jar
+java -Djava.library.path=. -jar PilotPC-PC-Java.jar
