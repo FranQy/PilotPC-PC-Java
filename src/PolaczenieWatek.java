@@ -1,16 +1,11 @@
+import com.example.socketclient.Connect;
+import com.example.socketclient.Ping;
+import com.example.socketclient.TCP_Data;
+
 import java.awt.event.KeyEvent;
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.StreamCorruptedException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import com.example.socketclient.Connect;
-import com.example.socketclient.TCP_Data;
 
 public class PolaczenieWatek
         extends Thread  implements PolaczenieInfo{
@@ -87,8 +82,12 @@ public class PolaczenieWatek
                             oos.flush();
                             // dataObject =  in.readObject();
                             System.out.println(Jezyk.napisy[Jezyk.n.Polaczono.ordinal()]+" "+toString());
-                        }
-                        else
+                        } else if (dataObject.getClass() == Ping.class) {
+                            ObjectOutputStream oos = new ObjectOutputStream(soc.getOutputStream());
+                            oos.writeObject(in);
+                            oos.flush();
+
+                        } else
                         {
                             TCP_Data data=(TCP_Data) dataObject;
 
