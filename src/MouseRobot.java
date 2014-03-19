@@ -6,14 +6,9 @@ import java.util.Date;
 public class MouseRobot {
 
 
-
-
-
-
-
-    static double pozostalex=0;//liczby po przecinku pozostałe po wyliczeniu ostetecznego ruchu myszy
-    static double pozostaley=0;
-    static boolean wcisniete=false;
+    static double pozostalex = 0;//liczby po przecinku pozostałe po wyliczeniu ostetecznego ruchu myszy
+    static double pozostaley = 0;
+    static boolean wcisniete = false;
     static double gladkieX = 0;
     static double gladkieY = 0;
     public static double sredniCzas = 0;
@@ -25,20 +20,18 @@ public class MouseRobot {
             (new WatekMouseRobot()).start();
     }
 
-    static public void PPM()
-    {
+    static public void PPM() {
         Program.robot.mousePress(InputEvent.BUTTON3_MASK);
         Program.robot.mouseRelease(InputEvent.BUTTON3_MASK);
     }
-    static public void LPM()
-    {
+
+    static public void LPM() {
         Program.robot.mousePress(InputEvent.BUTTON1_MASK);
         Program.robot.mouseRelease(InputEvent.BUTTON1_MASK);
     }
 
-    static public void move(int mx, int my)
-    {
-        double odleglosc=Math.sqrt(mx*mx+my*my);//liczy odległość
+    static public void move(int mx, int my) {
+        double odleglosc = Math.sqrt(mx * mx + my * my);//liczy odległość
 
         if (Program.ustawienia.plynnaMysz) {
             gladkieX += mx * odleglosc / 15;//mnoży współrzędne i odległość, dzięki temu gdy szybko poruszymy palcem to kursor przesunie się na drógi koniec ekranu, a jeżeli wolno, to mamy większą dokładność
@@ -46,6 +39,8 @@ public class MouseRobot {
             long cz = (new Date()).getTime();
             if (ostatniCzas > 0)
                 sredniCzas = sredniCzas * 0.9 + (cz - ostatniCzas) * 0.1;
+            if (sredniCzas > 100)
+                sredniCzas = 100;
             ostatniCzas = cz;
         } else {
             double mx2 = mx * odleglosc / 15 + pozostalex;//mnoży współrzędne i odległość, dzięki temu gdy szybko poruszymy palcem to kursor przesunie się na drógi koniec ekranu, a jeżeli wolno, to mamy większą dokładność
@@ -55,31 +50,30 @@ public class MouseRobot {
             Point b = MouseInfo.getPointerInfo().getLocation();
             int x = (int) b.getX();
             int y = (int) b.getY();
-            Program.robot.mouseMove(x+(int)Math.floor(mx2), y+(int)Math.floor(my2));
+            Program.robot.mouseMove(x + (int) Math.floor(mx2), y + (int) Math.floor(my2));
         }
     }
-    static public void moveTo(int mx, int my)
-    {
 
-        Program.robot.mouseMove(mx,my);
+    static public void moveTo(int mx, int my) {
+
+        Program.robot.mouseMove(mx, my);
     }
-    static public void move(boolean LONG, int mx, int my)
-    {
-        if(!wcisniete)
-        {Program.robot.mousePress(InputEvent.BUTTON1_MASK);
-            wcisniete=true;
+
+    static public void move(boolean LONG, int mx, int my) {
+        if (!wcisniete) {
+            Program.robot.mousePress(InputEvent.BUTTON1_MASK);
+            wcisniete = true;
         }
-        move(mx,  my);
+        move(mx, my);
 
     }
 
-    static public void up()
-    {
+    static public void up() {
         Program.robot.mouseRelease(InputEvent.BUTTON1_MASK);
         wcisniete = false;
     }
-    static public void scroll(int y)
-    {
+
+    static public void scroll(int y) {
         Program.robot.mouseWheel(y);
     }
 }

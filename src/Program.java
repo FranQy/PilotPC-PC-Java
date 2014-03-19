@@ -15,29 +15,27 @@ public class Program {
     static Polaczenie polaczenia;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
-    static public String wersja = "0.2.4";
+    static public String wersja = "0.2.6";
     static public Robot robot;
     static public TrayIcon trayIcon;
 
     public static void main(String[] args) throws AWTException, InterruptedException {
         Biblioteka.load();
-        if(ustawienia.jezyk==null)
-        {
-            ustawienia.jezyk= Jezyk.jezyki.Polski;
+        if (ustawienia.jezyk == null) {
+            ustawienia.jezyk = Jezyk.jezyki.Polski;
             ustawienia.eksportuj();
         }
         // TODO Auto-generated method stub
-        robot=new Robot();
+        robot = new Robot();
         wyswietlanie = TypWyswietlania.Konsola;
         boolean pomoc = false;
-        Jezyk.jezyki lang= ustawienia.jezyk;
+        Jezyk.jezyki lang = ustawienia.jezyk;
         for (int i = 0; i < args.length; i++) {
-            if (args[i].equalsIgnoreCase("/o"))
+            if (args[i].equalsIgnoreCase("/o") || args[i].equalsIgnoreCase("-o"))
                 wyswietlanie = TypWyswietlania.Okno;
             else if (args[i].equals("/?"))
                 pomoc = true;
-            else if (args[i].equals("/l")||args[i].equals("-l"))
-            {
+            else if (args[i].equals("/l") || args[i].equals("-l")) {
                 i++;
                 if (args[i].equalsIgnoreCase("pl"))
                     lang = Jezyk.jezyki.Polski;
@@ -58,8 +56,7 @@ public class Program {
 
             //if(wyświetlanie==TypWyświetlania.Okno)
             //Mess
-        }
-        else
+        } else
             System.out.println(Jezyk.napisy[Jezyk.n.PilotPCWersja.ordinal()] + wersja);
         tray(true);
         try {
@@ -114,25 +111,23 @@ public class Program {
 
             BufferedImage imgObrazek;
             imgObrazek = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
-                try{
-            if(!nowy)
+            try {
+                if (!nowy)
                     tray.remove(trayIcon);
-                }
-                catch(NullPointerException e){}
+            } catch (NullPointerException e) {
+            }
             trayIcon = new TrayIcon(imgObrazek, "PilotPC-PC-Java", popup);
             trayIcon.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    if(e.getButton()==1)  {
+                    if (e.getButton() == 1) {
                         wyswietlanie = TypWyswietlania.Okno;
-                        if (glowneOkno == null)
-                        {
+                        if (glowneOkno == null) {
                             glowneOkno = new Okno();
-                        }
-                        else
-                        {
+                        } else {
                             glowneOkno.frame.setVisible(true);
-                        }   }
+                        }
+                    }
                 }
 
                 @Override
@@ -154,7 +149,7 @@ public class Program {
                 public void mouseExited(MouseEvent e) {
 
                 }
-            })     ;
+            });
             trayIcon.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
                 public void actionPerformed(ActionEvent e) {
                 }
@@ -167,13 +162,13 @@ public class Program {
 
             }
             // if(nowy)
-           // trayIcon.displayMessage("PilotPC " + wersja, Jezyk.napisy[Jezyk.n.SerwerZostalUruchomiony.ordinal()], TrayIcon.MessageType.INFO);  // Wyświetlenie dymka powitalnego.
-    }
+            // trayIcon.displayMessage("PilotPC " + wersja, Jezyk.napisy[Jezyk.n.SerwerZostalUruchomiony.ordinal()], TrayIcon.MessageType.INFO);  // Wyświetlenie dymka powitalnego.
+        }
 
-    try{
-             Biblioteka.sprawdz();
-         }
-         catch(Throwable e){}
+        try {
+            Biblioteka.sprawdz();
+        } catch (Throwable e) {
+        }
         Timer timer1 = new Timer();
         Aktualizacja timer1_task = new Aktualizacja();
         timer1.schedule(timer1_task, 0, 3600000);
