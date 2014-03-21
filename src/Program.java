@@ -15,7 +15,7 @@ public class Program {
     static Polaczenie polaczenia;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
-    static public String wersja = "0.2.6";
+    static public String wersja = "0.2.7";
     static public Robot robot;
     static public TrayIcon trayIcon;
 
@@ -172,6 +172,9 @@ public class Program {
         Timer timer1 = new Timer();
         Aktualizacja timer1_task = new Aktualizacja();
         timer1.schedule(timer1_task, 0, 3600000);
+        Timer timer2 = new Timer();
+        OdśmiecanieHttpPołączenia timer2_task = new OdśmiecanieHttpPołączenia();
+        timer2.schedule(timer2_task, 5000, 5000);
         polaczenia = new Polaczenie();
     }
 

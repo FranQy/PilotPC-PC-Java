@@ -84,7 +84,7 @@ public class PolaczenieWatek
                             System.out.println(Jezyk.napisy[Jezyk.n.Polaczono.ordinal()]+" "+toString());
                         } else if (dataObject.getClass() == Ping.class) {
                             ObjectOutputStream oos = new ObjectOutputStream(soc.getOutputStream());
-                            oos.writeObject(in);
+                            oos.writeObject((Ping) dataObject);
                             oos.flush();
 
                         } else

@@ -27,44 +27,44 @@ public class Okno {
     private JLabel PodlaczoneUrzadzenia;
     private JButton gladkaMysz;
     PanelQRCode qr;
-    public JFrame frame  ;
+    public JFrame frame;
 
-    public Okno(){
+    public Okno() {
         this(true);
     }
-        public Okno(boolean wyswietl){
 
-        frame= new JFrame("PilotPC");
+    public Okno(boolean wyswietl) {
+
+        frame = new JFrame("PilotPC");
 
         //System.out.println("1");
         frame.setContentPane(zawartosc);
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        telefony.setLayout(new GridLayout(0,1));
-            Jezyk.jezyki[] langs=Jezyk.jezyki.values();
-            for(short i=0;i<langs.length;i++)
-            {
-                WybierzJezyk.addItem(langs[i].toString());
+        telefony.setLayout(new GridLayout(0, 1));
+        Jezyk.jezyki[] langs = Jezyk.jezyki.values();
+        for (short i = 0; i < langs.length; i++) {
+            WybierzJezyk.addItem(langs[i].toString());
 
-                if(Program.ustawienia.jezyk==langs[i])
+            if (Program.ustawienia.jezyk == langs[i])
                 WybierzJezyk.setSelectedIndex(i);
+        }
+        WybierzJezyk.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Program.ustawienia.jezyk = Jezyk.jezyki.values()[WybierzJezyk.getSelectedIndex()];
+                Jezyk.przeladuj(Program.ustawienia.jezyk);
+                Program.ustawienia.eksportuj();
             }
-            WybierzJezyk.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                   Program.ustawienia.jezyk = Jezyk.jezyki.values()[WybierzJezyk.getSelectedIndex()];
-                    Jezyk.przeladuj(Program.ustawienia.jezyk);
-                    Program.ustawienia.eksportuj();
-                }
-            });
-       kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()]+": " + Program.ustawienia.haslo);
-            ustawJezyk();
+        });
+        kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ": " + Program.ustawienia.haslo);
+        ustawJezyk();
         zmieńKodButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 Program.ustawienia.haslo = Ustawienia.generujHaslo();
-                kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()]+": " + Program.ustawienia.haslo);
+                kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ": " + Program.ustawienia.haslo);
                 qr.odswierz();
                 Program.ustawienia.eksportuj();
             }
@@ -94,27 +94,27 @@ public class Okno {
         Odswierz timer1_task = new Odswierz();
         timer1_task.okno = this;
         timer1.schedule(timer1_task, 100, 100);
-            if (Program.ustawienia.plynnaMysz)
-                gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
-            else
-                gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WlaczWygladzanieMyszy.ordinal()]);
-            gladkaMysz.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    Program.ustawienia.plynnaMysz = !Program.ustawienia.plynnaMysz;
-                    if (Program.ustawienia.plynnaMysz) {
-                        (new WatekMouseRobot()).start();
-                        gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
-                    } else
-                        gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WlaczWygladzanieMyszy.ordinal()]);
+        if (Program.ustawienia.plynnaMysz)
+            gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
+        else
+            gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WlaczWygladzanieMyszy.ordinal()]);
+        gladkaMysz.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Program.ustawienia.plynnaMysz = !Program.ustawienia.plynnaMysz;
+                if (Program.ustawienia.plynnaMysz) {
+                    (new WatekMouseRobot()).start();
+                    gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
+                } else
+                    gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WlaczWygladzanieMyszy.ordinal()]);
 
-                    Program.ustawienia.eksportuj();
-                }
-            });
-            // System.out.println("4");
-        frame.setSize(750,400);
-            if(wyswietl)
-        frame.setVisible(true);
+                Program.ustawienia.eksportuj();
+            }
+        });
+        // System.out.println("4");
+        frame.setSize(750, 400);
+        if (wyswietl)
+            frame.setVisible(true);
         //System.out.println("5");
     }
 
@@ -123,7 +123,7 @@ public class Okno {
         zmieńKodButton.setText(Jezyk.napisy[Jezyk.n.ZmienKod.ordinal()]);
         informacjeButton.setText(Jezyk.napisy[Jezyk.n.Infromacje.ordinal()]);
         startZSystememButton.setText(Jezyk.napisy[Jezyk.n.StartZSystemem.ordinal()]);
-        kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()]+": " + Program.ustawienia.haslo);
+        kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ": " + Program.ustawienia.haslo);
         PodlaczoneUrzadzenia.setText(Jezyk.napisy[Jezyk.n.PodlaczoneUrzadzenia.ordinal()]);
         if (Program.ustawienia.plynnaMysz)
             gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
@@ -142,7 +142,7 @@ public class Okno {
         public void run() {
             String statusTxt = "";
             if (Polaczenie.nasluchiwanie) {
-                if (Polaczenie.watki[0].gotowe)
+                if (Polaczenie.watki[0] != null && Polaczenie.watki[0].gotowe)
                     statusTxt = "Gotowe!";
                 else
                     statusTxt = "Inicjowanie...";
@@ -151,12 +151,11 @@ public class Okno {
                 statusTxt += " Zaktualizowano do nowej wersji!";
             else if (Aktualizacja.trwa)
                 statusTxt += " Trwa aktualizacja do nowej wersji...";
-           // status.setText(statusTxt);
+            // status.setText(statusTxt);
             for (byte i = 0; i < Polaczenie.watki.length; i++) {
                 if (Polaczenie.watki[i] != null)
                     if (Polaczenie.watki[i].czyPolaczono()) {
-                        if (!Polaczenie.watki[i].pokazane && Polaczenie.watki[i].infoPrzyPolaczeniu != null)
-                        {
+                        if (!Polaczenie.watki[i].pokazane && Polaczenie.watki[i].infoPrzyPolaczeniu != null) {
                             Polaczenie.watki[i].pokazane = true;
                             telefony.add(Polaczenie.watki[i].UI = new Urzadzenie(Polaczenie.watki[i], telefony));
                             potrzebneOdswierzenie = true;
@@ -164,19 +163,19 @@ public class Okno {
                     }
             }
             for (byte i = 0; i < Polaczenie.polaczeniaHttp.length; i++) {
-                if (Polaczenie.polaczeniaHttp[i] != null)
-                {
-                    long rozn=(new Date()).getTime() - Polaczenie.polaczeniaHttp[i].czas.getTime();
+                if (Polaczenie.polaczeniaHttp[i] != null) {
+                    long rozn = (new Date()).getTime() - Polaczenie.polaczeniaHttp[i].czas.getTime();
                     if (!Polaczenie.polaczeniaHttp[i].pokazane && rozn < 5000) {
                         Polaczenie.polaczeniaHttp[i].pokazane = true;
                         telefony.add(Polaczenie.polaczeniaHttp[i].UI = new Okno.Urzadzenie(Polaczenie.polaczeniaHttp[i], telefony));
                         potrzebneOdswierzenie = true;
-                    } else if (Polaczenie.polaczeniaHttp[i].pokazane&&rozn > 5000) {
+                    } else if (Polaczenie.polaczeniaHttp[i].pokazane && rozn > 5000) {
                         telefony.remove(Polaczenie.polaczeniaHttp[i].UI);
                         Polaczenie.polaczeniaHttp[i].pokazane = false;
                         potrzebneOdswierzenie = true;
 
-                    }    }
+                    }
+                }
             }
             //if(potrzebneOdswierzenie)
 /*{telefony.repaint();//(telefony.getGraphics());
@@ -185,14 +184,15 @@ for(int i=0;i<telefony.countComponents();i++)
 {
 	telefony.getComponent(i).paint(telefony.getComponent(i).getGraphics());
 }}*/
-            if (potrzebneOdswierzenie)
-            {
+            if (potrzebneOdswierzenie) {
                 telefony.paintAll(telefony.getGraphics());
                 zawartosc.paintAll(zawartosc.getGraphics());
             }
             potrzebneOdswierzenie = false;
         }
-    }            public class Urzadzenie extends JPanel {
+    }
+
+    public class Urzadzenie extends JPanel {
         public PolaczenieInfo zrodlo;
         JButton rozlacz = new JButton(Jezyk.napisy[Jezyk.n.Rozlacz.ordinal()]);
         JLabel tekst = new JLabel();
@@ -230,12 +230,12 @@ for(int i=0;i<telefony.countComponents();i++)
 
         }
     }
-    class Start extends Thread
-    {
+
+    class Start extends Thread {
 
         @Override
         public void run() {
-            String tekstIP = Jezyk.napisy[Jezyk.n.TwojeIPTo.ordinal()]+":<br/>";
+            String tekstIP = Jezyk.napisy[Jezyk.n.TwojeIPTo.ordinal()] + ":<br/>";
             Enumeration<NetworkInterface> n;
             try {
                 n = NetworkInterface.getNetworkInterfaces();
@@ -251,7 +251,7 @@ for(int i=0;i<telefony.countComponents();i++)
                             tekstIP += addr.getHostAddress() + "<br/>";
                     }
                 }
-               // System.out.println("2b");
+                // System.out.println("2b");
             } catch (SocketException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();

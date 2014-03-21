@@ -856,13 +856,19 @@ public class HTTP {
                     }
                 }
             }
-        } else
+        } else {
+            long terazCzas = (new Date()).getTime();
             for (; i < 100; i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
             {
+
                 if (Polaczenie.polaczeniaHttp[i] == null) {
+                    break;
+                } else if (!Polaczenie.polaczeniaHttp[i].pokazane && terazCzas - Polaczenie.polaczeniaHttp[i].czas.getTime() > 5000) {
+                    Polaczenie.polaczeniaHttp[i] = null;
                     break;
                 }
             }
+        }
         if (Polaczenie.polaczeniaHttp[i] == null) {
             Polaczenie.polaczeniaHttp[i] = new HttpPolaczenie();
 
