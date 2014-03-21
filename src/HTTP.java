@@ -249,6 +249,7 @@ public class HTTP {
                         "</style>"
                         + "<script>/*<![CDATA[*/\n"
                         + "var czasPrzesylu=new Date();"
+                        + "var czasWysylu=new Date();"
                         + "var polaczono=false;" +
                         "var jakosc=[];"
                         + "var pilot=new Object();\n"
@@ -259,7 +260,9 @@ public class HTTP {
                         + "var data=new TCP_Data();"
                         + "data.type=TCP_Data.typ.PILOT;"
                         + "data.button=przycisk;"
-                        + "send(data);"
+                        + "send(data);" +
+                        "if(window.navigator.vibrate)" +
+                        " window.navigator.vibrate(100);"
                         + "};\n"
                         + "pilot.clickTrzymaj=function(przycisk, przycisk2)"
                         + "{" +
@@ -410,8 +413,9 @@ public class HTTP {
                         "document.getElementById('stanPol').textContent='"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Polaczono.ordinal()]+"';" +
                         "document.getElementById('jakosc').textContent=Math.ceil(jakoscLicz());"
                         + "}};\n"
-                        + "socket.open('get', '?'+JSON.stringify(data), false)\n"
-                        + "socket.send();\n"
+                        + "socket.open('get', '?'+JSON.stringify(data), true)\n"
+                        + "czasWysylu=new Date();" +
+                        "socket.send();\n"
                         + "}"
                         + "function TCP_Data(){this.touchpadX=0;this.touchpadY=0;this.button=0;this.type=0;this.mouse=0;};"
                         + "TCP_Data.touchedTYPE={NORMAL:0, LONG:1, UP:2, SCROLL:3, LPM:4, PPM:5};"
@@ -432,8 +436,9 @@ public class HTTP {
                         "document.getElementById('stanPol').textContent='"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Rozlaczono.ordinal()]+"!';"
                         //+ "alert('Rozłączono!');"
                         + "}"
-                        + "if((new Date()).getTime()-czasPrzesylu.getTime()>1000)"
-                        + "send(new Object());"
+                        + "if((new Date()).getTime()-czasPrzesylu.getTime()>1000&&(new Date()).getTime()-czasWysylu.getTime()>1000)"
+                        + "" +
+                        "send(new Object());"
                         + "},250);" +
                         "function mapa(skala)" +
                         "{" +
