@@ -44,8 +44,10 @@ return ret;
 }*/
 
 
-instalacja::instalacja(bool _systemStart, bool _wszyscy, LPWSTR _folder, bool _skrotPulpit, bool _skrotMenuStart, HWND _progressbar)
+instalacja::instalacja(bool _systemStart, bool _wszyscy, LPCWSTR _folder, bool _skrotPulpit, bool _skrotMenuStart, HWND _progressbar)
 {
+
+
 	systemStart = _systemStart;
 	wszyscy = _wszyscy;
 	folder = _folder;
@@ -53,12 +55,73 @@ instalacja::instalacja(bool _systemStart, bool _wszyscy, LPWSTR _folder, bool _s
 	skrotPulpit = _skrotPulpit;
 	folderStr = wstring(folder);
 	progressbar = _progressbar;
+
+
 }
 void __cdecl watekStart(void * Args)
 {
-	((instalacja*)Args)[0].start();
-	MessageBox(((instalacja*)Args)[0].okno, jezyk::napisy[Zainstalowano], jezyk::napisy[Zainstalowano], MB_ICONINFORMATION);
-	exit(0);
+	// Check the current process's "run as administrator" status.
+	BOOL fIsRunAsAdmin;
+	try
+	{
+		fIsRunAsAdmin = IsRunAsAdmin();
+
+
+		// Elevate the process if it is not run as administrator.
+		if (!fIsRunAsAdmin)
+		{
+			wchar_t szPath[MAX_PATH];
+			if (GetModuleFileName(NULL, szPath, ARRAYSIZE(szPath)))
+			{
+				// Launch itself as administrator.
+				SHELLEXECUTEINFO sei = { sizeof(sei) };
+				sei.lpVerb = L"runas";
+				sei.lpFile = szPath;
+				wstring parametry = wstring(jezyk::napisy[Kod]) + wstring(L" \"") + wstring(((instalacja*)Args)[0].folder) + wstring(L"\"");
+				if (((instalacja*)Args)[0].systemStart)
+					parametry = parametry + wstring(L" /s");
+				if (((instalacja*)Args)[0].wszyscy)
+					parametry = parametry + wstring(L" /w");
+				if (((instalacja*)Args)[0].skrotMenuStart)
+					parametry = parametry + wstring(L" /m");
+				if (((instalacja*)Args)[0].skrotPulpit)
+					parametry = parametry + wstring(L" /p");
+				sei.lpParameters = parametry.c_str();
+				sei.hwnd = ((instalacja*)Args)[0].okno;
+				sei.nShow = SW_NORMAL;
+
+				if (!ShellExecuteEx(&sei))
+				{
+					DWORD dwError = GetLastError();
+					if (dwError == ERROR_CANCELLED)
+					{
+						MessageBox(((instalacja*)Args)[0].okno, jezyk::napisy[WymaganeUprawneiniaAdministratora], jezyk::napisy[BladPodczasInstalacji], MB_ICONINFORMATION);
+						exit(0);
+					}
+				}
+				else
+				{
+					EndDialog(((instalacja*)Args)[0].okno, TRUE);  // Quit itself
+					exit(0);
+				}
+			}
+		}
+		else
+		{
+			((instalacja*)Args)[0].start();
+			MessageBox(((instalacja*)Args)[0].okno, jezyk::napisy[Zainstalowano], jezyk::napisy[Zainstalowano], MB_ICONINFORMATION);
+			exit(0);
+		}
+	}
+	catch (DWORD dwError)
+	{
+		((instalacja*)Args)[0].start();
+		MessageBox(((instalacja*)Args)[0].okno, jezyk::napisy[Zainstalowano], jezyk::napisy[Zainstalowano], MB_ICONINFORMATION);
+		exit(0);
+	}
+
+
+
 }
 void instalacja::start()
 {
@@ -90,13 +153,13 @@ void instalacja::start()
 		ZeroMemory(&si, sizeof(si));
 		si.cb = sizeof(si);
 		ZeroMemory(&pi, sizeof(pi));
-		CreateProcess(((wstring)folder + L"\\java.exe").c_str(), L"java.exe", NULL, NULL, false, 0, NULL, folder, &si,&pi);
+		CreateProcess(((wstring)folder + L"\\java.exe").c_str(), L"java.exe", NULL, NULL, false, 0, NULL, folder, &si, &pi);
 	}
 	WCHAR bufor[1024];
 	GetModuleFileName(NULL, bufor, 1024);
 	CopyFile(bufor, (folderStr + (L"\\uninstall.exe")).c_str(), false);
 	SendMessage(progressbar, PBM_SETPOS, (WPARAM)512, 0);
-	
+
 	//int soc=getHttp("pilotpc.za.pl", 13, "pilotpc-pc-java.jar", 19);
 	int soc = getHttp("pilotpc.za.pl", 13, "version.ini", 11);
 	const int BuffSize = 10000;
@@ -108,7 +171,7 @@ void instalacja::start()
 	int n = recv(soc, buff, BuffSize, 0);
 
 	SendMessage(progressbar, PBM_SETPOS, (WPARAM)2048, 0);
-	
+
 	buff[n] = 0;
 	int i = 0;
 	for (; i < n; i++)
@@ -145,19 +208,19 @@ void instalacja::start()
 			pobierz(plik);
 			ilePlikowGotowe++;
 			SendMessage(progressbar, PBM_SETPOS, (WPARAM)2048 + (29 * 1024 * ilePlikowGotowe) / ilePlikow, 0);
-			
+
 		}
 	}
 
 	SendMessage(progressbar, PBM_SETPOS, (WPARAM)31 * 1024, 0);
-	
+
 	HKEY hkUninstall;
 	HKEY hkProgram;
 	DWORD dwDisp;
 	if (wszyscy)
 		RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", 0, KEY_ALL_ACCESS, &hkUninstall);
 	else
-	RegOpenKeyEx(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", 0, KEY_ALL_ACCESS, &hkUninstall);
+		RegOpenKeyEx(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", 0, KEY_ALL_ACCESS, &hkUninstall);
 	RegCreateKeyEx(hkUninstall, L"PilotPC", 0, NULL, REG_OPTION_NON_VOLATILE,
 		KEY_ALL_ACCESS, NULL, &hkProgram, &dwDisp);
 	RegSetValueEx(hkProgram, L"DisplayName", 0, REG_SZ, (byte*)L"PilotPC", 14);
@@ -176,7 +239,7 @@ void instalacja::start()
 		if (wszyscy)
 			RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
 		else
-		RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
+			RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
 		wstring polecenie = (L"\"" + folderStr + (L"\\Windows.exe\""));
 		RegSetValueEx(hkTest, L"PilotPC", 0, REG_SZ, (byte*)polecenie.c_str(), 2 * polecenie.length());
 	}
@@ -212,43 +275,43 @@ void instalacja::start()
 
 /*HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR workingDir)
 {
-	HRESULT hres;
-	IShellLink* psl;
-	// Get a pointer to the IShellLink interface. It is assumed that CoInitialize
-	// has already been called.
-	HRESULT test10 = CoInitialize((LPVOID)&psl);
-	hres = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID*)&psl);
-	int test = (int)hres;
-	if (SUCCEEDED(hres))
-	{
-		IPersistFile* ppf;
+HRESULT hres;
+IShellLink* psl;
+// Get a pointer to the IShellLink interface. It is assumed that CoInitialize
+// has already been called.
+HRESULT test10 = CoInitialize((LPVOID)&psl);
+hres = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID*)&psl);
+int test = (int)hres;
+if (SUCCEEDED(hres))
+{
+IPersistFile* ppf;
 
-		// Set the path to the shortcut target and add the description. 
-		psl->SetPath(lpszPathObj);
-		psl->SetDescription(lpszDesc);
-		psl->SetWorkingDirectory(workingDir);
-		// Query IShellLink for the IPersistFile interface, used for saving the 
-		// shortcut in persistent storage. 
+// Set the path to the shortcut target and add the description.
+psl->SetPath(lpszPathObj);
+psl->SetDescription(lpszDesc);
+psl->SetWorkingDirectory(workingDir);
+// Query IShellLink for the IPersistFile interface, used for saving the
+// shortcut in persistent storage.
 
-		hres = psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf);
+hres = psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf);
 
-		if (SUCCEEDED(hres))
-		{
-			WCHAR wsz[MAX_PATH];
+if (SUCCEEDED(hres))
+{
+WCHAR wsz[MAX_PATH];
 
-			// Ensure that the string is Unicode. 
-			MultiByteToWideChar(CP_ACP, 0, lpszPathLink, -1, wsz, MAX_PATH);
+// Ensure that the string is Unicode.
+MultiByteToWideChar(CP_ACP, 0, lpszPathLink, -1, wsz, MAX_PATH);
 
-			// Add code here to check return value from MultiByteWideChar 
-			// for success.
+// Add code here to check return value from MultiByteWideChar
+// for success.
 
-			// Save the link by calling IPersistFile::Save. 
-			hres = ppf->Save(wsz, TRUE);
-			ppf->Release();
-		}
-		psl->Release();
-	}
-	return hres;
+// Save the link by calling IPersistFile::Save.
+hres = ppf->Save(wsz, TRUE);
+ppf->Release();
+}
+psl->Release();
+}
+return hres;
 
 }*/
 void instalacja::start(HWND hWnd)
@@ -294,7 +357,7 @@ void instalacja::pobierz(string nazwa)
 
 	if (hPlik == INVALID_HANDLE_VALUE) {
 		MessageBox(NULL, jezyk::napisy[NieMoznaUtworzycPliku], jezyk::napisy[BladPodczasInstalacji], MB_ICONEXCLAMATION);
-		PostQuitMessage(0); // Zakoñcz program
+		exit(0); // Zakoñcz program
 	}
 	DWORD licz = 0;
 
@@ -312,7 +375,7 @@ void instalacja::pobierz(string nazwa)
 			if (ilePlikow > 0)
 				SendMessage(progressbar, PBM_SETPOS, (WPARAM)2048 + (29 * 1024 * ilePlikowGotowe) / ilePlikow + (29 * 1024 * ((float)zapisane / (float)(rozmiar)) / ilePlikow), 0);
 			else
-				SendMessage(progressbar, PBM_SETPOS, (WPARAM) (1024 * ((float)zapisane / (float)(rozmiar))), 0);
+				SendMessage(progressbar, PBM_SETPOS, (WPARAM)(1024 * ((float)zapisane / (float)(rozmiar))), 0);
 			n = recv(soc, buff, BuffSize, 0);
 			int i = 0;
 			if (!znalezione)
@@ -444,11 +507,55 @@ int instalacja::getHttp(char host[], int hostl, string path, int pathl)
 	WSACleanup();
 	//return 5;
 }
-void instalacja::odinstaluj(HINSTANCE hInstance, HWND progressbar)
+void instalacja::odinstaluj(HINSTANCE hInstance, HWND progressbar, HWND okno)
 {
+	// Check the current process's "run as administrator" status.
+	BOOL fIsRunAsAdmin;
+	try
+	{
+		fIsRunAsAdmin = IsRunAsAdmin();
 
+
+		// Elevate the process if it is not run as administrator.
+		if (!fIsRunAsAdmin)
+		{
+			wchar_t szPath[MAX_PATH];
+			if (GetModuleFileName(NULL, szPath, ARRAYSIZE(szPath)))
+			{
+				// Launch itself as administrator.
+				SHELLEXECUTEINFO sei = { sizeof(sei) };
+				sei.lpVerb = L"runas";
+				sei.lpFile = szPath;
+				wstring test = (wstring(jezyk::napisy[Kod]) + wstring(L" /u"));
+				LPCWSTR test2 = test.c_str();
+				LPCWSTR test3 = (LPCWSTR)test.c_str();
+				sei.lpParameters = test3;
+				//sei.hwnd = ((instalacja*)Args)[0].okno;
+				sei.nShow = SW_NORMAL;
+
+				if (!ShellExecuteEx(&sei))
+				{
+					DWORD dwError = GetLastError();
+					if (dwError == ERROR_CANCELLED)
+					{
+						MessageBox(okno, jezyk::napisy[WymaganeUprawneiniaAdministratora], jezyk::napisy[BladPodczasInstalacji], MB_ICONINFORMATION);
+						exit(0);
+					}
+				}
+				else
+				{
+					EndDialog(okno, TRUE);  // Quit itself
+					exit(0);
+				}
+				return;
+			}
+		}
+	}
+	catch (DWORD dwError)
+	{
+	}
 	HKEY r, uninstall, run;
-	long blad=RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\PilotPC", 0, KEY_ALL_ACCESS, &r);
+	long blad = RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\PilotPC", 0, KEY_ALL_ACCESS, &r);
 	if (blad != 0)
 		long blad = RegOpenKeyEx(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\PilotPC", 0, KEY_ALL_ACCESS, &r);
 	CHAR folderExe[1024];
@@ -486,4 +593,78 @@ void instalacja::odinstaluj(HINSTANCE hInstance, HWND progressbar)
 	SendMessage(progressbar, PBM_SETPOS, (WPARAM)32 * 1024, 0);
 	MessageBox(0, jezyk::napisy[Usunieto], L"", MB_ICONINFORMATION);
 	exit(0);
+}
+
+
+// 
+//   FUNCTION: IsRunAsAdmin()
+//
+//   PURPOSE: The function checks whether the current process is run as 
+//   administrator. In other words, it dictates whether the primary access 
+//   token of the process belongs to user account that is a member of the 
+//   local Administrators group and it is elevated.
+//
+//   RETURN VALUE: Returns TRUE if the primary access token of the process 
+//   belongs to user account that is a member of the local Administrators 
+//   group and it is elevated. Returns FALSE if the token does not.
+//
+//   EXCEPTION: If this function fails, it throws a C++ DWORD exception which 
+//   contains the Win32 error code of the failure.
+//
+//   EXAMPLE CALL:
+//     try 
+//     {
+//         if (IsRunAsAdmin())
+//             wprintf (L"Process is run as administrator\n");
+//         else
+//             wprintf (L"Process is not run as administrator\n");
+//     }
+//     catch (DWORD dwError)
+//     {
+//         wprintf(L"IsRunAsAdmin failed w/err %lu\n", dwError);
+//     }
+//
+BOOL IsRunAsAdmin()
+{
+	BOOL fIsRunAsAdmin = FALSE;
+	DWORD dwError = ERROR_SUCCESS;
+	PSID pAdministratorsGroup = NULL;
+
+	// Allocate and initialize a SID of the administrators group.
+	SID_IDENTIFIER_AUTHORITY NtAuthority = SECURITY_NT_AUTHORITY;
+	if (!AllocateAndInitializeSid(
+		&NtAuthority,
+		2,
+		SECURITY_BUILTIN_DOMAIN_RID,
+		DOMAIN_ALIAS_RID_ADMINS,
+		0, 0, 0, 0, 0, 0,
+		&pAdministratorsGroup))
+	{
+		dwError = GetLastError();
+		goto Cleanup;
+	}
+
+	// Determine whether the SID of administrators group is enabled in 
+	// the primary access token of the process.
+	if (!CheckTokenMembership(NULL, pAdministratorsGroup, &fIsRunAsAdmin))
+	{
+		dwError = GetLastError();
+		goto Cleanup;
+	}
+
+Cleanup:
+	// Centralized cleanup for all allocated resources.
+	if (pAdministratorsGroup)
+	{
+		FreeSid(pAdministratorsGroup);
+		pAdministratorsGroup = NULL;
+	}
+
+	// Throw the error if something failed in the function.
+	if (ERROR_SUCCESS != dwError)
+	{
+		throw dwError;
+	}
+
+	return fIsRunAsAdmin;
 }

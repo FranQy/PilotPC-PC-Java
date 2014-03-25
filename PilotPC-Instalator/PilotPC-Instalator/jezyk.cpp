@@ -1,20 +1,32 @@
 ﻿#include "jezyk.h"
 
-
+LPWSTR jezyk::nazwyJezykow[3];
+int jezyk::nazwyJezykowLen[3];
 jezyk::jezyk()
 {
 }
+void jezyk::nazwyLoad()
+{
+	jezyk::nazwyJezykow[0] = L"Polski";
+	jezyk::nazwyJezykow[1] = L"English";
+	jezyk::nazwyJezykow[2] = L"русский";
+	jezyk::nazwyJezykowLen[0] = 6;
+	jezyk::nazwyJezykowLen[1] = 7;
+	jezyk::nazwyJezykowLen[2] = 7;
 
+
+}
 
 jezyk::~jezyk()
 {
 }
-wchar_t* jezyk::napisy[16];
+wchar_t* jezyk::napisy[18];
 void jezyk::laduj(jezyki a)
 {
 	switch (a)
 	{
 	case jezyk::Polski:
+		napisy[n::Kod] = L"PL";
 		napisy[n::Instaluj] = L"Instaluj";
 		napisy[n::Odinstaluj] = (L"Odinstaluj");
 		napisy[n::WybierzFolder] = (L"Wybierz folder");
@@ -24,15 +36,22 @@ void jezyk::laduj(jezyki a)
 		napisy[n::SkrotNaPulpicie] = (L"Skrót na pulpicie");
 		napisy[n::SkrotWMenuStart] = (L"Skrót w Menu Start");
 		napisy[n::ProgramJestJuzZainstalowany] = (L"Program jest już zainstalowany.");
-		napisy[n::InstalujPonownie] = (L"Instaluj ponownie");
+		napisy[n::InstalujPonownie] = (L"Napraw");
 		napisy[n::PilotPCInstalator] = (L"PilotPC - Instalator");
 		napisy[n::Zainstalowano] = (L"Zainstalowano");
 		napisy[n::BladPodczasInstalacji] = (L"Błąd podczas instalacji");
 		napisy[n::BladZapisuDoPliku] = (L"Błąd zapisu do pliku");
 		napisy[n::NieMoznaUtworzycPliku] = L"Nie można utworzyć pliku.";
 		napisy[n::Usunieto] = L"Usunięto";
+		napisy[n::WymaganeUprawneiniaAdministratora] = L"Wymagane uprawneinia administratora";
+		napisy[n::Zaakceptuj] = L"Zaakceptuj";
+		napisy[n::Licencja] = L"Postanowienia licencji wkrótce...";
+		napisy[n::PotrzebnaJava] = L"Do działania programu wymagana jest instalacja Javy.";
+		napisy[n::JavaTak] = L"Zainstaluj Javę i kontynuuj";
+		napisy[n::JavaNie] = L"Anuluj";
 		break;
 	case jezyk::Angielski:
+		napisy[n::Kod] = L"EN";
 		napisy[n::Instaluj] = L"Install";
 		napisy[n::Odinstaluj] = (L"Uninstall");
 		napisy[n::WybierzFolder] = (L"Choose folder");
@@ -49,8 +68,15 @@ void jezyk::laduj(jezyki a)
 		napisy[n::BladZapisuDoPliku] = (L"File saving error");
 		napisy[n::NieMoznaUtworzycPliku] = L"Creating file error";
 		napisy[n::Usunieto] = L"Removing done";
+		napisy[n::WymaganeUprawneiniaAdministratora] = L"Access denied";
+		napisy[n::Zaakceptuj] = L"Accept";
+		napisy[n::Licencja] = L"Postanowienia licencji wkrótce...";
+		napisy[n::PotrzebnaJava] = L"Do działania programu wymagana jest instalacja Javy.";
+		napisy[n::JavaTak] = L"Zainstaluj Javę i kontynuuj";
+		napisy[n::JavaNie] = L"Cancel";
 		break;
 	case jezyk::Rosyjski:
+		napisy[n::Kod] = L"RU";
 		napisy[n::Instaluj] = L"Instaluj";
 		napisy[n::Odinstaluj] = (L"Odinstaluj");
 		napisy[n::WybierzFolder] = (L"Выберите папку");
@@ -67,6 +93,12 @@ void jezyk::laduj(jezyki a)
 		napisy[n::BladZapisuDoPliku] = (L"Błąd zapisu do pliku");
 		napisy[n::NieMoznaUtworzycPliku] = L"Nie można utworzyć pliku.";
 		napisy[n::Usunieto] = L"Usunięto";
+		napisy[n::WymaganeUprawneiniaAdministratora] = L"Wymagane uprawneinia administratora";
+		napisy[n::Zaakceptuj] = L"Zaakceptuj";
+		napisy[n::Licencja] = L"Postanowienia licencji wkrótce...";
+		napisy[n::PotrzebnaJava] = L"Do działania programu wymagana jest instalacja Javy.";
+		napisy[n::JavaTak] = L"Zainstaluj Javę i kontynuuj";
+		napisy[n::JavaNie] = L"Anuluj";
 		break;
 	default:
 		break;

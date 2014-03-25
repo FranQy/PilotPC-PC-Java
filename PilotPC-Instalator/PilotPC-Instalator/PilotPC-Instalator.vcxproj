@@ -71,7 +71,7 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AddModuleNamesToAssembly>
       </AddModuleNamesToAssembly>
-      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
       <SubSystem>Windows</SubSystem>
     </Link>
     <Manifest>

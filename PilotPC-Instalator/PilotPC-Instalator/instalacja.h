@@ -3,20 +3,20 @@
 using namespace std;
 
 
-
+BOOL IsRunAsAdmin();
 class instalacja
 {
 public:
 
-	instalacja(bool systemStart, bool wszyscy, LPWSTR folder, bool skrotPulpit, bool skrotMenuStart,HWND);
+	instalacja(bool systemStart, bool wszyscy, LPCWSTR folder, bool skrotPulpit, bool skrotMenuStart,HWND);
 public: void instalacja::start();
 public: void instalacja::start(HWND hWnd);
-public: static void instalacja::odinstaluj(HINSTANCE, HWND);
+public: static void instalacja::odinstaluj(HINSTANCE, HWND, HWND);
 public: void __cdecl instalacja::start(void * Args);
 		HWND okno;
-	bool czyJava();
+public: static bool czyJava();
 	HWND progressbar;
-	bool systemStart; bool wszyscy; LPWSTR folder;
+	bool systemStart; bool wszyscy; LPCWSTR folder;
 	bool skrotPulpit; bool skrotMenuStart;
 	wstring folderStr;
 	int ilePlikow;

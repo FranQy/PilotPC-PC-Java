@@ -7,3 +7,4 @@ int WinMain(HINSTANCE hInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow
 	);
+void wyswietl3(HINSTANCE);
