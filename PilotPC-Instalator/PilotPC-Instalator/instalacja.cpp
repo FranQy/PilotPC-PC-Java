@@ -113,14 +113,14 @@ void __cdecl watekStart(void * Args)
 		}
 		else
 		{
-			((instalacja*)Args)[0].start();
+			((instalacja*)Args)[0].start(((instalacja*)Args)[0].wfolder);
 			MessageBox(((instalacja*)Args)[0].okno, jezyk::napisy[Zainstalowano], jezyk::napisy[Zainstalowano], MB_ICONINFORMATION);
 			exit(0);
 		}
 	}
 	catch (DWORD dwError)
 	{
-		((instalacja*)Args)[0].start();
+		((instalacja*)Args)[0].start(((instalacja*)Args)[0].wfolder);
 		MessageBox(((instalacja*)Args)[0].okno, jezyk::napisy[Zainstalowano], jezyk::napisy[Zainstalowano], MB_ICONINFORMATION);
 		exit(0);
 	}
@@ -128,7 +128,7 @@ void __cdecl watekStart(void * Args)
 
 
 }
-void instalacja::start()
+void instalacja::start(wstring fol)
 {
 
 	SECURITY_ATTRIBUTES  sa;
@@ -143,13 +143,25 @@ void instalacja::start()
 		SDDL_REVISION_1,
 		&(saw->lpSecurityDescriptor),
 		NULL);
-	if (!CreateDirectory(folder, &sa)){
-		//MessageBox(NULL, jezyk::napisy[BladPodczasInstalacji], L"Nie mo¿na utworzyæ folderu", MB_ICONEXCLAMATION);
 
+	for (int i = 3; i < fol.length(); i++)
+	{
+
+		if (fol[i] == '\\')
+		{
+			if (!CreateDirectory(fol.substr(0, i).c_str(), &sa)&&_waccess(fol.substr(0, i).c_str(), 0) == ENOENT){
+				MessageBox(NULL, (wstring(L"Nie mo¿na utworzyæ folderu ") + fol.substr(0, i)).c_str(), jezyk::napisy[BladPodczasInstalacji], MB_ICONERROR);
+				exit(1);
+			}
+		}
+	}
+	if (!CreateDirectory(fol.c_str(), &sa)&&_waccess(fol.c_str(), 0) == ENOENT){
+		MessageBox(NULL, (wstring(L"Nie mo¿na utworzyæ folderu ")+fol).c_str(), jezyk::napisy[BladPodczasInstalacji], MB_ICONERROR);
+		exit(1);
 	}
 	if (!czyJava())
 	{
-		pobierz("java.bin");
+		pobierz("java.bin", fol);
 		MoveFile(((wstring)folder + L"\\java.bin").c_str(), ((wstring)folder + L"\\java.exe").c_str());
 		MessageBox(NULL, L"W systemie brak Javy. Proszê zainstalowaæ Javê", L"Informacja o Javie", MB_ICONEXCLAMATION);
 		STARTUPINFO si;
@@ -210,7 +222,7 @@ void instalacja::start()
 			int x2 = x;
 			string plik = tresc.substr(x);
 			plik = plik.substr(0, plik.find_first_of('\r'));
-			pobierz(plik);
+			pobierz(plik,fol);
 			ilePlikowGotowe++;
 			SendMessage(progressbar, PBM_SETPOS, (WPARAM)2048 + (29 * 1024 * ilePlikowGotowe) / ilePlikow, 0);
 
@@ -334,7 +346,7 @@ void instalacja::start(HWND hWnd)
 instalacja::~instalacja()
 {
 }
-void instalacja::pobierz(string nazwa)
+void instalacja::pobierz(string nazwa, wstring fol)
 {
 	int soc;
 	int leng = nazwa.length();
@@ -353,17 +365,16 @@ void instalacja::pobierz(string nazwa)
 	wstring b;
 	convert(nazwa, b);
 	const WCHAR* nazwa2 = b.c_str();;
-	wstring c(folder);
-	const WCHAR* folder2 = c.c_str();
+	
+	const WCHAR* folder2 = fol.c_str();
 	//_bstr_t naz2 = new _bstr_t()
 	//HANDLE  hPlik = CreateFile(lacz(folder, nazwa), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, 0, NULL);
 	//WCHAR* test = c +L"\\"+ b;
-	HANDLE  hPlik = CreateFile((c + wstring(L"\\") + b).c_str(), GENERIC_ALL, 0, NULL, CREATE_ALWAYS, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+	HANDLE  hPlik = CreateFile((fol + wstring(L"\\") + b).c_str(), GENERIC_ALL, 0, NULL, CREATE_ALWAYS, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
 
 
 	if (hPlik == INVALID_HANDLE_VALUE) {
-		MessageBox(NULL, jezyk::napisy[NieMoznaUtworzycPliku], jezyk::napisy[BladPodczasInstalacji], MB_ICONEXCLAMATION);
-		MessageBox(NULL, (c + wstring(L"\\") + b).c_str(), jezyk::napisy[BladPodczasInstalacji], MB_ICONEXCLAMATION);
+		MessageBox(NULL, (wstring(jezyk::napisy[NieMoznaUtworzycPliku]) + wstring(L" ") + fol + wstring(L"\\") + b).c_str(), jezyk::napisy[BladPodczasInstalacji], MB_ICONEXCLAMATION);
 		exit(0); // Zakoñcz program
 	}
 	DWORD licz = 0;

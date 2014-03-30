@@ -30,12 +30,25 @@ bool trwa = false;
 #pragma comment (lib,"comctl32.lib")
 #pragma comment (lib,"Msimg32.lib")
 
+HINSTANCE hinstance;
+
 
 HBRUSH ciemnyTlo;
 HBRUSH ciemnyTlo2;
 HBRUSH ciemnyTlo3;
 HBRUSH ciemnyTlo4;
 HBRUSH ciemnyTlo5;
+HBRUSH jasnyTlo1;
+HBRUSH jasnyTlo2;
+HBRUSH czarny;
+HBRUSH niebieski;
+
+
+HFONT JaebeCzcionka = CreateFont(60, 0, 0, 0, 0, 0, 0, 0, 0, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, 0, L"Segoe UI");
+HFONT PilotPCCzcionka = CreateFont(20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, 0, L"Segoe UI");
+HFONT PilotPCCzcionka2 = CreateFont(35, 0, 0, 0, 0, 0, 0, 0, 0, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, 0, L"Segoe UI");
+HFONT hNormalFont = CreateFont(18, 0, 0, 0, 0, 0, 0, 0, 0, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, PROOF_QUALITY, 0, L"Segoe UI");
+
 int stringDlugosc(wchar_t* wej)
 {
 	int ret = 0;
@@ -61,44 +74,70 @@ void convert(std::string &in, std::wstring &out)
 		in.c_str(), in.c_str() + in.length(), in_next,
 		&out[0], (&out[0]) + in.length(), out_next);
 }
-
+HBITMAP hbmObraz;
+HBITMAP Checkbox1;
+HBITMAP Checkbox2;
 VOID OnPaint(HDC hdc)
 {
+	
+
+	hbmObraz = LoadBitmap(hinstance, MAKEINTRESOURCE(1));
+	RECT prost;
+	prost.left = 0;
+	prost.top = 500;
+	prost.right = 450;
+	prost.bottom = 650;
+	FillRect(hdc, &prost, ciemnyTlo3);
+	prost.left = 0;
+	prost.top = 0;
+	prost.right = 1;
+	prost.bottom = 650;
+	FillRect(hdc, &prost, czarny);
+	prost.left = 449;
+	prost.top = 0;
+	prost.right = 450;
+	prost.bottom = 650;
+	FillRect(hdc, &prost, czarny);
+	prost.left = 0;
+	prost.top = 0;
+	prost.right = 450;
+	prost.bottom = 1;
+	FillRect(hdc, &prost, czarny);
+	prost.left = 0;
+	prost.top = 649;
+	prost.right = 450;
+	prost.bottom = 650;
+	FillRect(hdc, &prost, czarny);
+
+	HDC hdcNowy = CreateCompatibleDC(hdc);
+	HBITMAP hbmOld = (HBITMAP)SelectObject(hdcNowy, hbmObraz);
+	BitBlt(hdc, 1, 79, 21, 41, hdcNowy, 0, 0, SRCCOPY);
+	SelectObject(hdcNowy, hbmOld);
+	DeleteDC(hdcNowy);
 
 
 }
 HWND hWnd = NULL;
-HWND LicencjaZaakceptuj, LicencjaTxt;
+HWND LicencjaZaakceptuj, LicencjaTxt, folderButton;
 void wyswietl(HINSTANCE hInstance)
 {//licencja
-	HFONT PilotPCCzcionka = CreateFont(18, 7, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, L"Arial");
 	LicencjaTxt = CreateWindowEx(0, L"STATIC", NULL, WS_CHILD | WS_VISIBLE |
 		SS_LEFT, 25, 130, 400, 300, hWnd, NULL, hInstance, NULL);
 	SendMessage(LicencjaTxt, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
 	SetWindowText(LicencjaTxt, jezyk::napisy[Licencja]);
 	LicencjaZaakceptuj = CreateWindowEx(0, L"BUTTON", jezyk::napisy[Zaakceptuj], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
 		100, 525, 250, 100, hWnd, (HMENU)2002, hInstance, NULL);
+	SendMessage(LicencjaZaakceptuj, WM_SETFONT, (WPARAM)PilotPCCzcionka2, 0);
 }
 HWND JavaTxt, JavaTakB, JavaNieB;
 void wyswietl2(HINSTANCE hInstance)
 {
 
-	HDC hdcOkno;
-	hdcOkno = GetDC(hWnd);
-	RECT prost;
-	prost.left = 0;
-	prost.top = 500;
-	prost.right = 450;
-	prost.bottom = 650;
-
-
-	FillRect(hdcOkno, &prost, ciemnyTlo3);
-	ReleaseDC(hWnd, hdcOkno);
 	if (instalacja::czyJava())
 		wyswietl3(hInstance);
 	else
 	{
-		HFONT PilotPCCzcionka = CreateFont(18, 7, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, L"Arial");
+		//HFONT PilotPCCzcionka = CreateFont(18, 7, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, L"Arial");
 		JavaTxt = CreateWindowEx(0, L"STATIC", NULL, WS_CHILD | WS_VISIBLE |
 			SS_LEFT, 25, 130, 400, 100, hWnd, NULL, hInstance, NULL);
 		SendMessage(JavaTxt, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
@@ -127,41 +166,46 @@ void wyswietl2(HINSTANCE hInstance)
 void wyswietl3(HINSTANCE hInstance)
 {
 
-	HFONT hNormalFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 	FolderTxt = CreateWindowEx(0, L"STATIC", NULL, WS_CHILD | WS_VISIBLE |
-		SS_LEFT, 25, 130, 400, 100, hWnd, NULL, hInstance, NULL);
+		SS_LEFT, 25, 180, 400, 100, hWnd, NULL, hInstance, NULL);
 
-	HFONT PilotPCCzcionka = CreateFont(18, 7, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, L"Arial");
+	//HFONT PilotPCCzcionka = CreateFont(18, 7, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, L"Arial");
 	SendMessage(FolderTxt, WM_SETFONT, (WPARAM)hNormalFont, 0);
 	SetWindowText(FolderTxt, jezyk::napisy[n::WybierzFolder]);
 	SendMessage(FolderTxt, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
 	g_hPrzycisk = CreateWindowEx(0, L"BUTTON", jezyk::napisy[Instaluj], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
 		100, 525, 250, 100, hWnd, (HMENU)2010, hInstance, NULL);
-	SendMessage(g_hPrzycisk, WM_SETFONT, (WPARAM)hNormalFont, 0);
+	SendMessage(g_hPrzycisk, WM_SETFONT, (WPARAM)PilotPCCzcionka2, 0);
 	//SendMessage(g_hPrzycisk, WM_CTLCOLORSTATIC, g_hBrush, 0);
 	folder = CreateWindowEx(WS_EX_CLIENTEDGE, L"EDIT", NULL, WS_CHILD | WS_VISIBLE,
-		25, 150, 400, 25, hWnd, NULL, hInstance, NULL);
+		25, 200, 325, 25, hWnd, NULL, hInstance, NULL);
 	SendMessage(folder, WM_SETFONT, (WPARAM)hNormalFont, 0);
 	SetWindowText(folder, L"c:\\Program Files\\PilotPC");
-	user1 = CreateWindowEx(0, L"BUTTON", jezyk::napisy[DlaObecnegoUzytkownika], WS_CHILD | WS_VISIBLE | BS_RADIOBUTTON,
-		25, 180, 175, 30, hWnd, NULL, hInstance, NULL);
+
+
+	folderButton = CreateWindowEx(0, L"BUTTON", L"Wybierz", WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
+		355, 200, 70, 25, hWnd, (HMENU)2999, hInstance, NULL);
+	SendMessage(folderButton, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
+
+	user1 = CreateWindowEx(0, L"BUTTON", jezyk::napisy[DlaObecnegoUzytkownika], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
+		25, 230, 400, 25, hWnd, (HMENU)3000, hInstance, NULL);
 	SendMessage(user1, WM_SETFONT, (WPARAM)hNormalFont, 0);
 	SendMessage(user1, BM_SETCHECK, 1, 0);
 
 
 
-	userWiele = CreateWindowEx(0, L"BUTTON", jezyk::napisy[DlaWszystkichUzytkownikow], WS_CHILD | WS_VISIBLE | BS_RADIOBUTTON,
-		200, 180, 175, 30, hWnd, NULL, hInstance, NULL);
+	userWiele = CreateWindowEx(0, L"BUTTON", jezyk::napisy[DlaWszystkichUzytkownikow], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
+		25, 260, 400, 25, hWnd, (HMENU)3001, hInstance, NULL);
 	SendMessage(userWiele, WM_SETFONT, (WPARAM)hNormalFont, 0);
-	systemStart = CreateWindowEx(0, L"BUTTON", jezyk::napisy[UruchamiajAutomatyczneiPrzyStarcieSystemu], WS_CHILD | WS_VISIBLE | BS_CHECKBOX,
-		25, 210, 400, 30, hWnd, NULL, hInstance, NULL);
+	systemStart = CreateWindowEx(0, L"BUTTON", jezyk::napisy[UruchamiajAutomatyczneiPrzyStarcieSystemu], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
+		25, 300, 400, 25, hWnd, (HMENU)3002, hInstance, NULL);
 	SendMessage(systemStart, WM_SETFONT, (WPARAM)hNormalFont, 0);
 
 	SendMessage(systemStart, BM_SETCHECK, 1, 0);
 
 
-	skrotP = CreateWindowEx(0, L"BUTTON", jezyk::napisy[SkrotNaPulpicie], WS_CHILD | WS_VISIBLE | BS_CHECKBOX,
-		25, 240, 200, 30, hWnd, NULL, hInstance, NULL);
+	skrotP = CreateWindowEx(0, L"BUTTON", jezyk::napisy[SkrotNaPulpicie], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
+		25, 330, 400, 25, hWnd, (HMENU)3003, hInstance, NULL);
 	SendMessage(skrotP, WM_SETFONT, (WPARAM)hNormalFont, 0);
 
 	SendMessage(skrotP, BM_SETCHECK, 1, 0);
@@ -170,8 +214,8 @@ void wyswietl3(HINSTANCE hInstance)
 	skrotMS = CreateWindowEx(0, L"BUTTON", L"Skrót na Ekranie Start", WS_CHILD | WS_VISIBLE | BS_CHECKBOX,
 	200, 120, 190, 30, hWnd, NULL, hInstance, NULL);
 	else*/
-	skrotMS = CreateWindowEx(0, L"BUTTON", jezyk::napisy[SkrotWMenuStart], WS_CHILD | WS_VISIBLE | BS_CHECKBOX,
-		225, 240, 200, 30, hWnd, NULL, hInstance, NULL);
+	skrotMS = CreateWindowEx(0, L"BUTTON", jezyk::napisy[SkrotWMenuStart], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
+		25, 360, 400, 25, hWnd, (HMENU)3004, hInstance, NULL);
 	SendMessage(skrotMS, WM_SETFONT, (WPARAM)hNormalFont, 0);
 
 	SendMessage(skrotMS, BM_SETCHECK, 1, 0);
@@ -187,58 +231,56 @@ int WinMain(HINSTANCE hInstance,
 	);
 LONG a, b;
 HWND WyborOdinstaluj, WyborInstaluj, WyborTxt;
-HINSTANCE hinstance;
 void wybor(HINSTANCE hInstance){
 	HKEY r;
 	a = RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\PilotPC", 0, KEY_READ, &r);
 	b = RegOpenKeyEx(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\PilotPC", 0, KEY_READ, &r);
 
-	HFONT hNormalFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
+	//HFONT hNormalFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 	if (a == 0 || b == 0)
 	{
 
-		HFONT PilotPCCzcionka = CreateFont(18, 7, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, L"Arial");
+		//HFONT PilotPCCzcionka = CreateFont(18, 7, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, L"Arial");
 		WyborTxt = CreateWindowEx(0, L"STATIC", NULL, WS_CHILD | WS_VISIBLE |
 			SS_LEFT, 25, 130, 400, 100, hWnd, NULL, hInstance, NULL);
 		SendMessage(WyborTxt, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
 		SetWindowText(WyborTxt, jezyk::napisy[ProgramJestJuzZainstalowany]);
 		WyborOdinstaluj = CreateWindowEx(0, L"BUTTON", jezyk::napisy[Odinstaluj], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
-			0, 180, 450, 220, hWnd, (HMENU)2000, hInstance, NULL);
+			1, 180, 448, 220, hWnd, (HMENU)2000, hInstance, NULL);
 		SendMessage(WyborOdinstaluj, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
 		WyborInstaluj = CreateWindowEx(0, L"BUTTON", jezyk::napisy[InstalujPonownie], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
-			0, 400, 450, 100, hWnd, (HMENU)2001, hInstance, NULL);
+			1, 400, 448, 100, hWnd, (HMENU)2001, hInstance, NULL);
 		SendMessage(WyborInstaluj, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
 	}
 	else
 		wyswietl(hInstance);
 }
 HWND przyciskX;
+HWND przyciskMin;
 HWND CopyTxt;
 void rysujStałe(HINSTANCE hInstance)
 {
-	HFONT hNormalFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
-	HFONT JaebeCzcionka = CreateFont(50, 18, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, L"Arial");
+	//HFONT hNormalFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 	HFONT JaebeCzcionkaCopy = CreateFont(12, 6, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, L"Arial");
 	HWND JaebeTxt = CreateWindowEx(0, L"STATIC", NULL, WS_CHILD | WS_VISIBLE |
-		SS_LEFT, 165, 10, 300, 50, hWnd, NULL, hInstance, NULL);
+		SS_LEFT, 165, 10, 449-165, 50, hWnd, NULL, hInstance, NULL);
 	SendMessage(JaebeTxt, WM_SETFONT, (WPARAM)JaebeCzcionka, 0);
 	SetWindowText(JaebeTxt, L"Jaebe™");
 	//CopyTxt = CreateWindowEx(0, L"STATIC", NULL, WS_CHILD | WS_VISIBLE |
 	//	SS_LEFT, 30, 630, 300, 50, hWnd, NULL, hInstance, NULL);
 	//SendMessage(CopyTxt, WM_SETFONT, (WPARAM)JaebeCzcionkaCopy, 0);
 	//SetWindowText(CopyTxt, L"©");
-	HFONT PilotPCCzcionka = CreateFont(25, 10, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, L"Arial");
 	HWND PilotPCTxt = CreateWindowEx(0, L"STATIC", NULL, WS_CHILD | WS_VISIBLE |
 		SS_LEFT, 20, 80, 300, 40, hWnd, NULL, hInstance, NULL);
-	SendMessage(PilotPCTxt, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
+	SendMessage(PilotPCTxt, WM_SETFONT, (WPARAM)PilotPCCzcionka2, 0);
 	SetWindowText(PilotPCTxt, L"PilotPC");
 	HDC hdcOkno;
 	hdcOkno = GetDC(hWnd);
 	RECT prost;
-	prost.left = 0;
+	prost.left = 1;
 	prost.top = 500;
-	prost.right = 450;
-	prost.bottom = 650;
+	prost.right = 448;
+	prost.bottom = 649;
 
 
 	FillRect(hdcOkno, &prost, ciemnyTlo3);
@@ -246,8 +288,11 @@ void rysujStałe(HINSTANCE hInstance)
 
 	HFONT XCzcionka = CreateFont(15, 7, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, L"Arial");
 	przyciskX = CreateWindowEx(0, L"BUTTON", L"X", WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
-		425, 0, 25, 25, hWnd, (HMENU)1999, hInstance, NULL);
+		424, 1, 25, 25, hWnd, (HMENU)1999, hInstance, NULL);
 	SendMessage(przyciskX, WM_SETFONT, (WPARAM)XCzcionka, 0);
+	przyciskMin = CreateWindowEx(0, L"BUTTON", L"_", WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
+		399, 1, 25, 25, hWnd, (HMENU)1998, hInstance, NULL);
+	SendMessage(przyciskMin, WM_SETFONT, (WPARAM)XCzcionka, 0);
 }
 
 HFONT jezykCzcionka = CreateFont(20, 8, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, L"Arial");
@@ -259,25 +304,30 @@ void wybierzJezyk(HINSTANCE hInstance)
 	HFONT hNormalFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 
 	przyciskJezyk[0] = CreateWindowEx(0, L"BUTTON", L"Polski", WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
-		0, 150, 450, 113, hWnd, (HMENU)1000, hInstance, NULL);
+		1, 150, 448, 113, hWnd, (HMENU)1000, hInstance, NULL);
 	SendMessage(przyciskJezyk[0], WM_SETFONT, (WPARAM)jezykCzcionka, 0);
 	przyciskJezyk[1] = CreateWindowEx(0, L"BUTTON", L"English", WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
-		0, 263, 450, 113, hWnd, (HMENU)1001, hInstance, NULL);
+		1, 263, 448, 113, hWnd, (HMENU)1001, hInstance, NULL);
 	SendMessage(przyciskJezyk[1], WM_SETFONT, (WPARAM)jezykCzcionka, 0);
 	przyciskJezyk[2] = CreateWindowEx(0, L"BUTTON", L"русский", WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
-		0, 376, 450, 114, hWnd, (HMENU)1002, hInstance, NULL);
+		1, 376, 448, 114, hWnd, (HMENU)1002, hInstance, NULL);
 	SendMessage(przyciskJezyk[2], WM_SETFONT, (WPARAM)jezykCzcionka, 0);
 
 
 }
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 {
+	hbmObraz = LoadBitmap(hinstance, MAKEINTRESOURCE(1));
 
 	ciemnyTlo = CreateSolidBrush(RGB(38, 33, 27));
 	ciemnyTlo2 = CreateSolidBrush(RGB(48, 43, 35));
 	ciemnyTlo3 = CreateSolidBrush(RGB(28, 24, 20));
 	ciemnyTlo4 = CreateSolidBrush(RGB(58, 50, 40));
 	ciemnyTlo5 = CreateSolidBrush(RGB(68, 60, 50));
+	jasnyTlo1 = CreateSolidBrush(RGB(225, 220, 210));
+	jasnyTlo2 = CreateSolidBrush(RGB(255, 255, 255));
+	czarny = CreateSolidBrush(RGB(0, 0, 0));
+	niebieski = CreateSolidBrush(RGB(20, 40, 240));
 	hinstance = hInstance;
 	MSG                 msg;
 	WNDCLASS            wndClass;
@@ -302,7 +352,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 	hWnd = CreateWindow(
 		TEXT("GettingStarted"),   // window class name
 		TEXT("PilotPC - Instalator"),  // window caption
-		WS_POPUP,      // window style
+		WS_POPUP | WS_MINIMIZE,      // window style
 		GetSystemMetrics(SM_CXSCREEN) / 2 - 225,            // initial x position
 		GetSystemMetrics(SM_CYSCREEN) / 2 - 325,            // initial y position
 		450,            // initial x size
@@ -347,6 +397,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 
 			hProgressBar = CreateWindowEx(0, PROGRESS_CLASS, NULL, WS_CHILD | WS_VISIBLE | PBS_SMOOTH,
 				25, 250, 400, 20, hWnd, (HMENU)200, hinstance, NULL);
+			SendMessage(hProgressBar, PBM_SETBKCOLOR, 0, (LPARAM)niebieski);
 
 			SendMessage(hProgressBar, PBM_SETRANGE, 0, (LPARAM)MAKELONG(0, 32 * 1024));
 			instalacja::odinstaluj(hinstance, hProgressBar, hWnd);
@@ -400,6 +451,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 
 			hProgressBar = CreateWindowEx(0, PROGRESS_CLASS, NULL, WS_CHILD | WS_VISIBLE | PBS_SMOOTH,
 				25, 250, 400, 20, hWnd, (HMENU)200, hinstance, NULL);
+			SendMessage(hProgressBar, PBM_SETBKCOLOR, 0, (LPARAM)niebieski);
 
 			SendMessage(hProgressBar, PBM_SETRANGE, 0, (LPARAM)MAKELONG(0, 32 * 1024));
 			instalacja* ins = new instalacja(systemStartBool, wszyscy, folder3, skrotPulpit, skrotMenuStart, hProgressBar, folder2);
@@ -459,6 +511,79 @@ void drawButtonRed(DRAWITEMSTRUCT *dis, HWND hwnd, HBRUSH zaznaczone, HBRUSH nie
 
 	SetTextColor(dis->hDC, RGB(255, 255, 255));
 	DrawText(dis->hDC, txt, Txtlen, &rc, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+}
+void drawRadio(HDC hDC, int itemState, HWND hwnd, HBRUSH tlo, LPWSTR txt, int Txtlen, boolean zaznaczone){
+
+	if (Checkbox1 == NULL)
+		Checkbox1 = LoadBitmap(hinstance, MAKEINTRESOURCE(2));
+	if (Checkbox2 == NULL)
+		Checkbox2 = LoadBitmap(hinstance, MAKEINTRESOURCE(3));
+	RECT prost;
+	prost.left = 0;
+	prost.top = 0;
+	prost.right = 32;
+	prost.bottom = 32;
+
+	RECT prostTlo;
+	prostTlo.left = 0;
+	prostTlo.top = 0;
+	prostTlo.right = 400;
+	prostTlo.bottom = 25;
+	FillRect(hDC, &prostTlo, tlo);
+	/*HBRUSH PedzelZiel, Pudelko;
+	HPEN OlowekCzerw, Piornik;
+	if (itemState & ODS_SELECTED) {
+
+
+		PedzelZiel = CreateSolidBrush(0x444444);
+		OlowekCzerw = CreatePen(PS_DOT, 1, 0xFFFFFF);
+	}
+	else if (itemState & ODS_HOTLIGHT) {
+
+
+		PedzelZiel = CreateSolidBrush(0x444444);
+		OlowekCzerw = CreatePen(PS_DOT, 1, 0xFFFFFF);
+	}
+	else{
+
+		PedzelZiel = CreateSolidBrush(0x000000);
+		OlowekCzerw = CreatePen(PS_DOT, 1, 0xEEEEEE);
+
+	}
+	Pudelko = (HBRUSH)SelectObject(hDC, PedzelZiel);
+	Piornik = (HPEN)SelectObject(hDC, OlowekCzerw);
+	Ellipse(hDC, 0, 0, 24, 24);
+	SelectObject(hDC, Pudelko);
+	SelectObject(hDC, Piornik);
+	if (zaznaczone)
+	{
+		Ellipse(hDC, 8, 8, 16, 16);
+
+	}
+	DeleteObject(OlowekCzerw);
+	DeleteObject(PedzelZiel);*/
+	RECT rc;
+	GetClientRect(hwnd, &rc);
+
+	SetBkMode(hDC, TRANSPARENT);
+
+
+	HDC hdcNowy = CreateCompatibleDC(hDC);
+	HBITMAP hbmOld;
+	if (zaznaczone)
+	hbmOld = (HBITMAP)SelectObject(hdcNowy, Checkbox1);
+	else
+	hbmOld = (HBITMAP)SelectObject(hdcNowy, Checkbox2);
+	BitBlt(hDC, 4, 5, 16, 16, hdcNowy, 0, 0, SRCCOPY);
+	SelectObject(hdcNowy, hbmOld);
+	DeleteDC(hdcNowy);
+
+	char buf[255];
+	GetWindowText(hwnd, txt, 255);
+	rc.left += 28;
+	SetTextColor(hDC, RGB(255, 255, 255));
+	SelectObject(hDC, hNormalFont);
+	DrawText(hDC, txt, Txtlen, &rc, DT_VCENTER | DT_SINGLELINE);
 }
 
 void drawButtonBlue(DRAWITEMSTRUCT *dis, HWND hwnd){
@@ -533,7 +658,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 		return 0;
 		break; case WM_CTLCOLORSTATIC:
 		{
-			 hdc = (HDC)wParam;
+			hdc = (HDC)wParam;
 
 			//for (int i = 0; i < 3;i++)
 			//if (hCtl == przyciskJezyk[i])
@@ -554,7 +679,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 
 		case WM_CTLCOLORDLG:
 
-			 hdc = (HDC)wParam;
+			hdc = (HDC)wParam;
 
 			//for (int i = 0; i < 3;i++)
 			//if (hCtl == przyciskJezyk[i])
@@ -581,6 +706,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 								drawButtonRed(dis, WyborOdinstaluj, ciemnyTlo4, ciemnyTlo5, jezyk::napisy[Odinstaluj], stringDlugosc(jezyk::napisy[Odinstaluj]));
 							else if (dis->CtlID == 2001)
 								drawButtonRed(dis, WyborInstaluj, ciemnyTlo2, ciemnyTlo, jezyk::napisy[InstalujPonownie], stringDlugosc(jezyk::napisy[InstalujPonownie]));
+							else if (dis->CtlID == 1998)
+								drawButtonRed(dis, przyciskX, ciemnyTlo2, ciemnyTlo, L"_", 1);
 							else if (dis->CtlID == 1999)
 								drawButtonRed(dis, przyciskX, ciemnyTlo2, ciemnyTlo, L"X", 1);
 							else if (dis->CtlID == 2002)
@@ -591,6 +718,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 								drawButtonRed(dis, JavaTakB, ciemnyTlo4, ciemnyTlo5, jezyk::napisy[JavaTak], stringDlugosc(jezyk::napisy[JavaTak]));
 							else if (dis->CtlID == 2010)
 								drawButtonRed(dis, g_hPrzycisk, ciemnyTlo, ciemnyTlo3, jezyk::napisy[Instaluj], stringDlugosc(jezyk::napisy[Instaluj]));
+							else if (dis->CtlID == 2999)
+								drawButtonRed(dis, folderButton, ciemnyTlo2, ciemnyTlo3, L"Wybierz", 7);
+							else if (dis->CtlID == 3000)
+								drawRadio(dis->hDC, dis->itemState, user1, ciemnyTlo, jezyk::napisy[DlaObecnegoUzytkownika], stringDlugosc(jezyk::napisy[DlaObecnegoUzytkownika]), !wszyscy);
+							else if (dis->CtlID == 3001)
+								drawRadio(dis->hDC, dis->itemState, userWiele, ciemnyTlo, jezyk::napisy[DlaWszystkichUzytkownikow], stringDlugosc(jezyk::napisy[DlaWszystkichUzytkownikow]), wszyscy);
+							else if (dis->CtlID == 3002)
+								drawRadio(dis->hDC, dis->itemState, systemStart, ciemnyTlo, jezyk::napisy[UruchamiajAutomatyczneiPrzyStarcieSystemu], stringDlugosc(jezyk::napisy[UruchamiajAutomatyczneiPrzyStarcieSystemu]), systemStartBool);
+							else if (dis->CtlID == 3003)
+								drawRadio(dis->hDC, dis->itemState, skrotP, ciemnyTlo, jezyk::napisy[SkrotNaPulpicie], stringDlugosc(jezyk::napisy[SkrotNaPulpicie]), skrotPulpit);
+							else if (dis->CtlID == 3004)
+								drawRadio(dis->hDC, dis->itemState, skrotMS, ciemnyTlo, jezyk::napisy[SkrotWMenuStart], stringDlugosc(jezyk::napisy[SkrotWMenuStart]), skrotMenuStart);
 
 							/*switch (dis->CtlID){
 							case (int)1000: drawButtonRed(dis, przyciskJezyk[0]); break;
@@ -605,6 +744,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 			case BTNRED: MessageBox(hWnd, L"Red Button Pressed", L"Red", MB_OK); break;
 			case BTNBLUE: MessageBox(hWnd, L"Blue Button Pressed", L"Blue", MB_OK); break;
 			}*/
+
 			if ((HWND)lParam == g_hPrzycisk)
 			{
 				DWORD dlugosc = GetWindowTextLength(folder);
@@ -623,6 +763,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 
 				hProgressBar = CreateWindowEx(0, PROGRESS_CLASS, NULL, WS_CHILD | WS_VISIBLE | PBS_SMOOTH,
 					25, 250, 400, 20, hWnd, (HMENU)200, hinstance, NULL);
+				SendMessage(hProgressBar, PBM_SETBKCOLOR, 0, (LPARAM)niebieski);
 
 				SendMessage(hProgressBar, PBM_SETRANGE, 0, (LPARAM)MAKELONG(0, 32 * 1024));
 				wstring wfolder;
@@ -661,6 +802,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 
 				hProgressBar = CreateWindowEx(0, PROGRESS_CLASS, NULL, WS_CHILD | WS_VISIBLE | PBS_SMOOTH,
 					25, 250, 400, 20, hWnd, (HMENU)200, hinstance, NULL);
+				SendMessage(hProgressBar, PBM_SETBKCOLOR, 0, (LPARAM)niebieski);
 
 				SendMessage(hProgressBar, PBM_SETRANGE, 0, (LPARAM)MAKELONG(0, 32 * 1024));
 				instalacja::odinstaluj(hinstance, hProgressBar, hWnd);
@@ -670,12 +812,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 				SendMessage(user1, BM_SETCHECK, 1, 0);
 				SendMessage(userWiele, BM_SETCHECK, 0, 0);
 				wszyscy = false;
+				if (userWiele != NULL)
+					drawRadio(GetDC(userWiele), 0, userWiele, ciemnyTlo, jezyk::napisy[DlaWszystkichUzytkownikow], stringDlugosc(jezyk::napisy[DlaWszystkichUzytkownikow]), wszyscy);
+				if (user1 != NULL)
+					drawRadio(GetDC(user1), 0, user1, ciemnyTlo, jezyk::napisy[DlaObecnegoUzytkownika], stringDlugosc(jezyk::napisy[DlaObecnegoUzytkownika]), !wszyscy);
 			}
 			else if ((HWND)lParam == userWiele)
 			{
 				SendMessage(user1, BM_SETCHECK, 0, 0);
 				SendMessage(userWiele, BM_SETCHECK, 1, 0);
 				wszyscy = true;
+				if (userWiele != NULL)
+					drawRadio(GetDC(userWiele), 0, userWiele, ciemnyTlo, jezyk::napisy[DlaWszystkichUzytkownikow], stringDlugosc(jezyk::napisy[DlaWszystkichUzytkownikow]), wszyscy);
+				if (user1 != NULL)
+					drawRadio(GetDC(user1), 0, user1, ciemnyTlo, jezyk::napisy[DlaObecnegoUzytkownika], stringDlugosc(jezyk::napisy[DlaObecnegoUzytkownika]), !wszyscy);
 			}
 			else if ((HWND)lParam == systemStart)
 			{
@@ -719,6 +869,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 			else if ((HWND)lParam == przyciskX)
 			{
 				exit(0);
+			}
+			else if ((HWND)lParam == przyciskMin)
+			{
+				ShowWindow(hWnd, SW_MINIMIZE);
 			}
 			else if ((HWND)lParam == LicencjaZaakceptuj)
 			{

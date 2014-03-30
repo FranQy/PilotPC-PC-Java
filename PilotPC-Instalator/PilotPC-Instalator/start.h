@@ -8,4 +8,4 @@ int WinMain(HINSTANCE hInstance,
 	int nCmdShow
 	);
 void wyswietl3(HINSTANCE);
-void convert(std::string &in, std::wstring &out)
+void convert(std::string &in, std::wstring &out);

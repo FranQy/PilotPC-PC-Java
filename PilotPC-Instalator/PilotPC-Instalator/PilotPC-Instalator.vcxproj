@@ -78,6 +78,9 @@
       <AdditionalManifestFiles>
       </AdditionalManifestFiles>
     </Manifest>
+    <ResourceCompile>
+      <ResourceOutputFileName>resource.rc</ResourceOutputFileName>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="instalacja.cpp" />
@@ -87,8 +90,14 @@
   <ItemGroup>
     <ClInclude Include="instalacja.h" />
     <ClInclude Include="jezyk.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="start.h" />
     <ClInclude Include="stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.res">
+      <Culture Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">0x0415</Culture>
+    </ResourceCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

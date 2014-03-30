@@ -9,7 +9,7 @@ class instalacja
 public:
 
 	instalacja(bool systemStart, bool wszyscy, LPCWSTR folder, bool skrotPulpit, bool skrotMenuStart, HWND,wstring wfolder);
-public: void instalacja::start();
+public: void instalacja::start(wstring fol);
 public: void instalacja::start(HWND hWnd);
 public: static void instalacja::odinstaluj(HINSTANCE, HWND, HWND);
 public: void __cdecl instalacja::start(void * Args);
@@ -24,7 +24,7 @@ public: static bool czyJava();
 	//WCHAR* lacz(LPCWSTR a, string b);
 	int getHttp(char host[], int hostl, string path, int pathl);
 	~instalacja();
-	void instalacja::pobierz(string nazwa);
+	void instalacja::pobierz(string nazwa, wstring fold);
 
 };
 //HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc,LPCWSTR workingDir);
