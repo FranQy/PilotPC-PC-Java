@@ -1,12 +1,15 @@
 #include "instalacja.h"
 #include <stdio.h>
 #include <stdlib.h>
+;
 #include <shellapi.h>
+;
 #ifdef WIN32
 #include <io.h>
 #else
 #include <unistd.h>
 #endif
+;
 #include <Winsock2.h>
 #include <comdef.h>
 #include <Winbase.h>
@@ -20,7 +23,6 @@
 #include <process.h>
 #include <Shobjidl.h>
 #include <Sddl.h>
-#include <ShObjIdl.h>
 #include "jezyk.h"
 using namespace std;
 
