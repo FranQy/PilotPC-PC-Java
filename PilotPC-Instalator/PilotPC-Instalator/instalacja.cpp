@@ -44,17 +44,20 @@ return ret;
 }*/
 
 
-instalacja::instalacja(bool _systemStart, bool _wszyscy, LPCWSTR _folder, bool _skrotPulpit, bool _skrotMenuStart, HWND _progressbar)
+instalacja::instalacja(bool _systemStart, bool _wszyscy, LPCWSTR _folder, bool _skrotPulpit, bool _skrotMenuStart, HWND _progressbar, wstring _wfolder)
 {
 
 
 	systemStart = _systemStart;
 	wszyscy = _wszyscy;
 	folder = _folder;
+	wfolder = _wfolder;
 	skrotMenuStart = _skrotMenuStart;
 	skrotPulpit = _skrotPulpit;
 	folderStr = wstring(folder);
 	progressbar = _progressbar;
+
+	//MessageBox(okno, folder,wfolder.c_str(), MB_ICONINFORMATION);
 
 
 }
@@ -77,7 +80,7 @@ void __cdecl watekStart(void * Args)
 				SHELLEXECUTEINFO sei = { sizeof(sei) };
 				sei.lpVerb = L"runas";
 				sei.lpFile = szPath;
-				wstring parametry = wstring(jezyk::napisy[Kod]) + wstring(L" \"") + wstring(((instalacja*)Args)[0].folder) + wstring(L"\"");
+				wstring parametry = wstring(jezyk::napisy[Kod]) + wstring(L" \"") + (((instalacja*)Args)[0].wfolder) + wstring(L"\"");
 				if (((instalacja*)Args)[0].systemStart)
 					parametry = parametry + wstring(L" /s");
 				if (((instalacja*)Args)[0].wszyscy)
@@ -345,18 +348,20 @@ void instalacja::pobierz(string nazwa)
 
 
 
-	_bstr_t b(nazwa.c_str());
-	WCHAR* nazwa2 = b;
-	_bstr_t c(folder);
-	WCHAR* folder2 = c;
+	wstring b;
+	convert(nazwa, b);
+	const WCHAR* nazwa2 = b.c_str();;
+	wstring c(folder);
+	const WCHAR* folder2 = c.c_str();
 	//_bstr_t naz2 = new _bstr_t()
 	//HANDLE  hPlik = CreateFile(lacz(folder, nazwa), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, 0, NULL);
 	//WCHAR* test = c +L"\\"+ b;
-	HANDLE  hPlik = CreateFile(c + L"\\" + b, GENERIC_ALL, 0, NULL, CREATE_ALWAYS, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+	HANDLE  hPlik = CreateFile((c + wstring(L"\\") + b).c_str(), GENERIC_ALL, 0, NULL, CREATE_ALWAYS, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
 
 
 	if (hPlik == INVALID_HANDLE_VALUE) {
 		MessageBox(NULL, jezyk::napisy[NieMoznaUtworzycPliku], jezyk::napisy[BladPodczasInstalacji], MB_ICONEXCLAMATION);
+		MessageBox(NULL, (c + wstring(L"\\") + b).c_str(), jezyk::napisy[BladPodczasInstalacji], MB_ICONEXCLAMATION);
 		exit(0); // Zakoñcz program
 	}
 	DWORD licz = 0;

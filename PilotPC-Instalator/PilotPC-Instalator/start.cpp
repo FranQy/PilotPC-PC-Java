@@ -43,6 +43,25 @@ int stringDlugosc(wchar_t* wej)
 		ret++;
 	return ret;
 }
+void convert(std::string &in, std::wstring &out)
+{
+	out.resize(in.size());
+	const char   *in_next = &*in.begin();
+	wchar_t      *out_next = &*out.begin();
+
+
+	typedef std::codecvt<wchar_t, char, std::mbstate_t> converter;
+	const converter &my_converter = std::use_facet<converter>(std::locale());
+
+
+	std::mbstate_t   my_state;
+
+
+	my_converter.in(my_state,
+		in.c_str(), in.c_str() + in.length(), in_next,
+		&out[0], (&out[0]) + in.length(), out_next);
+}
+
 VOID OnPaint(HDC hdc)
 {
 
@@ -335,6 +354,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 		else if (parametry.length() > 4 && parametry[3] == '"')
 		{
 			string folder1;
+			wstring folder2;
 			LPCWSTR folder3 = L"c:\program files\PilotPC";
 			systemStartBool = wszyscy = skrotMenuStart = skrotPulpit = false;
 			int i = 4;
@@ -343,7 +363,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 				if (parametry[i] == '"')
 				{
 					folder1 = parametry.substr(4, i - 4);
-					wstring folder2 = wstring(folder1.begin(), folder1.end());
+					convert(folder1, folder2);
 					folder3 = folder2.c_str();
 					break;
 				}
@@ -382,7 +402,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 				25, 250, 400, 20, hWnd, (HMENU)200, hinstance, NULL);
 
 			SendMessage(hProgressBar, PBM_SETRANGE, 0, (LPARAM)MAKELONG(0, 32 * 1024));
-			instalacja* ins = new instalacja(systemStartBool, wszyscy, folder3, skrotPulpit, skrotMenuStart, hProgressBar);
+			instalacja* ins = new instalacja(systemStartBool, wszyscy, folder3, skrotPulpit, skrotMenuStart, hProgressBar, folder2);
 			(*ins).start(hWnd);
 		}
 		else
@@ -605,7 +625,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 					25, 250, 400, 20, hWnd, (HMENU)200, hinstance, NULL);
 
 				SendMessage(hProgressBar, PBM_SETRANGE, 0, (LPARAM)MAKELONG(0, 32 * 1024));
-				instalacja* ins = new instalacja(systemStartBool, wszyscy, Bufor, skrotPulpit, skrotMenuStart, hProgressBar);
+				wstring wfolder;
+				instalacja* ins = new instalacja(systemStartBool, wszyscy, Bufor, skrotPulpit, skrotMenuStart, hProgressBar, wstring(Bufor));
 				(*ins).start(hWnd);
 			}for (int i = 0; i < 3; i++)
 			{
