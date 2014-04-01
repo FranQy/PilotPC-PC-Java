@@ -16,16 +16,13 @@ public class Okno {
 
     private JButton zmieńKodButton;
     private JButton informacjeButton;
-    private JButton startZSystememButton;
     public static boolean potrzebneOdswierzenie = false;
     private JLabel kod;
     private JLabel info;
     private JPanel telefony;
     private JPanel zawartosc;
     private JPanel QRPanel;
-    private JComboBox WybierzJezyk;
     private JLabel PodlaczoneUrzadzenia;
-    private JButton gladkaMysz;
     PanelQRCode qr;
     public JFrame frame;
 
@@ -42,21 +39,7 @@ public class Okno {
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         telefony.setLayout(new GridLayout(0, 1));
-        Jezyk.jezyki[] langs = Jezyk.jezyki.values();
-        for (short i = 0; i < langs.length; i++) {
-            WybierzJezyk.addItem(langs[i].toString());
 
-            if (Program.ustawienia.jezyk == langs[i])
-                WybierzJezyk.setSelectedIndex(i);
-        }
-        WybierzJezyk.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Program.ustawienia.jezyk = Jezyk.jezyki.values()[WybierzJezyk.getSelectedIndex()];
-                Jezyk.przeladuj(Program.ustawienia.jezyk);
-                Program.ustawienia.eksportuj();
-            }
-        });
         kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ": " + Program.ustawienia.haslo);
         ustawJezyk();
         zmieńKodButton.addActionListener(new ActionListener() {
@@ -72,18 +55,11 @@ public class Okno {
         informacjeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new OProgramie();
-            }
-        });
-        startZSystememButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                Program.autostart();
+                Opcje.pokarz();
             }
         });
         //System.out.println("2");
-
+        frame.setSize(750, 400);
         (new Start()).start();
         //System.out.println("3");
 
@@ -94,27 +70,6 @@ public class Okno {
         Odswierz timer1_task = new Odswierz();
         timer1_task.okno = this;
         timer1.schedule(timer1_task, 100, 100);
-        if (Program.ustawienia.plynnaMysz)
-            gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
-        else
-            gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WlaczWygladzanieMyszy.ordinal()]);
-        gladkaMysz.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Program.ustawienia.plynnaMysz = !Program.ustawienia.plynnaMysz;
-                if (Program.ustawienia.plynnaMysz) {
-                    (new WatekMouseRobot()).start();
-                    gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
-                } else
-                    gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WlaczWygladzanieMyszy.ordinal()]);
-
-                Program.ustawienia.eksportuj();
-            }
-        });
-        // System.out.println("4");
-        frame.setSize(750, 400);
-        if (wyswietl)
-            frame.setVisible(true);
         //System.out.println("5");
     }
 
@@ -122,13 +77,8 @@ public class Okno {
         (new Start()).start();
         zmieńKodButton.setText(Jezyk.napisy[Jezyk.n.ZmienKod.ordinal()]);
         informacjeButton.setText(Jezyk.napisy[Jezyk.n.Infromacje.ordinal()]);
-        startZSystememButton.setText(Jezyk.napisy[Jezyk.n.StartZSystemem.ordinal()]);
         kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ": " + Program.ustawienia.haslo);
         PodlaczoneUrzadzenia.setText(Jezyk.napisy[Jezyk.n.PodlaczoneUrzadzenia.ordinal()]);
-        if (Program.ustawienia.plynnaMysz)
-            gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
-        else
-            gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WlaczWygladzanieMyszy.ordinal()]);
     }
 
     private void createUIComponents() {

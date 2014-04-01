@@ -6,9 +6,11 @@ public class Jezyk {
 
     public static void przeladuj(jezyki a) {
          laduj(a);
-                 if(Program.glowneOkno!=null)
-                     Program.glowneOkno.ustawJezyk();
-Program.tray(false);
+        if (Program.glowneOkno != null)
+            Program.glowneOkno.ustawJezyk();
+        if (Opcje.okno != null)
+            Opcje.okno.ustawJezyk();
+        Program.tray(false);
 
     }
      //Jezyk.napisy[Jezyk.n.PilotPCWersja.ordinal()]
@@ -49,7 +51,7 @@ Program.tray(false);
                 napisy[n.Rozlacz.ordinal()]="Rozłącz";
                 napisy[n.TwojeIPTo.ordinal()]="Twoje IP to";
                 napisy[n.ZmienKod.ordinal()]="Zmień kod";
-                napisy[n.Infromacje.ordinal()]="Informacje";
+                napisy[n.Infromacje.ordinal()] = "Opcje";
                 napisy[n.StartZSystemem.ordinal()]="Start z systemem";
                 napisy[n.PodlaczoneUrzadzenia.ordinal()]="Podłączone urządzenia";
                 napisy[n.WlaczWygladzanieMyszy.ordinal()] = "Włącz wygładzanie myszy";
@@ -73,7 +75,7 @@ Program.tray(false);
                 napisy[n.Rozlacz.ordinal()]="Disconnect";
                 napisy[n.TwojeIPTo.ordinal()]="Your IP";
                 napisy[n.ZmienKod.ordinal()]="New code";
-                napisy[n.Infromacje.ordinal()]="Information";
+                napisy[n.Infromacje.ordinal()] = "Settings";
                 napisy[n.StartZSystemem.ordinal()]="Start with system boot";
                 napisy[n.PodlaczoneUrzadzenia.ordinal()]="Connected devices";
                 napisy[n.WlaczWygladzanieMyszy.ordinal()] = "Turn on smooth mouse";

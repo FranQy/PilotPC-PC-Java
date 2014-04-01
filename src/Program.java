@@ -91,6 +91,14 @@ public class Program {
                         glowneOkno.frame.setVisible(true);
                 }
             });
+            MenuItem opcje = new MenuItem(Jezyk.napisy[Jezyk.n.Infromacje.ordinal()]); //tworzymy obiekt menuItem
+            popup.add(opcje);                //dodajemy objekt do menu
+
+            opcje.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
+                public void actionPerformed(ActionEvent e) {
+                    Opcje.pokarz();
+                }
+            });
             MenuItem zakoncz = new MenuItem(Jezyk.napisy[Jezyk.n.Zakoncz.ordinal()]); //tworzymy obiekt menuItem
             popup.add(zakoncz);                //dodajemy objekt do menu
             zakoncz.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
