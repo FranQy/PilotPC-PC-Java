@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "start.h"
 #include "jezyk.h"
+#include <Windowsx.h>
 using namespace Gdiplus;
 HWND przyciskJezyk[3];
 HWND g_hPrzycisk, user1, userWiele, systemStart, skrotP, skrotMS;
@@ -117,6 +118,7 @@ VOID OnPaint(HDC hdc)
 
 
 }
+byte* jezykPrzyciskStan=new byte[3];
 HWND hWnd = NULL;
 HWND LicencjaZaakceptuj, LicencjaTxt, folderButton;
 void wyswietl(HINSTANCE hInstance)
@@ -315,6 +317,44 @@ void wybierzJezyk(HINSTANCE hInstance)
 
 
 }
+
+void drawButtonRed(HDC hDC, UINT itemState, HWND hwnd, HBRUSH zaznaczone, HBRUSH niezaznaczone, LPWSTR txt, int Txtlen,int szerokosc,int wysokosc){
+
+
+	RECT prost;
+	prost.left = 0;
+	prost.top = 0;
+	prost.right = szerokosc;
+	prost.bottom = wysokosc;
+	if (itemState & ODS_SELECTED) {
+
+
+		FillRect(hDC, &prost, zaznaczone);
+	}
+	else if (itemState & ODS_HOTLIGHT) {
+
+
+		FillRect(hDC, &prost, zaznaczone);
+	}
+	else{
+
+		FillRect(hDC, &prost, niezaznaczone);
+
+	}
+	RECT rc;
+	GetClientRect(hwnd, &rc);
+
+	SetBkMode(hDC, TRANSPARENT);
+
+	char buf[255];
+	GetWindowText(hwnd, txt, 255);
+
+	SetTextColor(hDC, RGB(255, 255, 255));
+	DrawText(hDC, txt, Txtlen, &rc, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+}
+void drawButtonRed(DRAWITEMSTRUCT *dis, HWND hwnd, HBRUSH zaznaczone, HBRUSH niezaznaczone, LPWSTR txt, int Txtlen){
+	drawButtonRed(dis->hDC, dis->itemState, hwnd, zaznaczone, niezaznaczone,txt, Txtlen,450,650);
+}
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 {
 	hbmObraz = LoadBitmap(hinstance, MAKEINTRESOURCE(1));
@@ -466,6 +506,27 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
+		if (msg.message == WM_MOUSEMOVE)
+		{
+			int xPos = GET_X_LPARAM(msg.lParam);
+			int yPos = GET_Y_LPARAM(msg.lParam);
+
+			for (int i = 0; i < 3; i++)
+			{
+				if (msg.hwnd == przyciskJezyk[i]&&jezykPrzyciskStan[i]==0)
+				{
+					jezykPrzyciskStan[i] = 1;
+					drawButtonRed(GetDC(przyciskJezyk[i]), 0, przyciskJezyk[i], ciemnyTlo2, ciemnyTlo3, jezyk::nazwyJezykow[i], jezyk::nazwyJezykowLen[i], 448, 113);
+
+				}
+				else if(msg.hwnd != przyciskJezyk[i] && jezykPrzyciskStan[i] != 0)
+				{
+					jezykPrzyciskStan[i] = 0;
+					drawButtonRed(GetDC(przyciskJezyk[i]), 0, przyciskJezyk[i], ciemnyTlo2, ciemnyTlo, jezyk::nazwyJezykow[i], jezyk::nazwyJezykowLen[i], 448, 113);
+
+				}
+			}
+		}
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
@@ -478,40 +539,6 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 }  // WinMain
 
 
-void drawButtonRed(DRAWITEMSTRUCT *dis, HWND hwnd, HBRUSH zaznaczone, HBRUSH niezaznaczone, LPWSTR txt, int Txtlen){
-
-
-	RECT prost;
-	prost.left = 0;
-	prost.top = 0;
-	prost.right = 450;
-	prost.bottom = 650;
-	if (dis->itemState & ODS_SELECTED) {
-
-
-		FillRect(dis->hDC, &prost, zaznaczone);
-	}
-	else if (dis->itemState & ODS_HOTLIGHT) {
-
-
-		FillRect(dis->hDC, &prost, zaznaczone);
-	}
-	else{
-
-		FillRect(dis->hDC, &prost, niezaznaczone);
-
-	}
-	RECT rc;
-	GetClientRect(hwnd, &rc);
-
-	SetBkMode(dis->hDC, TRANSPARENT);
-
-	char buf[255];
-	GetWindowText(hwnd, txt, 255);
-
-	SetTextColor(dis->hDC, RGB(255, 255, 255));
-	DrawText(dis->hDC, txt, Txtlen, &rc, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-}
 void drawRadio(HDC hDC, int itemState, HWND hwnd, HBRUSH tlo, LPWSTR txt, int Txtlen, boolean zaznaczone){
 
 	if (Checkbox1 == NULL)
