@@ -11,6 +11,7 @@ public class Opcje {
     private JButton gladkaMysz;
     private JButton startZSystememButton;
     private JComboBox WybierzJezyk;
+    private JLabel NazwaProgramu;
     static Opcje okno;
 
     public static Opcje pokarz() {
@@ -80,5 +81,7 @@ public class Opcje {
             gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
         else
             gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WlaczWygladzanieMyszy.ordinal()]);
+        NazwaProgramu.setText("PilotPC " + Jezyk.napisy[Jezyk.n.Wersja.ordinal()] + " " + Program.wersja);
     }
+
 }
