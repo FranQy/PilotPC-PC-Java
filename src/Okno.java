@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -23,6 +22,7 @@ public class Okno {
     private JPanel zawartosc;
     private JPanel QRPanel;
     private JLabel PodlaczoneUrzadzenia;
+    private JButton powiększQRCodeButton;
     PanelQRCode qr;
     public JFrame frame;
 
@@ -58,6 +58,63 @@ public class Okno {
                 Opcje.pokarz();
             }
         });
+
+        powiększQRCodeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                okienkoQR = new JFrame();
+                JPanel okienkoQRPanel = new JPanel();
+                okienkoQR.add(okienkoQRPanel);
+                PanelQRCode qrO = new PanelQRCode(okienkoQRPanel);
+                okienkoQRPanel.add(qrO);
+                okienkoQR.setUndecorated(true);
+                okienkoQR.setExtendedState(Frame.MAXIMIZED_BOTH);
+                okienkoQR.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        okienkoQR.dispose();
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+
+                    }
+                });
+                okienkoQR.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        okienkoQR.dispose();
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+
+                    }
+                });
+                okienkoQR.setVisible(true);
+
+            }
+        });
         //System.out.println("2");
         frame.setSize(750, 400);
         (new Start()).start();
@@ -72,6 +129,8 @@ public class Okno {
         timer1.schedule(timer1_task, 100, 100);
         //System.out.println("5");
     }
+
+    JFrame okienkoQR;
 
     public void ustawJezyk() {
         (new Start()).start();

@@ -1008,7 +1008,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 				bInfo.hwndOwner = hWnd;
 					bInfo.pidlRoot = NULL;
 				bInfo.pszDisplayName = szDir; // Address of a buffer to receive the display name of the folder selected by the user
-				bInfo.lpszTitle = L"Please, select a folder"; // Title of the dialog
+				bInfo.lpszTitle = L"Wybierz folder do instalacji"; // Title of the dialog
 				bInfo.ulFlags = 0;
 				bInfo.lpfn = NULL;
 				bInfo.lParam = 0;
