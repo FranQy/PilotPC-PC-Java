@@ -359,14 +359,40 @@ void instalacja::pobierz(string nazwa, wstring fol)
 	int n = 1;
 	bool znalezione = false;
 
+	for (int i = 0; i < nazwa.length();i++)
+	if (nazwa[i] == '/')
+		nazwa[i] = '\\';
 
+	SECURITY_ATTRIBUTES  sa;
+	SECURITY_ATTRIBUTES*  saw = &sa;
 
-
+	sa.nLength = sizeof(SECURITY_ATTRIBUTES);
+	sa.bInheritHandle = FALSE;
+	TCHAR * szSD = TEXT("D:")       // Discretionary ACL
+		TEXT("(A;OICI;GA;;;AU)");
+	ConvertStringSecurityDescriptorToSecurityDescriptor(
+		szSD,
+		SDDL_REVISION_1,
+		&(saw->lpSecurityDescriptor),
+		NULL);
 	wstring b;
 	convert(nazwa, b);
 	const WCHAR* nazwa2 = b.c_str();;
 	
 	const WCHAR* folder2 = fol.c_str();
+	//tworzy podfoldery
+	wstring calyplik = (fol + wstring(L"\\") + b);
+	for (int i = 3; i < calyplik.length(); i++)
+	{
+
+		if (calyplik[i] == '\\')
+		{
+			if (!CreateDirectory(calyplik.substr(0, i).c_str(), &sa) && _waccess(calyplik.substr(0, i).c_str(), 0) == ENOENT){
+				MessageBox(NULL, (wstring(L"Nie mo¿na utworzyæ folderu ") + calyplik.substr(0, i)).c_str(), jezyk::napisy[BladPodczasInstalacji], MB_ICONERROR);
+				exit(1);
+			}
+		}
+	}
 	//_bstr_t naz2 = new _bstr_t()
 	//HANDLE  hPlik = CreateFile(lacz(folder, nazwa), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, 0, NULL);
 	//WCHAR* test = c +L"\\"+ b;

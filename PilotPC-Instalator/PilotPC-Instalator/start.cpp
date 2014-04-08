@@ -268,7 +268,9 @@ void wybor(HINSTANCE hInstance){
 	b = RegOpenKeyEx(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\PilotPC", 0, KEY_READ, &r);
 
 	//HFONT hNormalFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
-	if (a == 0 || b == 0)
+	//if (a == 0 || b == 0)
+	
+	if(true)
 	{
 		nrAni = 1;
 		animacjaCzas = GetTickCount();
@@ -1217,10 +1219,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 					{
 					DestroyWindow(przyciskJezyk[i2]);
 					}*/
+					jezyk::laduj((jezyk::jezyki)i);
 					wybor(hinstance);
 					nrAni = 1;
 					animacjaCzas = GetTickCount();
-					jezyk::laduj((jezyk::jezyki)i);
 					return NULL;
 				}
 			}
