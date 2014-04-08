@@ -9,3 +9,4 @@ int WinMain(HINSTANCE hInstance,
 	);
 void wyswietl3(HINSTANCE);
 void convert(std::string &in, std::wstring &out);
+void przerysuj(HWND);

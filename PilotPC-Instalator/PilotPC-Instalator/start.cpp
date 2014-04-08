@@ -127,10 +127,12 @@ VOID OnPaint(HDC hdc)
 boolean* jezykPrzyciskStan = new boolean[3];
 boolean* PrzyciskStan = new boolean[10];
 
+byte nrAni = 0;
 HWND hWnd = NULL;
 HWND LicencjaZaakceptuj, LicencjaTxt, folderButton;
 void wyswietl(HINSTANCE hInstance)
 {//licencja
+	nrAni = 2;
 	LicencjaTxt = CreateWindowEx(0, L"STATIC", NULL, WS_CHILD | WS_VISIBLE |
 		SS_LEFT, 25, 130, 400, 300, hWnd, NULL, hInstance, NULL);
 	SendMessage(LicencjaTxt, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
@@ -140,9 +142,25 @@ void wyswietl(HINSTANCE hInstance)
 	SendMessage(LicencjaZaakceptuj, WM_SETFONT, (WPARAM)PilotPCCzcionka2, 0);
 }
 HWND JavaTxt, JavaTakB, JavaNieB;
+DWORD animacjaCzas;
+int* animowane=new int[1024,5];
+void przesun(HWND el, DWORD czas,int x,int y,int z,int a)
+{
+	animacjaCzas = czas;
+	for (int i = 0; i < 1024;i++)
+	if (animowane[i,0] == NULL)
+	{
+		animowane[i, 0] = (int)el;
+		animowane[i, 1] = (int)x;
+		animowane[i, 2] = (int)y;
+		animowane[i, 3] = (int)z;
+		animowane[i, 4] = (int)a;
+		return;
+	}
+}
 void wyswietl2(HINSTANCE hInstance)
 {
-
+	nrAni = 3;
 	if (instalacja::czyJava())
 		wyswietl3(hInstance);
 	else
@@ -175,7 +193,7 @@ void wyswietl2(HINSTANCE hInstance)
 }
 void wyswietl3(HINSTANCE hInstance)
 {
-
+	nrAni = 4;
 	FolderTxt = CreateWindowEx(0, L"STATIC", NULL, WS_CHILD | WS_VISIBLE |
 		SS_LEFT, 25, 180, 400, 100, hWnd, NULL, hInstance, NULL);
 
@@ -249,17 +267,17 @@ void wybor(HINSTANCE hInstance){
 	//HFONT hNormalFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 	if (a == 0 || b == 0)
 	{
-
+		nrAni = 1;
 		//HFONT PilotPCCzcionka = CreateFont(18, 7, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, L"Arial");
 		WyborTxt = CreateWindowEx(0, L"STATIC", NULL, WS_CHILD | WS_VISIBLE |
-			SS_LEFT, 25, 130, 400, 100, hWnd, NULL, hInstance, NULL);
+			SS_LEFT, 475, 130, 400, 40, hWnd, NULL, hInstance, NULL);
 		SendMessage(WyborTxt, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
 		SetWindowText(WyborTxt, jezyk::napisy[ProgramJestJuzZainstalowany]);
 		WyborOdinstaluj = CreateWindowEx(0, L"BUTTON", jezyk::napisy[Odinstaluj], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
-			1, 180, 448, 220, hWnd, (HMENU)2000, hInstance, NULL);
+			451, 180, 448, 220, hWnd, (HMENU)2000, hInstance, NULL);
 		SendMessage(WyborOdinstaluj, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
 		WyborInstaluj = CreateWindowEx(0, L"BUTTON", jezyk::napisy[InstalujPonownie], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
-			1, 400, 448, 100, hWnd, (HMENU)2001, hInstance, NULL);
+			451, 400, 448, 100, hWnd, (HMENU)2001, hInstance, NULL);
 		SendMessage(WyborInstaluj, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
 	}
 	else
@@ -366,10 +384,287 @@ void drawButtonRed(HDC hDC, UINT itemState, HWND hwnd, HBRUSH zaznaczone, HBRUSH
 void drawButtonRed(DRAWITEMSTRUCT *dis, HWND hwnd, HBRUSH zaznaczone, HBRUSH niezaznaczone, LPWSTR txt, int Txtlen){
 	drawButtonRed(dis->hDC, dis->itemState, hwnd, zaznaczone, niezaznaczone,txt, Txtlen,450,650,NULL);
 }
+int aaaaa = 0;
+VOID CALLBACK TimerProc(
+	_In_  HWND hwnd,
+	_In_  UINT uMsg,
+	_In_  UINT_PTR idEvent,
+	_In_  DWORD dwTime
+	)
+{
+	float czas = (float)(GetTickCount() - animacjaCzas);
+	int przes = (int)(-0.005f*czas*czas + .9 * czas);
+	
+	if (przes < -450)
+	{
+		przes = -450;
+		if (nrAni >0)
+		{
+
+			for (int i2 = 0; i2 < 3; i2++)
+			{
+				DestroyWindow(przyciskJezyk[i2]);
+
+			}
+		}
+		if (nrAni>1)
+		{
+			DestroyWindow(WyborInstaluj);
+			DestroyWindow(WyborOdinstaluj);
+			DestroyWindow(WyborTxt);
+		}
+		if (nrAni>2)
+		{
+			DestroyWindow(LicencjaTxt);
+			DestroyWindow(LicencjaZaakceptuj);
+		}
+	}
+	if (nrAni >0 && przyciskJezyk[0]!=NULL)
+	{
+
+		for (int i2 = 0; i2 < 3; i2++)
+		{
+			MoveWindow(przyciskJezyk[i2], 1 + przes, 150 + i2 * 113, 448, 113, false);
+
+			
+				if (jezykPrzyciskStan[i2] == 1)
+				{
+
+					drawButtonRed(GetDC(przyciskJezyk[i2]), 0, przyciskJezyk[i2], ciemnyTlo2, ciemnyTloB, jezyk::nazwyJezykow[i2], jezyk::nazwyJezykowLen[i2], 448, 113, jezykCzcionka);
+
+				}
+				else
+				{
+					jezykPrzyciskStan[i2] = 0;
+					drawButtonRed(GetDC(przyciskJezyk[i2]), 0, przyciskJezyk[i2], ciemnyTlo2, ciemnyTlo, jezyk::nazwyJezykow[i2], jezyk::nazwyJezykowLen[i2], 448, 113, jezykCzcionka);
+
+				}
+			
+
+		}
+	}if (nrAni == 1)
+	{
+
+		MoveWindow(WyborTxt, 475 + przes, 130, 400, 50, true);
+		MoveWindow(WyborOdinstaluj, 451 + przes, 180, 448, 220, false);
+		MoveWindow(WyborInstaluj, 451 + przes, 400, 448, 100, false);
+
+		if (PrzyciskStan[0] == 1)
+		{
+
+			drawButtonRed(GetDC(WyborOdinstaluj), 0, WyborOdinstaluj, ciemnyTlo5, ciemnyTlo4B, jezyk::napisy[Odinstaluj], stringDlugosc(jezyk::napisy[Odinstaluj]), 448, 220, PilotPCCzcionka);
+
+		}
+		else
+		{
+			PrzyciskStan[0] = 0;
+			drawButtonRed(GetDC(WyborOdinstaluj), 0, WyborOdinstaluj, ciemnyTlo5, ciemnyTlo4, jezyk::napisy[Odinstaluj], stringDlugosc(jezyk::napisy[Odinstaluj]), 448, 220, PilotPCCzcionka);
+
+		}
+		if (PrzyciskStan[1] == 1)
+		{
+
+			drawButtonRed(GetDC(WyborInstaluj), 0, WyborInstaluj, ciemnyTlo2, ciemnyTloB, jezyk::napisy[InstalujPonownie], stringDlugosc(jezyk::napisy[InstalujPonownie]), 448, 100, PilotPCCzcionka);
+
+		}
+		else
+		{
+			PrzyciskStan[1] = 0;
+			drawButtonRed(GetDC(WyborInstaluj), 0, WyborInstaluj, ciemnyTlo2, ciemnyTlo, jezyk::napisy[InstalujPonownie], stringDlugosc(jezyk::napisy[InstalujPonownie]), 448, 100, PilotPCCzcionka);
+
+		}
+
+	}
+	else if (nrAni > 1 && WyborTxt!=NULL)
+	{
+
+		MoveWindow(WyborTxt, 25 + przes, 130, 400, 50, true);
+		MoveWindow(WyborOdinstaluj, 1 + przes, 180, 448, 220, false);
+		MoveWindow(WyborInstaluj, 1 + przes, 400, 448, 100, false);
+
+		if (PrzyciskStan[0] == 1)
+		{
+
+			drawButtonRed(GetDC(WyborOdinstaluj), 0, WyborOdinstaluj, ciemnyTlo5, ciemnyTlo4B, jezyk::napisy[Odinstaluj], stringDlugosc(jezyk::napisy[Odinstaluj]), 448, 220, PilotPCCzcionka);
+
+		}
+		else
+		{
+			PrzyciskStan[0] = 0;
+			drawButtonRed(GetDC(WyborOdinstaluj), 0, WyborOdinstaluj, ciemnyTlo5, ciemnyTlo4, jezyk::napisy[Odinstaluj], stringDlugosc(jezyk::napisy[Odinstaluj]), 448, 220, PilotPCCzcionka);
+
+		}
+		if (PrzyciskStan[1] == 1)
+		{
+
+			drawButtonRed(GetDC(WyborInstaluj), 0, WyborInstaluj, ciemnyTlo2, ciemnyTloB, jezyk::napisy[InstalujPonownie], stringDlugosc(jezyk::napisy[InstalujPonownie]), 448, 100, PilotPCCzcionka);
+
+		}
+		else
+		{
+			PrzyciskStan[1] = 0;
+			drawButtonRed(GetDC(WyborInstaluj), 0, WyborInstaluj, ciemnyTlo2, ciemnyTlo, jezyk::napisy[InstalujPonownie], stringDlugosc(jezyk::napisy[InstalujPonownie]), 448, 100, PilotPCCzcionka);
+
+		}
+
+	}
+
+
+	/*for (int i = 0; i < 10; i++)
+	{
+		if (animowane[i,0] != NULL)
+		{
+			MoveWindow((HWND)animowane[i, 0], animowane[i, 1] + przes, animowane[i, 2], animowane[i, 3], animowane[i, 4], false);
+		}
+	}
+	if (przes<-450)
+	{
+
+		for (int i = 0; i < 1024; i++)
+		{
+			animowane[i, 0] = animowane[i, 1] = animowane[i, 2] = animowane[i, 3] = animowane[i, 4] = 0;
+		}
+		animacjaCzas = GetTickCount();
+	}*/
+	if (przes == -450)
+		nrAni = 0;
+}
+void przerysuj(HWND msghwnd)
+{
+
+	for (int i = 0; i < 3; i++)
+	{
+		if (msghwnd == przyciskJezyk[i] && jezykPrzyciskStan[i] == 0)
+		{
+			jezykPrzyciskStan[i] = 1;
+
+			drawButtonRed(GetDC(przyciskJezyk[i]), 0, przyciskJezyk[i], ciemnyTlo2, ciemnyTloB, jezyk::nazwyJezykow[i], jezyk::nazwyJezykowLen[i], 448, 113, jezykCzcionka);
+
+		}
+		else if (msghwnd != przyciskJezyk[i] && jezykPrzyciskStan[i] != 0)
+		{
+			jezykPrzyciskStan[i] = 0;
+			drawButtonRed(GetDC(przyciskJezyk[i]), 0, przyciskJezyk[i], ciemnyTlo2, ciemnyTlo, jezyk::nazwyJezykow[i], jezyk::nazwyJezykowLen[i], 448, 113, jezykCzcionka);
+
+		}
+	}
+	if (msghwnd == WyborOdinstaluj && PrzyciskStan[0] == 0)
+	{
+		PrzyciskStan[0] = 1;
+
+		drawButtonRed(GetDC(WyborOdinstaluj), 0, WyborOdinstaluj, ciemnyTlo5, ciemnyTlo4B, jezyk::napisy[Odinstaluj], stringDlugosc(jezyk::napisy[Odinstaluj]), 448, 220, PilotPCCzcionka);
+
+	}
+	else if (msghwnd != WyborOdinstaluj && PrzyciskStan[0] != 0)
+	{
+		PrzyciskStan[0] = 0;
+		drawButtonRed(GetDC(WyborOdinstaluj), 0, WyborOdinstaluj, ciemnyTlo5, ciemnyTlo4, jezyk::napisy[Odinstaluj], stringDlugosc(jezyk::napisy[Odinstaluj]), 448, 220, PilotPCCzcionka);
+
+	}
+	if (msghwnd == WyborInstaluj && PrzyciskStan[1] == 0)
+	{
+		PrzyciskStan[1] = 1;
+
+		drawButtonRed(GetDC(WyborInstaluj), 0, WyborInstaluj, ciemnyTlo2, ciemnyTloB, jezyk::napisy[InstalujPonownie], stringDlugosc(jezyk::napisy[InstalujPonownie]), 448, 100, PilotPCCzcionka);
+
+	}
+	else if (msghwnd != WyborInstaluj && PrzyciskStan[1] != 0)
+	{
+		PrzyciskStan[1] = 0;
+		drawButtonRed(GetDC(WyborInstaluj), 0, WyborInstaluj, ciemnyTlo2, ciemnyTlo, jezyk::napisy[InstalujPonownie], stringDlugosc(jezyk::napisy[InstalujPonownie]), 448, 100, PilotPCCzcionka);
+
+	}
+	if (msghwnd == przyciskX && PrzyciskStan[2] == 0)
+	{
+		PrzyciskStan[2] = 1;
+
+		drawButtonRed(GetDC(przyciskX), 0, przyciskX, ciemnyTlo2, ciemnyTloB, L"X", 1, 25, 25, XCzcionka);
+
+	}
+	else if (msghwnd != przyciskX && PrzyciskStan[2] != 0)
+	{
+		PrzyciskStan[2] = 0;
+		drawButtonRed(GetDC(przyciskX), 0, przyciskX, ciemnyTlo2, ciemnyTlo, L"X", 1, 25, 25, XCzcionka);
+
+	}
+	if (msghwnd == przyciskMin && PrzyciskStan[3] == 0)
+	{
+		PrzyciskStan[3] = 1;
+
+		drawButtonRed(GetDC(przyciskMin), 0, przyciskMin, ciemnyTlo2, ciemnyTloB, L"_", 1, 25, 25, XCzcionka);
+
+	}
+	else if (msghwnd != przyciskMin && PrzyciskStan[3] != 0)
+	{
+		PrzyciskStan[3] = 0;
+		drawButtonRed(GetDC(przyciskMin), 0, przyciskMin, ciemnyTlo2, ciemnyTlo, L"_", 1, 25, 25, XCzcionka);
+
+	}
+	if (msghwnd == LicencjaZaakceptuj && PrzyciskStan[4] == 0)
+	{
+		PrzyciskStan[4] = 1;
+
+		drawButtonRed(GetDC(LicencjaZaakceptuj), 0, LicencjaZaakceptuj, ciemnyTlo2, ciemnyTlo3B, jezyk::napisy[Zaakceptuj], stringDlugosc(jezyk::napisy[Zaakceptuj]), 250, 100, PilotPCCzcionka2);
+
+	}
+	else if (msghwnd != LicencjaZaakceptuj && PrzyciskStan[4] != 0)
+	{
+		PrzyciskStan[4] = 0;
+		drawButtonRed(GetDC(LicencjaZaakceptuj), 0, LicencjaZaakceptuj, ciemnyTlo2, ciemnyTlo3, jezyk::napisy[Zaakceptuj], stringDlugosc(jezyk::napisy[Zaakceptuj]), 250, 100, PilotPCCzcionka2);
+
+	}
+
+
+	if (msghwnd == JavaTakB && PrzyciskStan[5] == 0)
+	{
+		PrzyciskStan[5] = 1;
+
+		drawButtonRed(GetDC(JavaTakB), 0, JavaTakB, ciemnyTlo5, ciemnyTlo4B, jezyk::napisy[Odinstaluj], stringDlugosc(jezyk::napisy[JavaTak]), 448, 220, PilotPCCzcionka);
+
+	}
+	else if (msghwnd != JavaTakB && PrzyciskStan[5] != 0)
+	{
+		PrzyciskStan[5] = 0;
+		drawButtonRed(GetDC(JavaTakB), 0, JavaTakB, ciemnyTlo5, ciemnyTlo4, jezyk::napisy[Odinstaluj], stringDlugosc(jezyk::napisy[JavaTak]), 448, 220, PilotPCCzcionka);
+
+	}
+	if (msghwnd == JavaNieB && PrzyciskStan[6] == 0)
+	{
+		PrzyciskStan[6] = 1;
+
+		drawButtonRed(GetDC(JavaNieB), 0, JavaNieB, ciemnyTlo2, ciemnyTloB, jezyk::napisy[InstalujPonownie], stringDlugosc(jezyk::napisy[JavaNie]), 448, 100, PilotPCCzcionka);
+
+	}
+	else if (msghwnd != JavaNieB && PrzyciskStan[6] != 0)
+	{
+		PrzyciskStan[6] = 0;
+		drawButtonRed(GetDC(JavaNieB), 0, JavaNieB, ciemnyTlo2, ciemnyTlo, jezyk::napisy[InstalujPonownie], stringDlugosc(jezyk::napisy[JavaNie]), 448, 100, PilotPCCzcionka);
+
+	}
+
+	if (msghwnd == g_hPrzycisk && PrzyciskStan[7] == 0)
+	{
+		PrzyciskStan[7] = 1;
+
+		drawButtonRed(GetDC(g_hPrzycisk), 0, g_hPrzycisk, ciemnyTlo2, ciemnyTlo3B, jezyk::napisy[Instaluj], stringDlugosc(jezyk::napisy[Instaluj]), 250, 100, PilotPCCzcionka2);
+
+	}
+	else if (msghwnd != g_hPrzycisk && PrzyciskStan[7] != 0)
+	{
+		PrzyciskStan[7] = 0;
+		drawButtonRed(GetDC(g_hPrzycisk), 0, g_hPrzycisk, ciemnyTlo2, ciemnyTlo3, jezyk::napisy[Instaluj], stringDlugosc(jezyk::napisy[Instaluj]), 250, 100, PilotPCCzcionka2);
+
+	}
+}
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 {
+
 	for (int i = 0; i < 10; i++)
 		PrzyciskStan[i] = 0;
+	for (int i = 0; i < 1024; i++)
+	{
+		animowane[i, 0] = animowane[i, 1] = animowane[i, 2] = animowane[i, 3] = animowane[i, 4] = 0;
+	}
 	hbmObraz = LoadBitmap(hinstance, MAKEINTRESOURCE(1));
 
 	ciemnyTlo = CreateSolidBrush(RGB(38, 33, 27));
@@ -421,6 +716,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 	ShowWindow(hWnd, iCmdShow);
 
 	UpdateWindow(hWnd);
+
+	SetTimer(hWnd, 1, 10, TimerProc);
 	HFONT hNormalFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 
 	rysujStałe(hInstance);
@@ -527,129 +824,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 			int xPos = GET_X_LPARAM(msg.lParam);
 			int yPos = GET_Y_LPARAM(msg.lParam);
 
-			for (int i = 0; i < 3; i++)
-			{
-				if (msg.hwnd == przyciskJezyk[i]&&jezykPrzyciskStan[i]==0)
-				{
-					jezykPrzyciskStan[i] = 1;
-
-					drawButtonRed(GetDC(przyciskJezyk[i]), 0, przyciskJezyk[i], ciemnyTlo2, ciemnyTloB, jezyk::nazwyJezykow[i], jezyk::nazwyJezykowLen[i], 448, 113, jezykCzcionka);
-
-				}
-				else if(msg.hwnd != przyciskJezyk[i] && jezykPrzyciskStan[i] != 0)
-				{
-					jezykPrzyciskStan[i] = 0;
-					drawButtonRed(GetDC(przyciskJezyk[i]), 0, przyciskJezyk[i], ciemnyTlo2, ciemnyTlo, jezyk::nazwyJezykow[i], jezyk::nazwyJezykowLen[i], 448, 113, jezykCzcionka);
-
-				}
-			}
-			if (msg.hwnd == WyborOdinstaluj && PrzyciskStan[0] == 0)
-			{
-				PrzyciskStan[0] = 1;
-
-				drawButtonRed(GetDC(WyborOdinstaluj), 0, WyborOdinstaluj, ciemnyTlo5, ciemnyTlo4B, jezyk::napisy[Odinstaluj], stringDlugosc(jezyk::napisy[Odinstaluj]), 448, 220, PilotPCCzcionka);
-
-			}
-			else if (msg.hwnd != WyborOdinstaluj && PrzyciskStan[0] != 0)
-			{
-				PrzyciskStan[0] = 0;
-				drawButtonRed(GetDC(WyborOdinstaluj), 0, WyborOdinstaluj, ciemnyTlo5, ciemnyTlo4, jezyk::napisy[Odinstaluj], stringDlugosc(jezyk::napisy[Odinstaluj]), 448, 220, PilotPCCzcionka);
-
-			}
-			if (msg.hwnd == WyborInstaluj && PrzyciskStan[1] == 0)
-			{
-				PrzyciskStan[1] = 1;
-
-				drawButtonRed(GetDC(WyborInstaluj), 0, WyborInstaluj, ciemnyTlo2, ciemnyTloB, jezyk::napisy[InstalujPonownie], stringDlugosc(jezyk::napisy[InstalujPonownie]), 448, 100, PilotPCCzcionka);
-
-			}
-			else if (msg.hwnd != WyborInstaluj && PrzyciskStan[1] != 0)
-			{
-				PrzyciskStan[1] = 0;
-				drawButtonRed(GetDC(WyborInstaluj), 0, WyborInstaluj, ciemnyTlo2, ciemnyTlo, jezyk::napisy[InstalujPonownie], stringDlugosc(jezyk::napisy[InstalujPonownie]), 448, 100, PilotPCCzcionka);
-
-			}
-			if (msg.hwnd == przyciskX && PrzyciskStan[2] == 0)
-			{
-				PrzyciskStan[2] = 1;
-
-				drawButtonRed(GetDC(przyciskX), 0, przyciskX, ciemnyTlo2, ciemnyTloB, L"X", 1, 25, 25, XCzcionka);
-
-			}
-			else if (msg.hwnd != przyciskX && PrzyciskStan[2] != 0)
-			{
-				PrzyciskStan[2] = 0;
-				drawButtonRed(GetDC(przyciskX), 0, przyciskX, ciemnyTlo2, ciemnyTlo, L"X", 1, 25, 25, XCzcionka);
-
-			}
-			if (msg.hwnd == przyciskMin && PrzyciskStan[3] == 0)
-			{
-				PrzyciskStan[3] = 1;
-
-				drawButtonRed(GetDC(przyciskMin), 0, przyciskMin, ciemnyTlo2, ciemnyTloB, L"_", 1, 25, 25, XCzcionka);
-
-			}
-			else if (msg.hwnd != przyciskMin && PrzyciskStan[3] != 0)
-			{
-				PrzyciskStan[3] = 0;
-				drawButtonRed(GetDC(przyciskMin), 0, przyciskMin, ciemnyTlo2, ciemnyTlo, L"_", 1, 25, 25, XCzcionka);
-
-			}
-			if (msg.hwnd == LicencjaZaakceptuj && PrzyciskStan[4] == 0)
-			{
-				PrzyciskStan[4] = 1;
-
-				drawButtonRed(GetDC(LicencjaZaakceptuj), 0, LicencjaZaakceptuj, ciemnyTlo2, ciemnyTlo3B, jezyk::napisy[Zaakceptuj], stringDlugosc(jezyk::napisy[Zaakceptuj]), 250, 100, PilotPCCzcionka2);
-
-			}
-			else if (msg.hwnd != LicencjaZaakceptuj && PrzyciskStan[4] != 0)
-			{
-				PrzyciskStan[4] = 0;
-				drawButtonRed(GetDC(LicencjaZaakceptuj), 0, LicencjaZaakceptuj, ciemnyTlo2, ciemnyTlo3, jezyk::napisy[Zaakceptuj], stringDlugosc(jezyk::napisy[Zaakceptuj]), 250, 100, PilotPCCzcionka2);
-
-			}
-
-
-			if (msg.hwnd == JavaTakB && PrzyciskStan[5] == 0)
-			{
-				PrzyciskStan[5] = 1;
-
-				drawButtonRed(GetDC(JavaTakB), 0, JavaTakB, ciemnyTlo5, ciemnyTlo4B, jezyk::napisy[Odinstaluj], stringDlugosc(jezyk::napisy[JavaTak]), 448, 220, PilotPCCzcionka);
-
-			}
-			else if (msg.hwnd != JavaTakB && PrzyciskStan[5] != 0)
-			{
-				PrzyciskStan[5] = 0;
-				drawButtonRed(GetDC(JavaTakB), 0, JavaTakB, ciemnyTlo5, ciemnyTlo4, jezyk::napisy[Odinstaluj], stringDlugosc(jezyk::napisy[JavaTak]), 448, 220, PilotPCCzcionka);
-
-			}
-			if (msg.hwnd == JavaNieB && PrzyciskStan[6] == 0)
-			{
-				PrzyciskStan[6] = 1;
-
-				drawButtonRed(GetDC(JavaNieB), 0, JavaNieB, ciemnyTlo2, ciemnyTloB, jezyk::napisy[InstalujPonownie], stringDlugosc(jezyk::napisy[JavaNie]), 448, 100, PilotPCCzcionka);
-
-			}
-			else if (msg.hwnd != JavaNieB && PrzyciskStan[6] != 0)
-			{
-				PrzyciskStan[6] = 0;
-				drawButtonRed(GetDC(JavaNieB), 0, JavaNieB, ciemnyTlo2, ciemnyTlo, jezyk::napisy[InstalujPonownie], stringDlugosc(jezyk::napisy[JavaNie]), 448, 100, PilotPCCzcionka);
-
-			}
-
-			if (msg.hwnd == g_hPrzycisk && PrzyciskStan[7] == 0)
-			{
-				PrzyciskStan[7] = 1;
-
-				drawButtonRed(GetDC(g_hPrzycisk), 0, g_hPrzycisk, ciemnyTlo2, ciemnyTlo3B, jezyk::napisy[Instaluj], stringDlugosc(jezyk::napisy[Instaluj]), 250, 100, PilotPCCzcionka2);
-
-			}
-			else if (msg.hwnd != g_hPrzycisk && PrzyciskStan[7] != 0)
-			{
-				PrzyciskStan[7] = 0;
-				drawButtonRed(GetDC(g_hPrzycisk), 0, g_hPrzycisk, ciemnyTlo2, ciemnyTlo3, jezyk::napisy[Instaluj], stringDlugosc(jezyk::napisy[Instaluj]), 250, 100, PilotPCCzcionka2);
-
-			}
+			przerysuj(msg.hwnd);
 		}
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
@@ -878,22 +1053,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 			{
 				if ((HWND)lParam == przyciskJezyk[i])
 				{
-					for (int i2 = 0; i2 < 3; i2++)
+					/*for (int i2 = 0; i2 < 3; i2++)
 					{
 						DestroyWindow(przyciskJezyk[i2]);
-					}
-					jezyk::laduj((jezyk::jezyki)i);
+					}*/
 					wybor(hinstance);
+					nrAni = 1;
+					animacjaCzas = GetTickCount();
+					jezyk::laduj((jezyk::jezyki)i);
 					return NULL;
 				}
 			}
 			if ((HWND)lParam == WyborInstaluj)
 			{
 				//Bufor[dlugosc] = 0;
-				DestroyWindow(WyborInstaluj);
+				/*DestroyWindow(WyborInstaluj);
 				DestroyWindow(WyborOdinstaluj);
-				DestroyWindow(WyborTxt);
+				DestroyWindow(WyborTxt);*/
+
 				wyswietl(hinstance);
+				nrAni = 2;
+				animacjaCzas = GetTickCount();
 			}if ((HWND)lParam == WyborOdinstaluj)
 			{
 				DWORD dlugosc = GetWindowTextLength(folder);
