@@ -268,9 +268,9 @@ void wybor(HINSTANCE hInstance){
 	b = RegOpenKeyEx(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\PilotPC", 0, KEY_READ, &r);
 
 	//HFONT hNormalFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
-	//if (a == 0 || b == 0)
+	if (a == 0 || b == 0)
 	
-	if(true)
+	//if(false)
 	{
 		nrAni = 1;
 		animacjaCzas = GetTickCount();
@@ -414,7 +414,7 @@ VOID CALLBACK TimerProc(
 
 			}
 		}
-		if (nrAni>1)
+		if (nrAni>1 && WyborInstaluj!=NULL)
 		{
 			DestroyWindow(WyborInstaluj);
 			DestroyWindow(WyborOdinstaluj);
@@ -505,7 +505,7 @@ VOID CALLBACK TimerProc(
 		}
 
 	}
-	else if (nrAni > 1 && WyborTxt != NULL)
+	else if (nrAni > 1 && WyborOdinstaluj != NULL)
 	{
 
 		MoveWindow(WyborTxt, 25 + przes, 130, 400, 50, true);
@@ -1221,8 +1221,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 					}*/
 					jezyk::laduj((jezyk::jezyki)i);
 					wybor(hinstance);
-					nrAni = 1;
-					animacjaCzas = GetTickCount();
+					//nrAni = 1;
+					//animacjaCzas = GetTickCount();
 					return NULL;
 				}
 			}
