@@ -46,22 +46,23 @@ public class Aktualizacja
 
     static void aktualizuj(String content) {
         String[] linie = content.split("\n");
+        for (int i2 = 0; i2 < linie.length; i2++) {
+            if (linie[i2].split("=")[0].compareTo("plik") == 0) {//Usuwa pozostałości po ostatniej aktualizacji
+                File old = new File(linie[i2].split("=")[1] + ".old");
+                if (old.isFile())
+                    old.delete();
+                File New = new File(linie[i2].split("=")[1] + ".new");
+                if (New.isFile())
+                    New.delete();
+            }
+        }
         for (int i = 0; i < linie.length; i++)
             if (linie[i].split("=")[0].compareTo("wersja") == 0) {
                 if (linie[i].split("=")[1].compareTo(Program.wersja) != 0 || wymus)//czy jest inna wersja
                 {
                     trwa = true;
 
-                    for (int i2 = 0; i2 < linie.length; i2++) {
-                        if (linie[i2].split("=")[0].compareTo("plik") == 0) {//Usuwa pozostałości po ostatniej aktualizacji
-                            File old = new File(linie[i2].split("=")[1] + ".old");
-                            if (old.isFile())
-                                old.delete();
-                            File New = new File(linie[i2].split("=")[1] + ".new");
-                            if (New.isFile())
-                                New.delete();
-                        }
-                    }
+
                     for (int i2 = 0; i2 < linie.length; i2++) {
                         if (linie[i2].split("=")[0].compareTo("plik") == 0) {
                             InputStream is = null;
@@ -72,6 +73,13 @@ public class Aktualizacja
                                 else
                                     u = new URL("http://pilotpc.za.pl/" + linie[i2].split("=")[1]);
                                 is = u.openStream();
+                                if (linie[i2].lastIndexOf('/') > 0)
+                                    (new File(linie[i2].substring(linie[i2].indexOf('=') + 1, linie[i2].lastIndexOf('/')))).mkdirs();
+                                /*String[] podfoldery=linie[i2].split("=")[1].split("/");
+                                for(byte i3=0;i3<podfoldery.length-1;i3++)
+                                {
+                                    CreateDirectory();
+                                }  */
                                 FileOutputStream strumien;
                                 if (linie[i2].split("=")[1].compareTo("PilotPC-PC-Java.jar") == 0) {
                                     if (Program.glowneOkno == null)
