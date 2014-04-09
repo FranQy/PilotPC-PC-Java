@@ -7,25 +7,19 @@ public class Biblioteka {
     public static void load() {
         if (zaladowano)
             return;
-        try{
+        try {
 
             System.loadLibrary("pilotpc");
             zaladowano = true;
-        }
-        catch(Throwable e)
-        {
+        } catch (Throwable e) {
             e.printStackTrace();
-            try{
+            try {
                 System.loadLibrary("pilotpc-x64");
                 zaladowano = true;
-            }
-            catch(UnsatisfiedLinkError f)
-            {
+            } catch (UnsatisfiedLinkError f) {
                 f.printStackTrace();
-                Aktualizacja.wymus=true;
-            }
-            catch(Throwable f)
-            {
+                Aktualizacja.wymus = true;
+            } catch (Throwable f) {
                 System.out.println("Błąd z ładowaniem biblioteki! Niektóre elementy programu nie będą działały poprawnie.");
                 f.printStackTrace();
 
@@ -33,8 +27,11 @@ public class Biblioteka {
         }
 
     }
+
     static public native void click(int i);
 
     static public native void autostart(boolean wlacz, boolean wszyscy, String folder);
-    static public void sprawdz(){}
+
+    static public void sprawdz() {
+    }
 }

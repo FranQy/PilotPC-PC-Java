@@ -18,12 +18,12 @@ public class HTTP {
     public static TCP_Data polaczenie(InputStream is, Socket soc, String wyj) throws IOException {
 
         //System.out.print(wyj);
-        Jezyk.jezyki lang= Program.ustawienia.jezyk;
-        int AcceptLanguage =wyj.indexOf("Accept-Language") ;
-        int[] jezykiHttp={wyj.indexOf("pl", AcceptLanguage),wyj.indexOf("en",AcceptLanguage),wyj.indexOf("ru",AcceptLanguage)};
-        int jezykHttp=max(jezykiHttp);
-        if(jezykHttp!=-1)
-            lang=Jezyk.jezyki.values()[jezykHttp];
+        Jezyk.jezyki lang = Program.ustawienia.jezyk;
+        int AcceptLanguage = wyj.indexOf("Accept-Language");
+        int[] jezykiHttp = {wyj.indexOf("pl", AcceptLanguage), wyj.indexOf("en", AcceptLanguage), wyj.indexOf("ru", AcceptLanguage)};
+        int jezykHttp = max(jezykiHttp);
+        if (jezykHttp != -1)
+            lang = Jezyk.jezyki.values()[jezykHttp];
         if (wyj.indexOf("/") == 0 && wyj.indexOf("?") > 0) {
 
             OutputStream os = soc.getOutputStream();
@@ -32,7 +32,7 @@ public class HTTP {
             String wysylanie;
             TCP_Data ret = new TCP_Data();
             if (Polaczenie.polaczeniaHttp[i].zablokowane)
-                wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.ZostalesRozlaczony.ordinal()];
+                wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.ZostalesRozlaczony.ordinal()];
             else if (wyj.indexOf("/" + Program.ustawienia.haslo) == 0) {
                 wysylanie = "HTTP/1.1 200 OK\r\nSet-Cookie: id=" + i + "; path=/\r\n\r\nok";
                 String klasaString = wyj.substring(wyj.indexOf("?") + 1, wyj.indexOf(" HTTP"));
@@ -44,21 +44,19 @@ public class HTTP {
                     ret.touchpadY = klasaObjekt.getInt("touchpadY");
                     ret.type = typ.values()[klasaObjekt.getInt("type")];
                     ret.mouse = touchedTYPE.values()[klasaObjekt.getInt("mouse")];
-                    try
-                    {
+                    try {
                         ret.key = klasaObjekt.getInt("key");
+                    } catch (Exception e) {
                     }
-                    catch(Exception e)
-                    {}
 
-                        ret.button = pilotButton.values()[klasaObjekt.getInt("button")];
+                    ret.button = pilotButton.values()[klasaObjekt.getInt("button")];
 
                 } catch (Exception e) {
                     ret = null;
                 }
 
             } else {
-                wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.KodBledny.ordinal()];
+                wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.KodBledny.ordinal()];
 
             }
             os.write(wysylanie.getBytes());
@@ -71,29 +69,29 @@ public class HTTP {
             byte i = id(wyj);
             String wysylanie;
             if (Polaczenie.polaczeniaHttp[i].zablokowane)
-                wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.ZostalesRozlaczony.ordinal()];
+                wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.ZostalesRozlaczony.ordinal()];
             else if (wyj.indexOf("/dodatek") == 0) {
                 if (soc.getInetAddress().isLoopbackAddress()) {
                     wysylanie = "HTTP/1.1 200 OK\n" +
-                        "Server: PilotPC\n" +
-                        "Set-Cookie: id="+i+"; path=/\n" +
-                        "Content-Type: application/json; charset=UTF-8\n" +
-                        "\n" +
-                        "{\"polecenia\":[";
-                boolean przecinek=false;
-                for (byte x = 0; x < doWykonania.length; x++) {
-                    if (doWykonania[x] != null) {
-                        if (doWykonania[x].type == typ.PILOT) {
-                            if(przecinek)
-                                wysylanie+=",";
-                            wysylanie += "{\"akcja\":" + doWykonania[x].button.ordinal() + "}";
-                            przecinek=true;
+                            "Server: PilotPC\n" +
+                            "Set-Cookie: id=" + i + "; path=/\n" +
+                            "Content-Type: application/json; charset=UTF-8\n" +
+                            "\n" +
+                            "{\"polecenia\":[";
+                    boolean przecinek = false;
+                    for (byte x = 0; x < doWykonania.length; x++) {
+                        if (doWykonania[x] != null) {
+                            if (doWykonania[x].type == typ.PILOT) {
+                                if (przecinek)
+                                    wysylanie += ",";
+                                wysylanie += "{\"akcja\":" + doWykonania[x].button.ordinal() + "}";
+                                przecinek = true;
+                            }
+                            doWykonania[x] = null;
                         }
-                        doWykonania[x] = null;
-                    }
 
-                }
-                wysylanie += "]}";
+                    }
+                    wysylanie += "]}";
                 } else {
                     wysylanie = "HTTP/1.1 403 Forbidden\n" +
                             "Server: PilotPC\n" +
@@ -102,10 +100,9 @@ public class HTTP {
                             "\n" +
                             "{[\"Połączenie tylko przez localhost\"]}";
                 }
-            } else if (wyj.indexOf("/" + Program.ustawienia.haslo+"/pulpit/") == 0) {
-            wysylanie=Pulpit.HTTP(wyj,i, os);
-            }
-                else if (wyj.indexOf("/" + Program.ustawienia.haslo) == 0) {
+            } else if (wyj.indexOf("/" + Program.ustawienia.haslo + "/pulpit/") == 0) {
+                wysylanie = Pulpit.HTTP(wyj, i, os);
+            } else if (wyj.indexOf("/" + Program.ustawienia.haslo) == 0) {
                 String gamepadBase64;
                 try {
                     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -223,7 +220,7 @@ public class HTTP {
                         + "<style>"
                         + "*{-ms-touch-action: none;touch-action: none;}" +
                         "a img{border:none;}"
-                        +"body{font-family:\"Segoe UI Light\",\"Segoe UI\",arial;overflow:hidden;background:#26211b;color:white;font-style:non-sherif;}"
+                        + "body{font-family:\"Segoe UI Light\",\"Segoe UI\",arial;overflow:hidden;background:#26211b;color:white;font-style:non-sherif;}"
                         + "#menu{z-index:10;transition:all 300ms;-webkit-transition:all 300ms;height:10%;position: absolute;top: 90%;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
                         + "#menu li{display:inline;}" +
                         ".karta{position:absolute;left:0;top:0;width:100%;bottom:10%;display:none;}"
@@ -269,7 +266,7 @@ public class HTTP {
                         "if(przycisk2==undefined)"
                         + "pilot.trzymaj=przycisk;" +
                         "else " +
-                         "pilot.trzymaj=przycisk2;" +
+                        "pilot.trzymaj=przycisk2;" +
                         "" +
                         "pilot.trzymajLicz=-10;" +
                         "" +
@@ -283,7 +280,7 @@ public class HTTP {
                         + "touchpad.onTouchDown=function(event){" +
                         "setInterval(function(){if((new Date())-touchpad.czas>450){" +
 
-                         "var data=new TCP_Data();" +
+                        "var data=new TCP_Data();" +
                         "data.mouse = TCP_Data.touchedTYPE.LONG;" +
                         "data.touchpadX = 0;data.touchpadY =0;"
                         + "data.type=TCP_Data.typ.TOUCHPAD;send(data);" +
@@ -314,7 +311,7 @@ public class HTTP {
 
                         + "touchpad.wcisniete=false;"
 
-                         + "if(event.changedTouches[0].screenX>touchpad.oldX-2&&event.changedTouches[0].screenX<touchpad.oldX+2&&event.changedTouches[0].screenY>touchpad.oldY-2&&event.changedTouches[0].screenY<touchpad.oldY+2)"
+                        + "if(event.changedTouches[0].screenX>touchpad.oldX-2&&event.changedTouches[0].screenX<touchpad.oldX+2&&event.changedTouches[0].screenY>touchpad.oldY-2&&event.changedTouches[0].screenY<touchpad.oldY+2)"
 
                         //+ "if(event.screenX>touchpad.oldX-10)"
                         + "{"
@@ -345,7 +342,7 @@ public class HTTP {
                         "data.mouse = TCP_Data.touchedTYPE.UP;" +
                         "data.touchpadX = 0;data.touchpadY =0;"
                         + "data.type=TCP_Data.typ.TOUCHPAD;send(data);"
-                        +"}"
+                        + "}"
                         + "};"
                         + "touchpad.onMouseMove=function(event){" +
                         "touchpad.czas=new Date();"
@@ -378,26 +375,26 @@ public class HTTP {
                         "{" +
                         "var data=new TCP_Data();data.key = txt.value.charCodeAt(klawiatura.i);\n"
                         + "data.type=TCP_Data.typ.KEYBOARD;send(data);\n"
-                       + "}" +
-                       // "txt.value='';\n" +
+                        + "}" +
+                        // "txt.value='';\n" +
                         "};\n"
-                        +"klawiatura.timer=setInterval(klawiatura.t,10);\n" +
+                        + "klawiatura.timer=setInterval(klawiatura.t,10);\n" +
                         "klawiatura.char=function(key){" +
                         "" +
                         "var data=new TCP_Data();" +
                         "if(klawiatura.shiftTeraz||klawiatura.shift!=0)" +
                         "data.key = key.charCodeAt(0)-32;\n" +
-                        "else "+
+                        "else " +
                         "data.key = key.charCodeAt(0);\n" +
                         "if(klawiatura.shift!=2)" +
                         "klawiatura.shift=0;" +
                         "document.getElementsByClassName('shift')[0].className='gr shift shift'+klawiatura.shift;" +
-                        "data.type=TCP_Data.typ.KEYBOARD;send(data);\n"+
-                        "};\n"  +
+                        "data.type=TCP_Data.typ.KEYBOARD;send(data);\n" +
+                        "};\n" +
                         "klawiatura.num=function(key){" +
                         "" +
                         "var data=new TCP_Data();data.key = key;\n"
-                        + "data.type=TCP_Data.typ.KEYBOARD;send(data);\n"+
+                        + "data.type=TCP_Data.typ.KEYBOARD;send(data);\n" +
                         "};\n"
                         + "function send(data){"
                         + "var socket=new XMLHttpRequest();"
@@ -410,7 +407,7 @@ public class HTTP {
                         + "{czasPrzesylu=czas;\n" +
                         "jakosc[jakosc.length]=(new Date()).getTime()-data.czas;\n"
                         + "polaczono=true;" +
-                        "document.getElementById('stanPol').textContent='"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Polaczono.ordinal()]+"';" +
+                        "document.getElementById('stanPol').textContent='" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Polaczono.ordinal()] + "';" +
                         "document.getElementById('jakosc').textContent=Math.ceil(jakoscLicz());"
                         + "}};\n"
                         + "socket.open('get', '?'+JSON.stringify(data), true)\n"
@@ -432,8 +429,8 @@ public class HTTP {
                         + "{"
                         + "polaczono=false;" +
                         "jakosc=[];" +
-                        "document.getElementById('jakosc').textContent='"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.BrakDanych.ordinal()]+"';" +
-                        "document.getElementById('stanPol').textContent='"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Rozlaczono.ordinal()]+"!';"
+                        "document.getElementById('jakosc').textContent='" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.BrakDanych.ordinal()] + "';" +
+                        "document.getElementById('stanPol').textContent='" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Rozlaczono.ordinal()] + "!';"
                         //+ "alert('Rozłączono!');"
                         + "}"
                         + "if((new Date()).getTime()-czasPrzesylu.getTime()>1000&&(new Date()).getTime()-czasWysylu.getTime()>1000)"
@@ -478,8 +475,8 @@ public class HTTP {
                         "}" +
                         "" +
                         "var pulpit=new Object();" +
-                        "pulpit.width="+(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+";\n" +
-                        "pulpit.height="+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+";\n" +
+                        "pulpit.width=" + (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() + ";\n" +
+                        "pulpit.height=" + (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() + ";\n" +
                         "pulpit.jakosc=1;" +
                         "pulpit.laduj=function(thi){\n" +
                         "if(pulpit.zoom<0.5)" +
@@ -502,7 +499,7 @@ public class HTTP {
                         "if(wymWid>Math.floor(pulpit.width/pulpit.zoomX))\n wymWid=Math.floor(pulpit.width/pulpit.zoomX);\n" +
                         "var wymHei=thi.parentNode.clientHeight;\n" +
                         "if(wymHei>Math.floor(pulpit.height/pulpit.zoomY))\n wymHei=Math.floor(pulpit.height/pulpit.zoomY);\n" +
-                        "thi.src='/"+Program.ustawienia.haslo+"/pulpit/'+Math.floor(pulpit.x/pulpit.zoomX)+'/'+Math.floor(pulpit.y/pulpit.zoomY)+'/'+Math.floor(pulpit.width/pulpit.zoomX)+'/'+Math.floor(pulpit.height/pulpit.zoomY)+'/'+wymWid+'/'+wymHei+'/BMP/'+(new Date()).getTime();\n" +
+                        "thi.src='/" + Program.ustawienia.haslo + "/pulpit/'+Math.floor(pulpit.x/pulpit.zoomX)+'/'+Math.floor(pulpit.y/pulpit.zoomY)+'/'+Math.floor(pulpit.width/pulpit.zoomX)+'/'+Math.floor(pulpit.height/pulpit.zoomY)+'/'+wymWid+'/'+wymHei+'/BMP/'+(new Date()).getTime();\n" +
                         "}" +
                         "else \n" +
                         "{\n" +
@@ -510,7 +507,7 @@ public class HTTP {
                         "if(wymWid>Math.floor(pulpit.width/pulpit.zoomX))\n wymWid=Math.floor(pulpit.width/pulpit.zoomX);\n" +
                         "var wymHei=(Math.floor(thi.parentNode.clientHeight/pulpit.jakosc));\n" +
                         "if(wymHei>Math.floor(pulpit.height/pulpit.zoomY))\n wymHei=Math.floor(pulpit.height/pulpit.zoomY);\n" +
-                        "thi.src='/"+Program.ustawienia.haslo+"/pulpit/'+Math.floor(pulpit.x/pulpit.zoomX)+'/'+Math.floor(pulpit.y/pulpit.zoomY)+'/'+Math.floor(pulpit.width/pulpit.zoomX)+'/'+Math.floor(pulpit.height/pulpit.zoomY)+'/'+wymWid+'/'+wymHei+'/JPEG/'+(new Date()).getTime();\n" +
+                        "thi.src='/" + Program.ustawienia.haslo + "/pulpit/'+Math.floor(pulpit.x/pulpit.zoomX)+'/'+Math.floor(pulpit.y/pulpit.zoomY)+'/'+Math.floor(pulpit.width/pulpit.zoomX)+'/'+Math.floor(pulpit.height/pulpit.zoomY)+'/'+wymWid+'/'+wymHei+'/JPEG/'+(new Date()).getTime();\n" +
                         "}" +
                         "pulpit.xs=pulpit.x;" +
                         "pulpit.ys=pulpit.y;" +
@@ -534,7 +531,7 @@ public class HTTP {
                         "document.getElementById(\"pulpit\").children[0].style.height=mnoznik*parseFloat(document.getElementById(\"pulpit\").children[0].style.width)+'%';" +
                         "}" +
                         "}\n" +
-                        "else if(eve.touches.length==1)\n"   +
+                        "else if(eve.touches.length==1)\n" +
                         "{" +
                         "if(pulpit.punkty.length==1)\n" +
                         "{" +
@@ -546,12 +543,12 @@ public class HTTP {
                         //"document.getElementById(\"pulpit\").children[1].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginTop)+(-pulpit.punkty[0].screenY+eve.touches[0].screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
                         "}" +
                         "}\n" +
-                        "pulpit.punkty=eve.touches;"+
+                        "pulpit.punkty=eve.touches;" +
                         "};\n"
-                        +"pulpit.moveM=function(eve){\n" +
+                        + "pulpit.moveM=function(eve){\n" +
                         "if(pulpit.punktXs-eve.screenX>-5&&pulpit.punktXs-eve.screenX<5&&pulpit.punktYs-eve.screenY>-5&&pulpit.punktYs-eve.screenY<5)" +
                         "clearTimeout(pulpit.timeout);" +
-                        "if(pulpit.punktX!=undefined)\n"   +
+                        "if(pulpit.punktX!=undefined)\n" +
                         "{" +
                         "pulpit.x+=pulpit.punktX-eve.screenX;\n" +
                         "pulpit.y+=pulpit.punktY-eve.screenY;\n" +
@@ -559,8 +556,8 @@ public class HTTP {
                         //"document.getElementById(\"pulpit\").children[1].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginLeft)+(-pulpit.punktX+eve.screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';\n" +
                         "document.getElementById(\"pulpit\").children[0].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginTop)+(-pulpit.punktY+eve.screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';\n" +
                         //"document.getElementById(\"pulpit\").children[1].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginTop)+(-pulpit.punktY+eve.screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';\n" +
-                        "pulpit.punktX=eve.screenX;\n"+
-                        "pulpit.punktY=eve.screenY;\n"+
+                        "pulpit.punktX=eve.screenX;\n" +
+                        "pulpit.punktY=eve.screenY;\n" +
                         "}" +
                         "};\n" +
                         /*"pulpit.moveP=function(eve){" +
@@ -605,7 +602,7 @@ public class HTTP {
                         "data.touchpadX = Math.floor(((eve.clientX-thi.clientLeft)*pulpit.width/thi.clientWidth+pulpit.x)/pulpit.zoomX);\n" +
                         "data.touchpadY = Math.floor(((eve.clientY-thi.clientTop)*pulpit.height/thi.clientHeight+pulpit.y)/pulpit.zoomY);\n"
                         + "data.type=TCP_Data.typ.TOUCHPAD;send(data);\n"
-                        +"}}\n" +
+                        + "}}\n" +
                         "document.getElementById('pulpit').addEventListener(\"MSGestureChange\", onDivGestureChange, false);\n" +
                         "document.getElementById('pulpit').addEventListener(\"GestureChange\", onDivGestureChange, false);\n" +
                         "\n" +
@@ -619,7 +616,7 @@ public class HTTP {
                         + "</head><body onload=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onresize=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onkeypress=\"console.log(event);" +
                         "var data=new TCP_Data();" +
                         "data.key = event.charCode;\n" +
-                        "data.type=TCP_Data.typ.KEYBOARD;send(data);\n"+"return false;\">"
+                        "data.type=TCP_Data.typ.KEYBOARD;send(data);\n" + "return false;\">"
                         //+ "<div class=\"karta\" id=\"gamepad\">Gamepad wkrodce</div>"
                         + "<div class=\"karta\" style=\"display:block\" id=\"pilot\">"
                         + "<img id=\"przyciski\" src=\"" + przyciskiBase64 + "\" usemap=\"#przycMapa\" />" +
@@ -658,8 +655,8 @@ public class HTTP {
                         "<button onclick=\"klawiatura.char('b')\" class=\"nor\">B</button>" +
                         "<button onclick=\"klawiatura.char('n')\" class=\"nor\">N</button>" +
                         "<button onclick=\"klawiatura.char('m')\" class=\"nor\">M</button>" +
-                        "<button onclick=\"klawiatura.num(8)\" class=\"gr\">"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Usun.ordinal()]+"</button>"+
-                        "</div></div>" +"<div id=\"klawiaturaLiteryAlt\"><DIV>" +
+                        "<button onclick=\"klawiatura.num(8)\" class=\"gr\">" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Usun.ordinal()] + "</button>" +
+                        "</div></div>" + "<div id=\"klawiaturaLiteryAlt\"><DIV>" +
                         "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
                         "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
                         "<button onclick=\"klawiatura.char('ę')\" class=\"nor\">Ę</button>" +
@@ -689,7 +686,7 @@ public class HTTP {
                         "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
                         "<button onclick=\"klawiatura.char('ń')\" class=\"nor\">Ń</button>" +
                         "<button onclick=\"klawiatura.char('')\" class=\"nor\"></button>" +
-                        "<button onclick=\"klawiatura.num(8)\" class=\"gr\">"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Usun.ordinal()]+"</button>"+
+                        "<button onclick=\"klawiatura.num(8)\" class=\"gr\">" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Usun.ordinal()] + "</button>" +
                         "</div></div>" +
                         "<div id=\"klawiaturaCyfry\"><DIV>" +
                         "<button onclick=\"klawiatura.char('1')\" class=\"nor\">1</button>" +
@@ -760,7 +757,7 @@ public class HTTP {
                         "<button id=\"klLit\" onclick=\"document.getElementById('klLit').style.display='none';document.getElementById('klCyfry').style.display='inline';document.getElementById('klSpec').style.display='inline';document.getElementById('klAlt').style.display='inline';document.getElementById('klawiaturaLitery').style.display='block';document.getElementById('klawiaturaLiteryAlt').style.display='none';document.getElementById('klawiaturaCyfry').style.display='none';document.getElementById('klawiaturaSpecjalne').style.display='none';document.getElementsByClassName('spacja')[0].className='spacja';\" class=\"gr\" style=\"display:none\">ABC</button>" +
                         "<button id=\"klCyfry\" onclick=\"document.getElementById('klLit').style.display='inline';document.getElementById('klCyfry').style.display='none';document.getElementById('klSpec').style.display='inline';document.getElementById('klAlt').style.display='none';document.getElementById('klawiaturaLitery').style.display='none';document.getElementById('klawiaturaLiteryAlt').style.display='none';document.getElementById('klawiaturaCyfry').style.display='block';document.getElementById('klawiaturaSpecjalne').style.display='none';document.getElementsByClassName('spacja')[0].className='spacja spacjaGrube';\" class=\"gr\">123</button>" +
                         "<button id=\"klSpec\" onclick=\"document.getElementById('klLit').style.display='inline';document.getElementById('klCyfry').style.display='inline';document.getElementById('klSpec').style.display='none';document.getElementById('klAlt').style.display='none';document.getElementById('klawiaturaLitery').style.display='none';document.getElementById('klawiaturaLiteryAlt').style.display='none';document.getElementById('klawiaturaCyfry').style.display='none';document.getElementById('klawiaturaSpecjalne').style.display='block';document.getElementsByClassName('spacja')[0].className='spacja spacjaGrube';\" class=\"gr\">Spec</button>" +
-                        "<button onclick=\"klawiatura.char(' ')\" class=\"spacja\">"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Spacja.ordinal()]+"</button>" +
+                        "<button onclick=\"klawiatura.char(' ')\" class=\"spacja\">" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Spacja.ordinal()] + "</button>" +
                         "<button id=\"klAlt\" onclick=\"if(document.getElementById('klawiaturaLitery').style.display=='none'){document.getElementById('klawiaturaLitery').style.display='block';document.getElementById('klawiaturaLiteryAlt').style.display='none';} else {document.getElementById('klawiaturaLitery').style.display='none';document.getElementById('klawiaturaLiteryAlt').style.display='block';}document.getElementById('klawiaturaCyfry').style.display='none';document.getElementById('klawiaturaSpecjalne').style.display='none';\" class=\"gr\">Alt</button>" +
                         "<button onclick=\"klawiatura.num(10)\" class=\"gr\">Enter</button>" +
                         "</DIV>" +
@@ -779,7 +776,7 @@ public class HTTP {
                         "<img " +
                         " src=\"/" + Program.ustawienia.haslo + "/pulpit/0/0/" + (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() + "/" + (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() + "/" + ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 16) + "/" + ((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 16) + "/JPEG/\" style=\"width:100%;height:100%\" onload=\"this.style.zIndex=2;pulpit.laduj(this);\" alt=\"Błąd\" />" +
                         //"<img " +
-                       // " src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[0].style.zIndex=1;pulpit.laduj(this);\" alt=\"\" />" +
+                        // " src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[0].style.zIndex=1;pulpit.laduj(this);\" alt=\"\" />" +
                         "<div id=\"zoom\"><img class=\"zoom\" id=\"powieksz\" src=\"" + plusBase64 + "\" onclick=\"pulpit.zoom=pulpit.zoom*1.5;document.getElementById(\'pulpit\').children[0].style.height=document.getElementById(\'pulpit\').children[0].style.width=parseFloat(document.getElementById(\'pulpit\').children[0].style.width)*1.5+'%'\">" +
                         "<img class=\"zoom\" id=\"pomniejsz\" src=\"" + minusBase64 + "\" onclick=\"pulpit.zoom=pulpit.zoom*0.666666666;document.getElementById(\'pulpit\').children[0].style.height=document.getElementById(\'pulpit\').children[0].style.width=parseFloat(document.getElementById(\'pulpit\').children[0].style.width)*0.6666666+'%'\"></div>" +
                         "</div>"
@@ -787,25 +784,25 @@ public class HTTP {
                         //"<li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li>" +
                         "<li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img alt=\"pilot\" src=\"" + pilotBase64 + "\"/></li><li onclick='kartaPokaz(\"klawiatura\");'><img alt=\"klawiatura\" src=\"" + klawiaturaBase64 + "\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img alt=\"touchpad\" src=\"" + touchpadBase64 + "\"/></li><li onclick='kartaPokaz(\"pulpit\");pulpit.laduj(document.getElementById(\"pulpit\").children[0]);'><img alt=\"Pulpit\" src=\"" + pulpitBase64 + "\"/></li><li onclick=\"" +
                         //"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';}else{document.getElementById('menu').style.top='5%';document.getElementById('menur').style.top='15%';}" +
-                        "if(window.scrollY>0)window.scroll(0,0); else window.scroll(0,document.body.clientHeight*0.85);"+
+                        "if(window.scrollY>0)window.scroll(0,0); else window.scroll(0,document.body.clientHeight*0.85);" +
                         "\"><img style=\"float:right\" alt=\"menu\" src=\"" + menuBase64 + "\"/></li>" +
-                        "</ul><div id=\"menur\"><h2>"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Informacje.ordinal()]+"</h2>" +
+                        "</ul><div id=\"menur\"><h2>" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Informacje.ordinal()] + "</h2>" +
                         "<div class=\"podmenu\">" +
-                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Polaczenie.ordinal()]+"<br/>" +
-                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Stan.ordinal()]+":<span id=\"stanPol\">"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Polaczono.ordinal()]+"</span><br/>" +
-                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Jakosc.ordinal()]+":<span id=\"jakosc\">"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.BrakDanych.ordinal()]+"</span><br/>" +
-                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Host.ordinal()]+": " + java.net.InetAddress.getLocalHost().getHostName() + "<br/>" +
-                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Coder.ordinal()]+"<br />" +
+                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Polaczenie.ordinal()] + "<br/>" +
+                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Stan.ordinal()] + ":<span id=\"stanPol\">" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Polaczono.ordinal()] + "</span><br/>" +
+                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Jakosc.ordinal()] + ":<span id=\"jakosc\">" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.BrakDanych.ordinal()] + "</span><br/>" +
+                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Host.ordinal()] + ": " + java.net.InetAddress.getLocalHost().getHostName() + "<br/>" +
+                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Coder.ordinal()] + "<br />" +
                         "-FranQy<br />" +
                         "-Matrix0123456789<br />" +
-                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Designers.ordinal()]+"<br/>" +
+                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Designers.ordinal()] + "<br/>" +
                         "-FranQy<br/>" +
                         "-Wieczur" +
-                        "</div><h2>"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.JakoscObrazu.ordinal()]+"</h2><div class=\"podmenu\">" +
-                        "<button onclick='pulpit.jakosc=3'>"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Niska.ordinal()]+"</button>" +
-                        "<button onclick='pulpit.jakosc=2'>"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Srednia.ordinal()]+"</button>" +
-                        "<button onclick='pulpit.jakosc=1'>"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Wysoka.ordinal()]+"</button>" +
-                        "<button onclick='pulpit.jakosc=0'>"+Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Ultra.ordinal()]+"</button>" +
+                        "</div><h2>" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.JakoscObrazu.ordinal()] + "</h2><div class=\"podmenu\">" +
+                        "<button onclick='pulpit.jakosc=3'>" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Niska.ordinal()] + "</button>" +
+                        "<button onclick='pulpit.jakosc=2'>" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Srednia.ordinal()] + "</button>" +
+                        "<button onclick='pulpit.jakosc=1'>" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Wysoka.ordinal()] + "</button>" +
+                        "<button onclick='pulpit.jakosc=0'>" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Ultra.ordinal()] + "</button>" +
                         "<h2>Motyw</h2><div class=\"podmenu\"><label><input type=\"radio\" name=\"motyw\" onclick=\"document.body.style.background='#28211b';\" checked>Ciemny motyw</label><label><input type=\"radio\" name=\"motyw\" onclick=\"document.body.style.background='#e2dd21';\">Jasny motyw</label></div></div>" +
                         "</div></body></html>";
 
@@ -851,9 +848,9 @@ public class HTTP {
         //spradzanie po cookie czy jest już
         byte i = 0;
         if (wyj.contains("Cookie: id=")) {
-            try{i = (byte) Integer.parseInt(wyj.substring(wyj.indexOf("Cookie: id=") + 11, wyj.indexOf('\r', wyj.indexOf("Cookie: id="))));
-            }
-            catch(Exception e){
+            try {
+                i = (byte) Integer.parseInt(wyj.substring(wyj.indexOf("Cookie: id=") + 11, wyj.indexOf('\r', wyj.indexOf("Cookie: id="))));
+            } catch (Exception e) {
                 for (; i < 100; i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
                 {
                     if (Polaczenie.polaczeniaHttp[i] == null) {
@@ -880,21 +877,18 @@ public class HTTP {
             Polaczenie.polaczeniaHttp[i].UserAgent = new UserAgent(wyj.substring(wyj.indexOf("User-Agent:") + 11, wyj.indexOf('\r', wyj.indexOf("User-Agent:"))));
             if (wyj.indexOf("/dodatek") == 0)
                 Polaczenie.polaczeniaHttp[i].UserAgent.urzadzenie = "Dodatek do przeglądarki";
-        }
-        else
-        Polaczenie.polaczeniaHttp[i].czas=new Date();
+        } else
+            Polaczenie.polaczeniaHttp[i].czas = new Date();
         return i;
     }
-    static int max(int[] wej)
-    {
-        int ret=-1;
-        int tera=Integer.MAX_VALUE;
-        for(int i=0;i<wej.length;i++)
-        {
-            if(wej[i]<tera&&wej[i]!=-1)
-            {
-                tera=wej[i];
-                ret=i;
+
+    static int max(int[] wej) {
+        int ret = -1;
+        int tera = Integer.MAX_VALUE;
+        for (int i = 0; i < wej.length; i++) {
+            if (wej[i] < tera && wej[i] != -1) {
+                tera = wej[i];
+                ret = i;
             }
         }
         return ret;

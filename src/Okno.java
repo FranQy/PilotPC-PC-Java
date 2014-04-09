@@ -23,23 +23,29 @@ public class Okno {
     private JPanel QRPanel;
     private JLabel PodlaczoneUrzadzenia;
     private JButton powiększQRCodeButton;
+    private JLabel Min;
+    private JLabel Zamknij;
+    private JPanel PasekTytulowy;
     PanelQRCode qr;
     public JFrame frame;
+    private PrzesuwanieOkna przesuwanie;
 
     public Okno() {
         this(true);
     }
-
     public Okno(boolean wyswietl) {
 
         frame = new JFrame("PilotPC");
+        //frame.setType(Window.Type.POPUP);
+        frame.setUndecorated(true);
+        frame.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - 225, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - 325);
 
         //System.out.println("1");
         frame.setContentPane(zawartosc);
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         telefony.setLayout(new GridLayout(0, 1));
-
+        frame.setSize(450, 650);
         kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ": " + Program.ustawienia.haslo);
         ustawJezyk();
         zmieńKodButton.addActionListener(new ActionListener() {
@@ -115,8 +121,105 @@ public class Okno {
 
             }
         });
+        Zamknij.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                while (true) {
+                    if (!Aktualizacja.trwa)
+                        System.exit(0);
+                    else
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
+                        }
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        Min.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                frame.setVisible(false);
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        PasekTytulowy.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (przesuwanie != null) {
+                    przesuwanie.działa = false;
+                    przesuwanie = null;
+                }
+                przesuwanie = new PrzesuwanieOkna(frame);
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (przesuwanie != null) {
+                    przesuwanie.działa = false;
+                    przesuwanie = null;
+                }
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         //System.out.println("2");
-        frame.setSize(750, 400);
         (new Start()).start();
         //System.out.println("3");
 

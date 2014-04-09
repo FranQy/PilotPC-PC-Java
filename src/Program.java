@@ -89,6 +89,7 @@ public class Program {
                         glowneOkno = new Okno();
                     else
                         glowneOkno.frame.setVisible(true);
+                    // glowneOkno.frame.setUndecorated(false);
                 }
             });
             MenuItem opcje = new MenuItem(Jezyk.napisy[Jezyk.n.Infromacje.ordinal()]); //tworzymy obiekt menuItem
@@ -133,6 +134,7 @@ public class Program {
                         if (glowneOkno == null) {
                             glowneOkno = new Okno();
                         } else {
+                            //glowneOkno.frame.setUndecorated(true);
                             glowneOkno.frame.setVisible(true);
                         }
                     }

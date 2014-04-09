@@ -72,8 +72,10 @@ public class Opcje {
         ustawJezyk();
         // System.out.println("4");
         frame.setSize(400, 250);
-        if (wyswietl)
+        if (wyswietl) {
             frame.setVisible(true);
+
+        }
     }
 
     public void ustawJezyk() {

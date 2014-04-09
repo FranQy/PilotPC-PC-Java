@@ -1,3 +1,3 @@
 public enum TypWyswietlania {
-Nic,Okno,Konsola
+    Nic, Okno, Konsola
 }
