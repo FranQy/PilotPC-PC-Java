@@ -383,7 +383,7 @@ void drawButtonRed(HDC hDC, UINT itemState, HWND hwnd, HBRUSH zaznaczone, HBRUSH
 	char buf[255];
 	if (font != NULL)
 		SelectObject(hDC, font);
-	GetWindowText(hwnd, txt, 255);
+	//GetWindowText(hwnd, txt, 255);
 
 	//SendMessage(hDC, WM_SETFONT, (WPARAM)jezykCzcionka, 0);
 
@@ -777,7 +777,7 @@ void przerysuj(HWND msghwnd)
 		drawButtonRed(GetDC(WyborInstaluj), 0, WyborInstaluj, ciemnyTlo2, ciemnyTlo, jezyk::napisy[InstalujPonownie], stringDlugosc(jezyk::napisy[InstalujPonownie]), 448, 100, PilotPCCzcionka);
 
 	}
-	if (msghwnd == przyciskX && PrzyciskStan[2] == 0)
+	/*if (msghwnd == przyciskX && PrzyciskStan[2] == 0)
 	{
 		PrzyciskStan[2] = 1;
 
@@ -802,7 +802,7 @@ void przerysuj(HWND msghwnd)
 		PrzyciskStan[3] = 0;
 		drawButtonRed(GetDC(przyciskMin), 0, przyciskMin, ciemnyTlo2, ciemnyTlo, L"_", 1, 25, 25, XCzcionka);
 
-	}
+	}*/
 	if (msghwnd == LicencjaZaakceptuj && PrzyciskStan[4] == 0)
 	{
 		PrzyciskStan[4] = 1;
@@ -1199,7 +1199,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 							else if (dis->CtlID == 2001)
 								drawButtonRed(dis, WyborInstaluj, ciemnyTlo2, ciemnyTlo, jezyk::napisy[InstalujPonownie], stringDlugosc(jezyk::napisy[InstalujPonownie]));
 							else if (dis->CtlID == 1998)
-								drawButtonRed(dis, przyciskMin, ciemnyTlo2, ciemnyTlo, L"_", 1);
+								drawButtonRed(dis->hDC,dis->itemState, przyciskMin, ciemnyTlo2, ciemnyTlo, L"_", 1,25,25,XCzcionka);
 							else if (dis->CtlID == 1999)
 								drawButtonRed(dis, przyciskX, ciemnyTlo2, ciemnyTlo, L"X", 1);
 							else if (dis->CtlID == 2002)
