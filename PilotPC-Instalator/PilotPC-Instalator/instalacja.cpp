@@ -13,7 +13,6 @@
 #include <Winsock2.h>
 #include <comdef.h>
 #include <Winbase.h>
-#include "stdafx.h"
 #include "windows.h"
 #include "winnls.h"
 #include "shobjidl.h"
@@ -48,7 +47,6 @@ return ret;
 
 instalacja::instalacja(bool _systemStart, bool _wszyscy, LPCWSTR _folder, bool _skrotPulpit, bool _skrotMenuStart, HWND _progressbar, wstring _wfolder)
 {
-
 
 	systemStart = _systemStart;
 	wszyscy = _wszyscy;

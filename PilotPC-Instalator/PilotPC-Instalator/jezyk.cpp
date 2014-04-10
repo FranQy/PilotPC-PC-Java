@@ -49,6 +49,7 @@ void jezyk::laduj(jezyki a)
 		napisy[n::PotrzebnaJava] = L"Do działania programu wymagana jest instalacja Javy.";
 		napisy[n::JavaTak] = L"Zainstaluj Javę i kontynuuj";
 		napisy[n::JavaNie] = L"Anuluj";
+		napisy[n::Wybierz] = L"Wybierz";
 		break;
 	case jezyk::Angielski:
 		napisy[n::Kod] = L"EN";
@@ -71,9 +72,10 @@ void jezyk::laduj(jezyki a)
 		napisy[n::WymaganeUprawneiniaAdministratora] = L"Access denied";
 		napisy[n::Zaakceptuj] = L"Accept";
 		napisy[n::Licencja] = L"Postanowienia licencji wkrótce...";
-		napisy[n::PotrzebnaJava] = L"Do działania programu wymagana jest instalacja Javy.";
-		napisy[n::JavaTak] = L"Zainstaluj Javę i kontynuuj";
+		napisy[n::PotrzebnaJava] = L"This program need Java";
+		napisy[n::JavaTak] = L"Install Java and continue";
 		napisy[n::JavaNie] = L"Cancel";
+		napisy[n::Wybierz] = L"Choose";
 		break;
 	case jezyk::Rosyjski:
 		napisy[n::Kod] = L"RU";
@@ -99,6 +101,7 @@ void jezyk::laduj(jezyki a)
 		napisy[n::PotrzebnaJava] = L"Do działania programu wymagana jest instalacja Javy.";
 		napisy[n::JavaTak] = L"Zainstaluj Javę i kontynuuj";
 		napisy[n::JavaNie] = L"Anuluj";
+		napisy[n::Wybierz] = L"Wybierz";
 		break;
 	default:
 		break;
