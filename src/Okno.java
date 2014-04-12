@@ -58,6 +58,108 @@ public class Okno {
                 Program.ustawienia.eksportuj();
             }
         });
+        informacjeButton.setBackground(new Color(38, 33, 27));
+        powiększQRCodeButton.setBackground(new Color(38, 33, 27));
+        zmieńKodButton.setBackground(new Color(38, 33, 27));
+        informacjeButton.setBorderPainted(false);
+        powiększQRCodeButton.setBorderPainted(false);
+        zmieńKodButton.setBorderPainted(false);
+        informacjeButton.setForeground(Color.white);
+        powiększQRCodeButton.setForeground(Color.white);
+        zmieńKodButton.setForeground(Color.white);
+        zmieńKodButton.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                zmieńKodButton.setBackground(new Color(52, 47, 39));
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (zmieńKodButton.getBackground().getRed() == 52)
+                    zmieńKodButton.setBackground(new Color(48, 43, 35));
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                zmieńKodButton.setBackground(new Color(48, 43, 35));
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                zmieńKodButton.setBackground(new Color(38, 33, 27));
+
+            }
+        });
+        powiększQRCodeButton.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                powiększQRCodeButton.setBackground(new Color(52, 47, 39));
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (powiększQRCodeButton.getBackground().getRed() == 52)
+                    powiększQRCodeButton.setBackground(new Color(48, 43, 35));
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                powiększQRCodeButton.setBackground(new Color(48, 43, 35));
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                powiększQRCodeButton.setBackground(new Color(38, 33, 27));
+
+            }
+        });
+        informacjeButton.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                informacjeButton.setBackground(new Color(52, 47, 39));
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (informacjeButton.getBackground().getRed() == 52)
+                    informacjeButton.setBackground(new Color(48, 43, 35));
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                informacjeButton.setBackground(new Color(48, 43, 35));
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                informacjeButton.setBackground(new Color(38, 33, 27));
+
+            }
+        });
         informacjeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
