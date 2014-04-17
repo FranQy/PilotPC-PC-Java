@@ -2,13 +2,12 @@
 #include "stdafx.h"
 using namespace std;
 
-
 BOOL IsRunAsAdmin();
 class instalacja
 {
-public:
-
-	instalacja(bool systemStart, bool wszyscy, LPCWSTR folder, bool skrotPulpit, bool skrotMenuStart, HWND,wstring wfolder);
+public: int postepFaktyczny = 0;
+public: int postepAnim = 0;
+public:	instalacja(bool systemStart, bool wszyscy, LPCWSTR folder, bool skrotPulpit, bool skrotMenuStart, HWND,wstring wfolder);
 public: void instalacja::start(wstring fol);
 public: void instalacja::start(HWND hWnd);
 public: static void instalacja::odinstaluj(HINSTANCE, HWND, HWND);

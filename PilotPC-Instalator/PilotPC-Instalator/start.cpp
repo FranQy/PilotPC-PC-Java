@@ -16,6 +16,7 @@ int logoCzas;
 HWND hProgressBar;
 int myszX, myszY;
 bool trwa = false;
+instalacja* ins;
 // Enable Visual Style
 #if defined _M_IX86
 #pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
@@ -90,7 +91,7 @@ VOID OnPaint(HDC hdc)
 {
 
 	logoAni(hdc);
-	hbmObraz = LoadBitmap(hinstance, MAKEINTRESOURCE(1));
+	
 	RECT prost;
 	prost.left = 0;
 	prost.top = 500;
@@ -397,8 +398,10 @@ void logoAni(HDC hdc){
 
 	if (logoCzas != 0)
 	{
-		int czasR = GetTickCount() - logoCzas;
+		//int czasR = GetTickCount() - logoCzas;
 		//czasR = czasR / 10;
+		(*ins).postepAnim = (*ins).postepFaktyczny + ((*ins).postepFaktyczny - (*ins).postepAnim) / 10;
+		int czasR = (*ins).postepAnim * 2000 / (32 * 1024);
 		int czarMn = 2000 - czasR;
 		hbmObraz = LoadBitmap(hinstance, MAKEINTRESOURCE(4));
 		
@@ -409,7 +412,7 @@ void logoAni(HDC hdc){
 		prostTlo.left = 1;
 		prostTlo.top = 150;
 		prostTlo.right = 449;
-		prostTlo.bottom = 500;
+		prostTlo.bottom = 400;
 		FillRect(hdc, &prostTlo, ciemnyTlo);
 		if (czasR<2000)
 		for (int i = 0; i < 30; i++)
@@ -731,6 +734,22 @@ VOID CALLBACK TimerProc(
 	}
 
 	logoAni(GetDC(hWnd));
+	if ((*ins).postepAnim > 0)
+	{
+		RECT prostTlo2;
+		prostTlo2.left = 25;
+		prostTlo2.top = 450;
+		prostTlo2.right = 25 + (*ins).postepAnim*400/(32*1024);
+		prostTlo2.bottom = 470;
+		FillRect(GetDC(hWnd), &prostTlo2, jasnyTlo1);
+		prostTlo2.left = 25 + (*ins).postepAnim * 400 / (32 * 1024);
+		prostTlo2.top = 450;
+		prostTlo2.right = 425;
+		prostTlo2.bottom = 470;
+		FillRect(GetDC(hWnd), &prostTlo2, ciemnyTlo2);
+	}
+	//if (hProgressBar != NULL)
+	//	SendMessage(hProgressBar, PBM_SETPOS, (WPARAM)(*ins).postepFaktyczny, 0);
 }
 void przerysuj(HWND msghwnd)
 {
@@ -861,6 +880,9 @@ void przerysuj(HWND msghwnd)
 }
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 {
+		Checkbox1 = LoadBitmap(hinstance, MAKEINTRESOURCE(2));
+		Checkbox2 = LoadBitmap(hinstance, MAKEINTRESOURCE(3));
+	hbmObraz = LoadBitmap(hinstance, MAKEINTRESOURCE(1));
 	for (int i = 0; i < 300; i++)
 	{
 		logoRandom[i] = (rand() % 2)*900-450;
@@ -934,7 +956,11 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 	rysujStałe(hInstance);
 
 	string parametry = string(test);
-
+	if (parametry.length() > 0 && !IsRunAsAdmin())
+	{
+		MessageBox(hWnd, jezyk::napisy[WymaganeUprawneiniaAdministratora], jezyk::napisy[BladPodczasInstalacji], MB_ICONERROR);
+		exit(-1);
+	}
 	if (parametry.length() > 1 && parametry.substr(0, 2) == string("PL"))
 	{
 		jezyk::laduj(jezyk::jezyki::Polski);
@@ -1019,7 +1045,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 
 			SendMessage(hProgressBar, PBM_SETRANGE, 0, (LPARAM)MAKELONG(0, 32 * 1024));
 			logoCzas = GetTickCount();
-			instalacja* ins = new instalacja(systemStartBool, wszyscy, folder3, skrotPulpit, skrotMenuStart, hProgressBar, folder2);
+			 ins = new instalacja(systemStartBool, wszyscy, folder3, skrotPulpit, skrotMenuStart, hProgressBar, folder2);
 			(*ins).start(hWnd);
 		}
 		else
@@ -1261,7 +1287,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 				SendMessage(hProgressBar, PBM_SETRANGE, 0, (LPARAM)MAKELONG(0, 32 * 1024));
 				wstring wfolder;
 				logoCzas = GetTickCount();
-				instalacja* ins = new instalacja(systemStartBool, wszyscy, Bufor, skrotPulpit, skrotMenuStart, hProgressBar, wstring(Bufor));
+				 ins = new instalacja(systemStartBool, wszyscy, Bufor, skrotPulpit, skrotMenuStart, hProgressBar, wstring(Bufor));
 				(*ins).start(hWnd);
 			}for (int i = 0; i < 3; i++)
 			{

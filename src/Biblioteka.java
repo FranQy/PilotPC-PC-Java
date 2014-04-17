@@ -9,12 +9,12 @@ public class Biblioteka {
             return;
         try {
 
-            System.loadLibrary("pilotpc");
+            System.loadLibrary("lib/pilotpc");
             zaladowano = true;
         } catch (Throwable e) {
             e.printStackTrace();
             try {
-                System.loadLibrary("pilotpc-x64");
+                System.loadLibrary("lib/pilotpc-x64");
                 zaladowano = true;
             } catch (UnsatisfiedLinkError f) {
                 f.printStackTrace();
