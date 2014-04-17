@@ -30,6 +30,7 @@ public class Okno {
     private JLabel IP2;
     private JLabel nazwa;
     private JLabel DodatekDoPrzeg;
+    private JLabel NazwaPilotPC;
     PanelQRCode qr;
     public JFrame frame;
     private PrzesuwanieOkna przesuwanie;
@@ -50,6 +51,7 @@ public class Okno {
         frame.pack();
         telefony.setLayout(new GridLayout(0, 1));
         frame.setSize(800, 500);
+
         kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ":");
         Kod2.setText(Program.ustawienia.haslo);
         ustawJezyk();
@@ -296,41 +298,8 @@ public class Okno {
 
             }
         });
-        PasekTytulowy.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if (przesuwanie != null) {
-                    przesuwanie.działa = false;
-                    przesuwanie = null;
-                }
-                przesuwanie = new PrzesuwanieOkna(frame);
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (przesuwanie != null) {
-                    przesuwanie.działa = false;
-                    przesuwanie = null;
-                }
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
+        PasekTytulowy.addMouseListener(PrzesuńListener);
+        NazwaPilotPC.addMouseListener(PrzesuńListener);
         //System.out.println("2");
         (new Start()).start();
         //System.out.println("3");
@@ -345,6 +314,41 @@ public class Okno {
         //System.out.println("5");
     }
 
+    MouseListener PrzesuńListener = new MouseListener() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if (przesuwanie != null) {
+                przesuwanie.działa = false;
+                przesuwanie = null;
+            }
+            przesuwanie = new PrzesuwanieOkna(frame);
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            if (przesuwanie != null) {
+                przesuwanie.działa = false;
+                przesuwanie = null;
+            }
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
+    };
     JFrame okienkoQR;
 
     public void ustawJezyk() {
@@ -441,6 +445,7 @@ for(int i=0;i<telefony.countComponents();i++)
         JPanel ramka;
 
         public Urzadzenie(PolaczenieInfo z, JPanel telefony) {
+
             setBackground(new Color(46, 46, 46));
             tekst.setForeground(Color.white);
             rozlacz.setBackground(Color.white);
