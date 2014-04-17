@@ -26,6 +26,10 @@ public class Okno {
     private JLabel Min;
     private JLabel Zamknij;
     private JPanel PasekTytulowy;
+    private JLabel Kod2;
+    private JLabel IP2;
+    private JLabel nazwa;
+    private JLabel DodatekDoPrzeg;
     PanelQRCode qr;
     public JFrame frame;
     private PrzesuwanieOkna przesuwanie;
@@ -45,15 +49,21 @@ public class Okno {
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         telefony.setLayout(new GridLayout(0, 1));
-        frame.setSize(450, 650);
-        kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ": " + Program.ustawienia.haslo);
+        frame.setSize(800, 500);
+        kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ":");
+        Kod2.setText(Program.ustawienia.haslo);
         ustawJezyk();
+        try {
+            nazwa.setText(InetAddress.getLocalHost().getHostName());
+        } catch (Throwable e) {
+        }
         zmieńKodButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 Program.ustawienia.haslo = Ustawienia.generujHaslo();
-                kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ": " + Program.ustawienia.haslo);
+                kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ":");
+                Kod2.setText(Program.ustawienia.haslo);
                 qr.odswierz();
                 Program.ustawienia.eksportuj();
             }
@@ -341,7 +351,8 @@ public class Okno {
         (new Start()).start();
         zmieńKodButton.setText(Jezyk.napisy[Jezyk.n.ZmienKod.ordinal()]);
         informacjeButton.setText(Jezyk.napisy[Jezyk.n.Infromacje.ordinal()]);
-        kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ": " + Program.ustawienia.haslo);
+        kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ":");
+        Kod2.setText(Program.ustawienia.haslo);
         PodlaczoneUrzadzenia.setText(Jezyk.napisy[Jezyk.n.PodlaczoneUrzadzenia.ordinal()]);
     }
 
@@ -366,9 +377,11 @@ public class Okno {
             else if (Aktualizacja.trwa)
                 statusTxt += " Trwa aktualizacja do nowej wersji...";
             // status.setText(statusTxt);
+            int ileTel = 0;
             for (byte i = 0; i < Polaczenie.watki.length; i++) {
                 if (Polaczenie.watki[i] != null)
                     if (Polaczenie.watki[i].czyPolaczono()) {
+                        ileTel++;
                         if (!Polaczenie.watki[i].pokazane && Polaczenie.watki[i].infoPrzyPolaczeniu != null) {
                             Polaczenie.watki[i].pokazane = true;
                             telefony.add(Polaczenie.watki[i].UI = new Urzadzenie(Polaczenie.watki[i], telefony));
@@ -376,10 +389,15 @@ public class Okno {
                         }
                     }
             }
+            Boolean dodatek = false;
             for (byte i = 0; i < Polaczenie.polaczeniaHttp.length; i++) {
                 if (Polaczenie.polaczeniaHttp[i] != null) {
                     long rozn = (new Date()).getTime() - Polaczenie.polaczeniaHttp[i].czas.getTime();
-                    if (!Polaczenie.polaczeniaHttp[i].pokazane && rozn < 5000) {
+                    if (rozn < 5000)
+                        ileTel++;
+                    if (Polaczenie.polaczeniaHttp[i].toString() == "Dodatek do przeglądarki") {
+                        dodatek = true;
+                    } else if (!Polaczenie.polaczeniaHttp[i].pokazane && rozn < 5000) {
                         Polaczenie.polaczeniaHttp[i].pokazane = true;
                         telefony.add(Polaczenie.polaczeniaHttp[i].UI = new Okno.Urzadzenie(Polaczenie.polaczeniaHttp[i], telefony));
                         potrzebneOdswierzenie = true;
@@ -391,6 +409,16 @@ public class Okno {
                     }
                 }
             }
+            if (ileTel == 0) {
+                PodlaczoneUrzadzenia.setText("Brak podłączonych urządzeń");
+            } else
+
+                PodlaczoneUrzadzenia.setText(Jezyk.napisy[Jezyk.n.PodlaczoneUrzadzenia.ordinal()]);
+            if (dodatek) {
+                DodatekDoPrzeg.setText("Dodatek do przeglądarki: tak");
+            } else
+
+                DodatekDoPrzeg.setText("Dodatek do przeglądarki: nie");
             //if(potrzebneOdswierzenie)
 /*{telefony.repaint();//(telefony.getGraphics());
        //telefony.paintImmediately(0, 0, 2000, 2000);
@@ -449,7 +477,8 @@ for(int i=0;i<telefony.countComponents();i++)
 
         @Override
         public void run() {
-            String tekstIP = Jezyk.napisy[Jezyk.n.TwojeIPTo.ordinal()] + ":<br/>";
+            //String tekstIP = Jezyk.napisy[Jezyk.n.TwojeIPTo.ordinal()] + ":<br/>";
+            String tekstIP = "";
             Enumeration<NetworkInterface> n;
             try {
                 n = NetworkInterface.getNetworkInterfaces();
@@ -470,7 +499,8 @@ for(int i=0;i<telefony.countComponents();i++)
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
-            info.setText("<html>" + tekstIP + "</html>");
+            info.setText("<html>" + Jezyk.napisy[Jezyk.n.TwojeIPTo.ordinal()] + "</html>");
+            IP2.setText("<html>" + tekstIP + "</html>");
         }
     }
 }

@@ -55,10 +55,10 @@ public class Jezyk {
                 napisy[n.Polaczono.ordinal()] = "Połączono";
                 napisy[n.Nazwa.ordinal()] = "Nazwa";
                 napisy[n.BladZPolaczeniem.ordinal()] = "Błąd z połączeniem";
-                napisy[n.KodDoPolaczenia.ordinal()] = "Kod do połączenia";
+                napisy[n.KodDoPolaczenia.ordinal()] = "Kod";
                 napisy[n.Rozlacz.ordinal()] = "Rozłącz";
-                napisy[n.TwojeIPTo.ordinal()] = "Twoje IP to";
-                napisy[n.ZmienKod.ordinal()] = "Zmień kod";
+                napisy[n.TwojeIPTo.ordinal()] = "IP";
+                napisy[n.ZmienKod.ordinal()] = "Zmień";
                 napisy[n.Infromacje.ordinal()] = "Opcje";
                 napisy[n.StartZSystemem.ordinal()] = "Start z systemem";
                 napisy[n.PodlaczoneUrzadzenia.ordinal()] = "Podłączone urządzenia";
