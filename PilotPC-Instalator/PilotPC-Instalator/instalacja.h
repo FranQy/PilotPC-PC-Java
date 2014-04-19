@@ -7,7 +7,8 @@ class instalacja
 {
 public: int postepFaktyczny = 0;
 public: int postepAnim = 0;
-public:	instalacja(bool systemStart, bool wszyscy, LPCWSTR folder, bool skrotPulpit, bool skrotMenuStart, HWND,wstring wfolder);
+public:HWND StanInstalacji;
+public:	instalacja(bool systemStart, bool wszyscy, LPCWSTR folder, bool skrotPulpit, bool skrotMenuStart, HWND,wstring wfolder,HWND);
 public: void instalacja::start(wstring fol);
 public: void instalacja::start(HWND hWnd);
 public: static void instalacja::odinstaluj(HINSTANCE, HWND, HWND);
@@ -23,7 +24,7 @@ public: static bool czyJava();
 	//WCHAR* lacz(LPCWSTR a, string b);
 	int getHttp(char host[], int hostl, string path, int pathl);
 	~instalacja();
-	void instalacja::pobierz(string nazwa, wstring fold);
+	void instalacja::pobierz(string nazwa, wstring fold, instalacja*);
 
 };
 //HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc,LPCWSTR workingDir);

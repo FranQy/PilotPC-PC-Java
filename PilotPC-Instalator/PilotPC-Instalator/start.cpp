@@ -12,6 +12,7 @@ BOOL skrotPulpit = true;
 BOOL skrotMenuStart = true;
 HWND folder;
 HWND FolderTxt;
+HWND StanInstalacji;
 int logoCzas;
 HWND hProgressBar;
 int myszX, myszY;
@@ -85,7 +86,7 @@ void convert(std::string &in, std::wstring &out)
 }
 HBITMAP hbmObraz;
 HBITMAP Checkbox1;
-int* logoRandom = new int[2400];
+int* logoRandom = new int[20000];
 HBITMAP Checkbox2;
 VOID OnPaint(HDC hdc)
 {
@@ -352,7 +353,7 @@ void wybierzJezyk(HINSTANCE hInstance)
 
 
 }
-
+int narysowane = 0;
 void drawButtonRed(HDC hDC, UINT itemState, HWND hwnd, HBRUSH zaznaczone, HBRUSH niezaznaczone, LPWSTR txt, int Txtlen, int szerokosc, int wysokosc, HFONT font){
 
 
@@ -395,42 +396,53 @@ void drawButtonRed(DRAWITEMSTRUCT *dis, HWND hwnd, HBRUSH zaznaczone, HBRUSH nie
 	drawButtonRed(dis->hDC, dis->itemState, hwnd, zaznaczone, niezaznaczone, txt, Txtlen, 450, 650, NULL);
 }
 void logoAni(HDC hdc){
-
-	if (logoCzas != 0)
+	if (ins!=NULL)
+		(*ins).postepAnim = (*ins).postepAnim + ((*ins).postepFaktyczny - (*ins).postepAnim) / 50;
+	if (logoCzas != 0 && narysowane != (*ins).postepAnim * 1200 / (32 * 1024) )
 	{
+		int czasR = (*ins).postepAnim * 1200 / (32 * 1024);
 		//int czasR = GetTickCount() - logoCzas;
 		//czasR = czasR / 10;
-		(*ins).postepAnim = (*ins).postepFaktyczny + ((*ins).postepFaktyczny - (*ins).postepAnim) / 10;
-		int czasR = (*ins).postepAnim * 2000 / (32 * 1024);
-		int czarMn = 2000 - czasR;
+		int czarMn = 1000 - czasR;
+		if (hbmObraz==NULL)
 		hbmObraz = LoadBitmap(hinstance, MAKEINTRESOURCE(4));
-		
+
 		HDC hdcNowy = CreateCompatibleDC(hdc);
+		HDC hdcBufor = CreateCompatibleDC(hdc);
+		HBITMAP hbmBuf = CreateCompatibleBitmap(hdc, 448, 300);
+		HBITMAP hbmOldBuf = (HBITMAP)SelectObject(hdcBufor, hbmBuf);
 		HBITMAP hbmOld = (HBITMAP)SelectObject(hdcNowy, hbmObraz);
 
 		RECT prostTlo;
-		prostTlo.left = 1;
-		prostTlo.top = 150;
-		prostTlo.right = 449;
-		prostTlo.bottom = 400;
-		FillRect(hdc, &prostTlo, ciemnyTlo);
-		if (czasR<2000)
-		for (int i = 0; i < 30; i++)
+		prostTlo.left = 0;
+		prostTlo.top = 0;
+		prostTlo.right = 448;
+		prostTlo.bottom = 300;
+		FillRect(hdcBufor, &prostTlo, ciemnyTlo);
+		if (czasR<1000)
+		for (int i = 0; i < 150; i++)
 		{
-			for (int i2 = 0; i2 < 10; i2++)
+			for (int i2 = 0; i2 < 50; i2++)
 			{//do napisania pozycji
-				BitBlt(hdc, 10 * i + 75 + logoRandom[i * 10 + i2] * czarMn / 1000, 10 * i2 + 250 + logoRandom[i * 10 + i2 + 300] * czarMn / 1000, 10, 10, hdcNowy, 10 * i, 10 * i2, SRCCOPY);
+				BitBlt(hdcBufor, 2 * i + 74 + logoRandom[i * 50 + i2] * czarMn / 1000, 2 * i2 + 100 + logoRandom[i * 50 + i2 + 150 * 50] * czarMn / 1000, 2, 2, hdcNowy, 2 * i, 2 * i2, SRCCOPY);
 
 			}
 		}
 		else
 		{
 			logoCzas = 0;
-			BitBlt(hdc, 75, 250, 300, 100, hdcNowy, 0, 0, SRCCOPY);
+			BitBlt(hdcBufor, 74, 100, 300, 100, hdcNowy, 0, 0, SRCCOPY);
 		}
 
 		SelectObject(hdcNowy, hbmOld);
 		DeleteDC(hdcNowy);
+		
+		BitBlt(hdc, 1, 150, 448, 300, hdcBufor, 0, 0, SRCCOPY);
+		DeleteDC(hdcBufor);
+		DeleteBitmap(hbmBuf);
+		DeleteBitmap(hbmOldBuf);
+		DeleteBitmap(hbmOld);
+		narysowane = czasR;
 	}
 }
 int aaaaa = 0;
@@ -734,12 +746,26 @@ VOID CALLBACK TimerProc(
 	}
 
 	logoAni(GetDC(hWnd));
-	if ((*ins).postepAnim > 0)
+	/*if ((*ins).postepAnim > 0)
 	{
 		RECT prostTlo2;
 		prostTlo2.left = 25;
 		prostTlo2.top = 450;
 		prostTlo2.right = 25 + (*ins).postepAnim*400/(32*1024);
+		prostTlo2.bottom = 470;
+		FillRect(GetDC(hWnd), &prostTlo2, jasnyTlo1);
+		prostTlo2.left = 25 + (*ins).postepAnim * 400 / (32 * 1024);
+		prostTlo2.top = 450;
+		prostTlo2.right = 425;
+		prostTlo2.bottom = 470;
+		FillRect(GetDC(hWnd), &prostTlo2, ciemnyTlo2);
+	}*/
+	if ((*ins).postepFaktyczny > 0)
+	{
+		RECT prostTlo2;
+		prostTlo2.left = 25;
+		prostTlo2.top = 450;
+		prostTlo2.right = 25 + (*ins).postepAnim * 400 / (32 * 1024);
 		prostTlo2.bottom = 470;
 		FillRect(GetDC(hWnd), &prostTlo2, jasnyTlo1);
 		prostTlo2.left = 25 + (*ins).postepAnim * 400 / (32 * 1024);
@@ -883,11 +909,11 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 		Checkbox1 = LoadBitmap(hinstance, MAKEINTRESOURCE(2));
 		Checkbox2 = LoadBitmap(hinstance, MAKEINTRESOURCE(3));
 	hbmObraz = LoadBitmap(hinstance, MAKEINTRESOURCE(1));
-	for (int i = 0; i < 300; i++)
+	for (int i = 0; i < 50*150; i++)
 	{
 		logoRandom[i] = (rand() % 2)*900-450;
 	}
-	for (int i = 300; i < 600; i++)
+	for (int i = 50 * 150; i < 100 * 150; i++)
 	{
 		logoRandom[i] = rand() % 180 - 90;
 	}
@@ -1039,13 +1065,17 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 			}
 			trwa = true;
 
+			StanInstalacji = CreateWindowEx(0, L"STATIC", NULL, WS_CHILD | WS_VISIBLE |
+				SS_LEFT, 25, 470, 400, 20, hWnd, NULL, hInstance, NULL);
+			SendMessage(StanInstalacji, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
+			
 			hProgressBar = CreateWindowEx(0, PROGRESS_CLASS, NULL, WS_CHILD | WS_VISIBLE | PBS_SMOOTH,
 				25, 450, 400, 20, hWnd, (HMENU)200, hinstance, NULL);
 			SendMessage(hProgressBar, PBM_SETBKCOLOR, 0, (LPARAM)niebieski);
 
 			SendMessage(hProgressBar, PBM_SETRANGE, 0, (LPARAM)MAKELONG(0, 32 * 1024));
 			logoCzas = GetTickCount();
-			 ins = new instalacja(systemStartBool, wszyscy, folder3, skrotPulpit, skrotMenuStart, hProgressBar, folder2);
+			ins = new instalacja(systemStartBool, wszyscy, folder3, skrotPulpit, skrotMenuStart, hProgressBar, folder2, StanInstalacji);
 			(*ins).start(hWnd);
 		}
 		else
@@ -1287,7 +1317,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 				SendMessage(hProgressBar, PBM_SETRANGE, 0, (LPARAM)MAKELONG(0, 32 * 1024));
 				wstring wfolder;
 				logoCzas = GetTickCount();
-				 ins = new instalacja(systemStartBool, wszyscy, Bufor, skrotPulpit, skrotMenuStart, hProgressBar, wstring(Bufor));
+				ins = new instalacja(systemStartBool, wszyscy, Bufor, skrotPulpit, skrotMenuStart, hProgressBar, wstring(Bufor), StanInstalacji);
 				(*ins).start(hWnd);
 			}for (int i = 0; i < 3; i++)
 			{

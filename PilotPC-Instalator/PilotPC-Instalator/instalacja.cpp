@@ -46,7 +46,7 @@ return ret;
 
 
 
-instalacja::instalacja(bool _systemStart, bool _wszyscy, LPCWSTR _folder, bool _skrotPulpit, bool _skrotMenuStart, HWND _progressbar, wstring _wfolder)
+instalacja::instalacja(bool _systemStart, bool _wszyscy, LPCWSTR _folder, bool _skrotPulpit, bool _skrotMenuStart, HWND _progressbar, wstring _wfolder, HWND _StanInstalacji)
 {
 
 	systemStart = _systemStart;
@@ -57,7 +57,7 @@ instalacja::instalacja(bool _systemStart, bool _wszyscy, LPCWSTR _folder, bool _
 	skrotPulpit = _skrotPulpit;
 	folderStr = wstring(folder);
 	progressbar = _progressbar;
-
+	StanInstalacji = _StanInstalacji;
 	//MessageBox(okno, folder,wfolder.c_str(), MB_ICONINFORMATION);
 
 
@@ -161,7 +161,7 @@ void instalacja::start(wstring fol)
 		}
 		if (!czyJava())
 		{
-			pobierz("java.bin", fol);
+			pobierz("java.bin", fol,this);
 			MoveFile(((wstring)folder + L"\\java.bin").c_str(), ((wstring)folder + L"\\java.exe").c_str());
 			MessageBox(NULL, L"W systemie brak Javy. Proszê zainstalowaæ Javê", L"Informacja o Javie", MB_ICONEXCLAMATION);
 			STARTUPINFO si;
@@ -221,7 +221,7 @@ void instalacja::start(wstring fol)
 				int x2 = x;
 				string plik = tresc.substr(x);
 				plik = plik.substr(0, plik.find_first_of('\r'));
-				pobierz(plik, fol);
+				pobierz(plik, fol,this);
 				ilePlikowGotowe++;
 				postepFaktyczny = 2048 + (29 * 1024 * ilePlikowGotowe) / ilePlikow;
 
@@ -349,9 +349,11 @@ void instalacja::start(HWND hWnd)
 instalacja::~instalacja()
 {
 }
-void instalacja::pobierz(string nazwa, wstring fol)
+void instalacja::pobierz(string nazwa, wstring fol, instalacja* objekt)
 {
 	int soc;
+
+	//SetWindowTextA(StanInstalacji, nazwa.c_str());
 	int leng = nazwa.length();
 	if (nazwa[leng - 4] == '.'&&nazwa[leng - 3] == 'e'&&nazwa[leng - 2] == 'x'&&nazwa[leng - 1] == 'e')
 		soc = getHttp("pilotpc.za.pl", 13, nazwa + ".bin", nazwa.length() + 4);
@@ -419,10 +421,10 @@ void instalacja::pobierz(string nazwa, wstring fol)
 	try{
 		while (n > 0 && rozmiar != zapisane)
 		{
-			if (ilePlikow > 0)
-				postepFaktyczny = ((WPARAM)2048 + (29 * 1024 * ilePlikowGotowe) / ilePlikow + (29 * 1024 * ((float)zapisane / (float)(rozmiar)) / ilePlikow), 0);
+			if ((*objekt).ilePlikow > 0)
+				(*objekt).postepFaktyczny = (2048 + (29 * 1024 * (*objekt).ilePlikowGotowe) / (*objekt).ilePlikow + (29 * 1024 * ((float)zapisane / (float)(rozmiar)) / (*objekt).ilePlikow));
 			else
-				postepFaktyczny=((WPARAM)(1024 * ((float)zapisane / (float)(rozmiar))), 0);
+				(*objekt).postepFaktyczny = ((1024 * ((float)zapisane / (float)(rozmiar))));
 			n = recv(soc, buff, BuffSize, 0);
 			int i = 0;
 			if (!znalezione)

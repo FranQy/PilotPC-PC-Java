@@ -71,7 +71,7 @@ void jezyk::laduj(jezyki a)
 		napisy[n::Usunieto] = L"Removing done";
 		napisy[n::WymaganeUprawneiniaAdministratora] = L"Access denied";
 		napisy[n::Zaakceptuj] = L"Accept";
-		napisy[n::Licencja] = L"Postanowienia licencji wkrótce...";
+		napisy[n::Licencja] = L"Licence coming soon...";
 		napisy[n::PotrzebnaJava] = L"This program need Java";
 		napisy[n::JavaTak] = L"Install Java and continue";
 		napisy[n::JavaNie] = L"Cancel";
