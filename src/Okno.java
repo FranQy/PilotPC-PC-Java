@@ -238,7 +238,7 @@ public class Okno {
         Zamknij.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                while (true) {
+                /*while (true) {
                     if (!Aktualizacja.trwa)
                         System.exit(0);
                     else
@@ -248,7 +248,8 @@ public class Okno {
                             // TODO Auto-generated catch block
                             e1.printStackTrace();
                         }
-                }
+                }  */
+                frame.setVisible(false);
             }
 
             @Override

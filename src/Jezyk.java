@@ -2,7 +2,7 @@
  * Created by Mateusz on 11.01.14.
  */
 public class Jezyk {
-    public static String[] napisy = new String[22];
+    public static String[] napisy = new String[30];
 
     public static void przeladuj(jezyki a) {
         laduj(a);
@@ -25,7 +25,7 @@ public class Jezyk {
         PilotPCWersja, Pokaz, Zakoncz, BladPodczasDodawaniaIkony,
         SerwerZostalUruchomiony, OProgramiePilotPc, Programisci, Nieznane, Wersja,
         Rozlaczono, Polaczono, Nazwa, BladZPolaczeniem, KodDoPolaczenia, Rozlacz, TwojeIPTo,
-        ZmienKod, Infromacje, StartZSystemem, PodlaczoneUrzadzenia, WylaczWygladzanieMyszy, WlaczWygladzanieMyszy
+        ZmienKod, Infromacje, StartZSystemem, PodlaczoneUrzadzenia, WylaczWygladzanieMyszy, WlaczWygladzanieMyszy, AktualizacjaZostanie, TrwaAktualizowanie, ProgramAktualny, MoznaZaktualizowac, TrwaSprawdzanieAKtualizacji
     }
 
     ;
@@ -64,6 +64,11 @@ public class Jezyk {
                 napisy[n.PodlaczoneUrzadzenia.ordinal()] = "Podłączone urządzenia";
                 napisy[n.WlaczWygladzanieMyszy.ordinal()] = "Włącz wygładzanie myszy";
                 napisy[n.WylaczWygladzanieMyszy.ordinal()] = "Wyłącz wygładzanie myszy";
+                napisy[n.AktualizacjaZostanie.ordinal()] = "Aktualizacja zostanie zainstalowana po ponownym uruchomieniu";
+                napisy[n.TrwaAktualizowanie.ordinal()] = "Pobieranie aktualizacji...";
+                napisy[n.TrwaSprawdzanieAKtualizacji.ordinal()] = "Sprawdzanie aktualizacji...";
+                napisy[n.ProgramAktualny.ordinal()] = "Program aktualny";
+                napisy[n.MoznaZaktualizowac.ordinal()] = "Można zaktualizować do wersji";
                 break;
             case Angielski:
                 napisy[n.PilotPCWersja.ordinal()] = "PilotPC version ";
@@ -88,6 +93,11 @@ public class Jezyk {
                 napisy[n.PodlaczoneUrzadzenia.ordinal()] = "Connected devices";
                 napisy[n.WlaczWygladzanieMyszy.ordinal()] = "Turn on smooth mouse";
                 napisy[n.WylaczWygladzanieMyszy.ordinal()] = "Turn off smooth mouse";
+                napisy[n.AktualizacjaZostanie.ordinal()] = "Aktualizacja zostanie zainstalowana po ponownym uruchomieniu";
+                napisy[n.TrwaAktualizowanie.ordinal()] = "Pobieranie aktualizacji...";
+                napisy[n.TrwaSprawdzanieAKtualizacji.ordinal()] = "Sprawdzanie aktualizacji...";
+                napisy[n.ProgramAktualny.ordinal()] = "Program aktualny";
+                napisy[n.MoznaZaktualizowac.ordinal()] = "Można zaktualizować do wersji";
                 break;
 
             case Rosyjski:
@@ -113,6 +123,11 @@ public class Jezyk {
                 napisy[n.PodlaczoneUrzadzenia.ordinal()] = "Подключенные устройства";
                 napisy[n.WlaczWygladzanieMyszy.ordinal()] = "Włącz wygładzanie myszy";
                 napisy[n.WylaczWygladzanieMyszy.ordinal()] = "Wyłącz wygładzanie myszy";
+                napisy[n.AktualizacjaZostanie.ordinal()] = "Aktualizacja zostanie zainstalowana po ponownym uruchomieniu";
+                napisy[n.TrwaAktualizowanie.ordinal()] = "Pobieranie aktualizacji...";
+                napisy[n.TrwaSprawdzanieAKtualizacji.ordinal()] = "Sprawdzanie aktualizacji...";
+                napisy[n.ProgramAktualny.ordinal()] = "Program aktualny";
+                napisy[n.MoznaZaktualizowac.ordinal()] = "Można zaktualizować do wersji";
                 break;
         }
     }

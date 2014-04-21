@@ -13,6 +13,7 @@ public class Opcje {
     private JComboBox WybierzJezyk;
     private JLabel NazwaProgramu;
     private JLabel Programisci;
+    private JLabel AktualizacjaStatus;
     static Opcje okno;
 
     public static Opcje pokarz() {
@@ -86,6 +87,17 @@ public class Opcje {
             gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WlaczWygladzanieMyszy.ordinal()]);
         NazwaProgramu.setText("PilotPC " + Jezyk.napisy[Jezyk.n.Wersja.ordinal()] + " " + Program.wersja);
         Programisci.setText(Jezyk.napisy[Jezyk.n.Programisci.ordinal()] + ":");
+
+        if (Aktualizacja.zaktualizowano)
+            AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.AktualizacjaZostanie.ordinal()]);
+        else if (Aktualizacja.trwa)
+            AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.TrwaAktualizowanie.ordinal()]);
+        else if (Aktualizacja.najnowsza.equals(""))
+            AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.TrwaSprawdzanieAKtualizacji.ordinal()]);
+        else if (Aktualizacja.najnowsza.equals(Program.wersja))
+            AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.ProgramAktualny.ordinal()]);
+        else
+            AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.MoznaZaktualizowac.ordinal()] + " " + Aktualizacja.najnowsza);
     }
 
 }

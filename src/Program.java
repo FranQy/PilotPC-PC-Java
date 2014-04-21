@@ -15,7 +15,7 @@ public class Program {
     static Polaczenie polaczenia;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
-    static public String wersja = "0.3.2";
+    static public String wersja = "0.3.3";
     static public Robot robot;
     static public TrayIcon trayIcon;
 
