@@ -87,8 +87,8 @@ public class Program {
                     wyswietlanie = TypWyswietlania.Okno;
                     if (glowneOkno == null)
                         glowneOkno = new Okno();
-                    else
-                        glowneOkno.frame.setVisible(true);
+
+                    glowneOkno.frame.setVisible(true);
                     // glowneOkno.frame.setUndecorated(false);
                 }
             });
@@ -125,23 +125,24 @@ public class Program {
                     tray.remove(trayIcon);
             } catch (NullPointerException e) {
             }
+
             trayIcon = new TrayIcon(imgObrazek, "PilotPC-PC-Java", popup);
             trayIcon.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    if (e.getButton() == 1) {
-                        wyswietlanie = TypWyswietlania.Okno;
-                        if (glowneOkno == null) {
-                            glowneOkno = new Okno();
-                        } else {
-                            //glowneOkno.frame.setUndecorated(true);
-                            glowneOkno.frame.setVisible(true);
-                        }
-                    }
                 }
 
                 @Override
                 public void mousePressed(MouseEvent e) {
+                    if (e.getButton() == 1) {
+                        wyswietlanie = TypWyswietlania.Okno;
+                        if (glowneOkno == null) {
+                            glowneOkno = new Okno();
+                        }
+                        //glowneOkno.frame.setUndecorated(true);
+                            glowneOkno.frame.setVisible(true);
+
+                    }
 
                 }
 
@@ -158,10 +159,6 @@ public class Program {
                 @Override
                 public void mouseExited(MouseEvent e) {
 
-                }
-            });
-            trayIcon.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
-                public void actionPerformed(ActionEvent e) {
                 }
             });
             try {
