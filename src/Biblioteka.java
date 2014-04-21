@@ -7,10 +7,12 @@ public class Biblioteka {
     public static void load() {
         if (zaladowano)
             return;
-        try {
+        String OS = System.getProperty("os.name").toUpperCase();
+        if (OS.contains("WIN")) {
+            try {
 
-            System.loadLibrary("lib/pilotpc");
-            zaladowano = true;
+                System.loadLibrary("lib/pilotpc");
+                zaladowano = true;
         } catch (Throwable e) {
             e.printStackTrace();
             try {
@@ -23,6 +25,28 @@ public class Biblioteka {
                 System.out.println("Błąd z ładowaniem biblioteki! Niektóre elementy programu nie będą działały poprawnie.");
                 f.printStackTrace();
 
+            }
+            }
+        } else
+
+        {
+            try {
+
+                System.loadLibrary("pilotpc");
+                zaladowano = true;
+            } catch (Throwable e) {
+                e.printStackTrace();
+                try {
+                    System.loadLibrary("pilotpc-x64");
+                    zaladowano = true;
+                } catch (UnsatisfiedLinkError f) {
+                    f.printStackTrace();
+                    Aktualizacja.wymus = true;
+                } catch (Throwable f) {
+                    System.out.println("Błąd z ładowaniem biblioteki! Niektóre elementy programu nie będą działały poprawnie.");
+                    f.printStackTrace();
+
+                }
             }
         }
 

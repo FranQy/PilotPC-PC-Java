@@ -15,10 +15,13 @@ public class Pilot {
             case OFF: {
                 // TODO zrobic dla linuksa i wykrywanie sytemu
                 try {
-                    Runtime.getRuntime().exec("shutdown -s -t 0");
+                    if (System.getProperty("os.name").toUpperCase().contains("WIN"))
+                        Runtime.getRuntime().exec("shutdown -s -t 0");
+                    else
+                        Runtime.getRuntime().exec("shutdown -h now");
                     System.exit(0);
                 } catch (IOException e) {
-                    // TODO Komunikat o bledzie
+                    e.printStackTrace();
                 }
                 break;
             }

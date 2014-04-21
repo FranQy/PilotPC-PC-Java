@@ -15,7 +15,7 @@ public class Program {
     static Polaczenie polaczenia;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
-    static public String wersja = "0.3.3";
+    static public String wersja = "0.3.6";
     static public Robot robot;
     static public TrayIcon trayIcon;
 
@@ -57,7 +57,7 @@ public class Program {
             //if(wyświetlanie==TypWyświetlania.Okno)
             //Mess
         } else
-            System.out.println(Jezyk.napisy[Jezyk.n.PilotPCWersja.ordinal()] + wersja);
+            System.out.println(Jezyk.napisy[Jezyk.n.PilotPCWersja.ordinal()] + wersja + "\r\nKod: " + ustawienia.haslo);
         tray(true);
         try {
             DatagramSocket socket = new DatagramSocket(8753);
