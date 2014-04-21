@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -122,7 +123,11 @@ public class Program {
 
             BufferedImage imgObrazek = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
             try {
-                imgObrazek = ImageIO.read(new File("resources/ikona.png"));
+                ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                InputStream input = classLoader.getResourceAsStream(
+                        "resources/ikona.png");
+                imgObrazek = ImageIO.read(classLoader.getResourceAsStream(
+                        "resources/ikona.png"));
             } catch (IOException e) {
             }
             try {
