@@ -1,9 +1,11 @@
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -118,15 +120,18 @@ public class Program {
                 }
             });// dodajemy zdarzenie do pozycji zakończ
 
-            BufferedImage imgObrazek;
-            imgObrazek = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
+            BufferedImage imgObrazek = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
+            try {
+                imgObrazek = ImageIO.read(new File("resources/ikona.png"));
+            } catch (IOException e) {
+            }
             try {
                 if (!nowy)
                     tray.remove(trayIcon);
             } catch (NullPointerException e) {
             }
 
-            trayIcon = new TrayIcon(imgObrazek, "PilotPC-PC-Java", popup);
+            trayIcon = new TrayIcon(imgObrazek.getScaledInstance((int) tray.getTrayIconSize().getWidth(), (int) tray.getTrayIconSize().getHeight(), Image.SCALE_SMOOTH), "PilotPC-PC-Java", popup);
             trayIcon.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
