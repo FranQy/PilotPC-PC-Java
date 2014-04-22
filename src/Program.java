@@ -1,11 +1,8 @@
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.DatagramPacket;
@@ -18,7 +15,7 @@ public class Program {
     static Polaczenie polaczenia;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
-    static public String wersja = "0.3.6";
+    static public String wersja = "0.3.7";
     static public Robot robot;
     static public TrayIcon trayIcon;
 
@@ -80,14 +77,15 @@ public class Program {
 
     public static void tray(boolean nowy) {
         if (SystemTray.isSupported()) {
-            SystemTray tray = SystemTray.getSystemTray();
-            PopupMenu popup = new PopupMenu();
-            MenuItem pokaz = new MenuItem(Jezyk.napisy[Jezyk.n.Pokaz.ordinal()]); //tworzymy obiekt menuItem
+            final SystemTray tray = SystemTray.getSystemTray();
+            final JPopupMenu popup = new JPopupMenu();
+            JMenuItem pokaz = new JMenuItem(Jezyk.napisy[Jezyk.n.Pokaz.ordinal()]); //tworzymy obiekt menuItem
             popup.add(pokaz);                //dodajemy objekt do menu
 
             pokaz.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
                 public void actionPerformed(ActionEvent e) {
                     wyswietlanie = TypWyswietlania.Okno;
+                    popup.setVisible(false);
                     if (glowneOkno == null)
                         glowneOkno = new Okno();
 
@@ -95,18 +93,20 @@ public class Program {
                     // glowneOkno.frame.setUndecorated(false);
                 }
             });
-            MenuItem opcje = new MenuItem(Jezyk.napisy[Jezyk.n.Infromacje.ordinal()]); //tworzymy obiekt menuItem
+            JMenuItem opcje = new JMenuItem(Jezyk.napisy[Jezyk.n.Infromacje.ordinal()]); //tworzymy obiekt menuItem
             popup.add(opcje);                //dodajemy objekt do menu
 
             opcje.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
                 public void actionPerformed(ActionEvent e) {
+                    popup.setVisible(false);
                     Opcje.pokarz();
                 }
             });
-            MenuItem zakoncz = new MenuItem(Jezyk.napisy[Jezyk.n.Zakoncz.ordinal()]); //tworzymy obiekt menuItem
+            JMenuItem zakoncz = new JMenuItem(Jezyk.napisy[Jezyk.n.Zakoncz.ordinal()]); //tworzymy obiekt menuItem
             popup.add(zakoncz);                //dodajemy objekt do menu
             zakoncz.addActionListener(new ActionListener() {         // tworzymy obiekt ActionListener
                 public void actionPerformed(ActionEvent e) {    // tworzymy funkcję zamykającą naszą aplikację
+                    popup.setVisible(false);
                     while (true) {
                         if (!Aktualizacja.trwa)
                             System.exit(0);
@@ -136,7 +136,46 @@ public class Program {
             } catch (NullPointerException e) {
             }
 
-            trayIcon = new TrayIcon(imgObrazek.getScaledInstance((int) tray.getTrayIconSize().getWidth(), (int) tray.getTrayIconSize().getHeight(), Image.SCALE_SMOOTH), "PilotPC-PC-Java", popup);
+            popup.addFocusListener(new FocusListener() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                    // popup.setLocation(0,0);
+                }
+
+                @Override
+                public void focusLost(FocusEvent e) {
+                    popup.setVisible(false);
+
+                }
+            });
+            popup.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    popup.setVisible(false);
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                }
+            });
+
+            trayIcon = new TrayIcon(imgObrazek.getScaledInstance((int) tray.getTrayIconSize().getWidth(), (int) tray.getTrayIconSize().getHeight(), Image.SCALE_SMOOTH), "PilotPC-PC-Java", null);
+
             trayIcon.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -152,6 +191,13 @@ public class Program {
                         //glowneOkno.frame.setUndecorated(true);
                             glowneOkno.frame.setVisible(true);
 
+                    } else {
+
+                        popup.setLocation(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y - 50);
+                        popup.setVisible(true);
+                        popup.setFocusable(true);
+                        popup.grabFocus();
+                        popup.requestFocus();
                     }
 
                 }
