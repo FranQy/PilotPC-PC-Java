@@ -66,6 +66,7 @@ public class Okno {
                 Program.ustawienia.haslo = Ustawienia.generujHaslo();
                 kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ":");
                 Kod2.setText(Program.ustawienia.haslo);
+                System.out.print("Nowy kod:" + Program.ustawienia.haslo);
                 qr.odswierz();
                 Program.ustawienia.eksportuj();
             }
