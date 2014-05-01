@@ -7,24 +7,29 @@
 #include <string>
 using namespace std;
 #pragma comment (lib,"Advapi32.lib")
-int _tmain(const int argc, _TCHAR* argv[])
+int run(_TCHAR* argv[], LPCWSTR polec, bool konsola)
 {
-	if (argc == 1)
-	{
-		LPCWSTR polec = L"-jar PilotPC-PC-Java.jar -o";
-		for (short i = 1; i < argc;i++)
-		if ((argv[i][0] == '/' || argv[i][0] == '-') && argv[i][1] == 'n'&&argv[i][2] == 'o')
-			polec = L"-jar PilotPC-PC-Java.jar";
-			
-			HINSTANCE hInst;
+	HINSTANCE hInst;
+	//	if (!access("PilotPC-PC-Java.jar.new", 0))
+	WCHAR *pol;
+	if (konsola)
+		pol = L"java.exe";
+	else
 
-		
-		//	if (!access("PilotPC-PC-Java.jar.new", 0))
+		pol = L"javaw.exe";
+	if (konsola){
+
+		wstring komenda = wstring(pol) + wstring(L" ") + wstring(polec);
+		system(string(komenda.begin(), komenda.end()).c_str());
+	}
+	else
+	{
+
 		if (argv[0][1] == L':')
 		{
 			hInst = ShellExecute(0,
 				L"open",                      // Operation to perform
-				L"javaw.exe",  // Application name
+				pol,  // Application name
 				polec,           // Additional parameters
 				wstring(argv[0]).substr(0, wstring(argv[0]).find_last_of(L'\\')).c_str(),                           // Default directory
 				SW_SHOW);
@@ -33,24 +38,39 @@ int _tmain(const int argc, _TCHAR* argv[])
 		else
 			hInst = ShellExecute(0,
 			L"open",                      // Operation to perform
-			L"javaw.exe",  // Application name
+			pol,  // Application name
 			polec,           // Additional parameters
 			0,                           // Default directory
 			SW_SHOW);
-		if (reinterpret_cast<int>(hInst) <= 32)
+	}
+	if (reinterpret_cast<int>(hInst) <= 32)
+	{
+		if ((reinterpret_cast<int>(hInst)) == ERROR_FILE_NOT_FOUND)
 		{
-			if ((reinterpret_cast<int>(hInst)) == ERROR_FILE_NOT_FOUND)
-			{
-				//brak javy
-				printf("Brak zainstalowanej Javy!");
-				return false;
-			}
+			//brak javy
+			printf("Brak zainstalowanej Javy!");
+			return false;
 		}
 	}
+}
+int _tmain(const int argc, _TCHAR* argv[])
+{
+	if (argc == 1)
+	{
+		LPCWSTR polec = L"-jar PilotPC-PC-Java.jar -o";
+
+		for (short i = 1; i < argc;i++)
+		if ((argv[i][0] == '/' || argv[i][0] == '-') && argv[i][1] == 'n'&&argv[i][2] == 'o')
+			polec = L"-jar PilotPC-PC-Java.jar";
+			
+		return run(argv,polec, false);
+		
+		
+	}/*
 	else if (wstring(argv[1]) == wstring(L"/?"))
 	{
 		wprintf(L"PilotPC\r\n\r\n/a	wlacza autostart przy starcie systemu");
-	}
+	}*/
 	else if (wstring(argv[1]) == wstring(L"/a"))
 	{
 
@@ -68,6 +88,24 @@ int _tmain(const int argc, _TCHAR* argv[])
 		HKEY hkTest;
 		RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
 		RegSetValueEx(hkTest, L"PilotPC", 0, REG_SZ, (byte*)folder.c_str(), 2 * folder.length());
+		return 0;
+	}
+	if (argc > 1)
+	{
+		wstring polec = wstring(L"-jar PilotPC-PC-Java.jar -o");
+		bool konsola = false;
+		for (short i = 1; i < argc; i++)
+		if ((argv[i][0] == '/' || argv[i][0] == '-') && argv[i][1] == 'n'&&argv[i][2] == 'o')
+			polec = wstring(L"-jar PilotPC-PC-Java.jar");
+		else
+			konsola = true;
+
+		for (short i = 1; i < argc; i++)
+		
+			polec += wstring(L" ")+wstring(argv[i]);
+
+		run(argv, polec.c_str(), konsola);
+
 	}
 	//return 0;
 }
