@@ -14,8 +14,8 @@ public class Polaczenie {
 
     public Polaczenie() {
 
-
-        try {
+        while (true) {
+            try {
             socServ = new ServerSocket(port);
             nasluchiwanie = true;
             //System.out.print("Nasłuchiwanie na porcie "+port+"\r\n");
@@ -28,29 +28,20 @@ public class Polaczenie {
                     break;
                 }
             }
-            ServerSocket socServ2 = new ServerSocket(12345);
-            nasluchiwanie = true;
-            //System.out.print("Nasłuchiwanie na porcie 12345\r\n");
-            for (byte i = 0; i < 100; i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
-            {
-                if (watki[i] == null) {
-                    watki[i] = new PolaczenieWatek();
-                    watki[i].socServ = socServ2;
-                    watki[i].start();
-                    break;
-                }
-            }
 
-        } catch (BindException e) {
+                break;
+            } catch (BindException e) {
             System.out.print("Błąd, port " + port + "zajęty\r\n");
-            //port++;
-            /**
-             * bo teraz przy rozlaczaniu to wywala
-             */
+                port++;
+
+                /**
+                 * bo teraz przy rozlaczaniu to wywala
+                 */
         } catch (IOException e) {
 
             System.out.print(Jezyk.napisy[Jezyk.n.PilotPCWersja.ordinal()] + "\r\n");
 
+        }
         }
     }
 }

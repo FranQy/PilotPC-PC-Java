@@ -314,6 +314,7 @@ public class Okno {
         timer1_task.okno = this;
         timer1.schedule(timer1_task, 100, 100);
         //System.out.println("5");
+        frame.setVisible(wyswietl);
     }
 
     MouseListener PrzesuńListener = new MouseListener() {

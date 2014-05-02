@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.BindException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -15,7 +16,7 @@ public class Program {
     static Polaczenie polaczenia;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
-    static public String wersja = "0.3.8";
+    static public String wersja = "0.3.9";
     static public Robot robot;
     static public TrayIcon trayIcon;
 
@@ -65,15 +66,23 @@ public class Program {
         tray(true);
 
         try {
-            DatagramSocket socket = new DatagramSocket(8753);
-            socket.setBroadcast(true);
-            String host = "aaaa" + java.net.InetAddress.getLocalHost().getHostName();
             while (true) {
+                DatagramSocket socket = null;
+                for (int i = 8753; i < 20000; i++) {
+                    try {
+                        socket = new DatagramSocket(i);
+                        break;
+                    } catch (BindException e) {
+                    }
+                }
+                socket.setBroadcast(true);
+            String host = "aaaa" + java.net.InetAddress.getLocalHost().getHostName();
+
                 DatagramPacket pakiet = new DatagramPacket(host.getBytes(), host.length(), InetAddress.getByName("255.255.255.255"), 8753);
                 socket.connect(InetAddress.getByName("255.255.255.255"), 8753);
                 socket.send(pakiet);
                 Thread.sleep(1000);
-
+                socket.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
