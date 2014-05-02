@@ -92,6 +92,9 @@ public class Aktualizacja
                                     // strumien=new FileOutputStream(linie[i2].split("=")[1]+".new");
                                 } else
                                     strumien = new FileOutputStream(linie[i2].split("=")[1] + ".new");
+
+                                if (linie[i2].split("=")[1].equals("Linux.sh"))
+                                    (new File(linie[i2].split("=")[1] + ".new")).setExecutable(true);
                                 //while(is.available()>0)
                                 // for(int i3=0;i3<1000000;i3++)
                                 while (true) {
