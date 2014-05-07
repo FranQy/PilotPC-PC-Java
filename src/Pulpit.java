@@ -11,6 +11,8 @@ public class Pulpit {
 
     public static String HTTP(String wyj, int i, OutputStream os) {
         try {
+            //Tylko do debugowania!
+            //Thread.sleep(1000);
             String[] wymiary = wyj.split("/");
             String wysylanie = "HTTP/1.1 200 OK\n" +
                     "Server: PilotPC\n" +

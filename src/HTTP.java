@@ -499,7 +499,7 @@ public class HTTP {
                         "if(wymWid>Math.floor(pulpit.width/pulpit.zoomX))\n wymWid=Math.floor(pulpit.width/pulpit.zoomX);\n" +
                         "var wymHei=thi.parentNode.clientHeight;\n" +
                         "if(wymHei>Math.floor(pulpit.height/pulpit.zoomY))\n wymHei=Math.floor(pulpit.height/pulpit.zoomY);\n" +
-                        "thi.src='/" + Program.ustawienia.haslo + "/pulpit/'+Math.floor(pulpit.x/pulpit.zoomX)+'/'+Math.floor(pulpit.y/pulpit.zoomY)+'/'+Math.floor(pulpit.width/pulpit.zoomX)+'/'+Math.floor(pulpit.height/pulpit.zoomY)+'/'+wymWid+'/'+wymHei+'/BMP/'+(new Date()).getTime();\n" +
+                        "thi.src='/" + Program.ustawienia.haslo + "/pulpit/'+Math.floor(pulpit.x/pulpit.zoomX*pulpit.width/thi.parentNode.clientWidth)+'/'+Math.floor(pulpit.y/pulpit.zoomY*pulpit.height/thi.parentNode.clientHeight)+'/'+Math.floor(pulpit.width/pulpit.zoomX)+'/'+Math.floor(pulpit.height/pulpit.zoomY)+'/'+wymWid+'/'+wymHei+'/BMP/'+(new Date()).getTime();\n" +
                         "}" +
                         "else \n" +
                         "{\n" +
@@ -507,17 +507,21 @@ public class HTTP {
                         "if(wymWid>Math.floor(pulpit.width/pulpit.zoomX))\n wymWid=Math.floor(pulpit.width/pulpit.zoomX);\n" +
                         "var wymHei=(Math.floor(thi.parentNode.clientHeight/pulpit.jakosc));\n" +
                         "if(wymHei>Math.floor(pulpit.height/pulpit.zoomY))\n wymHei=Math.floor(pulpit.height/pulpit.zoomY);\n" +
-                        "thi.src='/" + Program.ustawienia.haslo + "/pulpit/'+Math.floor(pulpit.x/pulpit.zoomX)+'/'+Math.floor(pulpit.y/pulpit.zoomY)+'/'+Math.floor(pulpit.width/pulpit.zoomX)+'/'+Math.floor(pulpit.height/pulpit.zoomY)+'/'+wymWid+'/'+wymHei+'/JPEG/'+(new Date()).getTime();\n" +
+                        "thi.src='/" + Program.ustawienia.haslo + "/pulpit/'+Math.floor(pulpit.x/pulpit.zoomX*pulpit.width/thi.parentNode.clientWidth)+'/'+Math.floor(pulpit.y/pulpit.zoomY*pulpit.height/thi.parentNode.clientHeight)+'/'+Math.floor(pulpit.width/pulpit.zoomX)+'/'+Math.floor(pulpit.height/pulpit.zoomY)+'/'+wymWid+'/'+wymHei+'/JPEG/'+(new Date()).getTime();\n" +
                         "}" +
-                        "pulpit.xs=pulpit.x;" +
-                        "pulpit.ys=pulpit.y;" +
                         "thi.style.width='100%';" +
                         "thi.style.height='100%';" +
-                        "thi.style.marginLeft='0';" +
-                        "thi.style.marginTop='0';" +
+                        "thi.style.marginLeft=((pulpit.xs-pulpit.x))+'px';" +
+                        "thi.style.marginTop=((pulpit.ys-pulpit.y))+'px';" +
+                        "pulpit.ml=((pulpit.xs-pulpit.x));\r\n" +
+                        "pulpit.mt=((pulpit.ys-pulpit.y));\n" +
+                        //"thi.style.marginLeft='0px';" +
+                        //"thi.style.marginTop='0px';" +
+                        "pulpit.xs=pulpit.x;" +
+                        "pulpit.ys=pulpit.y;" +
                         "};\n" +
                         "pulpit.zoom=1;" +
-                        "pulpit.x=pulpit.y=pulpit.xs=pulpit.ys=0;" +
+                        "pulpit.x=pulpit.y=pulpit.xs=pulpit.ys=pulpit.mt=pulpit.ml=0;" +
                         "pulpit.punkty=[];" +
                         "pulpit.punktyP=[];" +
                         "pulpit.move=function(eve){\n" +
@@ -537,10 +541,11 @@ public class HTTP {
                         "{" +
                         "pulpit.x+=pulpit.punkty[0].screenX-eve.touches[0].screenX;\n" +
                         "pulpit.y+=pulpit.punkty[0].screenY-eve.touches[0].screenY;\n" +
-                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.touches[0].screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
-                        //"document.getElementById(\"pulpit\").children[1].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.touches[0].screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
-                        "document.getElementById(\"pulpit\").children[0].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginTop)+(-pulpit.punkty[0].screenY+eve.touches[0].screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
-                        //"document.getElementById(\"pulpit\").children[1].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginTop)+(-pulpit.punkty[0].screenY+eve.touches[0].screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
+                        //"document.getElementById(\"pulpit\").children[0].style.marginLeft=(parseFloat(document.getElementById(\"pulpit\").children[0].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.touches[0].screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
+                        //"document.getElementById(\"pulpit\").children[0].style.marginTop=(parseFloat(document.getElementById(\"pulpit\").children[0].style.marginTop)+(-pulpit.punkty[0].screenY+eve.touches[0].screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
+
+                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=((pulpit.xs-pulpit.x+pulpit.ml))+'px';" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginTop=((pulpit.ys-pulpit.y+pulpit.mt))+'px';" +
                         "}" +
                         "}\n" +
                         "pulpit.punkty=eve.touches;" +
@@ -552,35 +557,15 @@ public class HTTP {
                         "{" +
                         "pulpit.x+=pulpit.punktX-eve.screenX;\n" +
                         "pulpit.y+=pulpit.punktY-eve.screenY;\n" +
-                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginLeft)+(-pulpit.punktX+eve.screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';\n" +
-                        //"document.getElementById(\"pulpit\").children[1].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginLeft)+(-pulpit.punktX+eve.screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';\n" +
-                        "document.getElementById(\"pulpit\").children[0].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginTop)+(-pulpit.punktY+eve.screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';\n" +
-                        //"document.getElementById(\"pulpit\").children[1].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginTop)+(-pulpit.punktY+eve.screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';\n" +
+                        // "document.getElementById(\"pulpit\").children[0].style.marginLeft=(parseFloat(document.getElementById(\"pulpit\").children[0].style.marginLeft)+(-pulpit.punktX+eve.screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';\n" +
+                        // "document.getElementById(\"pulpit\").children[0].style.marginTop=(parseFloat(document.getElementById(\"pulpit\").children[0].style.marginTop)+(-pulpit.punktY+eve.screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';\n" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=((pulpit.xs-pulpit.x+pulpit.ml))+'px';" +
+                        "document.getElementById(\"pulpit\").children[0].style.marginTop=((pulpit.ys-pulpit.y+pulpit.mt))+'px';" +
                         "pulpit.punktX=eve.screenX;\n" +
                         "pulpit.punktY=eve.screenY;\n" +
                         "}" +
                         "};\n" +
-                        /*"pulpit.moveP=function(eve){" +
-                        "if(eve.pointerType=='touch')\n" +
-                        "{" +
-                        "" +
-                        "pulpit.moveE(eve)" +
-                        "}" +
-                        "};\n" +
-                        "pulpit.moveM=function(eve){" +
-                        "};" +
-                        "pulpit.moveE=function(eve){" +
-                        "if(pulpit.punkty.length==1)\n" +
-                        "{\n" +
-                        "pulpit.x+=pulpit.punkty[0].screenX-eve.screenX;\n" +
-                        "pulpit.y+=pulpit.punkty[0].screenY-eve.screenY;\n" +
-                        "document.getElementById(\"pulpit\").children[0].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
-                        "document.getElementById(\"pulpit\").children[1].style.marginLeft=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginLeft)+(-pulpit.punkty[0].screenX+eve.screenX)/pulpit.height*document.getElementById(\"pulpit\").clientHeight)+'px';" +
-                        "document.getElementById(\"pulpit\").children[0].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[0].style.marginTop)+(-pulpit.punkty[0].screenY+eve.screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
-                        "document.getElementById(\"pulpit\").children[1].style.marginTop=(parseInt(document.getElementById(\"pulpit\").children[1].style.marginTop)+(-pulpit.punkty[0].screenY+eve.screenY)/pulpit.width*document.getElementById(\"pulpit\").clientWidth)+'px';" +
-                        "}" +
-                        "pulpit.punkty=[{screenX:eve.screenX,screenY:eve.screenY}];" +
-                        "};\n" + */
+
                         "pulpit.clickD=function(eve,thi)\n" +
                         "{" +
                         "pulpit.timeout=setTimeout(\"pulpit.punktXs=-1000;" +
@@ -816,8 +801,8 @@ public class HTTP {
                         + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
                         + "<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
                         + "</head>"
-                        + "<body style=\"color:white;background:#26211b;\">"
-                        + "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\"><label>wpisz kod<input type=\"" + typ + "\"/></label><input type=\"submit\" value=\"ok\"/></form>"
+                        + "<body style=\" min-height:100%;color:white;background:#26211b;\" onload=\"document.getElementById('txt').focus()\" onclick=\"document.getElementById('txt').focus()\">"
+                        + "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\" style=\"text-align:center;\"><h1>PilotPC</h1><label><h2>wpisz kod</h2><input id=\"txt\" type=\"" + typ + "\" style=\"width: 100%;\" onkeyup=\"if(this.value.length==6)document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\"/></label><input type=\"submit\" value=\"ok\" style=\"width: 100%; height:20%;\"/></form>"
                         + "</body></html>";
 
             } else {
@@ -826,13 +811,19 @@ public class HTTP {
                     typ = "number";
                 else
                     typ = "text";
+
+
                 wysylanie = "HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
                         + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
                         + "<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
-                        + "</head>"
-                        + "<body style=\"color:white;background:#26211b;\">"
-                        + "<strong>Błędny kod!</strong>"
-                        + "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\"><label>wpisz kod<input type=\"" + typ + "\"/></label><input type=\"submit\" value=\"ok\"/></form>"
+                        + "<script>" +
+                        "var kod=" + wyj.substring(1, wyj.indexOf(' ')) + ";\n" +
+                        "</script>" +
+                        "</head>"
+                        + "<body style=\" min-height:100%;color:white;background:#26211b;\" onload=\"document.getElementById('txt').focus()\" onclick=\"document.getElementById('txt').focus()\">"
+                        + "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\" style=\"text-align:center;\"><h1>PilotPC</h1>" +
+                        "" +
+                        "<label><h2 style=\"color:white;text-shadow:0 0 5px red;\">Błędny kod! Wpisz ponownie</h2><input id=\"txt\" type=\"" + typ + "\" style=\"width: 100%;\" onkeyup=\"if(this.value.length==6&&this.value!=kod)document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\" value=\"" + wyj.substring(1, wyj.indexOf(' ')) + "\"/></label><input type=\"submit\" value=\"ok\" style=\"width: 100%; height:20%;\"/></form>"
                         + "</body></html>";
             }
 
