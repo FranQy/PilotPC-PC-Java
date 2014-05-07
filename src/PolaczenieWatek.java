@@ -245,7 +245,7 @@ public class PolaczenieWatek
                 Program.robot.keyRelease(KeyEvent.VK_SHIFT);
                 Program.robot.keyPress(data.key - 32);
                 Program.robot.keyRelease(data.key - 32);
-            } else if (data.key >= 45 && data.key < 57 || data.key == 32 || data.key == 59 || data.key == 61 || data.key == 91 || data.key == 92 || data.key == 93) {
+            } else if (data.key >= 45 && data.key <= 57 || data.key == 32 || data.key == 59 || data.key == 61 || data.key == 91 || data.key == 92 || data.key == 93) {
                 Program.robot.keyPress(data.key);
                 Program.robot.keyRelease(data.key);
 
