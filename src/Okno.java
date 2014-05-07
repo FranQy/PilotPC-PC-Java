@@ -16,14 +16,13 @@ public class Okno {
     private JButton zmieńKodButton;
     private JButton informacjeButton;
     public static boolean potrzebneOdswierzenie = false;
-    private JLabel kod;
+    JLabel kod;
     private JLabel info;
     private JPanel telefony;
     private JPanel zawartosc;
     private JPanel QRPanel;
     private JLabel PodlaczoneUrzadzenia;
     private JButton powiększQRCodeButton;
-    private JLabel Min;
     private JLabel Zamknij;
     private JPanel PasekTytulowy;
     private JLabel Kod2;
@@ -31,6 +30,7 @@ public class Okno {
     private JLabel nazwa;
     private JLabel DodatekDoPrzeg;
     private JLabel NazwaPilotPC;
+    private JButton Wylacz;
     PanelQRCode qr;
     public JFrame frame;
     private PrzesuwanieOkna przesuwanie;
@@ -72,12 +72,15 @@ public class Okno {
             }
         });
         informacjeButton.setBackground(new Color(38, 33, 27));
+        Wylacz.setBackground(new Color(38, 33, 27));
         powiększQRCodeButton.setBackground(new Color(38, 33, 27));
         zmieńKodButton.setBackground(new Color(38, 33, 27));
         informacjeButton.setBorderPainted(false);
+        Wylacz.setBorderPainted(false);
         powiększQRCodeButton.setBorderPainted(false);
         zmieńKodButton.setBorderPainted(false);
         informacjeButton.setForeground(Color.white);
+        Wylacz.setForeground(Color.white);
         powiększQRCodeButton.setForeground(Color.white);
         zmieńKodButton.setForeground(Color.white);
         zmieńKodButton.addMouseListener(new MouseListener() {
@@ -173,6 +176,37 @@ public class Okno {
 
             }
         });
+        Wylacz.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Wylacz.setBackground(new Color(52, 47, 39));
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (Wylacz.getBackground().getRed() == 52)
+                    Wylacz.setBackground(new Color(48, 43, 35));
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                Wylacz.setBackground(new Color(48, 43, 35));
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                Wylacz.setBackground(new Color(38, 33, 27));
+
+            }
+        });
         informacjeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -236,6 +270,12 @@ public class Okno {
 
             }
         });
+        Wylacz.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
         Zamknij.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -273,33 +313,7 @@ public class Okno {
 
             }
         });
-        Min.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                frame.setVisible(false);
 
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
         PasekTytulowy.addMouseListener(PrzesuńListener);
         NazwaPilotPC.addMouseListener(PrzesuńListener);
         //System.out.println("2");

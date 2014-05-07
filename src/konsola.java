@@ -14,6 +14,15 @@ public class Konsola extends Thread {
             } catch (NoSuchElementException e) {
             }
         }
+
+        /*try {
+            polecenie((" " + wej.nextLine()).split(" "), true);
+        } catch (NoSuchElementException e) {
+        }
+        try {
+            polecenie((" " + wej.nextLine()).split(" "), true);
+        } catch (NoSuchElementException e) {
+        }     */
     }
 
     public static boolean polecenie(String args[], boolean nasobie) {
