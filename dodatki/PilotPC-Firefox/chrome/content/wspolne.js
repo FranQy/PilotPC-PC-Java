@@ -97,29 +97,38 @@ uri=karta.document.URL
 	}
 	else if(uri.search("rmfon.pl")>=0)
 	{
+		if(dane.akcja==3)
 		karta.document.getElementById('btn-play').click()
 	}
 	else if(uri.search("eskago.pl")>=0)
 	{
+		if(dane.akcja==3)
 		karta.document.getElementById('_control_play').click()
 	}
 	else if(uri.search("radiozet.pl")>=0)
 	{
+		if(dane.akcja==3)
 		karta.document.getElementByClassName('playpause')[0].click()
 	}
 	else if(karta.document.getElementsByTagName('video').length>0)
+			{
+			if(dane.akcja==3)
 			{
 				if(karta.document.getElementsByTagName('video')[0].paused)
 				karta.document.getElementsByTagName('video')[0].play()
 				else
 				karta.document.getElementsByTagName('video')[0].pause()
 			}
+			}
 	else if(karta.document.getElementsByTagName('audio').length>0)
+			{
+			if(dane.akcja==3)
 			{
 				if(karta.document.getElementsByTagName('audio')[0].paused)
 				karta.document.getElementsByTagName('audio')[0].play()
 				else
 				karta.document.getElementsByTagName('audio')[0].pause()
+			}
 			}
 }
 pilotpc.http=function()

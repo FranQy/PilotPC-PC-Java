@@ -3,7 +3,7 @@
 
   "name": "PilotPC",
   "description": "PilotPC",
-  "version": "0.2.3",
+  "version": "0.3.11",
   "background": {"scripts": ["wspolne.js","background.js"]},
   "permissions": ["tabs", "http://localhost:8753/","activeTab"],
   "content_scripts": [

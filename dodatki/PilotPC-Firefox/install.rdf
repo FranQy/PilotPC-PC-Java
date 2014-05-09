@@ -4,7 +4,7 @@
     <Description about="urn:mozilla:install-manifest">
         <em:type>2</em:type> <!-- 2 : Extension -->
         <em:id>firefox@pilotpc.za.pl</em:id>
-        <em:version>0.2.3</em:version>
+        <em:version>0.3.11</em:version>
         <em:name>PilotPC-Firefox</em:name>
         <em:creator>matrix0123456789</em:creator>
         <em:contributor>FranQy</em:contributor>
