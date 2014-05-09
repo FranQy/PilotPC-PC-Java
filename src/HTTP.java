@@ -244,7 +244,29 @@ public class HTTP {
                         "#klawiaturaCyfry,#klawiaturaLiteryAlt, #klawiaturaSpecjalne{display:none;}" +
 
                         "</style>"
-                        + "<script>/*<![CDATA[*/\n"
+                        + "<script>/*<![CDATA[*/\n" +
+                        "var wstecz=0;\n" +
+                        "var hash=setInterval(function(){\n" +
+                        "if(wstecz>0&&window.scrollY==0&&location.hash!='') \n" +
+                        "{" +
+                        "location.hash='';" +
+                        "wstecz=0;" +
+                        "}\n" + "" +
+                        "else if(wstecz==0&&window.scrollY>0&&location.hash=='') \n" +
+                        "{" +
+                        "location.hash='ustawienia';" +
+                        "wstecz=1;" +
+                        "}\n" +
+                        "else if(wstecz>0&&window.scrollY>0&&location.hash=='')\n" +
+                        "{wstecz=0;" +
+                        "window.scroll(0,0);}" +
+
+                        "else if(wstecz==0&&location.hash=='#ustawienia')\n" +
+                        "{" +
+                        "window.scroll(0,document.body.clientHeight*0.85);" +
+                        "}}" +
+                        "" +
+                        ",100);\n"
                         + "var czasPrzesylu=new Date();"
                         + "var czasWysylu=new Date();"
                         + "var polaczono=false;" +
@@ -288,11 +310,11 @@ public class HTTP {
                         + "touchpad.czas=new Date();" +
                         "touchpad.mPreviousX=touchpad.oldX=event.touches[0].screenX;"
                         + "touchpad.mPreviousY=touchpad.oldY=event.touches[0].screenY;"
-                        + "touchpad.wcisniete=true;" +
-                        "if(event.touches[0].screenX>document.body.clientWidth*0.9)" +
-                        "touchpad.typ=TCP_Data.touchedTYPE.SCROLL;" +
+                        + "touchpad.wcisniete=true;\n" +
+                        "if(event.touches[0].screenX>document.body.clientWidth*0.9)\n" +
+                        "touchpad.typ=TCP_Data.touchedTYPE.SCROLL;\n" +
                         "else " +
-                        "touchpad.typ=TCP_Data.touchedTYPE.NORMAL;" +
+                        "touchpad.typ=TCP_Data.touchedTYPE.NORMAL;\n" +
                         "return false;"
                         + "};"
                         + "touchpad.onMouseDown=function(event){" +
@@ -300,11 +322,11 @@ public class HTTP {
                         "touchpad.czas=new Date();"
                         + "touchpad.mPreviousX=touchpad.oldX=event.screenX;"
                         + "touchpad.mPreviousY=touchpad.oldY=event.screenY;"
-                        + "touchpad.wcisniete=true;" +
-                        "if(event.screenX>document.body.clientWidth*0.9)" +
-                        "touchpad.typ=TCP_Data.touchedTYPE.SCROLL;" +
+                        + "touchpad.wcisniete=true;\n" +
+                        "if(event.screenX>document.body.clientWidth*0.9)\n" +
+                        "touchpad.typ=TCP_Data.touchedTYPE.SCROLL;\n" +
                         "else " +
-                        "touchpad.typ=TCP_Data.touchedTYPE.NORMAL;" +
+                        "touchpad.typ=TCP_Data.touchedTYPE.NORMAL;\n" +
                         "return false;"
                         + "};"
                         + "touchpad.onTouchUp=function(event){"
@@ -594,9 +616,10 @@ public class HTTP {
                         "      function onDivGestureChange(e) {\n" +
                         "        pulpit.zoom=pulpit.zoom*e.scale;" +
                         "document.getElementById(\"pulpit\").children[0].style.width=e.scale*parseFloat(document.getElementById(\"pulpit\").children[0].style.width)+'%';" +
-                        "document.getElementById(\"pulpit\").children[0].style.height=e.scale*parseFloat(document.getElementById(\"pulpit\").children[0].style.width)+'%';" +
-                        "" +
+                        "document.getElementById(\"pulpit\").children[0].style.height=e.scale*parseFloat(document.getElementById(\"pulpit\").children[0].style.width)+'%';\n" +
+
                         "      }\n"
+
                         + "/*]]>*/</script>"
                         + "</head><body onload=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onresize=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onkeypress=\"console.log(event);" +
                         "var data=new TCP_Data();" +
