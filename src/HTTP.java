@@ -214,13 +214,16 @@ public class HTTP {
                 } catch (IOException e) {
                     przyciskiBase64 = "";
                 }
+                String overflow = "hidden";
+                if (wyj.toLowerCase().contains("android"))
+                    overflow = "scrool";
                 wysylanie = "HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
                         + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
                         + "<meta name=\"viewport\" content=\"width=220px, initial-scale=1, user-scalable=no\" />"
                         + "<style>"
                         + "*{-ms-touch-action: none;touch-action: none;}" +
                         "a img{border:none;}"
-                        + "body{font-family:\"Segoe UI Light\",\"Segoe UI\",arial;overflow:hidden;background:#26211b;color:white;font-style:non-sherif;}"
+                        + "body{font-family:\"Segoe UI Light\",\"Segoe UI\",arial;overflow:" + overflow + ";background:#26211b;color:white;font-style:non-sherif;}"
                         + "#menu{z-index:10;transition:all 300ms;-webkit-transition:all 300ms;height:10%;position: absolute;top: 90%;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
                         + "#menu li{display:inline;}" +
                         ".karta{position:absolute;left:0;top:0;width:100%;bottom:10%;display:none;}"
@@ -264,7 +267,8 @@ public class HTTP {
                         "else if(wstecz==0&&location.hash=='#ustawienia')\n" +
                         "{" +
                         "window.scroll(0,document.body.clientHeight*0.85);" +
-                        "}}" +
+                        "}" +
+                        "}" +
                         "" +
                         ",100);\n"
                         + "var czasPrzesylu=new Date();"
