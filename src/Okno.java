@@ -403,9 +403,14 @@ public class Okno {
                 if (Polaczenie.watki[i] != null)
                     if (Polaczenie.watki[i].czyPolaczono()) {
                         ileTel++;
-                        if (!Polaczenie.watki[i].pokazane && Polaczenie.watki[i].infoPrzyPolaczeniu != null) {
+
+                        if (!Polaczenie.watki[i].pokazane && Polaczenie.watki[i].infoPrzyPolaczeniu != null && (new Date()).getTime() < Polaczenie.watki[i].czasMax) {
                             Polaczenie.watki[i].pokazane = true;
                             telefony.add(Polaczenie.watki[i].UI = new Urzadzenie(Polaczenie.watki[i], telefony));
+                            potrzebneOdswierzenie = true;
+                        } else if (Polaczenie.watki[i].pokazane && (new Date()).getTime() > Polaczenie.watki[i].czasMax) {
+                            Polaczenie.watki[i].pokazane = false;
+                            telefony.remove(Polaczenie.watki[i].UI);
                             potrzebneOdswierzenie = true;
                         }
                     }

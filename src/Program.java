@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.BindException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -16,7 +15,7 @@ public class Program {
     static Polaczenie polaczenia;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
-    static public String wersja = "0.3.12";
+    static public String wersja = "0.3.13";
     static public Robot robot;
     static public TrayIcon trayIcon;
 
@@ -75,14 +74,17 @@ public class Program {
                     } catch (BindException e) {
                     }
                 }
-                socket.setBroadcast(true);
-            String host = "aaaa" + java.net.InetAddress.getLocalHost().getHostName();
+                if (socket != null) {
+                    socket.setBroadcast(true);
 
-                DatagramPacket pakiet = new DatagramPacket(host.getBytes(), host.length(), InetAddress.getByName("255.255.255.255"), 8753);
+                    String host = "aaaa" + java.net.InetAddress.getLocalHost().getHostName();
+
+                    DatagramPacket pakiet = new DatagramPacket(host.getBytes(), host.length(), InetAddress.getByName("255.255.255.255"), 8753);
                 socket.connect(InetAddress.getByName("255.255.255.255"), 8753);
                 socket.send(pakiet);
                 Thread.sleep(1000);
-                socket.close();
+                    socket.close();
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -138,8 +140,8 @@ public class Program {
             BufferedImage imgObrazek = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
             try {
                 ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-                InputStream input = classLoader.getResourceAsStream(
-                        "resources/ikona.png");
+                //InputStream input = classLoader.getResourceAsStream(
+                // "resources/ikona.png");
                 imgObrazek = ImageIO.read(classLoader.getResourceAsStream(
                         "resources/ikona.png"));
             } catch (IOException e) {

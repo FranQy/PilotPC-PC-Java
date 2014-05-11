@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Date;
 
 public class PolaczenieWatek
         extends Thread implements PolaczenieInfo {
@@ -14,6 +15,7 @@ public class PolaczenieWatek
     Socket soc;
     InputStream is;
     public Okno.Urzadzenie UI = null;
+    public long czasMax = (long) 0x7fffffff * (long) 0x7fffffff;
 
     public Okno.Urzadzenie getUI() {
         return UI;
@@ -88,6 +90,7 @@ public class PolaczenieWatek
                         } else if (dataObject.getClass() == Ping.class) {
                             ObjectOutputStream oos = new ObjectOutputStream(soc.getOutputStream());
                             oos.writeObject(dataObject);
+                            czasMax = (new Date()).getTime() + 2000 + ((Ping) dataObject).liczba * 1000;
                             oos.flush();
 
                         } else {
@@ -332,10 +335,8 @@ public class PolaczenieWatek
     }
 
     public boolean czyPolaczono() {
-        if (is == null)
-            return false;
+        return is != null;
 
-        return true;
     }
 
     @Override
