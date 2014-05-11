@@ -6,6 +6,8 @@ public class OdśmiecanieHttpPołączenia
 
     @Override
     public void run() {
+        System.gc();
+        System.runFinalization();
         long terazCzas = (new Date()).getTime();
         for (byte i = 0; i < 100; i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
         {

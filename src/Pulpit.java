@@ -10,6 +10,9 @@ import java.io.OutputStream;
 public class Pulpit {
 
     public static String HTTP(String wyj, int i, OutputStream os) {
+        BufferedImage obr = null;
+        Image obraz2 = null;
+        BufferedImage obrazout = null;
         try {
             //Tylko do debugowania!
             //Thread.sleep(1000);
@@ -20,17 +23,12 @@ public class Pulpit {
                     "Content-Type: image/" + wymiary[9] + "; charset=UTF-8\n" +
                     "\n";
             os.write(wysylanie.getBytes());
-            BufferedImage obr = Program.robot.createScreenCapture(new Rectangle(Integer.parseInt(wymiary[3]), Integer.parseInt(wymiary[4]), Integer.parseInt(wymiary[5]), Integer.parseInt(wymiary[6])));
-            Image obraz2 = obr.getScaledInstance(Integer.parseInt(wymiary[7]), Integer.parseInt(wymiary[8]), BufferedImage.SCALE_SMOOTH);
-            BufferedImage obrazout = new BufferedImage(Integer.parseInt(wymiary[7]), Integer.parseInt(wymiary[8]), obr.TYPE_3BYTE_BGR);
+            obr = Program.robot.createScreenCapture(new Rectangle(Integer.parseInt(wymiary[3]), Integer.parseInt(wymiary[4]), Integer.parseInt(wymiary[5]), Integer.parseInt(wymiary[6])));
+            obraz2 = obr.getScaledInstance(Integer.parseInt(wymiary[7]), Integer.parseInt(wymiary[8]), BufferedImage.SCALE_SMOOTH);
+            obrazout = new BufferedImage(Integer.parseInt(wymiary[7]), Integer.parseInt(wymiary[8]), obr.TYPE_3BYTE_BGR);
             obrazout.getGraphics().drawImage(obraz2, 0, 0, null);  //pseudo rzutowanie Image na BufferedImge
 
-            /*ImageWriter writer = ImageIO.getImageWritersByFormatName(wymiary[9]).next();
-            writer.setOutput(os);
-            ImageWriteParam param = writer.getDefaultWriteParam();
-            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT); // Needed see javadoc
-            param.setCompressionQuality(0.1F);
-            writer.write(null, new IIOImage(obrazout, null, null), param);  */
+
             ImageIO.write(obrazout, wymiary[9], os);
 
             return wysylanie;
@@ -44,6 +42,28 @@ public class Pulpit {
                 e1.printStackTrace();
             }
             e.printStackTrace();
+            try {
+                os.flush();
+                os.close();
+
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
+        } finally {
+            if (obr != null)
+                obr.flush();
+            if (obraz2 != null)
+                obraz2.flush();
+            if (obrazout != null)
+                obrazout.flush();
+
+            try {
+                os.flush();
+                os.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return "";
     }

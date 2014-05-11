@@ -87,7 +87,7 @@ public class PolaczenieWatek
                             System.out.println(Jezyk.napisy[Jezyk.n.Polaczono.ordinal()] + " " + toString());
                         } else if (dataObject.getClass() == Ping.class) {
                             ObjectOutputStream oos = new ObjectOutputStream(soc.getOutputStream());
-                            oos.writeObject((Ping) dataObject);
+                            oos.writeObject(dataObject);
                             oos.flush();
 
                         } else {
@@ -306,9 +306,11 @@ public class PolaczenieWatek
                 Program.robot.keyRelease(KeyEvent.VK_ESCAPE);
 
             } else {
+                //windows
                 Program.robot.keyPress(KeyEvent.VK_ALT);
                 int kod = data.key;
-                int dz = 1000000000;
+                int dz = (int) Math.pow(10, Math.ceil(Math.log10(Math.abs(kod))));
+
                 while (dz > 0) {
                     Program.robot.keyPress(KeyEvent.VK_NUMPAD0 + (kod / dz) % 10);
                     Program.robot.keyRelease(KeyEvent.VK_NUMPAD0 + (kod / dz) % 10);
@@ -330,10 +332,10 @@ public class PolaczenieWatek
     }
 
     public boolean czyPolaczono() {
-        if (is != null)
-            return true;
+        if (is == null)
+            return false;
 
-        return false;
+        return true;
     }
 
     @Override
