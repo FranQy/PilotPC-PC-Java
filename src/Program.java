@@ -4,10 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.BindException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.*;
 import java.util.Timer;
 
 public class Program {
@@ -15,11 +14,50 @@ public class Program {
     static Polaczenie polaczenia;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
-    static public String wersja = "0.3.13";
+    static public String wersja = "0.3.14";
     static public Robot robot;
     static public TrayIcon trayIcon;
 
     public static void main(String[] args) throws AWTException, InterruptedException {
+        while (Polaczenie.socServ == null) {
+            if (Polaczenie.port == 1024 * 64)
+                //TODO Błąd, wszytskie porty zajęte
+                break;
+            try {
+                Polaczenie.socServ = new ServerSocket(Polaczenie.port);
+            } catch (IOException e) {
+
+                Polaczenie.port++;
+            }
+            if (Polaczenie.port > 8753) {
+                // if (Polaczenie.port == 8753) //łączy się z innym serwerem
+                {
+                    try {
+                        Socket soc = new Socket("localhost", 8753);
+                        OutputStream output = soc.getOutputStream();
+                        InputStream input = soc.getInputStream();
+                        output.write(("pilotpc" + ustawienia.haslo + Polaczenie.port + "\n\n\n\n").getBytes());
+                        // output.close();
+                        //int a= input.read();
+                        byte[] bufor = new byte[10];
+                        input.read(bufor);
+                        if (bufor[0] == 'p')//pilotpc
+                        {
+                            if (bufor[1] == 'e')//exit
+                            {
+                                System.exit(50);
+                            }
+
+                        }
+                    } catch (UnknownHostException e1) {
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        }
+
         Biblioteka.load();
         if (ustawienia.jezyk == null) {
             ustawienia.jezyk = Jezyk.jezyki.Polski;
@@ -80,9 +118,9 @@ public class Program {
                     String host = "aaaa" + java.net.InetAddress.getLocalHost().getHostName();
 
                     DatagramPacket pakiet = new DatagramPacket(host.getBytes(), host.length(), InetAddress.getByName("255.255.255.255"), 8753);
-                socket.connect(InetAddress.getByName("255.255.255.255"), 8753);
-                socket.send(pakiet);
-                Thread.sleep(1000);
+                    socket.connect(InetAddress.getByName("255.255.255.255"), 8753);
+                    socket.send(pakiet);
+                    Thread.sleep(1000);
                     socket.close();
                 }
             }
@@ -205,7 +243,7 @@ public class Program {
                             glowneOkno = new Okno();
                         }
                         //glowneOkno.frame.setUndecorated(true);
-                            glowneOkno.frame.setVisible(true);
+                        glowneOkno.frame.setVisible(true);
 
                     } else {
 

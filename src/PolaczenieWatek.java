@@ -137,6 +137,25 @@ public class PolaczenieWatek
                             TCP_Data data = HTTP.polaczenie(is, soc, wyj);
                             if (data != null)
                                 wykonuj(data);
+                        } else if (wyj.indexOf("tpc") == 0) {
+                            OutputStream os = soc.getOutputStream();
+                            //os.write("p000000000".getBytes());
+                            int haslo = Integer.parseInt(wyj.substring(3, 9));
+                            if (haslo == Integer.parseInt(Program.ustawienia.haslo)) {
+                                os.write("pe00000000".getBytes());
+                                if (Program.glowneOkno == null)
+                                    Program.glowneOkno = new Okno();
+                            } else
+                                try {
+                                    int port = Polaczenie.hasłoIPort.get(haslo);
+
+                                    os.write("pe00000000".getBytes());
+                                } catch (Exception e2) {
+
+                                    os.write("p000000000".getBytes());
+                                    int port = Integer.parseInt(wyj.substring(9));
+
+                                }
                         } else {
                             //pinguje
                             OutputStream os = soc.getOutputStream();
