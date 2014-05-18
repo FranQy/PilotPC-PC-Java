@@ -56,6 +56,7 @@ public class HTTP {
                 }
 
             } else {
+
                 wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.KodBledny.ordinal()];
 
             }
@@ -811,9 +812,33 @@ public class HTTP {
                     typ = "number";
                 else
                     typ = "text";
+                String kodWpisany = wyj.substring(1, wyj.indexOf(' '));
+                try {
+                    int port2 = Polaczenie.hasłoIPort.get(Integer.parseInt(kodWpisany));
+                    String host;
+                    try {
+                        int hostPos = wyj.indexOf("Host:");
+                        host = wyj.substring(hostPos, wyj.indexOf("\r", hostPos));
+                        wysylanie = "HTTP/1.1 302 Found\r\nLocation:http://" + host + ":" + port2 + "/" + kodWpisany;
+
+                    } catch (Throwable e3) {
+                        wysylanie = "HTTP/1.1 500 Internal Server Error\r\nServer: PilotPC\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
+                                + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
+                                + "<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
+                                + "<script>" +
+                                "var kod=" + wyj.substring(1, wyj.indexOf(' ')) + ";\n" +
+                                "</script>" +
+                                "</head>"
+                                + "<body style=\" min-height:100%;color:white;background:#26211b;\" onload=\"document.getElementById('txt').focus()\" onclick=\"document.getElementById('txt').focus()\">"
+                                + "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\" style=\"text-align:center;\"><h1>PilotPC</h1>" +
+                                "" +
+                                "<label><h2 style=\"color:white;text-shadow:0 0 5px red;\">Błąd!</h2><input id=\"txt\" type=\"" + typ + "\" style=\"width: 100%;\" onkeyup=\"if(this.value.length==6&&this.value!=kod)document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\" value=\"" + kodWpisany + "\"/></label><input type=\"submit\" value=\"ok\" style=\"width: 100%; height:20%;\"/></form>"
+                                + "</body></html>";
+                    }
+                } catch (Exception e) {
 
 
-                wysylanie = "HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
+                    wysylanie = "HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
                         + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
                         + "<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
                         + "<script>" +
@@ -823,8 +848,9 @@ public class HTTP {
                         + "<body style=\" min-height:100%;color:white;background:#26211b;\" onload=\"document.getElementById('txt').focus()\" onclick=\"document.getElementById('txt').focus()\">"
                         + "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\" style=\"text-align:center;\"><h1>PilotPC</h1>" +
                         "" +
-                        "<label><h2 style=\"color:white;text-shadow:0 0 5px red;\">Błędny kod! Wpisz ponownie</h2><input id=\"txt\" type=\"" + typ + "\" style=\"width: 100%;\" onkeyup=\"if(this.value.length==6&&this.value!=kod)document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\" value=\"" + wyj.substring(1, wyj.indexOf(' ')) + "\"/></label><input type=\"submit\" value=\"ok\" style=\"width: 100%; height:20%;\"/></form>"
-                        + "</body></html>";
+                            "<label><h2 style=\"color:white;text-shadow:0 0 5px red;\">Błędny kod! Wpisz ponownie</h2><input id=\"txt\" type=\"" + typ + "\" style=\"width: 100%;\" onkeyup=\"if(this.value.length==6&&this.value!=kod)document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\" value=\"" + kodWpisany + "\"/></label><input type=\"submit\" value=\"ok\" style=\"width: 100%; height:20%;\"/></form>"
+                            + "</body></html>";
+                }
             }
 
             os.write(wysylanie.getBytes());
