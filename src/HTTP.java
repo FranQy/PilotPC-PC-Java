@@ -506,6 +506,7 @@ public class HTTP {
                         "pulpit.height=" + (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() + ";\n" +
                         "pulpit.jakosc=1;" +
                         "pulpit.laduj=function(thi){\n" +
+                        "" +
                         "if(pulpit.zoom<0.5)" +
                         "pulpit.zoom=0.5;" +
                         "var proporcje=pulpit.width*thi.parentNode.clientHeight/pulpit.height/thi.parentNode.clientWidth;" +
@@ -536,10 +537,12 @@ public class HTTP {
                         "if(wymHei>Math.floor(pulpit.height/pulpit.zoomY))\n wymHei=Math.floor(pulpit.height/pulpit.zoomY);\n" +
                         "thi.src='/" + Program.ustawienia.haslo + "/pulpit/'+Math.floor(pulpit.x/pulpit.zoomX*pulpit.width/thi.parentNode.clientWidth)+'/'+Math.floor(pulpit.y/pulpit.zoomY*pulpit.height/thi.parentNode.clientHeight)+'/'+Math.floor(pulpit.width/pulpit.zoomX)+'/'+Math.floor(pulpit.height/pulpit.zoomY)+'/'+wymWid+'/'+wymHei+'/JPEG/'+(new Date()).getTime();\n" +
                         "}" +
-                        "thi.style.width='100%';" +
-                        "thi.style.height='100%';" +
-                        "thi.style.marginLeft=((pulpit.xs-pulpit.x))+'px';" +
+                        //"thi.style.width=(pulpit.zoom/pulpit.zoomS*100)+'%';" +
+                        //"thi.style.height=(pulpit.zoom/pulpit.zoomS*100)+'%';" +
+                        "thi.style.height=thi.style.height='100%';" +
+                        "thi.style.marginLeft=((pulpit.xs-(pulpit.x)))+'px';" +
                         "thi.style.marginTop=((pulpit.ys-pulpit.y))+'px';" +
+                        "pulpit.zoomS=pulpit.zoom;\n" +
                         "pulpit.ml=((pulpit.xs-pulpit.x));\r\n" +
                         "pulpit.mt=((pulpit.ys-pulpit.y));\n" +
                         //"thi.style.marginLeft='0px';" +
@@ -763,8 +766,16 @@ public class HTTP {
                         " src=\"/" + Program.ustawienia.haslo + "/pulpit/0/0/" + (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() + "/" + (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() + "/" + ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 16) + "/" + ((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 16) + "/JPEG/\" style=\"width:100%;height:100%\" onload=\"this.style.zIndex=2;pulpit.laduj(this);\" alt=\"Błąd\" />" +
                         //"<img " +
                         // " src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[0].style.zIndex=1;pulpit.laduj(this);\" alt=\"\" />" +
-                        "<div id=\"zoom\"><img class=\"zoom\" id=\"powieksz\" src=\"" + plusBase64 + "\" onclick=\"pulpit.zoom=pulpit.zoom*1.5;document.getElementById(\'pulpit\').children[0].style.height=document.getElementById(\'pulpit\').children[0].style.width=parseFloat(document.getElementById(\'pulpit\').children[0].style.width)*1.5+'%'\">" +
-                        "<img class=\"zoom\" id=\"pomniejsz\" src=\"" + minusBase64 + "\" onclick=\"pulpit.zoom=pulpit.zoom*0.666666666;document.getElementById(\'pulpit\').children[0].style.height=document.getElementById(\'pulpit\').children[0].style.width=parseFloat(document.getElementById(\'pulpit\').children[0].style.width)*0.6666666+'%'\"></div>" +
+                        "<div id=\"zoom\"><img class=\"zoom\" id=\"powieksz\" src=\"" + plusBase64 + "\" onclick=\"pulpit.zoom=pulpit.zoom*1.5;" +
+                        /*"document.getElementById(\'pulpit\').children[0].style.height=document.getElementById(\'pulpit\').children[0].style.width=parseFloat(document.getElementById(\'pulpit\').children[0].style.width)*1.5+'%';" +
+                        "document.getElementById('pulpit').children[0].style.marginLeft=parseFloat(document.getElementById('pulpit').children[0].style.marginLeft)+(pulpit.x*pulpit.zoom/pulpit.zoomS)-pulpit.x;" +
+                        "document.getElementById('pulpit').children[0].style.marginTop=parseFloat(document.getElementById('pulpit').children[0].style.marginTop)+(pulpit.y*pulpit.zoom/pulpit.zoomS)-pulpit.y;" +
+                        */"\">" +
+                        "<img class=\"zoom\" id=\"pomniejsz\" src=\"" + minusBase64 + "\" onclick=\"pulpit.zoom=pulpit.zoom*0.666666666;" +
+                        /*"document.getElementById(\'pulpit\').children[0].style.height=document.getElementById(\'pulpit\').children[0].style.width=parseFloat(document.getElementById(\'pulpit\').children[0].style.width)*0.6666666+'%';" +
+                        "document.getElementById('pulpit').children[0].style.marginLeft=parseFloat(document.getElementById('pulpit').children[0].style.marginLeft)+(pulpit.x*pulpit.zoom/pulpit.zoomS)-pulpit.x;" +
+                        "document.getElementById('pulpit').children[0].style.marginTop=parseFloat(document.getElementById('pulpit').children[0].style.marginTop)+(pulpit.y*pulpit.zoom/pulpit.zoomS)-pulpit.y;" +
+                        */"\"></div>" +
                         "</div>"
                         + "<ul id=\"menu\">" +
                         //"<li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li>" +
