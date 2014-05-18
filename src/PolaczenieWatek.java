@@ -150,10 +150,18 @@ public class PolaczenieWatek
                                     int port = Polaczenie.hasłoIPort.get(haslo);
 
                                     os.write("pe00000000".getBytes());
+                                    Socket soc = new Socket("localhost", port);
+                                    OutputStream output = soc.getOutputStream();
+                                    //InputStream input = soc.getInputStream();
+                                    output.write(("pilot" + wyj + "\n\n\n\n").getBytes());
+                                    output.close();
+                                    soc.close();
+
                                 } catch (Exception e2) {
 
                                     os.write("p000000000".getBytes());
                                     int port = Integer.parseInt(wyj.substring(9));
+                                    Polaczenie.hasłoIPort.put(haslo, port);
 
                                 }
                         } else {

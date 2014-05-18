@@ -49,6 +49,9 @@ public class Program {
                             }
 
                         }
+                        output.close();
+                        input.close();
+                        soc.close();
                     } catch (UnknownHostException e1) {
                         e1.printStackTrace();
                     } catch (IOException e1) {
