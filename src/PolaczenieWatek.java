@@ -26,6 +26,11 @@ public class PolaczenieWatek
 
     public void rozlacz() {
         try {
+            ObjectOutputStream oos = new ObjectOutputStream(soc.getOutputStream());
+            Ping dataObject = new Ping();
+            dataObject.liczba = -1;
+            oos.writeObject(dataObject);
+            oos.flush();
             soc.close();
         } catch (IOException e) {
             e.printStackTrace();
