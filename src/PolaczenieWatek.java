@@ -152,8 +152,13 @@ public class PolaczenieWatek
                                     Program.glowneOkno = new Okno();
                             } else
                                 try {
-                                    int port = Polaczenie.hasłoIPort.get(haslo);
+                                    Integer port = Polaczenie.hasłoIPort.get(haslo);
+                                    if (port == null) {
 
+                                        os.write("p000000000".getBytes());
+                                        port = Integer.parseInt(wyj.substring(9));
+                                        Polaczenie.hasłoIPort.put(haslo, port);
+                                    }
                                     os.write("pe00000000".getBytes());
                                     Socket soc = new Socket("localhost", port);
                                     OutputStream output = soc.getOutputStream();

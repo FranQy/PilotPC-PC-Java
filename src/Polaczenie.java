@@ -2,8 +2,8 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;
-import java.util.Dictionary;
-import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Polaczenie {
@@ -13,42 +13,7 @@ public class Polaczenie {
     public static HttpPolaczenie[] polaczeniaHttp = new HttpPolaczenie[100];
     public static boolean nasluchiwanie = false;
     public static PolaczenieWatek[] watki = new PolaczenieWatek[100];
-    static Dictionary<Integer, Integer> hasłoIPort = new Dictionary<Integer, Integer>() {
-        @Override
-        public int size() {
-            return 0;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-
-        @Override
-        public Enumeration<Integer> keys() {
-            return null;
-        }
-
-        @Override
-        public Enumeration<Integer> elements() {
-            return null;
-        }
-
-        @Override
-        public Integer get(Object key) {
-            return null;
-        }
-
-        @Override
-        public Integer put(Integer key, Integer value) {
-            return null;
-        }
-
-        @Override
-        public Integer remove(Object key) {
-            return null;
-        }
-    };
+    static Map<Integer, Integer> hasłoIPort = new HashMap<Integer, Integer>();
 
     public Polaczenie() {
 
