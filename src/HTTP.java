@@ -829,8 +829,11 @@ public class HTTP {
                     String host;
                     try {
                         int hostPos = wyj.indexOf("Host:");
-                        host = wyj.substring(hostPos, wyj.indexOf("\r", hostPos));
-                        wysylanie = "HTTP/1.1 302 Found\r\nLocation:http://" + host + ":" + port2 + "/" + kodWpisany;
+                        int pos2 = wyj.indexOf("\r", hostPos);
+                        if (wyj.indexOf(":", hostPos + 6) < pos2)
+                            pos2 = wyj.indexOf(":", hostPos + 6);
+                        host = wyj.substring(hostPos + 6, pos2);
+                        wysylanie = "HTTP/1.1 302 Found\r\nLocation:http://" + host + ":" + port2 + "/" + kodWpisany + "\r\n\r\n";
 
                     } catch (Throwable e3) {
                         wysylanie = "HTTP/1.1 500 Internal Server Error\r\nServer: PilotPC\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"

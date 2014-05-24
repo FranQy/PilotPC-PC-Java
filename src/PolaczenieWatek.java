@@ -67,14 +67,16 @@ public class PolaczenieWatek
                         }
                 }
                 //nowe=true;
-                is = soc.getInputStream();
 
                 try {
                     ObjectInputStream in = new ObjectInputStream(soc.getInputStream());
+
                     while (true) {
 
-                        Object dataObject = in.readObject();
-                        if (dataObject.getClass() == Connect.class) {
+                        try {
+                            Object dataObject = in.readObject();
+
+                            if (dataObject.getClass() == Connect.class) {
                             infoPrzyPolaczeniu = (Connect) dataObject;
                             Connect odpowiedz = new Connect();
                             if (infoPrzyPolaczeniu.haslo.length() == 0)
@@ -83,7 +85,7 @@ public class PolaczenieWatek
                                 odpowiedz.status = Connect.Status.ok;
                             else {
                                 odpowiedz.status = Connect.Status.zlyKod;
-                                is.close();
+                                in.close();
                                 break;
                             }
                             odpowiedz.nazwa = java.net.InetAddress.getLocalHost().getHostName();
@@ -104,10 +106,23 @@ public class PolaczenieWatek
 
                             //TCP_Data data = (TCP_Data) in.readObject();
                             wykonuj(data);
+                            }
+                        } catch (UTFDataFormatException e2) {
+                            e2.printStackTrace();
+
+                            is = soc.getInputStream();
+                            for (int licz = 0; licz < 16; licz++) {
+                                int n = is.read();
+                                if (n == -1) {
+                                    System.out.println((char) n + n);
+                                }
+                            }
+
                         }
                     }
                 } catch (StreamCorruptedException e) {
 
+                    is = soc.getInputStream();
                                         /*if(UI!=null)
                                         {
                                                 UI.ramka.remove(UI);
@@ -158,7 +173,7 @@ public class PolaczenieWatek
                                     if (port == null) {
 
                                         os.write("p000000000".getBytes());
-                                        port = Integer.parseInt(wyj.substring(9));
+                                        port = Integer.parseInt(wyj.substring(9, wyj.indexOf('\n')));
                                         Polaczenie.hasłoIPort.put(haslo, port);
                                     }
                                     os.write("pe00000000".getBytes());
@@ -172,7 +187,7 @@ public class PolaczenieWatek
                                 } catch (Exception e2) {
 
                                     os.write("p000000000".getBytes());
-                                    int port = Integer.parseInt(wyj.substring(9));
+                                    int port = Integer.parseInt(wyj.substring(9, wyj.indexOf('\n')));
                                     Polaczenie.hasłoIPort.put(haslo, port);
 
                                 }
