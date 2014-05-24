@@ -95,8 +95,9 @@ public class PolaczenieWatek
                         } else if (dataObject.getClass() == Ping.class) {
                             ObjectOutputStream oos = new ObjectOutputStream(soc.getOutputStream());
                             oos.writeObject(dataObject);
-                            czasMax = (new Date()).getTime() + 2000 + ((Ping) dataObject).liczba * 1000;
+                            czasMax = (new Date()).getTime() + 5000 + ((Ping) dataObject).liczba * 1000;
                             oos.flush();
+                            // oos.close();
 
                         } else {
                             TCP_Data data = (TCP_Data) dataObject;
@@ -150,6 +151,7 @@ public class PolaczenieWatek
                                 os.write("pe00000000".getBytes());
                                 if (Program.glowneOkno == null)
                                     Program.glowneOkno = new Okno();
+                                Program.glowneOkno.frame.setVisible(true);
                             } else
                                 try {
                                     Integer port = Polaczenie.hasłoIPort.get(haslo);
@@ -194,7 +196,9 @@ public class PolaczenieWatek
                 this.pokazane = false;
                 System.out.println(Jezyk.napisy[Jezyk.n.Rozlaczono.ordinal()] + " " + toString());
                 Okno.potrzebneOdswierzenie = true;
-
+                if (Program.debug) {
+                    e.printStackTrace();
+                }
 
             } catch (Exception e) {
                 if (UI != null) {
@@ -205,7 +209,9 @@ public class PolaczenieWatek
                 this.infoPrzyPolaczeniu = null;
                 this.pokazane = false;
                 System.out.println("Błąd, rozłączono " + toString());
-
+                if (Program.debug) {
+                    e.printStackTrace();
+                }
             }
 
 

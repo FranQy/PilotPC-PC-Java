@@ -28,7 +28,9 @@ public class Konsola extends Thread {
     public static boolean polecenie(String args[], boolean nasobie) {
         if (args.length >= 2 && args[1].charAt(0) != '/' && args[1].charAt(0) != '-') {
 
-            if (args[1].equalsIgnoreCase("change")) {
+            if (args[1].equalsIgnoreCase("help") || args[1].equalsIgnoreCase("pomoc")) {
+                System.out.println("Dostępne polecenia:\r\n  zmień kod\r\n  pokarz kod\r\n  pokarz okno\r\n  zamknij");
+            } else if (args[1].equalsIgnoreCase("change") || args[1].equalsIgnoreCase("zmień") || args[1].equalsIgnoreCase("zmien")) {
                 if (args.length == 2)
                     System.out.println("Polecenia:\r\n  zmień kod");
                 else if (args[2].equalsIgnoreCase("kod") || args[2].equalsIgnoreCase("code")) {
@@ -42,8 +44,24 @@ public class Konsola extends Thread {
                     return false;
                 } else
                     System.out.println("Nie można zmienić " + args[2].toLowerCase(Locale.getDefault()));
-            }
-            if (args[1].equalsIgnoreCase("exit")) {
+            } else if (args[1].equalsIgnoreCase("show") || args[1].equalsIgnoreCase("pokarz")) {
+                if (args.length == 2)
+                    System.out.println("Polecenia:\r\n  pokarz kod\r\n  pokarz okno");
+                else if (args[2].equalsIgnoreCase("kod") || args[2].equalsIgnoreCase("code")) {
+
+                    System.out.println("Kod:" + Program.ustawienia.haslo);
+                    return false;
+                } else if (args[2].equalsIgnoreCase("window") || args[2].equalsIgnoreCase("okno")) {
+
+
+                    if (Program.glowneOkno == null)
+                        Program.glowneOkno = new Okno();
+
+                    Program.glowneOkno.frame.setVisible(true);
+                    return false;
+                } else
+                    System.out.println("Nie można pokazać " + args[2].toLowerCase(Locale.getDefault()));
+            } else if (args[1].equalsIgnoreCase("exit") || args[1].equalsIgnoreCase("wyjdź") || args[1].equalsIgnoreCase("wyjdz") || args[1].equalsIgnoreCase("zamknij")) {
                 if (!Aktualizacja.trwa)
                     System.exit(0);
                 else
@@ -54,7 +72,7 @@ public class Konsola extends Thread {
                         e1.printStackTrace();
                     }
             } else
-                System.out.println("Nieznane polecenie " + args[1].toLowerCase(Locale.getDefault()));
+                System.out.println("Nieznane polecenie " + args[1].toLowerCase(Locale.getDefault()) + ", wpisz pomoc");
         }
         return true;
     }
