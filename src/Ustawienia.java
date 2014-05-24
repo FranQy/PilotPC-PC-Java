@@ -1,4 +1,5 @@
 import java.io.*;
+import java.net.Socket;
 import java.util.Random;
 
 /**
@@ -30,9 +31,25 @@ public class Ustawienia implements Serializable {
     }
 
     static String generujHaslo() {
+        return generujHaslo(true);
+    }
+
+    static String generujHaslo(Boolean wyslij) {
         String ret = "";
         for (byte i = 0; i < 6; i++)
             ret += (new Random()).nextInt(9);
+        if (wyslij && Polaczenie.port > 8753) {
+            try {
+                Socket soc = new Socket("localhost", 8753);
+                OutputStream output = soc.getOutputStream();
+                InputStream input = soc.getInputStream();
+                output.write(("pilotpc" + ret + Polaczenie.port + "\n\n\n\n").getBytes());
+                soc.close();
+            } catch (Throwable e) {
+
+            }
+        }
+
         return ret;
     }
 
@@ -91,7 +108,7 @@ public class Ustawienia implements Serializable {
     /**
      * Hasło urzywane do łączenia się
      */
-    public String haslo = generujHaslo();
+    public String haslo = generujHaslo(false);
     public Jezyk.jezyki jezyk = Jezyk.jezyki.Polski;
     public boolean plynnaMysz = false;
 }
