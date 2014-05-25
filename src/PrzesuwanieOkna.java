@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by Mateusz on 09.04.14.
+ * Wątek do przeciągania okna programu
  */
 class PrzesuwanieOkna extends Thread {
 

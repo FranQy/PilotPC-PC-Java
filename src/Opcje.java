@@ -29,7 +29,7 @@ public class Opcje {
     public Opcje(boolean wyswietl) {
 
         frame = new JFrame("Opcje");
-
+        frame.setTitle(Jezyk.napisy[Jezyk.n.Infromacje.ordinal()]);
         if (Program.imgObrazek == null) {
             try {
                 Program.imgObrazek = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
@@ -50,7 +50,7 @@ public class Opcje {
         frame.pack();
         Jezyk.jezyki[] langs = Jezyk.jezyki.values();
         for (short i = 0; i < langs.length; i++) {
-            WybierzJezyk.addItem(langs[i].toString());
+            WybierzJezyk.addItem(Jezyk.nazwyJezykow[i]);
 
             if (Program.ustawienia.jezyk == langs[i])
                 WybierzJezyk.setSelectedIndex(i);

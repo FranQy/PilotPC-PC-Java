@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * Created by Mateusz on 14.01.14.
+ * Wyświetlanie podglądu pulpitu w telefonie
  */
 public class Pulpit {
 

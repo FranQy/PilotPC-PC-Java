@@ -1,5 +1,8 @@
 import java.util.Date;
 
+/**
+ * Pojedynćze urządzenie wyświetlone na liście w oknie wersja dla http
+ */
 public class HttpPolaczenie implements PolaczenieInfo {
     public boolean zablokowane = false;
     public UserAgent UserAgent;
@@ -27,9 +30,9 @@ public class HttpPolaczenie implements PolaczenieInfo {
     public String opis() {
         String ret = "<html>";
         if (UserAgent.OS != null)
-            ret += "System: " + UserAgent.OS;
+            ret += Jezyk.napisy[Jezyk.n.System.ordinal()] + ": " + UserAgent.OS;
         if (UserAgent.urzadzenie != null)
-            ret += "<br>Model: " + UserAgent.urzadzenie;
+            ret += Jezyk.napisy[Jezyk.n.Model.ordinal()] + "<br>: " + UserAgent.urzadzenie;
         ret += "<br>User-Agent: " + UserAgent + "</html>";
         return ret;
     }

@@ -2,7 +2,9 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.util.Date;
 
-
+/**
+ * Obsługa myszy
+ */
 public class MouseRobot {
 
 
@@ -78,6 +80,9 @@ public class MouseRobot {
     }
 }
 
+/**
+ * Osobny wątek dla wygładzania ruchu myszy
+ */
 class WatekMouseRobot extends Thread {
     static long ostatniCzas = 0;
 

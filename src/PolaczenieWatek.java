@@ -8,6 +8,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
 
+/**
+ * Pojedynćze urządzenie wyświetlone na liście w oknie wersja dla apki
+ */
 public class PolaczenieWatek
         extends Thread implements PolaczenieInfo {
     public ServerSocket socServ;
@@ -223,7 +226,7 @@ public class PolaczenieWatek
                 }
                 this.infoPrzyPolaczeniu = null;
                 this.pokazane = false;
-                System.out.println("Błąd, rozłączono " + toString());
+                System.out.println(Jezyk.napisy[Jezyk.n.BladRozlaczono.ordinal()] + " " + toString());
                 if (Program.debug) {
                     e.printStackTrace();
                 }

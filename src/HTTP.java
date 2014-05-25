@@ -12,6 +12,9 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Date;
 
+/**
+ * Obsługa protokołu HTTP
+ */
 public class HTTP {
     public static TCP_Data[] doWykonania = new TCP_Data[16];
 
@@ -853,15 +856,15 @@ public class HTTP {
 
 
                     wysylanie = "HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
-                        + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
-                        + "<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
-                        + "<script>" +
-                        "var kod=" + wyj.substring(1, wyj.indexOf(' ')) + ";\n" +
-                        "</script>" +
-                        "</head>"
-                        + "<body style=\" min-height:100%;color:white;background:#26211b;\" onload=\"document.getElementById('txt').focus()\" onclick=\"document.getElementById('txt').focus()\">"
-                        + "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\" style=\"text-align:center;\"><h1>PilotPC</h1>" +
-                        "" +
+                            + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
+                            + "<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
+                            + "<script>" +
+                            "var kod=" + wyj.substring(1, wyj.indexOf(' ')) + ";\n" +
+                            "</script>" +
+                            "</head>"
+                            + "<body style=\" min-height:100%;color:white;background:#26211b;\" onload=\"document.getElementById('txt').focus()\" onclick=\"document.getElementById('txt').focus()\">"
+                            + "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\" style=\"text-align:center;\"><h1>PilotPC</h1>" +
+                            "" +
                             "<label><h2 style=\"color:white;text-shadow:0 0 5px red;\">Błędny kod! Wpisz ponownie</h2><input id=\"txt\" type=\"" + typ + "\" style=\"width: 100%;\" onkeyup=\"if(this.value.length==6&&this.value!=kod)document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\" value=\"" + kodWpisany + "\"/></label><input type=\"submit\" value=\"ok\" style=\"width: 100%; height:20%;\"/></form>"
                             + "</body></html>";
                 }

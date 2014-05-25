@@ -9,6 +9,9 @@ import java.io.OutputStream;
 import java.net.*;
 import java.util.Timer;
 
+/**
+ * Główna klasa
+ */
 public class Program {
     static Okno glowneOkno;
     static Polaczenie polaczenia;

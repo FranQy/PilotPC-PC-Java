@@ -13,12 +13,10 @@ public class Aktualizacja
     public static boolean trwa = false;
     public static Boolean wymus = false;
     public static String najnowsza = "";
-    public static String stan = "Sprawdzanie aktualizacji...";
 
     @Override
     public void run() {
         if (!zaktualizowano) {
-            stan = "Sprawdzanie aktualizacji...";
             InputStream is = null;
             String s;
             String content = new String();
@@ -35,8 +33,8 @@ public class Aktualizacja
                 trwa = false;
                 Biblioteka.load();
             } catch (IOException ioe) {
-                stan = "Błąd aktualizacji!";
-                System.out.println("Oops- an IOException happened.");
+                if (Program.debug)
+                    ioe.printStackTrace();
             } finally {
                 try {
                     is.close();
@@ -65,7 +63,6 @@ public class Aktualizacja
                 if (linie[i].split("=")[1].compareTo(Program.wersja) != 0 || wymus)//czy jest inna wersja
                 {
                     trwa = true;
-                    stan = "Pobieranie aktualizacji...";
 
                     for (int i2 = 0; i2 < linie.length; i2++) {
                         if (linie[i2].split("=")[0].compareTo("plik") == 0) {
@@ -106,7 +103,8 @@ public class Aktualizacja
                                 strumien.close();
                             } catch (IOException ioe) {
 
-                                System.out.println("Oops- an IOException happened.");
+                                if (Program.debug)
+                                    ioe.printStackTrace();
                             } finally {
                                 try {
                                     is.close();
@@ -124,10 +122,8 @@ public class Aktualizacja
                             (new File(linie[i2].split("=")[1] + ".new")).renameTo(new File(linie[i2].split("=")[1]));
                         }
                     }
-                    stan = "Aktualizacja zostanie zainstalowana przy ponownym uruchomieniu programu.";
                     zaktualizowano = true;
-                } else
-                    stan = "Program jest aktualny.";
+                }
                 break;
             }
     }

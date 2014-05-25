@@ -3,7 +3,9 @@ import com.example.socketclient.TCP_Data;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
-
+/**
+ * Obsługa przycisków pilota
+ */
 public class Pilot {
 
 

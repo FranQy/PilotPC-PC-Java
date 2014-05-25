@@ -13,16 +13,16 @@ public class Biblioteka {
 
                 System.loadLibrary("lib/pilotpc");
                 zaladowano = true;
-        } catch (Throwable e) {
+            } catch (Throwable e) {
                 // e.printStackTrace();
                 try {
-                System.loadLibrary("lib/pilotpc-x64");
-                zaladowano = true;
-            } catch (UnsatisfiedLinkError f) {
+                    System.loadLibrary("lib/pilotpc-x64");
+                    zaladowano = true;
+                } catch (UnsatisfiedLinkError f) {
                     //f.printStackTrace();
                     Aktualizacja.wymus = true;
-            } catch (Throwable f) {
-                System.out.println("Błąd z ładowaniem biblioteki! Niektóre elementy programu nie będą działały poprawnie.");
+                } catch (Throwable f) {
+                    System.out.println(Jezyk.napisy[Jezyk.n.BladZLadowaniemBiblioteki.ordinal()]);
                     //f.printStackTrace();
 
                 }
@@ -43,7 +43,7 @@ public class Biblioteka {
                     //f.printStackTrace();
                     Aktualizacja.wymus = true;
                 } catch (Throwable f) {
-                    System.out.println("Błąd z ładowaniem biblioteki! Niektóre elementy programu nie będą działały poprawnie.");
+                    System.out.println(Jezyk.napisy[Jezyk.n.BladZLadowaniemBiblioteki.ordinal()]);
                     //f.printStackTrace();
 
                 }

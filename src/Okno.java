@@ -393,6 +393,10 @@ public class Okno {
         kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ":");
         Kod2.setText(Program.ustawienia.haslo);
         PodlaczoneUrzadzenia.setText(Jezyk.napisy[Jezyk.n.PodlaczoneUrzadzenia.ordinal()]);
+        nazwa.setText(Jezyk.napisy[Jezyk.n.Nazwa.ordinal()]);
+        Wylacz.setText(Jezyk.napisy[Jezyk.n.WylaczSerwer.ordinal()]);
+        powiększQRCodeButton.setText(Jezyk.napisy[Jezyk.n.PowiekszQR.ordinal()]);
+        nazwa.setText(Jezyk.napisy[Jezyk.n.Nazwa.ordinal()]);
     }
 
     private void createUIComponents() {
@@ -404,7 +408,7 @@ public class Okno {
         int licznik = 0;
 
         public void run() {
-            String statusTxt = "";
+            /*String statusTxt = "";
             if (Polaczenie.nasluchiwanie) {
                 if (Polaczenie.watki[0] != null && Polaczenie.watki[0].gotowe)
                     statusTxt = "Gotowe!";
@@ -414,7 +418,7 @@ public class Okno {
             if (Aktualizacja.zaktualizowano)
                 statusTxt += " Zaktualizowano do nowej wersji!";
             else if (Aktualizacja.trwa)
-                statusTxt += " Trwa aktualizacja do nowej wersji...";
+                statusTxt += " Trwa aktualizacja do nowej wersji..."; */
             // status.setText(statusTxt);
             int ileTel = 0;
             for (byte i = 0; i < Polaczenie.watki.length; i++) {
@@ -454,15 +458,15 @@ public class Okno {
                 }
             }
             if (ileTel == 0) {
-                PodlaczoneUrzadzenia.setText("Brak podłączonych urządzeń");
+                PodlaczoneUrzadzenia.setText(Jezyk.napisy[Jezyk.n.BrakPodlaczonychUrzadzen.ordinal()]);
             } else
 
                 PodlaczoneUrzadzenia.setText(Jezyk.napisy[Jezyk.n.PodlaczoneUrzadzenia.ordinal()]);
             if (dodatek) {
-                DodatekDoPrzeg.setText("Dodatek do przeglądarki: tak");
+                DodatekDoPrzeg.setText(Jezyk.napisy[Jezyk.n.DodatekDoPrzegladarkiTak.ordinal()]);
             } else
 
-                DodatekDoPrzeg.setText("Dodatek do przeglądarki: nie");
+                DodatekDoPrzeg.setText(Jezyk.napisy[Jezyk.n.DodatekDoPrzegladarkiNie.ordinal()]);
             //if(potrzebneOdswierzenie)
 /*{telefony.repaint();//(telefony.getGraphics());
        //telefony.paintImmediately(0, 0, 2000, 2000);
