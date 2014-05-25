@@ -41,6 +41,7 @@ public class Okno {
     public Okno(boolean wyswietl) {
 
         frame = new JFrame("PilotPC");
+        frame.setTitle("PilotPC");
         //frame.setType(Window.Type.POPUP);
         frame.setUndecorated(true);
         frame.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - 225, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - 325);

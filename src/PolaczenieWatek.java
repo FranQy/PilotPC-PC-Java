@@ -296,7 +296,7 @@ public class PolaczenieWatek
             Pilot.click(data);
             // System.out.println("pilot");
         } else if (data.type == TCP_Data.typ.KEYBOARD) {
-
+             try{
             if (data.key >= 65 && data.key <= 90) {
                 Program.robot.keyPress(KeyEvent.VK_SHIFT);
                 Program.robot.keyPress(data.key);
@@ -366,7 +366,112 @@ public class PolaczenieWatek
                 Program.robot.keyPress(KeyEvent.VK_ESCAPE);
                 Program.robot.keyRelease(KeyEvent.VK_ESCAPE);
 
-            } else {
+
+            } else if (data.key == 38) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(KeyEvent.VK_7);
+                Program.robot.keyRelease(KeyEvent.VK_7);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+            }else if (data.key == 58) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(KeyEvent.VK_SEMICOLON);
+                Program.robot.keyRelease(KeyEvent.VK_SEMICOLON);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+            } else if (data.key == 40) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(KeyEvent.VK_9);
+                Program.robot.keyRelease(KeyEvent.VK_9);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+            }else if (data.key == 41) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(KeyEvent.VK_0);
+                Program.robot.keyRelease(KeyEvent.VK_0);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+        } else if (data.key == 47) {
+            Program.robot.keyPress(KeyEvent.VK_SLASH);
+            Program.robot.keyRelease(KeyEvent.VK_SLASH);
+        } else if (data.key == 59) {
+            Program.robot.keyPress(KeyEvent.VK_SEMICOLON);
+            Program.robot.keyRelease(KeyEvent.VK_SEMICOLON);
+        } else if (data.key == 45) {
+                Program.robot.keyPress(KeyEvent.VK_MINUS);
+                Program.robot.keyRelease(KeyEvent.VK_MINUS);
+            } else if (data.key == 43) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(KeyEvent.VK_EQUALS);
+                Program.robot.keyRelease(KeyEvent.VK_EQUALS);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+            } else if (data.key == 38) {
+                Program.robot.keyPress(KeyEvent.VK_DOLLAR);
+                Program.robot.keyRelease(KeyEvent.VK_DOLLAR);
+            } else if (data.key == 92) {
+                Program.robot.keyPress(KeyEvent.VK_BACK_SLASH);
+                Program.robot.keyRelease(KeyEvent.VK_BACK_SLASH);
+            } else if (data.key == 37) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(KeyEvent.VK_5);
+                Program.robot.keyRelease(KeyEvent.VK_5);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+            } else if (data.key == 61) {
+                Program.robot.keyPress(KeyEvent.VK_EQUALS);
+                Program.robot.keyRelease(KeyEvent.VK_EQUALS);
+            } else if (data.key == 60) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(KeyEvent.VK_COMMA);
+                Program.robot.keyRelease(KeyEvent.VK_COMMA);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+            } else if (data.key == 62) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(46);
+                Program.robot.keyRelease(46);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+            } else if (data.key == 95) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(KeyEvent.VK_MINUS);
+                Program.robot.keyRelease(KeyEvent.VK_MINUS);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+            } else if (data.key == 94) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(KeyEvent.VK_6);
+                Program.robot.keyRelease(KeyEvent.VK_6);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+            }  else if (data.key == 46) {
+                Program.robot.keyPress(46);
+                Program.robot.keyRelease(46);
+            } else if (data.key == 63) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(KeyEvent.VK_SLASH);
+                Program.robot.keyRelease(KeyEvent.VK_SLASH);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+            } else if (data.key == 33) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(KeyEvent.VK_1);
+                Program.robot.keyRelease(KeyEvent.VK_1);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+            } else if (data.key == 39) {
+                Program.robot.keyPress(KeyEvent.VK_QUOTE);
+                Program.robot.keyRelease(KeyEvent.VK_QUOTE);
+            } else if (data.key == 34) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(KeyEvent.VK_QUOTE);
+                Program.robot.keyRelease(KeyEvent.VK_QUOTE);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+            } else if (data.key == 42) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(KeyEvent.VK_8);
+                Program.robot.keyRelease(KeyEvent.VK_8);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+            } else if (data.key == 35) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(KeyEvent.VK_3);
+                Program.robot.keyRelease(KeyEvent.VK_3);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+            } else if (data.key == 64) {
+                Program.robot.keyPress(KeyEvent.VK_SHIFT);
+                Program.robot.keyPress(KeyEvent.VK_2);
+                Program.robot.keyRelease(KeyEvent.VK_2);
+                Program.robot.keyRelease(KeyEvent.VK_SHIFT);
+            }else {
                 //windows
                 Program.robot.keyPress(KeyEvent.VK_ALT);
                 int kod = data.key;
@@ -376,14 +481,18 @@ public class PolaczenieWatek
                     Program.robot.keyPress(KeyEvent.VK_NUMPAD0 + (kod / dz) % 10);
                     Program.robot.keyRelease(KeyEvent.VK_NUMPAD0 + (kod / dz) % 10);
                     dz = dz / 10;
+                }Program.robot.keyRelease(KeyEvent.VK_ALT);}
+                 } catch(IllegalArgumentException e) {}
+                finally{
+                    Program.robot.keyRelease(KeyEvent.VK_SHIFT);
                 }
-                Program.robot.keyRelease(KeyEvent.VK_ALT);
+
 
             }
 
-        }
         data.clean();//czyszczenie zmiennych w TCP_Data
-    }
+        }
+
 
     /**
      * @return Adres IP podłączonego telefonu
