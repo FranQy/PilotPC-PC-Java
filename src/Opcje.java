@@ -1,6 +1,9 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
  * Created by Mateusz on 01.04.14.
@@ -27,6 +30,20 @@ public class Opcje {
 
         frame = new JFrame("Opcje");
 
+        if (Program.imgObrazek == null) {
+            try {
+                Program.imgObrazek = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
+                ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                //InputStream input = classLoader.getResourceAsStream(
+                // "resources/ikona.png");
+                Program.imgObrazek = ImageIO.read(classLoader.getResourceAsStream(
+                        "resources/ikona.png"));
+            } catch (IOException e) {
+                Program.imgObrazek = null;
+            }
+        }
+        if (Program.imgObrazek != null)
+            frame.setIconImage(Program.imgObrazek);
         //System.out.println("1");
         frame.setContentPane(zawartosc);
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

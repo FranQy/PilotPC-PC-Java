@@ -1,6 +1,9 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -44,6 +47,20 @@ public class Okno {
         frame.setTitle("PilotPC");
         //frame.setType(Window.Type.POPUP);
         frame.setUndecorated(true);
+        if (Program.imgObrazek == null) {
+            try {
+                Program.imgObrazek = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
+                ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                //InputStream input = classLoader.getResourceAsStream(
+                // "resources/ikona.png");
+                Program.imgObrazek = ImageIO.read(classLoader.getResourceAsStream(
+                        "resources/ikona.png"));
+            } catch (IOException e) {
+                Program.imgObrazek = null;
+            }
+        }
+        if (Program.imgObrazek != null)
+            frame.setIconImage(Program.imgObrazek);
         frame.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - 225, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - 325);
 
         //System.out.println("1");

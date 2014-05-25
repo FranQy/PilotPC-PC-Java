@@ -12,6 +12,7 @@ import java.util.Timer;
 public class Program {
     static Okno glowneOkno;
     static Polaczenie polaczenia;
+    static BufferedImage imgObrazek = null;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
     static public String wersja = "0.3.18";
@@ -179,7 +180,7 @@ public class Program {
                 }
             });// dodajemy zdarzenie do pozycji zakończ
 
-            BufferedImage imgObrazek = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
+            imgObrazek = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
             try {
                 ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
                 //InputStream input = classLoader.getResourceAsStream(
@@ -279,7 +280,9 @@ public class Program {
                 tray.add(trayIcon);   // dodanie naszej ikony do zasobnika systemowego
 
             } catch (AWTException e) {
-                javax.swing.JOptionPane.showMessageDialog(null, Jezyk.napisy[Jezyk.n.BladPodczasDodawaniaIkony.ordinal()]);            // Wyświetl komunikat
+                if (debug)
+                    e.printStackTrace();
+                System.out.println(Jezyk.napisy[Jezyk.n.BladPodczasDodawaniaIkony.ordinal()]);            // Wyświetl komunikat
 
             }
             // if(nowy)
