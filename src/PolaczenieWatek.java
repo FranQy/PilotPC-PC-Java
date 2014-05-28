@@ -88,14 +88,19 @@ public class PolaczenieWatek
                                 odpowiedz.status = Connect.Status.ok;
                             else {
                                 odpowiedz.status = Connect.Status.zlyKod;
-                                in.close();
+                                //in.close();
                                 break;
                             }
                             odpowiedz.nazwa = java.net.InetAddress.getLocalHost().getHostName();
                             ObjectOutputStream oos = new ObjectOutputStream(soc.getOutputStream());
                             oos.writeObject(odpowiedz);
                             oos.flush();
-                            // dataObject =  in.readObject();
+                                if (odpowiedz.status == Connect.Status.zlyKod) {
+                                    oos.close();
+                                    in.close();
+                                    soc.close();
+                                }
+                                // dataObject =  in.readObject();
                             System.out.println(Jezyk.napisy[Jezyk.n.Polaczono.ordinal()] + " " + toString());
                         } else if (dataObject.getClass() == Ping.class) {
                             ObjectOutputStream oos = new ObjectOutputStream(soc.getOutputStream());
