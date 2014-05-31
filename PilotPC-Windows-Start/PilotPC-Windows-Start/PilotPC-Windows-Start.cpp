@@ -7,6 +7,39 @@
 #include <string>
 using namespace std;
 #pragma comment (lib,"Advapi32.lib")
+#pragma comment (lib,"User32.lib")
+#pragma comment (lib,"Kernel32.lib")
+void plikiNew(wstring fold);
+void plikiNew(wstring fold){
+	WIN32_FIND_DATA  FindFileData;
+
+	HANDLE pliczekH = FindFirstFile((fold + wstring(L"*.new")).c_str(), &FindFileData);
+	if (pliczekH != INVALID_HANDLE_VALUE)
+	{
+		while (true){
+		wstring pliczek = wstring(FindFileData.cFileName);
+
+
+		MoveFileEx((fold+pliczek).c_str(), ((fold+pliczek.substr(0, pliczek.length() - 4)).c_str()), MOVEFILE_REPLACE_EXISTING);
+		if (!FindNextFile(pliczekH, &FindFileData))
+			break;
+	}
+	}
+	FindClose(pliczekH);
+
+	pliczekH = FindFirstFile((fold + wstring(L"*")).c_str(), &FindFileData);
+	while (pliczekH != INVALID_HANDLE_VALUE)
+	{
+		wstring pliczek = wstring(FindFileData.cFileName);
+		if (FindFileData.dwFileAttributes == FILE_ATTRIBUTE_DIRECTORY&&pliczek != wstring(L".") && pliczek != wstring(L"..") && pliczek != wstring(L""))
+			plikiNew(fold + pliczek + wstring(L"\\"));
+		if (!FindNextFile(pliczekH, &FindFileData))
+			break;
+	}
+	FindClose(pliczekH);
+
+	
+}
 int run(_TCHAR* argv[], LPCWSTR polec, bool konsola)
 {
 	HINSTANCE hInst;
@@ -55,13 +88,17 @@ int run(_TCHAR* argv[], LPCWSTR polec, bool konsola)
 }
 int _tmain(const int argc, _TCHAR* argv[])
 {
+	if (argv[0][1] == L':')
+		plikiNew(wstring(argv[0]).substr(0, wstring(argv[0]).find_last_of(L'\\'))+wstring(L"\\"));
+	else
+		plikiNew(wstring(L""));
 	if (argc == 1)
 	{
-		LPCWSTR polec = L"-jar PilotPC-PC-Java.jar -o";
+		LPCWSTR polec = L"-jar java/pilotpc.jar -o";
 
 		for (short i = 1; i < argc;i++)
 		if ((argv[i][0] == '/' || argv[i][0] == '-') && argv[i][1] == 'n'&&argv[i][2] == 'o')
-			polec = L"-jar PilotPC-PC-Java.jar";
+			polec = L"-jar java/pilotpc.jar";
 			
 		return run(argv,polec, false);
 		
@@ -92,11 +129,11 @@ int _tmain(const int argc, _TCHAR* argv[])
 	}
 	if (argc > 1)
 	{
-		wstring polec = wstring(L"-jar PilotPC-PC-Java.jar -o");
+		wstring polec = wstring(L"-jar java/pilotpc.jar -o");
 		bool konsola = false;
 		for (short i = 1; i < argc; i++)
 		if ((argv[i][0] == '/' || argv[i][0] == '-') && argv[i][1] == 'n'&&argv[i][2] == 'o')
-			polec = wstring(L"-jar PilotPC-PC-Java.jar");
+			polec = wstring(L"-jar java/pilotpc.jar");
 		else
 			konsola = true;
 
