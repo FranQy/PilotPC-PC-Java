@@ -16,7 +16,7 @@ public class Aktualizacja
 
     @Override
     public void run() {
-        if (!zaktualizowano) {
+        if ((!zaktualizowano && Program.ustawienia.aktualizujAutomatycznie) || wymus) {
             InputStream is = null;
             String s;
             String content = new String();
@@ -116,12 +116,12 @@ public class Aktualizacja
                             }
                         }
                     }
-                    for (int i2 = 0; i2 < linie.length; i2++) {
+                    /*for (int i2 = 0; i2 < linie.length; i2++) {
                         if (linie[i2].split("=")[0].compareTo("plik") == 0 && linie[i2].split("=")[1].compareTo("PilotPC-PC-Java.jar") != 0) {
                             (new File(linie[i2].split("=")[1])).renameTo(new File(linie[i2].split("=")[1] + ".old"));
                             (new File(linie[i2].split("=")[1] + ".new")).renameTo(new File(linie[i2].split("=")[1]));
                         }
-                    }
+                    }  */
                     zaktualizowano = true;
                 }
                 break;

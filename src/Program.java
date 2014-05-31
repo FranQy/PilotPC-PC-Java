@@ -50,7 +50,17 @@ public class Program {
                         {
                             if (bufor[1] == 'e')//exit
                             {
-                                System.exit(50);
+                                while (true) {
+                                    if (!Aktualizacja.trwa)
+                                        System.exit(0);
+                                    else
+                                        try {
+                                            Thread.sleep(500);
+                                        } catch (InterruptedException e1) {
+                                            // TODO Auto-generated catch block
+                                            e1.printStackTrace();
+                                        }
+                                }
                             }
 
                         }

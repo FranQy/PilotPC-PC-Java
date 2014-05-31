@@ -29,7 +29,7 @@ public class Jezyk {
         ZmienKod, Infromacje, StartZSystemem, PodlaczoneUrzadzenia, WylaczWygladzanieMyszy,
         WlaczWygladzanieMyszy, AktualizacjaZostanie, TrwaAktualizowanie, ProgramAktualny, MoznaZaktualizowac,
         TrwaSprawdzanieAKtualizacji, BladZLadowaniemBiblioteki, System, Model,
-        DostepnePolecenia, NowyKod, NieMoznaZmienic, NieMoznaPokazac, NieznanePolecenie, BladRozlaczono, Opcje, DodatekDoPrzegladarki, BrakPodlaczonychUrzadzen, DodatekDoPrzegladarkiTak, DodatekDoPrzegladarkiNie, WylaczSerwer, PowiekszQR, WpiszPomoc
+        DostepnePolecenia, NowyKod, NieMoznaZmienic, NieMoznaPokazac, NieznanePolecenie, BladRozlaczono, Opcje, DodatekDoPrzegladarki, BrakPodlaczonychUrzadzen, DodatekDoPrzegladarkiTak, DodatekDoPrzegladarkiNie, WylaczSerwer, PowiekszQR, AktualizujTeraz, AktualizacjaAutomatyzna, WpiszPomoc
     }
 
     ;
@@ -93,6 +93,8 @@ public class Jezyk {
                 napisy[n.BrakPodlaczonychUrzadzen.ordinal()] = "Brak podłączonych urządzeń";
                 napisy[n.WylaczSerwer.ordinal()] = "Wyłącz serwer";
                 napisy[n.PowiekszQR.ordinal()] = "Powiększ QRCode";
+                napisy[n.AktualizujTeraz.ordinal()] = "Aktualizuj teraz";
+                napisy[n.AktualizacjaAutomatyzna.ordinal()] = "Akrualizacja automatyzna";
 
                 break;
             case Angielski:
@@ -142,6 +144,8 @@ public class Jezyk {
                 napisy[n.BrakPodlaczonychUrzadzen.ordinal()] = "No conected devices";
                 napisy[n.WylaczSerwer.ordinal()] = "Close server";
                 napisy[n.PowiekszQR.ordinal()] = "Zoom QRCode";
+                napisy[n.AktualizujTeraz.ordinal()] = "Update now";
+                napisy[n.AktualizacjaAutomatyzna.ordinal()] = "Autoupdate";
                 break;
 
             case Rosyjski:
@@ -191,6 +195,8 @@ public class Jezyk {
                 napisy[n.BrakPodlaczonychUrzadzen.ordinal()] = "Brak podłączonych urządzeń";
                 napisy[n.WylaczSerwer.ordinal()] = "Wyłącz serwer";
                 napisy[n.PowiekszQR.ordinal()] = "Powiększ QRCode";
+                napisy[n.AktualizujTeraz.ordinal()] = "Aktualizuj teraz";
+                napisy[n.AktualizacjaAutomatyzna.ordinal()] = "Akrualizacja automatyzna";
                 break;
         }
     }

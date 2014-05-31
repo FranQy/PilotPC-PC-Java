@@ -17,6 +17,9 @@ public class Opcje {
     private JLabel NazwaProgramu;
     private JLabel Programisci;
     private JLabel AktualizacjaStatus;
+    private JCheckBox AktualizujAutomatycznie;
+    private JButton AktualizujTeraz;
+    private JButton button1;
     static Opcje okno;
 
     public static Opcje pokarz() {
@@ -70,6 +73,25 @@ public class Opcje {
                 Program.autostart();
             }
         });
+        AktualizujAutomatycznie.setSelected(Program.ustawienia.aktualizujAutomatycznie);
+        AktualizujAutomatycznie.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Program.ustawienia.aktualizujAutomatycznie = AktualizujAutomatycznie.isSelected();
+                Program.ustawienia.eksportuj();
+            }
+        });
+        AktualizujTeraz.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Aktualizacja.wymus = true;
+
+                java.util.Timer timer1 = new java.util.Timer();
+                Aktualizacja timer1_task = new Aktualizacja();
+                timer1.schedule(timer1_task, 0);
+            }
+        });
         if (Program.ustawienia.plynnaMysz)
             gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
         else
@@ -104,7 +126,8 @@ public class Opcje {
             gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WlaczWygladzanieMyszy.ordinal()]);
         NazwaProgramu.setText("PilotPC " + Jezyk.napisy[Jezyk.n.Wersja.ordinal()] + " " + Program.wersja);
         Programisci.setText(Jezyk.napisy[Jezyk.n.Programisci.ordinal()] + ":");
-
+        AktualizujTeraz.setText(Jezyk.napisy[Jezyk.n.AktualizujTeraz.ordinal()]);
+        AktualizujAutomatycznie.setText(Jezyk.napisy[Jezyk.n.AktualizacjaAutomatyzna.ordinal()]);
         if (Aktualizacja.zaktualizowano)
             AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.AktualizacjaZostanie.ordinal()]);
         else if (Aktualizacja.trwa)

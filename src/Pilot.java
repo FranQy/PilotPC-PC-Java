@@ -17,11 +17,22 @@ public class Pilot {
             case OFF: {
                 // TODO zrobic dla linuksa i wykrywanie sytemu
                 try {
-                    if (System.getProperty("os.name").toUpperCase().contains("WIN"))
-                        Runtime.getRuntime().exec("shutdown -s -t 0");
-                    else
-                        Runtime.getRuntime().exec("shutdown -h now");
-                    System.exit(0);
+
+                    while (true) {
+                        if (!Aktualizacja.trwa)
+                            System.exit(0);
+                        else
+                            try {
+                                if (System.getProperty("os.name").toUpperCase().contains("WIN"))
+                                    Runtime.getRuntime().exec("shutdown -s -t 0");
+                                else
+                                    Runtime.getRuntime().exec("shutdown -h now");
+                                Thread.sleep(500);
+                            } catch (InterruptedException e1) {
+                                // TODO Auto-generated catch block
+                                e1.printStackTrace();
+                            }
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

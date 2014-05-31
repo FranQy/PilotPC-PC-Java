@@ -12,6 +12,7 @@ public class Ustawienia implements Serializable {
      *
      */
     private static final long serialVersionUID = 1L;
+    public boolean aktualizujAutomatycznie = true;
 
     /**
      * Znajduje folder z ustawieniami programu

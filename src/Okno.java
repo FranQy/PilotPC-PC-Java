@@ -291,7 +291,17 @@ public class Okno {
         Wylacz.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                while (true) {
+                    if (!Aktualizacja.trwa)
+                        System.exit(0);
+                    else
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
+                        }
+                }
             }
         });
         Zamknij.addMouseListener(new MouseListener() {
