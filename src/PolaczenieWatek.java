@@ -80,7 +80,9 @@ public class PolaczenieWatek
                             Object dataObject = in.readObject();
 
                             if (dataObject.getClass() == Connect.class) {
-                            infoPrzyPolaczeniu = (Connect) dataObject;
+                                if (Program.debug)
+                                    System.out.println("Otrzymano klasę Connect");
+                                infoPrzyPolaczeniu = (Connect) dataObject;
                             Connect odpowiedz = new Connect();
                             if (infoPrzyPolaczeniu.haslo.length() == 0)
                                 odpowiedz.status = Connect.Status.ok;
@@ -96,6 +98,8 @@ public class PolaczenieWatek
                             oos.writeObject(odpowiedz);
                             oos.flush();
                                 if (odpowiedz.status == Connect.Status.zlyKod) {
+                                    if (Program.debug)
+                                        System.out.println();
                                     oos.close();
                                     in.close();
                                     soc.close();
