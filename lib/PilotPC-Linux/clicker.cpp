@@ -9,7 +9,9 @@
 
 enum  pilotButton{
 	OFF, MUSIC, MULTIMEDIA, PLAYPAUSE, PERV, NEXT, STOP, EXIT, BACK, VOLDOWN, VOLUP, MUTE,
-	UP, DOWN, RIGHT, LEFT, RETTURN
+	UP, DOWN, RIGHT, LEFT, RETTURN,
+	REWIND,//Przewijanie do tyłu
+	FORWARD//przewijanie do przodu
 };
 
 Display *display;
@@ -42,6 +44,9 @@ switch (przycisk)
 		break;
 	case STOP:
 		keycode = XKeysymToKeycode(display, XF86XK_AudioStop);
+		break;
+	case MULTIMEDIA:
+		keycode = XKeysymToKeycode(display, XF86XK_Music);
 		break;
 
 	}
