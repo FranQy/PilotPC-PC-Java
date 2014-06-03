@@ -649,7 +649,8 @@ public class HTTP {
                         "data.key = event.charCode;\n" +
                         "data.type=TCP_Data.typ.KEYBOARD;send(data);\n" + "return false;\">"
                         //+ "<div class=\"karta\" id=\"gamepad\">Gamepad wkrodce</div>"
-                        //+ "<div id=\"aaa\" style=\"color:white;position:fixed;left:0;top:0;\">test</div><div class=\"karta\" style=\"display:block\" id=\"pilot\">"
+                        //+ "<div id=\"aaa\" style=\"color:white;position:fixed;left:0;top:0;\">test</div>"
+                        + "<div class=\"karta\" style=\"display:block\" id=\"pilot\">"
                         + "<img id=\"przyciski\" src=\"" + przyciskiBase64 + "\" usemap=\"#przycMapa\" />" +
                         "<map id=\"przycMapa\" name=\"przycMapa\">" +
                         "</map>"

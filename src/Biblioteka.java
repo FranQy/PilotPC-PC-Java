@@ -8,23 +8,33 @@ public class Biblioteka {
         if (zaladowano)
             return;
         String OS = System.getProperty("os.name").toUpperCase();
-        if (OS.contains("WIN")) {
-            try {
+        //if (OS.contains("WIN")) {
+        try {
 
                 System.loadLibrary("pilotpc");
                 zaladowano = true;
             } catch (Throwable e) {
                 try {
 
-                    System.loadLibrary("..\\lib\\pilotpc");
+                    System.loadLibrary("lib//pilotpc");
                     zaladowano = true;
                 } catch (Throwable e2) {
                     try {
 
-                        System.loadLibrary("..\\lib\\pilotpc-x64");
+                        System.loadLibrary("..//lib//pilotpc");
                         zaladowano = true;
                     } catch (Throwable e3) {
-                        // e.printStackTrace();
+                        try {
+
+                            System.loadLibrary("..//lib//pilotpc-x64");
+                            zaladowano = true;
+                        } catch (Throwable e4) {
+                            try {
+
+                                System.loadLibrary("lib//pilotpc-x64");
+                                zaladowano = true;
+                            } catch (Throwable e5) {
+                                // e.printStackTrace();
                 try {
                     System.loadLibrary("pilotpc-x64");
                     zaladowano = true;
@@ -38,9 +48,11 @@ public class Biblioteka {
 
                 }
                     }
+                        }
+                    }
                 }
-            }
-        } else
+        }
+       /* } else
 
         {
             try {
@@ -61,7 +73,7 @@ public class Biblioteka {
 
                 }
             }
-        }
+        } */
 
     }
 
