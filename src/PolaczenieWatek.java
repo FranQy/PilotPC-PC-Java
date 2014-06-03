@@ -84,13 +84,14 @@ public class PolaczenieWatek
                                     System.out.println("Otrzymano klasę Connect");
                                 infoPrzyPolaczeniu = (Connect) dataObject;
                             Connect odpowiedz = new Connect();
-                            if (infoPrzyPolaczeniu.haslo.length() == 0)
-                                odpowiedz.status = Connect.Status.ok;
-                            else if (infoPrzyPolaczeniu.haslo.compareTo(Program.ustawienia.haslo) == 0)
-                                odpowiedz.status = Connect.Status.ok;
+                                while (System.currentTimeMillis() < Polaczenie.czasBlokadyHasla)
+                                    Thread.sleep(System.currentTimeMillis() - Polaczenie.czasBlokadyHasla);
+                                if (infoPrzyPolaczeniu.haslo.compareTo(Program.ustawienia.haslo) == 0)
+                                    odpowiedz.status = Connect.Status.ok;
                             else {
                                 odpowiedz.status = Connect.Status.zlyKod;
-                                //in.close();
+                                    Polaczenie.czasBlokadyHasla = System.currentTimeMillis() + 500;
+                                    //in.close();
                                 break;
                             }
                             odpowiedz.nazwa = java.net.InetAddress.getLocalHost().getHostName();

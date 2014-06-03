@@ -14,6 +14,10 @@ public class Polaczenie {
     public static boolean nasluchiwanie = false;
     public static PolaczenieWatek[] watki = new PolaczenieWatek[100];
     static Map<Integer, Integer> hasłoIPort = new HashMap<Integer, Integer>();
+    /*
+    Zabezpieczenie przed BruceForce
+     */
+    static long czasBlokadyHasla = 0;
 
     public Polaczenie() {
 

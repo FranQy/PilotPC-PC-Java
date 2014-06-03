@@ -20,6 +20,12 @@ public class HTTP {
 
     public static TCP_Data polaczenie(InputStream is, Socket soc, String wyj) throws IOException {
 
+        try {
+            while (System.currentTimeMillis() < Polaczenie.czasBlokadyHasla)
+                Thread.sleep(System.currentTimeMillis() - Polaczenie.czasBlokadyHasla);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         //System.out.print(wyj);
         Jezyk.jezyki lang = Program.ustawienia.jezyk;
         int AcceptLanguage = wyj.indexOf("Accept-Language");
@@ -62,6 +68,7 @@ public class HTTP {
 
                 wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.KodBledny.ordinal()];
 
+                Polaczenie.czasBlokadyHasla = System.currentTimeMillis() + 500;
             }
             os.write(wysylanie.getBytes());
             os.close();
@@ -844,6 +851,8 @@ public class HTTP {
                         wysylanie = "HTTP/1.1 302 Found\r\nLocation:http://" + host + ":" + port2 + "/" + kodWpisany + "\r\n\r\n";
 
                     } catch (Throwable e3) {
+
+                        Polaczenie.czasBlokadyHasla = System.currentTimeMillis() + 500;
                         wysylanie = "HTTP/1.1 500 Internal Server Error\r\nServer: PilotPC\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
                                 + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
                                 + "<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
@@ -860,6 +869,7 @@ public class HTTP {
                 } catch (Exception e) {
 
 
+                    Polaczenie.czasBlokadyHasla = System.currentTimeMillis() + 500;
                     wysylanie = "HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
                             + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
                             + "<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
