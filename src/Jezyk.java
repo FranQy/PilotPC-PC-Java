@@ -33,7 +33,7 @@ public class Jezyk {
     }
 
     ;
-    public static final String[] nazwyJezykow = {"Polski", "English", "R"};
+    public static final String[] nazwyJezykow = {"Polski", "English", "Русский"};
 
     public enum nHTTP {ZostalesRozlaczony, KodBledny, Usun, Informacje, Polaczenie, Stan, Jakosc, Host, Coder, Designers, JakoscObrazu, Niska, Srednia, Wysoka, Ultra, Spacja, Polaczono, BrakDanych, Rozlaczono}
 
@@ -94,7 +94,7 @@ public class Jezyk {
                 napisy[n.WylaczSerwer.ordinal()] = "Wyłącz serwer";
                 napisy[n.PowiekszQR.ordinal()] = "Powiększ QRCode";
                 napisy[n.AktualizujTeraz.ordinal()] = "Aktualizuj teraz";
-                napisy[n.AktualizacjaAutomatyzna.ordinal()] = "Akrualizacja automatyzna";
+                napisy[n.AktualizacjaAutomatyzna.ordinal()] = "Aktualizacja automatyzna";
 
                 break;
             case Angielski:

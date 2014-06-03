@@ -77,6 +77,8 @@ public class Pilot {
                 try {
                     Biblioteka.click(data.button.ordinal());//Korzysta z tego samego enuma co TCP_DATA, bo po co robic dwa osobne
                 } catch (Throwable e) {
+                    if (Program.debug)
+                        e.printStackTrace();
                 }
                 break;
             }

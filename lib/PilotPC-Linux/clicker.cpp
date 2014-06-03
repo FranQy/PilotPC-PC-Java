@@ -18,7 +18,7 @@ Display *display;
 unsigned int keycode;
 
 JNIEXPORT void JNICALL Java_Biblioteka_click(JNIEnv *env, jobject jobj, jint a) {
-{
+
     display = XOpenDisplay(NULL);
 pilotButton przycisk = (pilotButton)a;
 
@@ -59,5 +59,5 @@ switch (przycisk)
 }
 JNIEXPORT void JNICALL Java_Biblioteka_autostart
 (JNIEnv *env, jclass jobj, jboolean, jboolean, jstring f) {
-		{
+		
 		}

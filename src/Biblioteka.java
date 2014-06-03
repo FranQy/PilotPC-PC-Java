@@ -11,20 +11,33 @@ public class Biblioteka {
         if (OS.contains("WIN")) {
             try {
 
-                System.loadLibrary("lib/pilotpc");
+                System.loadLibrary("pilotpc");
                 zaladowano = true;
             } catch (Throwable e) {
-                // e.printStackTrace();
                 try {
-                    System.loadLibrary("lib/pilotpc-x64");
+
+                    System.loadLibrary("..\\lib\\pilotpc");
+                    zaladowano = true;
+                } catch (Throwable e2) {
+                    try {
+
+                        System.loadLibrary("..\\lib\\pilotpc-x64");
+                        zaladowano = true;
+                    } catch (Throwable e3) {
+                        // e.printStackTrace();
+                try {
+                    System.loadLibrary("pilotpc-x64");
                     zaladowano = true;
                 } catch (UnsatisfiedLinkError f) {
                     //f.printStackTrace();
+                    System.out.println("Nie załadowano dodatkowych bibliotek, nastąpi pobraniez internetu");
                     Aktualizacja.wymus = true;
                 } catch (Throwable f) {
                     System.out.println(Jezyk.napisy[Jezyk.n.BladZLadowaniemBiblioteki.ordinal()]);
                     //f.printStackTrace();
 
+                }
+                    }
                 }
             }
         } else
