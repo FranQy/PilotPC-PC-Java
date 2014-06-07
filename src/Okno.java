@@ -37,6 +37,8 @@ public class Okno {
     PanelQRCode qr;
     public JFrame frame;
     private PrzesuwanieOkna przesuwanie;
+    private boolean DodatekDoPrzegWyswietlane = false;
+    private boolean PodlaczoneUrzadzeniaWyswietlane = true;
 
     public Okno() {
         this(true);
@@ -419,19 +421,7 @@ public class Okno {
         int licznik = 0;
 
         public void run() {
-            /*String statusTxt = "";
-            if (Polaczenie.nasluchiwanie) {
-                if (Polaczenie.watki[0] != null && Polaczenie.watki[0].gotowe)
-                    statusTxt = "Gotowe!";
-                else
-                    statusTxt = "Inicjowanie...";
-            }
-            if (Aktualizacja.zaktualizowano)
-                statusTxt += " Zaktualizowano do nowej wersji!";
-            else if (Aktualizacja.trwa)
-                statusTxt += " Trwa aktualizacja do nowej wersji..."; */
-            // status.setText(statusTxt);
-            if (frame.isVisible()) {
+            if (frame.isVisible()) {  //gdy okno jest zamknięte to nie obciąża procka
                 int ileTel = 0;
             for (byte i = 0; i < Polaczenie.watki.length; i++) {
                 if (Polaczenie.watki[i] != null)
@@ -469,34 +459,33 @@ public class Okno {
                     }
                 }
             }
-            if (ileTel == 0) {
-                PodlaczoneUrzadzenia.setText(Jezyk.napisy[Jezyk.n.BrakPodlaczonychUrzadzen.ordinal()]);
-            } else
-
-                PodlaczoneUrzadzenia.setText(Jezyk.napisy[Jezyk.n.PodlaczoneUrzadzenia.ordinal()]);
-            if (dodatek) {
-                DodatekDoPrzeg.setText(Jezyk.napisy[Jezyk.n.DodatekDoPrzegladarkiTak.ordinal()]);
-            } else
-
-                DodatekDoPrzeg.setText(Jezyk.napisy[Jezyk.n.DodatekDoPrzegladarkiNie.ordinal()]);
-            //if(potrzebneOdswierzenie)
-/*{telefony.repaint();//(telefony.getGraphics());
-       //telefony.paintImmediately(0, 0, 2000, 2000);
-for(int i=0;i<telefony.countComponents();i++)
-{
-	telefony.getComponent(i).paint(telefony.getComponent(i).getGraphics());
-}}*/
-            if (potrzebneOdswierzenie) {
+                if (ileTel == 0 && PodlaczoneUrzadzeniaWyswietlane) {
+                    PodlaczoneUrzadzeniaWyswietlane = false;
+                    PodlaczoneUrzadzenia.setText(Jezyk.napisy[Jezyk.n.BrakPodlaczonychUrzadzen.ordinal()]);
+                } else if (ileTel > 0 && !PodlaczoneUrzadzeniaWyswietlane) {
+                    PodlaczoneUrzadzeniaWyswietlane = true;
+                    PodlaczoneUrzadzenia.setText(Jezyk.napisy[Jezyk.n.PodlaczoneUrzadzenia.ordinal()]);
+                }
+                if (dodatek && !DodatekDoPrzegWyswietlane) {
+                    DodatekDoPrzegWyswietlane = true;
+                    DodatekDoPrzeg.setText(Jezyk.napisy[Jezyk.n.DodatekDoPrzegladarkiTak.ordinal()]);
+                } else if (!dodatek && DodatekDoPrzegWyswietlane) {
+                    DodatekDoPrzegWyswietlane = false;
+                    DodatekDoPrzeg.setText(Jezyk.napisy[Jezyk.n.DodatekDoPrzegladarkiNie.ordinal()]);
+                }
+                if (potrzebneOdswierzenie) {
                 telefony.paintAll(telefony.getGraphics());
                 zawartosc.paintAll(zawartosc.getGraphics());
-            }
+                    frame.repaint(500);
+                }
             potrzebneOdswierzenie = false;
 
 
                 //z klasy start
-                //String tekstIP = Jezyk.napisy[Jezyk.n.TwojeIPTo.ordinal()] + ":<br/>";
-                String tekstIP = "";
-                Enumeration<NetworkInterface> n;
+                if (licznik % 100 == 0) {
+                    String tekstIP = "";
+
+                    Enumeration<NetworkInterface> n;
                 try {
                     n = NetworkInterface.getNetworkInterfaces();
 
@@ -518,11 +507,12 @@ for(int i=0;i<telefony.countComponents();i++)
                 }
                 info.setText("<html>" + Jezyk.napisy[Jezyk.n.TwojeIPTo.ordinal()] + "</html>");
                 IP2.setText("<html>" + tekstIP + "</html>");
-
-                if (licznik++ % 10 == 0) {
+                }
+                /*if (licznik % 10 == 0) {
                     //frame.repaint();
                     frame.repaint(500);
-                }
+                }    */
+                licznik++;
             }
         }
     }
