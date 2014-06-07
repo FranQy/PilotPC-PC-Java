@@ -6,14 +6,14 @@ import java.io.IOException;
 public class AccessPoint {
     public static void start(String nazwa, String klucz) throws IOException {
         if (System.getProperty("os.name").toUpperCase().contains("WIN")) {
-            Runtime.getRuntime().exec("netsh wlan set hostednetwork mode=allow \"ssid=" + nazwa + "\" \"key=" + klucz + "\" keyUsage=temporary");
-            Runtime.getRuntime().exec("netsh wlan start hostednetwork");
+            Biblioteka.runAsRoot("netsh", "wlan set hostednetwork mode=allow \"ssid=" + nazwa + "\" \"key=" + klucz + "\" keyUsage=temporary");
+            Biblioteka.runAsRoot("netsh", "wlan start hostednetwork");
         }
     }
 
     public static void stop() throws IOException {
         if (System.getProperty("os.name").toUpperCase().contains("WIN")) {
-            Runtime.getRuntime().exec("netsh wlan stop hostednetwork");
+            Biblioteka.runAsRoot("netsh", "wlan stop hostednetwork");
         }
     }
 

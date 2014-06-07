@@ -6,6 +6,7 @@
 #include <string>
 using namespace std;
 #pragma comment (lib,"Advapi32.lib")
+#pragma comment (lib,"Shell32.lib")
 enum  pilotButton{
 	OFF, MUSIC, MULTIMEDIA, PLAYPAUSE, PERV, NEXT, STOP, EXIT, BACK, VOLDOWN, VOLUP, MUTE,
 	UP, DOWN, RIGHT, LEFT, RETTURN,
@@ -65,4 +66,26 @@ JNIEXPORT void JNICALL Java_Biblioteka_autostart
 	HKEY hkTest;
 	RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
 	RegSetValueExA(hkTest, "PilotPC", 0, REG_SZ, (BYTE*)(folder.c_str()), folder.length());
+}
+JNIEXPORT void JNICALL Java_Biblioteka_runAsRoot
+(JNIEnv *env, jclass, jstring adres, jstring parametry){
+	{
+		// Launch itself as administrator.
+		SHELLEXECUTEINFOA sei = { sizeof(sei) };
+		sei.lpVerb = "runas";
+		jboolean blnIsCopy;
+		sei.lpFile = (env)->GetStringUTFChars(adres, &blnIsCopy);
+		sei.lpParameters = (env)->GetStringUTFChars(parametry, &blnIsCopy);
+		//sei.hwnd = ((instalacja*)Args)[0].okno;
+		sei.nShow = SW_NORMAL;
+
+		if (!ShellExecuteExA(&sei))
+		{
+			//return true;
+		}
+		else
+		{
+			//return false;
+		}
+	}
 }

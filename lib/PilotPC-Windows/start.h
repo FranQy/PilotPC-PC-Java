@@ -23,6 +23,9 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_Biblioteka_autostart
 		(JNIEnv *, jclass, jboolean, jboolean, jstring);
 
+	JNIEXPORT void JNICALL Java_Biblioteka_runAsRoot
+		(JNIEnv *, jclass, jstring, jstring);
+
 #ifdef __cplusplus
 }
 #endif
