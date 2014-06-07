@@ -3,7 +3,7 @@
  */
 //Jezyk.napisy[Jezyk.n.PilotPCWersja.ordinal()]
 public class Jezyk {
-    public static String[] napisy = new String[50];
+    public static String[] napisy = new String[100];
 
     public static void przeladuj(jezyki a) {
         laduj(a);
@@ -29,7 +29,8 @@ public class Jezyk {
         ZmienKod, Infromacje, StartZSystemem, PodlaczoneUrzadzenia, WylaczWygladzanieMyszy,
         WlaczWygladzanieMyszy, AktualizacjaZostanie, TrwaAktualizowanie, ProgramAktualny, MoznaZaktualizowac,
         TrwaSprawdzanieAKtualizacji, BladZLadowaniemBiblioteki, System, Model,
-        DostepnePolecenia, NowyKod, NieMoznaZmienic, NieMoznaPokazac, NieznanePolecenie, BladRozlaczono, Opcje, DodatekDoPrzegladarki, BrakPodlaczonychUrzadzen, DodatekDoPrzegladarkiTak, DodatekDoPrzegladarkiNie, WylaczSerwer, PowiekszQR, AktualizujTeraz, AktualizacjaAutomatyzna, WpiszPomoc
+        DostepnePolecenia, NowyKod, NieMoznaZmienic, NieMoznaPokazac, NieznanePolecenie, BladRozlaczono, Opcje, DodatekDoPrzegladarki, BrakPodlaczonychUrzadzen, DodatekDoPrzegladarkiTak, DodatekDoPrzegladarkiNie, WylaczSerwer, PowiekszQR, AktualizujTeraz, AktualizacjaAutomatyzna, WpiszPomoc,
+        TworzenieSieciWiFi, Haslo, Start, Stop
     }
 
     ;
@@ -96,6 +97,12 @@ public class Jezyk {
                 napisy[n.AktualizujTeraz.ordinal()] = "Aktualizuj teraz";
                 napisy[n.AktualizacjaAutomatyzna.ordinal()] = "Aktualizacja automatyzna";
 
+                napisy[n.TworzenieSieciWiFi.ordinal()] = "Tworzenie sieci WiFi";
+                napisy[n.Nazwa.ordinal()] = "Nazwa";
+                napisy[n.Haslo.ordinal()] = "Hasło";
+                napisy[n.Start.ordinal()] = "Start";
+                napisy[n.Stop.ordinal()] = "Stop";
+
                 break;
             case Angielski:
                 napisy[n.PilotPCWersja.ordinal()] = "PilotPC version ";
@@ -146,6 +153,11 @@ public class Jezyk {
                 napisy[n.PowiekszQR.ordinal()] = "Zoom QRCode";
                 napisy[n.AktualizujTeraz.ordinal()] = "Update now";
                 napisy[n.AktualizacjaAutomatyzna.ordinal()] = "Autoupdate";
+                napisy[n.TworzenieSieciWiFi.ordinal()] = "Create a WiFi network";
+                napisy[n.Nazwa.ordinal()] = "Name";
+                napisy[n.Haslo.ordinal()] = "Password";
+                napisy[n.Start.ordinal()] = "Start";
+                napisy[n.Stop.ordinal()] = "Stop";
                 break;
 
             case Rosyjski:
@@ -197,6 +209,11 @@ public class Jezyk {
                 napisy[n.PowiekszQR.ordinal()] = "Powiększ QRCode";
                 napisy[n.AktualizujTeraz.ordinal()] = "Aktualizuj teraz";
                 napisy[n.AktualizacjaAutomatyzna.ordinal()] = "Akrualizacja automatyzna";
+                napisy[n.TworzenieSieciWiFi.ordinal()] = "Tworzenie sieci WiFi";
+                napisy[n.Nazwa.ordinal()] = "Nazwa";
+                napisy[n.Haslo.ordinal()] = "Hasło";
+                napisy[n.Start.ordinal()] = "Start";
+                napisy[n.Stop.ordinal()] = "Stop";
                 break;
         }
     }

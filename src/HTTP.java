@@ -261,6 +261,7 @@ public class HTTP {
                         "</style>"
                         + "<script>/*<![CDATA[*/\n" +
                         "var wstecz=0;\n" +
+                        "var aktywny=true;" +
                         "var hash=setInterval(function(){\n" +
                         "if(wstecz>0&&window.scrollY==0&&location.hash!='') \n" +
                         "{" +
@@ -439,7 +440,7 @@ public class HTTP {
                         + "function send(data){"
                         //+"document.getElementById('aaa').innerHTML=data.mouse;"
 
-                        + "var socket=new XMLHttpRequest();"
+                        + "if(aktywny){var socket=new XMLHttpRequest();"
                         + "var czas=new Date();"
                         + "data.czas=czas.getTime();"
                         //+ "alert(data);"
@@ -450,12 +451,32 @@ public class HTTP {
                         "jakosc[jakosc.length]=(new Date()).getTime()-data.czas;\n"
                         + "polaczono=true;" +
                         "document.getElementById('stanPol').textContent='" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Polaczono.ordinal()] + "';" +
-                        "document.getElementById('jakosc').textContent=Math.ceil(jakoscLicz());"
-                        + "}};\n"
+                        "var jakli=Math.ceil(jakoscLicz());" +
+                        "if(jakli<15)" +
+                        "document.getElementById('jakosc').textContent='idealna';"
+                        + "else if(jakli<33)" +
+                        "document.getElementById('jakosc').textContent='Bardzo dobra';"
+                        + "else if(jakli<66)" +
+                        "document.getElementById('jakosc').textContent='dobra';"
+                        + "else if(jakli<200)" +
+                        "document.getElementById('jakosc').textContent='średnia';"
+                        + "else if(jakli<500)" +
+                        "document.getElementById('jakosc').textContent='słaba';"
+                        + "else " +
+                        "document.getElementById('jakosc').textContent='bardzo słaba';" +
+                        "document.getElementById('jakosc').attributes.getNamedItem('title').value=jakli+'ms';"
+                        + "}" +
+                        "else " +
+                        "{" +
+                        "aktywny=false;" +
+                        "alert(socket.responseText);" +
+                        "\n" +
+                        "}" +
+                        "};\n"
                         + "socket.open('get', '?'+JSON.stringify(data), true)\n"
                         + "czasWysylu=new Date();" +
                         "socket.send();\n"
-                        + "}"
+                        + "}}\n"
                         + "function TCP_Data(){this.touchpadX=0;this.touchpadY=0;this.button=0;this.type=0;this.mouse=0;};"
                         + "TCP_Data.touchedTYPE={NORMAL:0, LONG:1, UP:2, SCROLL:3, LPM:4, PPM:5};"
                         + "TCP_Data.typ={GAMEPAD:0, PILOT:1, KEYBOARD:2, TOUCHPAD:3};"
@@ -803,7 +824,8 @@ public class HTTP {
                         "<div class=\"podmenu\">" +
                         Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Polaczenie.ordinal()] + "<br/>" +
                         Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Stan.ordinal()] + ":<span id=\"stanPol\">" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Polaczono.ordinal()] + "</span><br/>" +
-                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Jakosc.ordinal()] + ":<span id=\"jakosc\">" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.BrakDanych.ordinal()] + "</span><br/>" +
+                        Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Jakosc.ordinal()] + ":<span id=\"jakosc\" title=\"" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.BrakDanych.ordinal()] + "\">" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.BrakDanych.ordinal()] + "</span><br/>" +
+
                         Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Host.ordinal()] + ": " + java.net.InetAddress.getLocalHost().getHostName() + "<br/>" +
                         Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Coder.ordinal()] + "<br />" +
                         "-FranQy<br />" +

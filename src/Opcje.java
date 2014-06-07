@@ -19,7 +19,14 @@ public class Opcje {
     private JLabel AktualizacjaStatus;
     private JCheckBox AktualizujAutomatycznie;
     private JButton AktualizujTeraz;
-    private JButton button1;
+    private JPanel APOpcje;
+    private JTextField APNazwa;
+    private JTextField APHaslo;
+    private JButton APWlacz;
+    private JButton APWylacz;
+    private JLabel APTytul;
+    private JLabel APNazwaLabel;
+    private JLabel APHasloLabel;
     static Opcje okno;
 
     public static Opcje pokarz() {
@@ -33,6 +40,30 @@ public class Opcje {
 
         frame = new JFrame("Opcje");
         frame.setTitle(Jezyk.napisy[Jezyk.n.Infromacje.ordinal()]);
+        if (!AccessPoint.dostepny()) {
+            APOpcje.setVisible(false);
+        } else {
+            APWlacz.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        AccessPoint.start(APNazwa.getText(), APHaslo.getText());
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            });
+            APWylacz.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        AccessPoint.stop();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            });
+        }
         if (Program.imgObrazek == null) {
             try {
                 Program.imgObrazek = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
@@ -111,7 +142,7 @@ public class Opcje {
         });
         ustawJezyk();
         // System.out.println("4");
-        frame.setSize(400, 250);
+        frame.setSize(510, 370);
         if (wyswietl) {
             frame.setVisible(true);
 
@@ -138,6 +169,12 @@ public class Opcje {
             AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.ProgramAktualny.ordinal()]);
         else
             AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.MoznaZaktualizowac.ordinal()] + " " + Aktualizacja.najnowsza);
+        APNazwaLabel.setText(Jezyk.napisy[Jezyk.n.Nazwa.ordinal()]);
+        APHasloLabel.setText(Jezyk.napisy[Jezyk.n.Haslo.ordinal()]);
+        APWlacz.setText(Jezyk.napisy[Jezyk.n.Start.ordinal()]);
+        APWylacz.setText(Jezyk.napisy[Jezyk.n.Stop.ordinal()]);
+        APTytul.setText(Jezyk.napisy[Jezyk.n.TworzenieSieciWiFi.ordinal()]);
+
     }
 
 }

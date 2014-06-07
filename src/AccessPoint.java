@@ -10,4 +10,24 @@ public class AccessPoint {
             Runtime.getRuntime().exec("netsh wlan start hostednetwork");
         }
     }
+
+    public static void stop() throws IOException {
+        if (System.getProperty("os.name").toUpperCase().contains("WIN")) {
+            Runtime.getRuntime().exec("netsh wlan stop hostednetwork");
+        }
+    }
+
+    /**
+     * Informuje, czy na obecnym systemie można odpalić AP
+     *
+     * @return
+     */
+    public static boolean dostepny() {
+        if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")) {
+            if (System.getProperty("os.name").length() > 8 && System.getProperty("os.name").charAt(8) >= '0' && System.getProperty("os.name").charAt(8) <= '9') {
+                return true;
+            }
+        }
+        return false;
+    }
 }
