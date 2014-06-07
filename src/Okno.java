@@ -345,20 +345,21 @@ public class Okno {
         PasekTytulowy.addMouseListener(PrzesuńListener);
         NazwaPilotPC.addMouseListener(PrzesuńListener);
         //System.out.println("2");
-        (new Start()).start();
+        //timer1.
         //System.out.println("3");
 
         //QRPanel.add(new JPanel(),0);
         qr = new PanelQRCode(QRPanel);
         QRPanel.add(qr);
-        java.util.Timer timer1 = new java.util.Timer();
+        timer1 = new java.util.Timer();
         Odswierz timer1_task = new Odswierz();
         timer1_task.okno = this;
-        timer1.schedule(timer1_task, 100, 100);
+        timer1.schedule(timer1_task, 0, 100);
         //System.out.println("5");
         frame.setVisible(wyswietl);
     }
 
+    java.util.Timer timer1;
     MouseListener PrzesuńListener = new MouseListener() {
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -397,7 +398,7 @@ public class Okno {
     JFrame okienkoQR;
 
     public void ustawJezyk() {
-        (new Start()).start();
+        //(new Start()).start();
         zmieńKodButton.setText(Jezyk.napisy[Jezyk.n.ZmienKod.ordinal()]);
         informacjeButton.setText(Jezyk.napisy[Jezyk.n.Infromacje.ordinal()]);
         kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ":");
@@ -430,7 +431,8 @@ public class Okno {
             else if (Aktualizacja.trwa)
                 statusTxt += " Trwa aktualizacja do nowej wersji..."; */
             // status.setText(statusTxt);
-            int ileTel = 0;
+            if (frame.isVisible()) {
+                int ileTel = 0;
             for (byte i = 0; i < Polaczenie.watki.length; i++) {
                 if (Polaczenie.watki[i] != null)
                     if (Polaczenie.watki[i].czyPolaczono()) {
@@ -489,6 +491,39 @@ for(int i=0;i<telefony.countComponents();i++)
                 zawartosc.paintAll(zawartosc.getGraphics());
             }
             potrzebneOdswierzenie = false;
+
+
+                //z klasy start
+                //String tekstIP = Jezyk.napisy[Jezyk.n.TwojeIPTo.ordinal()] + ":<br/>";
+                String tekstIP = "";
+                Enumeration<NetworkInterface> n;
+                try {
+                    n = NetworkInterface.getNetworkInterfaces();
+
+                    //System.out.println("2a");
+                    for (; n.hasMoreElements(); ) {
+                        NetworkInterface e = n.nextElement();
+                        // System.out.println("Interface: " + e.getName());
+                        Enumeration<InetAddress> a = e.getInetAddresses();
+                        for (; a.hasMoreElements(); ) {
+                            InetAddress addr = a.nextElement();
+                            if (!addr.isLoopbackAddress() && addr.getAddress().length == 4)
+                                tekstIP += addr.getHostAddress() + "<br/>";
+                        }
+                    }
+                    // System.out.println("2b");
+                } catch (SocketException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+                info.setText("<html>" + Jezyk.napisy[Jezyk.n.TwojeIPTo.ordinal()] + "</html>");
+                IP2.setText("<html>" + tekstIP + "</html>");
+
+                if (licznik++ % 10 == 0) {
+                    //frame.repaint();
+                    frame.repaint(500);
+                }
+            }
         }
     }
 
@@ -532,34 +567,4 @@ for(int i=0;i<telefony.countComponents();i++)
         }
     }
 
-    class Start extends Thread {
-
-        @Override
-        public void run() {
-            //String tekstIP = Jezyk.napisy[Jezyk.n.TwojeIPTo.ordinal()] + ":<br/>";
-            String tekstIP = "";
-            Enumeration<NetworkInterface> n;
-            try {
-                n = NetworkInterface.getNetworkInterfaces();
-
-                //System.out.println("2a");
-                for (; n.hasMoreElements(); ) {
-                    NetworkInterface e = n.nextElement();
-                    // System.out.println("Interface: " + e.getName());
-                    Enumeration<InetAddress> a = e.getInetAddresses();
-                    for (; a.hasMoreElements(); ) {
-                        InetAddress addr = a.nextElement();
-                        if (!addr.isLoopbackAddress() && addr.getAddress().length == 4)
-                            tekstIP += addr.getHostAddress() + "<br/>";
-                    }
-                }
-                // System.out.println("2b");
-            } catch (SocketException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-            info.setText("<html>" + Jezyk.napisy[Jezyk.n.TwojeIPTo.ordinal()] + "</html>");
-            IP2.setText("<html>" + tekstIP + "</html>");
-        }
-    }
 }

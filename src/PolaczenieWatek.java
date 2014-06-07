@@ -25,7 +25,7 @@ public class PolaczenieWatek
     }
 
     public boolean pokazane = false;
-    public Connect infoPrzyPolaczeniu;
+    public Connect infoPrzyPolaczeniu = null;
 
     public void rozlacz() {
         try {
@@ -515,7 +515,7 @@ public class PolaczenieWatek
     }
 
     public boolean czyPolaczono() {
-        return is != null;
+        return infoPrzyPolaczeniu != null;
 
     }
 
