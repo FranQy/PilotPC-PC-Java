@@ -466,10 +466,10 @@ public class Okno {
                     PodlaczoneUrzadzeniaWyswietlane = true;
                     PodlaczoneUrzadzenia.setText(Jezyk.napisy[Jezyk.n.PodlaczoneUrzadzenia.ordinal()]);
                 }
-                if (dodatek && !DodatekDoPrzegWyswietlane) {
+                if ((licznik % 600 == 0 && dodatek) || (dodatek && !DodatekDoPrzegWyswietlane)) {
                     DodatekDoPrzegWyswietlane = true;
                     DodatekDoPrzeg.setText(Jezyk.napisy[Jezyk.n.DodatekDoPrzegladarkiTak.ordinal()]);
-                } else if (!dodatek && DodatekDoPrzegWyswietlane) {
+                } else if ((licznik % 600 == 0 && !dodatek) || (!dodatek && DodatekDoPrzegWyswietlane)) {
                     DodatekDoPrzegWyswietlane = false;
                     DodatekDoPrzeg.setText(Jezyk.napisy[Jezyk.n.DodatekDoPrzegladarkiNie.ordinal()]);
                 }
