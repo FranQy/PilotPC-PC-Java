@@ -87,11 +87,18 @@ public class Aktualizacja
                                         Program.glowneOkno = new Okno(false);  //otwiera okno, bo potem będzie problem, ale go nie pokazuje
                                     strumien = new FileOutputStream(linie[i2].split("=")[1]);
                                     // strumien=new FileOutputStream(linie[i2].split("=")[1]+".new");
-                                } else
+                                } else if ((new File(linie[i2].split("=")[1] + ".new")).exists()) {
                                     strumien = new FileOutputStream(linie[i2].split("=")[1] + ".new");
 
-                                if (linie[i2].split("=")[1].equals("Linux.sh"))
-                                    (new File(linie[i2].split("=")[1] + ".new")).setExecutable(true);
+                                    if (linie[i2].split("=")[1].equals("Linux.sh"))
+                                        (new File(linie[i2].split("=")[1] + ".new")).setExecutable(true);
+                                } else {
+                                    strumien = new FileOutputStream(linie[i2].split("=")[1]);
+
+                                    if (linie[i2].split("=")[1].equals("Linux.sh"))
+                                        (new File(linie[i2].split("=")[1])).setExecutable(true);
+                                }
+
                                 //while(is.available()>0)
                                 // for(int i3=0;i3<1000000;i3++)
                                 while (true) {
@@ -117,7 +124,7 @@ public class Aktualizacja
                         }
                     }
                     for (int i2 = 0; i2 < linie.length; i2++) {
-                        if (linie[i2].split("=")[0].compareTo("plik") == 0 && (linie[i2].split("=")[1].equals("Windows.exe") || linie[i2].split("=")[1].equals("Linux.sh"))) {
+                        if ((new File(linie[i2].split("=")[1] + ".new")).exists() && linie[i2].split("=")[0].compareTo("plik") == 0 && (linie[i2].split("=")[1].equals("Windows.exe") || linie[i2].split("=")[1].equals("Linux.sh"))) {
                             (new File(linie[i2].split("=")[1])).renameTo(new File(linie[i2].split("=")[1] + ".old"));
                             (new File(linie[i2].split("=")[1] + ".new")).renameTo(new File(linie[i2].split("=")[1]));
                         }

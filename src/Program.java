@@ -18,7 +18,7 @@ public class Program {
     static BufferedImage imgObrazek = null;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
-    static public String wersja = "0.4.1";
+    static public String wersja = "0.4.3";
     static public Robot robot;
     static boolean debug = true;
     static public TrayIcon trayIcon;
@@ -81,7 +81,6 @@ public class Program {
             ustawienia.jezyk = Jezyk.jezyki.Polski;
             ustawienia.eksportuj();
         }
-        // TODO Auto-generated method stub
         robot = new Robot();
         wyswietlanie = TypWyswietlania.Konsola;
         boolean pomoc = false;
@@ -138,9 +137,9 @@ public class Program {
                     DatagramPacket pakiet = new DatagramPacket(host.getBytes(), host.length(), InetAddress.getByName("255.255.255.255"), 8753);
                     socket.connect(InetAddress.getByName("255.255.255.255"), 8753);
                     socket.send(pakiet);
-                    Thread.sleep(1000);
                     socket.close();
                 }
+                Thread.sleep(1000);
             }
         } catch (IOException e) {
             e.printStackTrace();
