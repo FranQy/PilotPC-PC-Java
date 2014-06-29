@@ -9,10 +9,18 @@ public class Konsola extends Thread {
     public void run() {
         Scanner wej = new Scanner(System.in);
         while (true) {
-            try {
-                polecenie((" " + wej.nextLine()).split(" "), true);
+            for (int i = 0; i < 10; i++) {
+                try {
+                    polecenie((" " + wej.nextLine()).split(" "), true);
             } catch (NoSuchElementException e) {
+                }
             }
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
 
         /*try {

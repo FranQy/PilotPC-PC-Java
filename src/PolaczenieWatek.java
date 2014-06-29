@@ -1,6 +1,6 @@
-import com.example.socketclient.Connect;
-import com.example.socketclient.Ping;
-import com.example.socketclient.TCP_Data;
+import com.jaebe.PilotPC.Connect;
+import com.jaebe.PilotPC.Ping;
+import com.jaebe.PilotPC.TCP_Data;
 
 import java.awt.event.KeyEvent;
 import java.io.*;

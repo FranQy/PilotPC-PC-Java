@@ -1,4 +1,4 @@
-package com.example.socketclient;
+package com.jaebe.PilotPC;
 
 import java.io.Serializable;
 

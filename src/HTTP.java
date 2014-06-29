@@ -1,7 +1,7 @@
-import com.example.socketclient.TCP_Data;
-import com.example.socketclient.TCP_Data.pilotButton;
-import com.example.socketclient.TCP_Data.touchedTYPE;
-import com.example.socketclient.TCP_Data.typ;
+import com.jaebe.PilotPC.TCP_Data;
+import com.jaebe.PilotPC.TCP_Data.pilotButton;
+import com.jaebe.PilotPC.TCP_Data.touchedTYPE;
+import com.jaebe.PilotPC.TCP_Data.typ;
 import org.json.JSONObject;
 
 import javax.xml.bind.DatatypeConverter;
