@@ -52,7 +52,7 @@ public class Konsola extends Thread {
                     return false;
                 } else
                     System.out.println(Jezyk.napisy[Jezyk.n.NieMoznaZmienic.ordinal()] + " " + args[2].toLowerCase(Locale.getDefault()));
-            } else if (args[1].equalsIgnoreCase("show") || args[1].equalsIgnoreCase("pokarz")) {
+            } else if (args[1].equalsIgnoreCase("show") || args[1].equalsIgnoreCase("pokaz") || args[1].equalsIgnoreCase("pokaż")) {
                 if (args.length == 2)
                     System.out.println(Jezyk.napisy[Jezyk.n.DostepnePolecenia.ordinal()]);
                 else if (args[2].equalsIgnoreCase("kod") || args[2].equalsIgnoreCase("code")) {
