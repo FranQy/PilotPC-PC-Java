@@ -33,7 +33,6 @@ public class TCP_Data implements Serializable {
     public int key;//kalwiatura
     public String ytUrl; // link do filmiku na yt
 
-    private static final long serialVersionUID = 11L;
 
     public void clean() {
         touchpadX = 0;
