@@ -7,11 +7,11 @@
 using namespace std;
 #pragma comment (lib,"Advapi32.lib")
 #pragma comment (lib,"Shell32.lib")
-enum  pilotButton{
-	OFF, MUSIC, MULTIMEDIA, PLAYPAUSE, PERV, NEXT, STOP, EXIT, BACK, VOLDOWN, VOLUP, MUTE,
+enum  pilotButton {
+	OFF, MUSIC, PLAYPAUSE, PERV, NEXT, STOP, EXIT, BACK, VOLDOWN, VOLUP, MUTE,
 	UP, DOWN, RIGHT, LEFT, RETTURN,
 	REWIND,//Przewijanie do ty³u
-	FORWARD//przewijanie do przodu
+	FORWARD, PHOTO, VIDEO
 };
 JNIEXPORT void JNICALL Java_Biblioteka_click(JNIEnv *env, jclass jobj, jint a) {
 	pilotButton przycisk = (pilotButton)a;
@@ -45,7 +45,7 @@ JNIEXPORT void JNICALL Java_Biblioteka_click(JNIEnv *env, jclass jobj, jint a) {
 		keybd_event(VK_MEDIA_STOP, 0, 1, 0);
 		keybd_event(VK_MEDIA_STOP, 0, 2, 0);
 		break;
-	case MULTIMEDIA:
+	case MUSIC:
 		keybd_event(VK_LAUNCH_MEDIA_SELECT, 0, 1, 0);
 		keybd_event(VK_LAUNCH_MEDIA_SELECT, 0, 2, 0);
 		break;

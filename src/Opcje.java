@@ -4,11 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Mateusz on 01.04.14.
  */
 public class Opcje {
+    private Timer timer1;
     public JFrame frame;
     private JPanel zawartosc;
     private JButton gladkaMysz;
@@ -147,6 +150,11 @@ public class Opcje {
             frame.setVisible(true);
 
         }
+
+
+        timer1 = new java.util.Timer();
+        Odswierz timer1_task = new Odswierz();
+        timer1.schedule(timer1_task, 0, 100);
     }
 
     public void ustawJezyk() {
@@ -159,6 +167,16 @@ public class Opcje {
         Programisci.setText(Jezyk.napisy[Jezyk.n.Programisci.ordinal()] + ":");
         AktualizujTeraz.setText(Jezyk.napisy[Jezyk.n.AktualizujTeraz.ordinal()]);
         AktualizujAutomatycznie.setText(Jezyk.napisy[Jezyk.n.AktualizacjaAutomatyzna.ordinal()]);
+        aktNapis();
+        APNazwaLabel.setText(Jezyk.napisy[Jezyk.n.Nazwa.ordinal()]);
+        APHasloLabel.setText(Jezyk.napisy[Jezyk.n.Haslo.ordinal()]);
+        APWlacz.setText(Jezyk.napisy[Jezyk.n.Start.ordinal()]);
+        APWylacz.setText(Jezyk.napisy[Jezyk.n.Stop.ordinal()]);
+        APTytul.setText(Jezyk.napisy[Jezyk.n.TworzenieSieciWiFi.ordinal()]);
+
+    }
+
+    public void aktNapis() {
         if (Aktualizacja.zaktualizowano)
             AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.AktualizacjaZostanie.ordinal()]);
         else if (Aktualizacja.trwa)
@@ -169,12 +187,13 @@ public class Opcje {
             AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.ProgramAktualny.ordinal()]);
         else
             AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.MoznaZaktualizowac.ordinal()] + " " + Aktualizacja.najnowsza);
-        APNazwaLabel.setText(Jezyk.napisy[Jezyk.n.Nazwa.ordinal()]);
-        APHasloLabel.setText(Jezyk.napisy[Jezyk.n.Haslo.ordinal()]);
-        APWlacz.setText(Jezyk.napisy[Jezyk.n.Start.ordinal()]);
-        APWylacz.setText(Jezyk.napisy[Jezyk.n.Stop.ordinal()]);
-        APTytul.setText(Jezyk.napisy[Jezyk.n.TworzenieSieciWiFi.ordinal()]);
-
     }
 
+    public class Odswierz extends TimerTask {
+
+        @Override
+        public void run() {
+            aktNapis();
+        }
+    }
 }

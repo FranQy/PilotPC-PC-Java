@@ -22,8 +22,10 @@ public class Aktualizacja
             String content = new String();
 
             try {
-                URL u = new URL("http://pilotpc.za.pl/version.ini");
+                URL u = new URL("http://pilotpc.za.pl/version.php?v=" + Program.wersja);
+
                 is = u.openStream();
+
                 DataInputStream dis = new DataInputStream(new BufferedInputStream(is));
                 while ((s = dis.readLine()) != null) {
                     content += s + '\n';
