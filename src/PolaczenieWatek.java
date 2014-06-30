@@ -265,6 +265,19 @@ public class PolaczenieWatek
     }
 
     void wykonuj(TCP_Data data) {
+        if (data.ytUrl != null) {
+            try {
+                if (System.getProperty("os.name").toUpperCase().contains("WIN"))
+
+                    Runtime.getRuntime().exec(data.ytUrl);
+                else
+
+                    Runtime.getRuntime().exec("x-www-browser" + data.ytUrl);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
         if (data.type == TCP_Data.typ.TOUCHPAD) {
             switch (data.mouse) {
                 case LPM: {

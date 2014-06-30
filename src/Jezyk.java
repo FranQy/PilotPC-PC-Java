@@ -89,8 +89,8 @@ public class Jezyk {
                 napisy[n.BladRozlaczono.ordinal()] = "Błąd, rozłączono";
 
                 napisy[n.Opcje.ordinal()] = "Opcje";
-                napisy[n.DodatekDoPrzegladarkiTak.ordinal()] = "Dodatek do przeglądraki: tak";
-                napisy[n.DodatekDoPrzegladarkiNie.ordinal()] = "Dodatek do przeglądraki: nie";
+                napisy[n.DodatekDoPrzegladarkiTak.ordinal()] = "Dodatek do przeglądarki: tak";
+                napisy[n.DodatekDoPrzegladarkiNie.ordinal()] = "Dodatek do przeglądarki: nie";
                 napisy[n.BrakPodlaczonychUrzadzen.ordinal()] = "Brak podłączonych urządzeń";
                 napisy[n.WylaczSerwer.ordinal()] = "Wyłącz serwer";
                 napisy[n.PowiekszQR.ordinal()] = "Powiększ QRCode";
