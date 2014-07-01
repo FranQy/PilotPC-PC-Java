@@ -272,7 +272,7 @@ public class PolaczenieWatek
                     Runtime.getRuntime().exec(data.ytUrl);
                 else
 
-                    Runtime.getRuntime().exec("x-www-browser" + data.ytUrl);
+                    Runtime.getRuntime().exec("x-www-browser " + data.ytUrl);
             } catch (IOException e) {
                 e.printStackTrace();
             }
