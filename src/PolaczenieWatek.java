@@ -101,9 +101,13 @@ public class PolaczenieWatek
                                 if (odpowiedz.status == Connect.Status.zlyKod) {
                                     if (Program.debug)
                                         System.out.println();
+                                    Thread.sleep(100);
                                     oos.close();
+                                    Thread.sleep(100);
                                     in.close();
+                                    Thread.sleep(100);
                                     soc.close();
+                                    Thread.sleep(100);
                                 }
                                 // dataObject =  in.readObject();
                             System.out.println(Jezyk.napisy[Jezyk.n.Polaczono.ordinal()] + " " + toString());
