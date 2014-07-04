@@ -8,10 +8,10 @@
 #include <X11/XF86keysym.h>
 
 enum  pilotButton{
-	OFF, MUSIC, MULTIMEDIA, PLAYPAUSE, PERV, NEXT, STOP, EXIT, BACK, VOLDOWN, VOLUP, MUTE,
+	OFF, MUSIC, PLAYPAUSE, PERV, NEXT, STOP, EXIT, BACK, VOLDOWN, VOLUP, MUTE,
 	UP, DOWN, RIGHT, LEFT, RETTURN,
 	REWIND,//Przewijanie do tyłu
-	FORWARD//przewijanie do przodu
+	FORWARD, PHOTO, VIDEO
 };
 
 Display *display;
@@ -45,7 +45,7 @@ switch (przycisk)
 	case STOP:
 		keycode = XKeysymToKeycode(display, XF86XK_AudioStop);
 		break;
-	case MULTIMEDIA:
+	case MUSIC:
 		keycode = XKeysymToKeycode(display, XF86XK_Music);
 		break;
 
@@ -61,3 +61,5 @@ JNIEXPORT void JNICALL Java_Biblioteka_autostart
 (JNIEnv *env, jclass jobj, jboolean, jboolean, jstring f) {
 		
 		}
+JNIEXPORT void JNICALL Java_Biblioteka_runAsRoot
+		(JNIEnv *env, jclass, jobj jstring str1, jstring str2){}
