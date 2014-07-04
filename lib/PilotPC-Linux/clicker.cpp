@@ -62,4 +62,4 @@ JNIEXPORT void JNICALL Java_Biblioteka_autostart
 		
 		}
 JNIEXPORT void JNICALL Java_Biblioteka_runAsRoot
-		(JNIEnv *env, jclass, jobj jstring str1, jstring str2){}
+		(JNIEnv *env, jclass jobj, jstring str1, jstring str2){}
