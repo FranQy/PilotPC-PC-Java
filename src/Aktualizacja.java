@@ -54,9 +54,9 @@ public class Aktualizacja
                 File old = new File(linie[i2].split("=")[1] + ".old");
                 if (old.isFile())
                     old.delete();
-                File New = new File(linie[i2].split("=")[1] + ".new");
+                /*File New = new File(linie[i2].split("=")[1] + ".new");
                 if (New.isFile())
-                    New.delete();
+                    New.delete(); */
             }
         }
         for (int i = 0; i < linie.length; i++)
@@ -89,16 +89,21 @@ public class Aktualizacja
                                         Program.glowneOkno = new Okno(false);  //otwiera okno, bo potem będzie problem, ale go nie pokazuje
                                     strumien = new FileOutputStream(linie[i2].split("=")[1]);
                                     // strumien=new FileOutputStream(linie[i2].split("=")[1]+".new");
-                                } else if ((new File(linie[i2].split("=")[1] + ".new")).exists()) {
-                                    strumien = new FileOutputStream(linie[i2].split("=")[1] + ".new");
-
-                                    if (linie[i2].split("=")[1].equals("Linux.sh"))
-                                        (new File(linie[i2].split("=")[1] + ".new")).setExecutable(true);
-                                } else {
+                                } else if (!(new File(linie[i2].split("=")[1])).exists()) {
                                     strumien = new FileOutputStream(linie[i2].split("=")[1]);
 
                                     if (linie[i2].split("=")[1].equals("Linux.sh"))
                                         (new File(linie[i2].split("=")[1])).setExecutable(true);
+                                } else if ((new File(linie[i2].split("=")[1] + ".new")).exists()) {
+                                    strumien = new FileOutputStream(linie[i2].split("=")[1]);
+
+                                    if (linie[i2].split("=")[1].equals("Linux.sh"))
+                                        (new File(linie[i2].split("=")[1])).setExecutable(true);
+                                } else {
+                                    strumien = new FileOutputStream(linie[i2].split("=")[1] + ".new");
+
+                                    if (linie[i2].split("=")[1].equals("Linux.sh"))
+                                        (new File(linie[i2].split("=")[1] + ".new")).setExecutable(true);
                                 }
 
                                 //while(is.available()>0)
