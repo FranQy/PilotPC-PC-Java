@@ -20,14 +20,13 @@ public class HTTP {
 
     public static TCP_Data polaczenie(InputStream is, Socket soc, String wyj) throws IOException {
 
-        try {
+        try { //zapobieganie atakom BruceForce
             while (System.currentTimeMillis() < Polaczenie.czasBlokadyHasla)
                 Thread.sleep(System.currentTimeMillis() - Polaczenie.czasBlokadyHasla);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        //System.out.print(wyj);
-        Jezyk.jezyki lang = Program.ustawienia.jezyk;
+        Jezyk.jezyki lang = Program.ustawienia.jezyk; //ustawienie języka
         int AcceptLanguage = wyj.indexOf("Accept-Language");
         int[] jezykiHttp = {wyj.indexOf("pl", AcceptLanguage), wyj.indexOf("en", AcceptLanguage), wyj.indexOf("ru", AcceptLanguage)};
         int jezykHttp = max(jezykiHttp);
@@ -42,7 +41,7 @@ public class HTTP {
             TCP_Data ret = new TCP_Data();
             if (Polaczenie.polaczeniaHttp[i].zablokowane)
                 wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.ZostalesRozlaczony.ordinal()];
-            else if (wyj.indexOf("/" + Program.ustawienia.haslo) == 0) {
+            else if (wyj.indexOf("/" + Program.ustawienia.haslo) == 0) {//jeśli hasło poprawne
                 wysylanie = "HTTP/1.1 200 OK\r\nSet-Cookie: id=" + i + "; path=/\r\n\r\nok";
                 String klasaString = wyj.substring(wyj.indexOf("?") + 1, wyj.indexOf(" HTTP"));
                 klasaString = klasaString.replaceAll("%22", "\"");
@@ -114,7 +113,7 @@ public class HTTP {
             } else if (wyj.indexOf("/" + Program.ustawienia.haslo + "/pulpit/") == 0) {
                 wysylanie = Pulpit.HTTP(wyj, i, os);
             } else if (wyj.indexOf("/" + Program.ustawienia.haslo) == 0) {
-                String gamepadBase64;
+                String gamepadBase64;   //ładuje obrazki i zamienia na Base64
                 try {
                     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
                     InputStream input = classLoader.getResourceAsStream(

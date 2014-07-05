@@ -4,6 +4,13 @@ import java.io.IOException;
  * Umożliwia wykorzystanie karty sieciowej komputera jako AP po wifi, na razie tylko dla windows 7 i nowszych
  */
 public class AccessPoint {
+    /**
+     * Uruchamia Access Point
+     *
+     * @param nazwa nazwa sieci
+     * @param klucz hasło do sieci
+     * @throws IOException
+     */
     public static void start(String nazwa, String klucz) throws IOException {
         if (System.getProperty("os.name").toUpperCase().contains("WIN")) {
             Biblioteka.runAsRoot("netsh", "wlan set hostednetwork mode=allow \"ssid=" + nazwa + "\" \"key=" + klucz + "\" keyUsage=temporary");
@@ -11,6 +18,11 @@ public class AccessPoint {
         }
     }
 
+    /**
+     * Zatrzymuje Access Point
+     *
+     * @throws IOException
+     */
     public static void stop() throws IOException {
         if (System.getProperty("os.name").toUpperCase().contains("WIN")) {
             Biblioteka.runAsRoot("netsh", "wlan stop hostednetwork");

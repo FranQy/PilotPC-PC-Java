@@ -5,6 +5,9 @@ import java.util.Date;
  */
 public class HttpPolaczenie implements PolaczenieInfo {
     public boolean zablokowane = false;
+    /**
+     * Kod wysłany przez przeglądarkę zawiera informacje m.in. o przeglądarce i systemie operacyjnym, a w przypadku telefonu równierz o modelu
+     */
     public UserAgent UserAgent;
     public Okno.Urzadzenie UI = null;
 
@@ -12,6 +15,9 @@ public class HttpPolaczenie implements PolaczenieInfo {
         return UI;
     }
 
+    /**
+     * Czy urządzenie jest w tej chwili wyświetlone w oknie serwera
+     */
     public boolean pokazane = false;
     public Date czas = new Date();
 

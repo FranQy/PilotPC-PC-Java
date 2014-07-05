@@ -3,7 +3,7 @@ import java.net.URL;
 import java.util.TimerTask;
 
 /**
- * Odpowiada za autoaktualizację programu
+ * Odpowiada za autoaktualizację programu oraz ściąganie plików bibliotek (.dll oraz .so) jeśli ich brakuje
  *
  * @author Mateusz
  */
@@ -19,20 +19,22 @@ public class Aktualizacja
         if ((!zaktualizowano && Program.ustawienia.aktualizujAutomatycznie) || wymus) {
             InputStream is = null;
             String s;
-            String content = new String();
+            String content = "";
 
             try {
+                //pobiera z serwera informacje o najnowszej wersji i plikach do ściągnięcia
                 URL u = new URL("http://pilotpc.za.pl/version.php?v=" + Program.wersja);
 
                 is = u.openStream();
 
-                DataInputStream dis = new DataInputStream(new BufferedInputStream(is));
+                BufferedReader dis = new BufferedReader(new InputStreamReader(new BufferedInputStream(is)));
                 while ((s = dis.readLine()) != null) {
                     content += s + '\n';
 
                 }
                 aktualizuj(content);
                 trwa = false;
+                //próbuje załadować biblioteki
                 Biblioteka.load();
             } catch (IOException ioe) {
                 if (Program.debug)
@@ -106,8 +108,6 @@ public class Aktualizacja
                                         (new File(linie[i2].split("=")[1] + ".new")).setExecutable(true);
                                 }
 
-                                //while(is.available()>0)
-                                // for(int i3=0;i3<1000000;i3++)
                                 while (true) {
                                     int bajt = is.read();
                                     if (bajt == -1)

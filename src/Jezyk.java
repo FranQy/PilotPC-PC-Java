@@ -1,5 +1,5 @@
 /**
- * Created by Mateusz on 11.01.14.
+ * Klasa odpowiedzialna za tłumaczenia na różne języki
  */
 //Jezyk.napisy[Jezyk.n.PilotPCWersja.ordinal()]
 public class Jezyk {
@@ -45,6 +45,11 @@ public class Jezyk {
             {"Вы отсоединили", "Неверный код", "бекспейс", "информации", "ПОДКЛЮЧЕНИЕ", "состояние", "Качество", "Хост", "ПРОГРАММИСТУ", "ДИЗАЙНЕРЫ", "Качество изображения", "низкой", "среднее", "высокое", "ультра", "Пробел", "комбинированный ", "нет данных", "отключен"}
     };
 
+    /**
+     * ładuje do tablicy napisy różne teksty w wybranym języku
+     *
+     * @param a język do załadowania
+     */
     public static void laduj(jezyki a) {
         switch (a) {
             case Polski:

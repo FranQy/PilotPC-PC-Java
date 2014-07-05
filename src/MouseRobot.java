@@ -18,20 +18,32 @@ public class MouseRobot {
     static short gladkiePos = 0;
 
     static {
-        if (Program.ustawienia.plynnaMysz)
+        if (Program.ustawienia.plynnaMysz) //rozpoczyna wątek odpowiedzialny za wygładzony ruch myszy
             (new WatekMouseRobot()).start();
     }
 
+    /**
+     * Emuluje prawy przycisk myszy
+     */
     static public void PPM() {
         Program.robot.mousePress(InputEvent.BUTTON3_MASK);
         Program.robot.mouseRelease(InputEvent.BUTTON3_MASK);
     }
 
+    /**
+     * emuluje lewy przycisk myszy
+     */
     static public void LPM() {
         Program.robot.mousePress(InputEvent.BUTTON1_MASK);
         Program.robot.mouseRelease(InputEvent.BUTTON1_MASK);
     }
 
+    /**
+     * przesuwa mysz z zachowaniem wszystkich "bajerów"
+     *
+     * @param mx przesunięcie w poziomie (dodatnia w prawo, ujemna w lewo)
+     * @param my przesunięcie w pionie (dodatnia w dół, ujemna w górę)
+     */
     static public void move(int mx, int my) {
         double odleglosc = Math.sqrt(mx * mx + my * my);//liczy odległość
 
@@ -90,7 +102,7 @@ class WatekMouseRobot extends Thread {
         while (Program.ustawienia.plynnaMysz) {
             try {
 
-                Thread.sleep(6);
+                Thread.sleep(6); //wykonuje
 
                 long cz = (new Date()).getTime();
                 double dziel = (cz - ostatniCzas) / MouseRobot.sredniCzas;
