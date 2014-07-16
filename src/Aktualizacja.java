@@ -20,36 +20,44 @@ public class Aktualizacja
             InputStream is = null;
             String s;
             String content = "";
-
-            try {
+            String[] serwerUrl = {"http://jaebe.za.pl/", "http://pilotpc.za.pl/"};
+            for (int SerNr = 0; SerNr < serwerUrl.length; SerNr++) {
+                try {
                 //pobiera z serwera informacje o najnowszej wersji i plikach do ściągnięcia
-                URL u = new URL("http://pilotpc.za.pl/version.php?v=" + Program.wersja);
+                    URL u = new URL(serwerUrl[SerNr] + "version.php?v=" + Program.wersja);
 
-                is = u.openStream();
+                    is = u.openStream();
 
                 BufferedReader dis = new BufferedReader(new InputStreamReader(new BufferedInputStream(is)));
                 while ((s = dis.readLine()) != null) {
                     content += s + '\n';
 
                 }
-                aktualizuj(content);
-                trwa = false;
+                    aktualizuj(content, serwerUrl[SerNr]);
+                    trwa = false;
                 //próbuje załadować biblioteki
                 Biblioteka.load();
-            } catch (IOException ioe) {
-                if (Program.debug)
-                    ioe.printStackTrace();
+                    break;
+                } catch (IOException ioe) {
+                    try {
+                        is.close();
+                    } catch (IOException ioe2) {
+                        // just going to ignore this one
+                    }
+                    if (Program.debug)
+                        ioe.printStackTrace();
             } finally {
                 try {
                     is.close();
                 } catch (IOException ioe) {
                     // just going to ignore this one
                 }
+                }
             }
         }
     }
 
-    static void aktualizuj(String content) {
+    static void aktualizuj(String content, String UrlSerwera) {
         String[] linie = content.split("\n");
         for (int i2 = 0; i2 < linie.length; i2++) {
             if (linie[i2].split("=")[0].compareTo("plik") == 0) {//Usuwa pozostałości po ostatniej aktualizacji
@@ -74,9 +82,9 @@ public class Aktualizacja
                             try {
                                 URL u;
                                 if (linie[i2].split("=")[1].endsWith("exe"))
-                                    u = new URL("http://pilotpc.za.pl/" + linie[i2].split("=")[1] + ".bin");
+                                    u = new URL(UrlSerwera + linie[i2].split("=")[1] + ".bin");
                                 else
-                                    u = new URL("http://pilotpc.za.pl/" + linie[i2].split("=")[1]);
+                                    u = new URL(UrlSerwera + linie[i2].split("=")[1]);
                                 is = u.openStream();
                                 if (linie[i2].lastIndexOf('/') > 0)
                                     (new File(linie[i2].substring(linie[i2].indexOf('=') + 1, linie[i2].lastIndexOf('/')))).mkdirs();
