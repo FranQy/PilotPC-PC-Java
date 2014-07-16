@@ -5,7 +5,9 @@ import java.awt.*;
  * Wątek do przeciągania okna programu
  */
 class PrzesuwanieOkna extends Thread {
-
+    /**
+     * czy w tej chwili okno jest przesuwane
+     */
     boolean przesuwanie = false;
     JFrame okno;
     public boolean działa = true;

@@ -85,7 +85,7 @@ public class PolaczenieWatek
                                 infoPrzyPolaczeniu = (Connect) dataObject;
                             Connect odpowiedz = new Connect();
                                 while (System.currentTimeMillis() < Polaczenie.czasBlokadyHasla)
-                                    Thread.sleep(System.currentTimeMillis() - Polaczenie.czasBlokadyHasla);
+                                    Thread.sleep(Polaczenie.czasBlokadyHasla - System.currentTimeMillis());
                                 if (infoPrzyPolaczeniu.haslo.compareTo(Program.ustawienia.haslo) == 0)
                                     odpowiedz.status = Connect.Status.ok;
                             else {

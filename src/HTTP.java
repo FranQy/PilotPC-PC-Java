@@ -22,7 +22,7 @@ public class HTTP {
 
         try { //zapobieganie atakom BruceForce
             while (System.currentTimeMillis() < Polaczenie.czasBlokadyHasla)
-                Thread.sleep(System.currentTimeMillis() - Polaczenie.czasBlokadyHasla);
+                Thread.sleep(Polaczenie.czasBlokadyHasla - System.currentTimeMillis());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
