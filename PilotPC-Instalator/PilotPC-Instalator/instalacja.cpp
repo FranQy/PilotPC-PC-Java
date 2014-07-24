@@ -162,7 +162,7 @@ void instalacja::start(wstring fol)
 		if (!czyJava())
 		{
 			pobierz("java.bin", fol,this);
-			MoveFile(((wstring)folder + L"\\java.bin").c_str(), ((wstring)folder + L"\\javaInstalacja.exe").c_str());
+			MoveFile((fol + L"\\java.bin").c_str(), (fol + L"\\javaInstalacja.exe").c_str());
 			MessageBox(NULL, L"W systemie brak Javy. Proszê zainstalowaæ Javê", L"Informacja o Javie", MB_ICONEXCLAMATION);
 			STARTUPINFO si;
 			PROCESS_INFORMATION pi;
