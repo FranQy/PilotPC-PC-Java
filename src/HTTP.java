@@ -480,6 +480,10 @@ public class HTTP {
                         + "TCP_Data.touchedTYPE={NORMAL:0, LONG:1, UP:2, SCROLL:3, LPM:4, PPM:5};"
                         + "TCP_Data.typ={GAMEPAD:0, PILOT:1, KEYBOARD:2, TOUCHPAD:3};"
                         + "TCP_Data.pilotButton={OFF:0, MUSIC:1, MULTIMEDIA:2, PLAYPAUSE:3, PERV:4, NEXT:5, STOP:6, EXIT:7, BACK:8, VOLDOWN:9, VOLUP:10, MUTE:11,UP:12, DOWN:13, RIGHT:14, LEFT:15, RETTURN:16, REWIND:17, FORWARD:18};"
+                        + "TCP_Data.pilotButton={OFF:0, MUSIC:1, PLAYPAUSE:2, PERV:3, NEXT:4, STOP:5, EXIT:6, BACK:7, VOLDOWN:8, VOLUP:9, MUTE:10," +
+                        "        UP:11, DOWN:12, RIGHT:13, LEFT:14, RETTURN:15," +
+                        "        REWIND:16," +
+                        "        FORWARD:17, PHOTO:18, VIDEO:19};"
                         + "function kartaPokaz(id){"
                         //+ "document.getElementById('gamepad').style.display="
                         + "document.getElementById('pulpit').style.display=document.getElementById('pilot').style.display=document.getElementById('klawiatura').style.display=document.getElementById('touchpad').style.display='none';"
