@@ -112,4 +112,8 @@ public class Ustawienia implements Serializable {
     public String haslo = generujHaslo(false);
     public Jezyk.jezyki jezyk = Jezyk.jezyki.Polski;
     public boolean plynnaMysz = false;
+    /**
+     * wersja, przy której urzytkownik kliknął "nie aktualizować"
+     */
+    public String WersjaOk = "0.0.0";
 }
