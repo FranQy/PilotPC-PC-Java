@@ -92,7 +92,11 @@ public class PolaczenieWatek
                                 odpowiedz.status = Connect.Status.zlyKod;
                                     Polaczenie.czasBlokadyHasla = System.currentTimeMillis() + 500;
                                     //in.close();
-                                break;
+                                    odpowiedz.nazwa = java.net.InetAddress.getLocalHost().getHostName();
+                                    ObjectOutputStream oos = new ObjectOutputStream(soc.getOutputStream());
+                                    oos.writeObject(odpowiedz);
+                                    oos.flush();
+                                    break;
                             }
                             odpowiedz.nazwa = java.net.InetAddress.getLocalHost().getHostName();
                             ObjectOutputStream oos = new ObjectOutputStream(soc.getOutputStream());
