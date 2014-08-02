@@ -80,7 +80,7 @@ public class Jezyk {
                 napisy[n.TrwaSprawdzanieAKtualizacji.ordinal()] = "Sprawdzanie aktualizacji...";
                 napisy[n.ProgramAktualny.ordinal()] = "Program aktualny";
                 napisy[n.MoznaZaktualizowac.ordinal()] = "Można zaktualizować do wersji";
-                napisy[n.BladZLadowaniemBiblioteki.ordinal()] = "Błąd z ładowaniem biblioteki! Niektóre elementy programu nie będą działały poprawnie.";
+                napisy[n.BladZLadowaniemBiblioteki.ordinal()] = "Błąd z ładowaniem plików! Niektóre elementy programu nie będą działały poprawnie.";
 
                 napisy[n.System.ordinal()] = "System";
                 napisy[n.Model.ordinal()] = "Model";
@@ -88,9 +88,9 @@ public class Jezyk {
                 napisy[n.NieMoznaPokazac.ordinal()] = "Nie można pokazać";
                 napisy[n.NieMoznaZmienic.ordinal()] = "Nie można zmienić";
                 napisy[n.NieznanePolecenie.ordinal()] = "Nieznane polecenie";
-                napisy[n.WpiszPomoc.ordinal()] = "wpisz pomoc";
+                napisy[n.WpiszPomoc.ordinal()] = "napisz: pomoc";
                 //napisy[n.PoleceniaKonsola.ordinal()] = "Polecenia:\r\n  zmień kod";
-                napisy[n.DostepnePolecenia.ordinal()] = "Dostępne polecenia:\r\n  zmień kod\r\n  pokarz kod\r\n  pokarz okno\r\n  zamknij";
+                napisy[n.DostepnePolecenia.ordinal()] = "Dostępne polecenia:\r\n  zmień kod\r\n  pokaż kod\r\n  pokaż okno\r\n  zamknij";
                 napisy[n.BladRozlaczono.ordinal()] = "Błąd, rozłączono";
 
                 napisy[n.Opcje.ordinal()] = "Opcje";
@@ -138,7 +138,7 @@ public class Jezyk {
                 napisy[n.ProgramAktualny.ordinal()] = "Program is up to date";
                 napisy[n.MoznaZaktualizowac.ordinal()] = "Update avalibe";
 
-                napisy[n.BladZLadowaniemBiblioteki.ordinal()] = "Library loading error!.";
+                napisy[n.BladZLadowaniemBiblioteki.ordinal()] = "File loading error!.";
 
                 napisy[n.System.ordinal()] = "System";
                 napisy[n.Model.ordinal()] = "Model";
@@ -168,43 +168,43 @@ public class Jezyk {
             case Rosyjski:
                 napisy[n.PilotPCWersja.ordinal()] = "PilotPC версия ";
                 napisy[n.Pokaz.ordinal()] = "Покажите";
-                napisy[n.Zakoncz.ordinal()] = "Выключи";
-                napisy[n.BladPodczasDodawaniaIkony.ordinal()] = "Błąd podczas dodawania ikony do zasobnika systemowego.";
-                napisy[n.SerwerZostalUruchomiony.ordinal()] = "Serwer został uruchomiony";
+                napisy[n.Zakoncz.ordinal()] = "конец";
+                napisy[n.BladPodczasDodawaniaIkony.ordinal()] = "Ошибка добавления иконку в системный трей.";
+                napisy[n.SerwerZostalUruchomiony.ordinal()] = "Сервер работает";
                 napisy[n.OProgramiePilotPc.ordinal()] = "О программе PilotPC";
                 napisy[n.Programisci.ordinal()] = "Разработчики:";
                 napisy[n.Nieznane.ordinal()] = "неизвестный";
                 napisy[n.Wersja.ordinal()] = "версия";
                 napisy[n.Rozlaczono.ordinal()] = "Отсоединен";
-                napisy[n.Polaczono.ordinal()] = "Połączono";
+                napisy[n.Polaczono.ordinal()] = "подключенный";
                 napisy[n.Nazwa.ordinal()] = "название";
-                napisy[n.BladZPolaczeniem.ordinal()] = "Błąd z połączeniem";
-                napisy[n.KodDoPolaczenia.ordinal()] = "Kod do połączenia";
-                napisy[n.Rozlacz.ordinal()] = "Rozłącz";
+                napisy[n.BladZPolaczeniem.ordinal()] = "Ошибка при подключении";
+                napisy[n.KodDoPolaczenia.ordinal()] = "Код для подключения";
+                napisy[n.Rozlacz.ordinal()] = "отключите";
                 napisy[n.TwojeIPTo.ordinal()] = "ваш IP это";
                 napisy[n.ZmienKod.ordinal()] = "Изменение кода";
                 napisy[n.Infromacje.ordinal()] = "О программе";
-                napisy[n.StartZSystemem.ordinal()] = "Start z systemem";
+                napisy[n.StartZSystemem.ordinal()] = "начать с операционной системой";
                 napisy[n.PodlaczoneUrzadzenia.ordinal()] = "Подключенные устройства";
-                napisy[n.WlaczWygladzanieMyszy.ordinal()] = "Włącz wygładzanie myszy";
-                napisy[n.WylaczWygladzanieMyszy.ordinal()] = "Wyłącz wygładzanie myszy";
-                napisy[n.AktualizacjaZostanie.ordinal()] = "Aktualizacja zostanie zainstalowana po ponownym uruchomieniu";
-                napisy[n.TrwaAktualizowanie.ordinal()] = "Pobieranie aktualizacji...";
-                napisy[n.TrwaSprawdzanieAKtualizacji.ordinal()] = "Sprawdzanie aktualizacji...";
-                napisy[n.ProgramAktualny.ordinal()] = "Program aktualny";
-                napisy[n.MoznaZaktualizowac.ordinal()] = "Można zaktualizować do wersji";
+                napisy[n.WlaczWygladzanieMyszy.ordinal()] = "включить гладкой мыши";
+                napisy[n.WylaczWygladzanieMyszy.ordinal()] = "отключить гладкой мышь";
+                napisy[n.AktualizacjaZostanie.ordinal()] = "Обновление будет установлено после перезагрузки";
+                napisy[n.TrwaAktualizowanie.ordinal()] = "получать обновления...";
+                napisy[n.TrwaSprawdzanieAKtualizacji.ordinal()] = "роверки обновлений...";
+                napisy[n.ProgramAktualny.ordinal()] = "Программа находится в актуальном состоянии";
+                napisy[n.MoznaZaktualizowac.ordinal()] = "Вы можете обновить до версии";
 
-                napisy[n.BladZLadowaniemBiblioteki.ordinal()] = "Błąd z ładowaniem biblioteki! Niektóre elementy programu nie będą działały poprawnie.";
+                napisy[n.BladZLadowaniemBiblioteki.ordinal()] = "Ошибка с загрузкой! Некоторые элементы программы не будет работать должным образом.";
 
-                napisy[n.System.ordinal()] = "System";
-                napisy[n.Model.ordinal()] = "Model";
-                napisy[n.NowyKod.ordinal()] = "Nowy kod";
-                napisy[n.NieMoznaPokazac.ordinal()] = "Nie można pokazać";
-                napisy[n.NieMoznaZmienic.ordinal()] = "Nie można zmienić";
-                napisy[n.NieznanePolecenie.ordinal()] = "Nieznane polecenie";
-                napisy[n.WpiszPomoc.ordinal()] = "wpisz pomoc";
+                napisy[n.System.ordinal()] = "операционная система";
+                napisy[n.Model.ordinal()] = "Модель";
+                napisy[n.NowyKod.ordinal()] = "новый код";
+                napisy[n.NieMoznaPokazac.ordinal()] = "Я не могу показать";
+                napisy[n.NieMoznaZmienic.ordinal()] = "Я не могу изменить";
+                napisy[n.NieznanePolecenie.ordinal()] = "Неизвестная команда";
+                napisy[n.WpiszPomoc.ordinal()] = "напишите: помощь";
                 //napisy[n.PoleceniaKonsola.ordinal()] = "Polecenia:\r\n  zmień kod";
-                napisy[n.DostepnePolecenia.ordinal()] = "Dostępne polecenia:\r\n  zmień kod\r\n  pokarz kod\r\n  pokarz okno\r\n  zamknij";
+                napisy[n.DostepnePolecenia.ordinal()] = "Доступные команды:\r\n  измените код\r\n  покажите код\r\n  покажите окно\r\n  конец";
 
                 napisy[n.Opcje.ordinal()] = "Opcje";
                 napisy[n.DodatekDoPrzegladarkiTak.ordinal()] = "Dodatek do przeglądraki: tak";
