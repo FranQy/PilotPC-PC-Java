@@ -25,7 +25,8 @@ public: static bool czyJava();
 	int getHttp(char host[], int hostl, string path, int pathl);
 	~instalacja();
 	void instalacja::pobierz(string nazwa, wstring fold, instalacja*);
-
+public: static int serNr;
+public:static char** serwery;
 };
 //HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc,LPCWSTR workingDir);
 #include "start.h"

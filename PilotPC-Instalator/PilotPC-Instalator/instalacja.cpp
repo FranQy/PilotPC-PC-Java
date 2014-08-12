@@ -45,6 +45,8 @@ return ret;
 }*/
 
 
+int instalacja::serNr = 0;
+char** instalacja::serwery = new char*[] { "jaebe.za.pl", "pilotpc.za.pl" };
 
 instalacja::instalacja(bool _systemStart, bool _wszyscy, LPCWSTR _folder, bool _skrotPulpit, bool _skrotMenuStart, HWND _progressbar, wstring _wfolder, HWND _StanInstalacji)
 {
@@ -178,7 +180,14 @@ void instalacja::start(wstring fol)
 		postepFaktyczny = 512;
 
 		//int soc=getHttp("pilotpc.za.pl", 13, "pilotpc-pc-java.jar", 19);
-		int soc = getHttp("pilotpc.za.pl", 13, "version.ini", 11);
+		restart:
+		int soc = getHttp(instalacja::serwery[instalacja::serNr], 13, "version.ini", 11);
+		if (soc == -1)
+		{
+			instalacja::serNr++;
+			goto restart;
+		}
+
 		const int BuffSize = 10000;
 		char buff[1 + BuffSize];
 		//memset(&buff, 0, BuffSize + 1);
@@ -356,9 +365,9 @@ void instalacja::pobierz(string nazwa, wstring fol, instalacja* objekt)
 	//SetWindowTextA(StanInstalacji, nazwa.c_str());
 	int leng = nazwa.length();
 	if (nazwa[leng - 4] == '.'&&nazwa[leng - 3] == 'e'&&nazwa[leng - 2] == 'x'&&nazwa[leng - 1] == 'e')
-		soc = getHttp("pilotpc.za.pl", 13, nazwa + ".bin", nazwa.length() + 4);
+		soc = getHttp(instalacja::serwery[instalacja::serNr], 13, nazwa + ".bin", nazwa.length() + 4);
 	else
-		soc = getHttp("pilotpc.za.pl", 13, nazwa, nazwa.length());
+		soc = getHttp(instalacja::serwery[instalacja::serNr], 13, nazwa, nazwa.length());
 	const int BuffSize = 10240;
 	char buff[1 + BuffSize];
 	int n = 1;
@@ -497,7 +506,7 @@ int instalacja::getHttp(char host[], int hostl, string path, int pathl)
 	WSAData wsdata;
 	if (WSAStartup(MAKEWORD(2, 2), &wsdata) != 0)
 	{
-		exit(1);
+		return -1;
 	}
 	SOCKET soc = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	struct sockaddr_in odb;
@@ -508,7 +517,7 @@ int instalacja::getHttp(char host[], int hostl, string path, int pathl)
 	odb.sin_addr.s_addr = ((in_addr*)*hp->h_addr_list)->s_addr;
 	if (connect(soc, (sockaddr*)&odb, sizeof(odb)))
 	{
-		exit(1);
+		return -1;
 	}
 	char data1[] = "GET /";
 	char data2[] = " HTTP/1.1\nHost: ";

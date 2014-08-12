@@ -17,7 +17,7 @@ public class Jezyk {
 
     //Jezyk.napisy[Jezyk.n.PilotPCWersja.ordinal()]
     public enum jezyki {
-        Polski, Angielski, Rosyjski
+        Polski, Angielski, Rosyjski, Esperanto
     }
 
     ;
@@ -34,7 +34,7 @@ public class Jezyk {
     }
 
     ;
-    public static final String[] nazwyJezykow = {"Polski", "English", "Русский"};
+    public static final String[] nazwyJezykow = {"Polski", "English", "Русский", "Esperanto"};
 
     public enum nHTTP {ZostalesRozlaczony, KodBledny, Usun, Informacje, Polaczenie, Stan, Jakosc, Host, Coder, Designers, JakoscObrazu, Niska, Srednia, Wysoka, Ultra, Spacja, Polaczono, BrakDanych, Rozlaczono}
 
@@ -206,19 +206,77 @@ public class Jezyk {
                 //napisy[n.PoleceniaKonsola.ordinal()] = "Polecenia:\r\n  zmień kod";
                 napisy[n.DostepnePolecenia.ordinal()] = "Доступные команды:\r\n  измените код\r\n  покажите код\r\n  покажите окно\r\n  конец";
 
+                napisy[n.Opcje.ordinal()] = "Параметры";
+                napisy[n.DodatekDoPrzegladarkiTak.ordinal()] = "Браузер дополнения: да";
+                napisy[n.DodatekDoPrzegladarkiNie.ordinal()] = "Браузер дополнения: нет";
+                napisy[n.BrakPodlaczonychUrzadzen.ordinal()] = "Нет устройство, подключенное";
+                napisy[n.WylaczSerwer.ordinal()] = "Выключите сервер";
+                napisy[n.PowiekszQR.ordinal()] = "Увеличий QRCode";
+                napisy[n.AktualizujTeraz.ordinal()] = "обновить сейчас";
+                napisy[n.AktualizacjaAutomatyzna.ordinal()] = "Автоматическое обновление";
+                napisy[n.TworzenieSieciWiFi.ordinal()] = "Создать сеть WiFi";
+                napisy[n.Nazwa.ordinal()] = "название";
+                napisy[n.Haslo.ordinal()] = "пароль";
+                napisy[n.Start.ordinal()] = "начало";
+                napisy[n.Stop.ordinal()] = "остановить";
+                break;
+
+            case Esperanto:
+                napisy[n.PilotPCWersja.ordinal()] = "PilotPC versio ";
+                napisy[n.Pokaz.ordinal()] = "Vidigu";
+                napisy[n.Zakoncz.ordinal()] = "Finu";
+                napisy[n.BladPodczasDodawaniaIkony.ordinal()] = "Błąd podczas dodawania ikony do zasobnika systemowego.";
+                napisy[n.SerwerZostalUruchomiony.ordinal()] = "La servilo funkcias";
+                napisy[n.OProgramiePilotPc.ordinal()] = "Pri la PilotPC";
+                napisy[n.Programisci.ordinal()] = "Programistoj:";
+                napisy[n.Nieznane.ordinal()] = "Nekonata";
+                napisy[n.Wersja.ordinal()] = "versio";
+                napisy[n.Rozlaczono.ordinal()] = "Malkonektita";
+                napisy[n.Polaczono.ordinal()] = "Konektita";
+                napisy[n.Nazwa.ordinal()] = "Nazwa";
+                napisy[n.BladZPolaczeniem.ordinal()] = "Eraro dum konektanta";
+                napisy[n.KodDoPolaczenia.ordinal()] = "Kodo";
+                napisy[n.Rozlacz.ordinal()] = "Malkonektu";
+                napisy[n.TwojeIPTo.ordinal()] = "IP";
+                napisy[n.ZmienKod.ordinal()] = "ŝanĝi";
+                napisy[n.Infromacje.ordinal()] = "Agordojn";
+                napisy[n.StartZSystemem.ordinal()] = "Start z systemem";
+                napisy[n.PodlaczoneUrzadzenia.ordinal()] = "Podłączone urządzenia";
+                napisy[n.WlaczWygladzanieMyszy.ordinal()] = "Włącz wygładzanie myszy";
+                napisy[n.WylaczWygladzanieMyszy.ordinal()] = "Wyłącz wygładzanie myszy";
+                napisy[n.AktualizacjaZostanie.ordinal()] = "Aktualizacja zostanie zainstalowana po ponownym uruchomieniu";
+                napisy[n.TrwaAktualizowanie.ordinal()] = "Pobieranie aktualizacji...";
+                napisy[n.TrwaSprawdzanieAKtualizacji.ordinal()] = "Sprawdzanie aktualizacji...";
+                napisy[n.ProgramAktualny.ordinal()] = "Program aktualny";
+                napisy[n.MoznaZaktualizowac.ordinal()] = "Można zaktualizować do wersji";
+                napisy[n.BladZLadowaniemBiblioteki.ordinal()] = "Błąd z ładowaniem plików! Niektóre elementy programu nie będą działały poprawnie.";
+
+                napisy[n.System.ordinal()] = "System";
+                napisy[n.Model.ordinal()] = "Model";
+                napisy[n.NowyKod.ordinal()] = "Nowy kod";
+                napisy[n.NieMoznaPokazac.ordinal()] = "Nie można pokazać";
+                napisy[n.NieMoznaZmienic.ordinal()] = "Nie można zmienić";
+                napisy[n.NieznanePolecenie.ordinal()] = "Nieznane polecenie";
+                napisy[n.WpiszPomoc.ordinal()] = "napisz: pomoc";
+                //napisy[n.PoleceniaKonsola.ordinal()] = "Polecenia:\r\n  zmień kod";
+                napisy[n.DostepnePolecenia.ordinal()] = "Dostępne polecenia:\r\n  zmień kod\r\n  pokaż kod\r\n  pokaż okno\r\n  zamknij";
+                napisy[n.BladRozlaczono.ordinal()] = "Błąd, rozłączono";
+
                 napisy[n.Opcje.ordinal()] = "Opcje";
-                napisy[n.DodatekDoPrzegladarkiTak.ordinal()] = "Dodatek do przeglądraki: tak";
-                napisy[n.DodatekDoPrzegladarkiNie.ordinal()] = "Dodatek do przeglądraki: nie";
+                napisy[n.DodatekDoPrzegladarkiTak.ordinal()] = "Dodatek do przeglądarki: tak";
+                napisy[n.DodatekDoPrzegladarkiNie.ordinal()] = "Dodatek do przeglądarki: nie";
                 napisy[n.BrakPodlaczonychUrzadzen.ordinal()] = "Brak podłączonych urządzeń";
                 napisy[n.WylaczSerwer.ordinal()] = "Wyłącz serwer";
                 napisy[n.PowiekszQR.ordinal()] = "Powiększ QRCode";
                 napisy[n.AktualizujTeraz.ordinal()] = "Aktualizuj teraz";
-                napisy[n.AktualizacjaAutomatyzna.ordinal()] = "Akrualizacja automatyzna";
+                napisy[n.AktualizacjaAutomatyzna.ordinal()] = "Aktualizacja automatyzna";
+
                 napisy[n.TworzenieSieciWiFi.ordinal()] = "Tworzenie sieci WiFi";
                 napisy[n.Nazwa.ordinal()] = "Nazwa";
                 napisy[n.Haslo.ordinal()] = "Hasło";
                 napisy[n.Start.ordinal()] = "Start";
                 napisy[n.Stop.ordinal()] = "Stop";
+
                 break;
         }
     }

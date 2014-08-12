@@ -36,12 +36,12 @@ public class Konsola extends Thread {
     public static boolean polecenie(String args[], boolean nasobie) {
         if (args.length >= 2 && args[1].charAt(0) != '/' && args[1].charAt(0) != '-') {
 
-            if (args[1].equalsIgnoreCase("help") || args[1].equalsIgnoreCase("pomoc")) {
+            if (args[1].equalsIgnoreCase("help") || args[1].equalsIgnoreCase("pomoc")|| args[1].equalsIgnoreCase("помощь")) {
                 System.out.println(Jezyk.napisy[Jezyk.n.DostepnePolecenia.ordinal()]);
-            } else if (args[1].equalsIgnoreCase("change") || args[1].equalsIgnoreCase("zmień") || args[1].equalsIgnoreCase("zmien")) {
+            } else if (args[1].equalsIgnoreCase("change") || args[1].equalsIgnoreCase("zmień") || args[1].equalsIgnoreCase("zmien")|| args[1].equalsIgnoreCase("измените")) {
                 if (args.length == 2)
                     System.out.println(Jezyk.napisy[Jezyk.n.DostepnePolecenia.ordinal()]);
-                else if (args[2].equalsIgnoreCase("kod") || args[2].equalsIgnoreCase("code")) {
+                else if (args[2].equalsIgnoreCase("kod") || args[2].equalsIgnoreCase("code")|| args[2].equalsIgnoreCase("код")) {
 
                     Program.ustawienia.haslo = Ustawienia.generujHaslo();
                     //kod.setText(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ":");
@@ -52,14 +52,14 @@ public class Konsola extends Thread {
                     return false;
                 } else
                     System.out.println(Jezyk.napisy[Jezyk.n.NieMoznaZmienic.ordinal()] + " " + args[2].toLowerCase(Locale.getDefault()));
-            } else if (args[1].equalsIgnoreCase("show") || args[1].equalsIgnoreCase("pokaz") || args[1].equalsIgnoreCase("pokaż")) {
+            } else if (args[1].equalsIgnoreCase("show") || args[1].equalsIgnoreCase("pokaz") || args[1].equalsIgnoreCase("покажи")|| args[1].equalsIgnoreCase("покажите")) {
                 if (args.length == 2)
                     System.out.println(Jezyk.napisy[Jezyk.n.DostepnePolecenia.ordinal()]);
-                else if (args[2].equalsIgnoreCase("kod") || args[2].equalsIgnoreCase("code")) {
+                else if (args[2].equalsIgnoreCase("kod") || args[2].equalsIgnoreCase("code")|| args[2].equalsIgnoreCase("код")) {
 
                     System.out.println(Jezyk.napisy[Jezyk.n.KodDoPolaczenia.ordinal()] + ":" + Program.ustawienia.haslo);
                     return false;
-                } else if (args[2].equalsIgnoreCase("window") || args[2].equalsIgnoreCase("okno")) {
+                } else if (args[2].equalsIgnoreCase("window") || args[2].equalsIgnoreCase("okno") || args[2].equalsIgnoreCase("окно")) {
 
 
                     if (Program.glowneOkno == null)
@@ -69,7 +69,7 @@ public class Konsola extends Thread {
                     return false;
                 } else
                     System.out.println(Jezyk.napisy[Jezyk.n.NieMoznaPokazac.ordinal()] + " " + args[2].toLowerCase(Locale.getDefault()));
-            } else if (args[1].equalsIgnoreCase("exit") || args[1].equalsIgnoreCase("wyjdź") || args[1].equalsIgnoreCase("wyjdz") || args[1].equalsIgnoreCase("zamknij")) {
+            } else if (args[1].equalsIgnoreCase("exit") || args[1].equalsIgnoreCase("wyjdź") || args[1].equalsIgnoreCase("wyjdz") || args[1].equalsIgnoreCase("zamknij")|| args[1].equalsIgnoreCase("конец")) {
                 if (!Aktualizacja.trwa)
                     System.exit(0);
                 else
