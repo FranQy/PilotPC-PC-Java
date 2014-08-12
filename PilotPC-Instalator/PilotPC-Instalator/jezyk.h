@@ -11,7 +11,7 @@ public:
 	enum jezyki;
 	static void laduj(jezyki);
 	static void nazwyLoad();
-	static wchar_t* napisy[18];
+	static wchar_t* napisy[30];
 	static LPWSTR nazwyJezykow[3];
 	static int nazwyJezykowLen[3];
 };

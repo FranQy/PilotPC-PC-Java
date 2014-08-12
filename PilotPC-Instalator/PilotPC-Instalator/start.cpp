@@ -218,9 +218,6 @@ void wyswietl3(HINSTANCE hInstance)
 	SetWindowText(folder, L"c:\\Program Files\\PilotPC");
 
 
-	folderButton = CreateWindowEx(0, L"BUTTON", jezyk::napisy[Wybierz], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
-		700, 160, 80, 20, hWnd, (HMENU)2999, hInstance, NULL);
-	SendMessage(folderButton, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
 
 	user1 = CreateWindowEx(0, L"BUTTON", jezyk::napisy[DlaObecnegoUzytkownika], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
 		475, 240, 400, 25, hWnd, (HMENU)3000, hInstance, NULL);
@@ -228,6 +225,9 @@ void wyswietl3(HINSTANCE hInstance)
 	SendMessage(user1, BM_SETCHECK, 1, 0);
 
 
+	folderButton = CreateWindowEx(0, L"BUTTON", jezyk::napisy[Wybierz], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
+		700, 160, 80, 20, hWnd, (HMENU)2999, hInstance, NULL);
+	SendMessage(folderButton, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
 
 	userWiele = CreateWindowEx(0, L"BUTTON", jezyk::napisy[DlaWszystkichUzytkownikow], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
 		475, 270, 400, 25, hWnd, (HMENU)3001, hInstance, NULL);

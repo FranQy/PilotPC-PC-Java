@@ -47,6 +47,7 @@ return ret;
 
 int instalacja::serNr = 0;
 char** instalacja::serwery = new char*[] { "jaebe.za.pl", "pilotpc.za.pl" };
+int* instalacja::serweryl = new int[] { 11, 13 };
 
 instalacja::instalacja(bool _systemStart, bool _wszyscy, LPCWSTR _folder, bool _skrotPulpit, bool _skrotMenuStart, HWND _progressbar, wstring _wfolder, HWND _StanInstalacji)
 {
@@ -181,7 +182,7 @@ void instalacja::start(wstring fol)
 
 		//int soc=getHttp("pilotpc.za.pl", 13, "pilotpc-pc-java.jar", 19);
 		restart:
-		int soc = getHttp(instalacja::serwery[instalacja::serNr], 13, "version.ini", 11);
+		int soc = getHttp(instalacja::serwery[instalacja::serNr], instalacja::serweryl[instalacja::serNr], "version.php?instal", 11);
 		if (soc == -1)
 		{
 			instalacja::serNr++;
@@ -195,7 +196,12 @@ void instalacja::start(wstring fol)
 		//while (true)
 		//{
 		int n = recv(soc, buff, BuffSize, 0);
-
+		string buforS = string(buff);
+		if (buforS.find("HTTP/1.1 200")!=0)
+		{
+			instalacja::serNr++;
+			goto restart;
+		}
 		postepFaktyczny = 2048;
 		buff[n] = 0;
 		int i = 0;
@@ -365,9 +371,9 @@ void instalacja::pobierz(string nazwa, wstring fol, instalacja* objekt)
 	//SetWindowTextA(StanInstalacji, nazwa.c_str());
 	int leng = nazwa.length();
 	if (nazwa[leng - 4] == '.'&&nazwa[leng - 3] == 'e'&&nazwa[leng - 2] == 'x'&&nazwa[leng - 1] == 'e')
-		soc = getHttp(instalacja::serwery[instalacja::serNr], 13, nazwa + ".bin", nazwa.length() + 4);
+		soc = getHttp(instalacja::serwery[instalacja::serNr], instalacja::serweryl[instalacja::serNr], nazwa + ".bin", nazwa.length() + 4);
 	else
-		soc = getHttp(instalacja::serwery[instalacja::serNr], 13, nazwa, nazwa.length());
+		soc = getHttp(instalacja::serwery[instalacja::serNr], instalacja::serweryl[instalacja::serNr], nazwa, nazwa.length());
 	const int BuffSize = 10240;
 	char buff[1 + BuffSize];
 	int n = 1;

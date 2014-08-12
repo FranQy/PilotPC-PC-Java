@@ -20,7 +20,7 @@ void jezyk::nazwyLoad()
 jezyk::~jezyk()
 {
 }
-wchar_t* jezyk::napisy[18];
+wchar_t* jezyk::napisy[30];
 void jezyk::laduj(jezyki a)
 {
 	switch (a)
@@ -45,7 +45,7 @@ void jezyk::laduj(jezyki a)
 		napisy[n::Usunieto] = L"Usunięto";
 		napisy[n::WymaganeUprawneiniaAdministratora] = L"Wymagane uprawnienia administratora";
 		napisy[n::Zaakceptuj] = L"Zaakceptuj";
-		napisy[n::Licencja] = L"Postanowienia licencji wkrótce...";
+		napisy[n::Licencja] = L"Program zawiera biblioteki JSON.org oraz ZXing\r\n\r\nInstalując, zgadzasz się na ich licencje.";
 		napisy[n::PotrzebnaJava] = L"Do działania programu wymagana jest instalacja Javy.";
 		napisy[n::JavaTak] = L"Zainstaluj Javę i kontynuuj";
 		napisy[n::JavaNie] = L"Anuluj";
@@ -71,7 +71,7 @@ void jezyk::laduj(jezyki a)
 		napisy[n::Usunieto] = L"Removing done";
 		napisy[n::WymaganeUprawneiniaAdministratora] = L"Access denied";
 		napisy[n::Zaakceptuj] = L"Accept";
-		napisy[n::Licencja] = L"Licence coming soon...";
+		napisy[n::Licencja] = L"Program contains libraries: JSON.org and ZXing\r\n\r\nIf you install PilotPC, you will accept their licence terms.";
 		napisy[n::PotrzebnaJava] = L"This program need Java";
 		napisy[n::JavaTak] = L"Install Java and continue";
 		napisy[n::JavaNie] = L"Cancel";
@@ -97,7 +97,7 @@ void jezyk::laduj(jezyki a)
 		napisy[n::Usunieto] = L"Удалено";
 		napisy[n::WymaganeUprawneiniaAdministratora] = L"Разрешение администратора требуется";
 		napisy[n::Zaakceptuj] = L"Примите";
-		napisy[n::Licencja] = L"Postanowienia licencji wkrótce...";
+		napisy[n::Licencja] = L"Программа содержит библиотеки: JSON.org и ZXing\r\n\r\nПри установке PilotPC, вы будете принимать их условия лицензии";
 		napisy[n::PotrzebnaJava] = L"Чтобы запустить программу, необходимую для установки Java.";
 		napisy[n::JavaTak] = L"Установите Java и продолжить";
 		napisy[n::JavaNie] = L"Отмени";
