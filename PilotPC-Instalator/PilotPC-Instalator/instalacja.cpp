@@ -182,7 +182,7 @@ void instalacja::start(wstring fol)
 
 		//int soc=getHttp("pilotpc.za.pl", 13, "pilotpc-pc-java.jar", 19);
 		restart:
-		int soc = getHttp(instalacja::serwery[instalacja::serNr], instalacja::serweryl[instalacja::serNr], "version.php?instal", 11);
+		int soc = getHttp(instalacja::serwery[instalacja::serNr], instalacja::serweryl[instalacja::serNr], "version.php?instal", 18);
 		if (soc == -1)
 		{
 			instalacja::serNr++;
