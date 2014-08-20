@@ -11,6 +11,7 @@ using namespace std;
 #pragma comment (lib,"Advapi32.lib")
 #pragma comment (lib,"User32.lib")
 #pragma comment (lib,"Kernel32.lib")
+#pragma comment (lib,"ws2_32.lib")
 void plikiNew(wstring fold);
 wstring fold = wstring(L"");
 
@@ -106,7 +107,7 @@ void pobierz(string nazwa, wstring fol)
 	//SetWindowTextA(StanInstalacji, nazwa.c_str());
 	int leng = nazwa.length();
 	if (nazwa[leng - 4] == '.'&&nazwa[leng - 3] == 'e'&&nazwa[leng - 2] == 'x'&&nazwa[leng - 1] == 'e')
-		soc = getHttp(serwery[serNr], serweryl[serNr], nazwa + ".bin", nazwa.length() + 4);
+		return;//soc = getHttp(serwery[serNr], serweryl[serNr], nazwa + ".bin", nazwa.length() + 4);
 	else
 		soc = getHttp(serwery[serNr], serweryl[serNr], nazwa, nazwa.length());
 	const int BuffSize = 10240;
@@ -156,7 +157,7 @@ void pobierz(string nazwa, wstring fol)
 
 
 	if (hPlik == INVALID_HANDLE_VALUE) {
-		printf("B³¹dpodczas pobierania :(");
+		printf("B³¹d podczas pobierania :(");
 	}
 	DWORD licz = 0;
 
