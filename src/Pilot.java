@@ -15,22 +15,27 @@ public class Pilot {
     static public void click(TCP_Data data) {
         switch (data.button) {
             case OFF: {
-                // TODO zrobic dla linuksa i wykrywanie sytemu
+
                 try {
 
                     while (true) {
                         if (!Aktualizacja.trwa)
-                            System.exit(0);
-                        else
+
                             try {
                                 if (System.getProperty("os.name").toUpperCase().contains("WIN"))
                                     Runtime.getRuntime().exec("shutdown -s -t 0");
                                 else
                                     Runtime.getRuntime().exec("shutdown -h now");
+
                                 Thread.sleep(500);
                             } catch (InterruptedException e1) {
                                 // TODO Auto-generated catch block
                                 e1.printStackTrace();
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             }
                     }
                 } catch (IOException e) {
