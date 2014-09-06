@@ -177,16 +177,21 @@ public class Opcje {
     }
 
     public void aktNapis() {
+        AktualizacjaStatus.setText(status());
+    }
+
+    public static String status() {
         if (Aktualizacja.zaktualizowano)
-            AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.AktualizacjaZostanie.ordinal()]);
+            return (Jezyk.napisy[Jezyk.n.AktualizacjaZostanie.ordinal()]);
         else if (Aktualizacja.trwa)
-            AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.TrwaAktualizowanie.ordinal()]);
+            return (Jezyk.napisy[Jezyk.n.TrwaAktualizowanie.ordinal()]);
         else if (Aktualizacja.najnowsza.equals(""))
-            AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.TrwaSprawdzanieAKtualizacji.ordinal()]);
+            return (Jezyk.napisy[Jezyk.n.TrwaSprawdzanieAKtualizacji.ordinal()]);
         else if (Aktualizacja.najnowsza.equals(Program.wersja))
-            AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.ProgramAktualny.ordinal()]);
+            return (Jezyk.napisy[Jezyk.n.ProgramAktualny.ordinal()]);
         else
-            AktualizacjaStatus.setText(Jezyk.napisy[Jezyk.n.MoznaZaktualizowac.ordinal()] + " " + Aktualizacja.najnowsza);
+            return (Jezyk.napisy[Jezyk.n.MoznaZaktualizowac.ordinal()] + " " + Aktualizacja.najnowsza);
+
     }
 
     public class Odswierz extends TimerTask {

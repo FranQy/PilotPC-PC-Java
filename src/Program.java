@@ -18,10 +18,11 @@ public class Program {
     static BufferedImage imgObrazek = null;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
-    static public final String wersja = "0.6.0";
+    static public final String wersja = "0.6.1";
     static public Robot robot;
     static boolean debug = true;
     static public TrayIcon trayIcon;
+    static public boolean nadpisywanie = false;
 
     public static void main(String[] args) throws AWTException, InterruptedException {
         while (Polaczenie.socServ == null) {
@@ -90,6 +91,8 @@ public class Program {
                 wyswietlanie = TypWyswietlania.Okno;
             else if (args[i].equals("/?"))
                 pomoc = true;
+            else if (args[i].equals("/n"))
+                nadpisywanie = true;
             else if (args[i].equals("/l") || args[i].equals("-l")) {
                 i++;
                 if (args[i].equalsIgnoreCase("pl"))

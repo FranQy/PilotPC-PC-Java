@@ -24,20 +24,20 @@ public class Aktualizacja
             String[] serwerUrl = {"http://jaebe.za.pl/", "http://pilotpc.za.pl/"};
             for (int SerNr = 0; SerNr < serwerUrl.length; SerNr++) {
                 try {
-                //pobiera z serwera informacje o najnowszej wersji i plikach do ściągnięcia
+                    //pobiera z serwera informacje o najnowszej wersji i plikach do ściągnięcia
                     URL u = new URL(serwerUrl[SerNr] + "version.php?v=" + Program.wersja + "&ok=" + Program.ustawienia.WersjaOk + "&auto=" + Program.ustawienia.aktualizujAutomatycznie);
 
                     is = u.openStream();
 
-                BufferedReader dis = new BufferedReader(new InputStreamReader(new BufferedInputStream(is)));
-                while ((s = dis.readLine()) != null) {
-                    content += s + '\n';
+                    BufferedReader dis = new BufferedReader(new InputStreamReader(new BufferedInputStream(is)));
+                    while ((s = dis.readLine()) != null) {
+                        content += s + '\n';
 
-                }
+                    }
                     aktualizuj(content, serwerUrl[SerNr]);
                     trwa = false;
-                //próbuje załadować biblioteki
-                Biblioteka.load();
+                    //próbuje załadować biblioteki
+                    Biblioteka.load();
                     break;
                 } catch (IOException ioe) {
                     try {
@@ -47,12 +47,12 @@ public class Aktualizacja
                     }
                     if (Program.debug)
                         ioe.printStackTrace();
-            } finally {
-                try {
-                    is.close();
-                } catch (IOException ioe) {
-                    // just going to ignore this one
-                }
+                } finally {
+                    try {
+                        is.close();
+                    } catch (IOException ioe) {
+                        // just going to ignore this one
+                    }
                 }
             }
         }
@@ -130,7 +130,7 @@ public class Aktualizacja
 
                             if (linie[i2].split("=")[1].equals("Linux.sh"))
                                 (new File(linie[i2].split("=")[1])).setExecutable(true);
-                        } else if ((new File(linie[i2].split("=")[1] + ".new")).exists()) {
+                        } else if ((new File(linie[i2].split("=")[1] + ".new")).exists() || Program.nadpisywanie) {
                             strumien = new FileOutputStream(linie[i2].split("=")[1]);
 
                             if (linie[i2].split("=")[1].equals("Linux.sh"))
@@ -171,6 +171,29 @@ public class Aktualizacja
                 }
             }
             zaktualizowano = true;
+        }
+    }
+
+    public static void reset() {
+        try {
+            while (true) {
+                if (!Aktualizacja.trwa) {
+                    if (System.getProperty("os.name").toUpperCase().contains("WINDOWS")) {
+                        Runtime.getRuntime().exec("Windows.exe");
+                    } else {
+
+                        Runtime.getRuntime().exec("Linux.exe");
+                    }
+                    System.exit(0);
+                } else
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+            }
+        } catch (Throwable e) {
         }
     }
 }

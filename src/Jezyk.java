@@ -30,7 +30,7 @@ public class Jezyk {
         WlaczWygladzanieMyszy, AktualizacjaZostanie, TrwaAktualizowanie, ProgramAktualny, MoznaZaktualizowac,
         TrwaSprawdzanieAKtualizacji, BladZLadowaniemBiblioteki, System, Model,
         DostepnePolecenia, NowyKod, NieMoznaZmienic, NieMoznaPokazac, NieznanePolecenie, BladRozlaczono, Opcje, DodatekDoPrzegladarki, BrakPodlaczonychUrzadzen, DodatekDoPrzegladarkiTak, DodatekDoPrzegladarkiNie, WylaczSerwer, PowiekszQR, AktualizujTeraz, AktualizacjaAutomatyzna, WpiszPomoc,
-        TworzenieSieciWiFi, Haslo, Start, Stop
+        TworzenieSieciWiFi, Haslo, Start, Stop, Zaktualizowano, DostepnaNowa, Blad
     }
 
     ;
@@ -107,6 +107,9 @@ public class Jezyk {
                 napisy[n.Haslo.ordinal()] = "Hasło";
                 napisy[n.Start.ordinal()] = "Start";
                 napisy[n.Stop.ordinal()] = "Stop";
+                napisy[n.Blad.ordinal()] = "Błąd";
+                napisy[n.Zaktualizowano.ordinal()] = "Zaktualizowano! Czy uruchomić ponownie program PilotPC?";
+                napisy[n.DostepnaNowa.ordinal()] = "Dostępna jest nowa wersja programu PilotPC. Czy chcesz zaktualizować?";
 
                 break;
             case Angielski:
@@ -163,6 +166,9 @@ public class Jezyk {
                 napisy[n.Haslo.ordinal()] = "Password";
                 napisy[n.Start.ordinal()] = "Start";
                 napisy[n.Stop.ordinal()] = "Stop";
+                napisy[n.Blad.ordinal()] = "Error";
+                napisy[n.Zaktualizowano.ordinal()] = "PilotPC have been updated! Do you want to reset PilotPC?";
+                napisy[n.DostepnaNowa.ordinal()] = "Update avalible. Do you want to download update?";
                 break;
 
             case Rosyjski:
@@ -219,6 +225,9 @@ public class Jezyk {
                 napisy[n.Haslo.ordinal()] = "пароль";
                 napisy[n.Start.ordinal()] = "начало";
                 napisy[n.Stop.ordinal()] = "остановить";
+                napisy[n.Blad.ordinal()] = "Błąd";
+                napisy[n.Zaktualizowano.ordinal()] = "Zaktualizowano! Czy uruchomić ponownie program PilotPC?";
+                napisy[n.DostepnaNowa.ordinal()] = "Dostępna jest nowa wersja programu PilotPC. Czy chcesz zaktualizować?";
                 break;
 
             case Esperanto:
@@ -276,6 +285,9 @@ public class Jezyk {
                 napisy[n.Haslo.ordinal()] = "Hasło";
                 napisy[n.Start.ordinal()] = "Start";
                 napisy[n.Stop.ordinal()] = "Stop";
+                napisy[n.Blad.ordinal()] = "Błąd";
+                napisy[n.Zaktualizowano.ordinal()] = "Zaktualizowano! Czy uruchomić ponownie program PilotPC?";
+                napisy[n.DostepnaNowa.ordinal()] = "Dostępna jest nowa wersja programu PilotPC. Czy chcesz zaktualizować?";
 
                 break;
         }
