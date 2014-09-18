@@ -373,12 +373,27 @@ int _tmain(const int argc, _TCHAR* argv[])
 	if (argv[0][1] == L':')
 		fold = (wstring(argv[0]).substr(0, wstring(argv[0]).find_last_of(L'\\')) + wstring(L"\\"));
 	fstream sprPl;
-	sprPl.open(L"java/pilotpc.jar", ios::in | ios::_Nocreate);  /* wa¿ne, by nie tworzyæ pliku, jeœli nie istnieje, st¹d flaga nocreate */
-	if (!sprPl.is_open())
-	{
-		printf("Brak plików, pobieranie...");
-		pobierzPlikiWszytskie();
 
+	if (argv[0][1] == L':'){
+		sprPl.open((wstring(argv[0]).substr(0, wstring(argv[0]).find_last_of(L'\\'))+wstring(L"/java/pilotpc.jar")).c_str(), ios::in | ios::_Nocreate);  /* wa¿ne, by nie tworzyæ pliku, jeœli nie istnieje, st¹d flaga nocreate */
+		if (!sprPl.is_open())
+		{
+
+			printf("Brak plików, pobieranie...");
+			pobierzPlikiWszytskie();
+
+		}
+	}
+	else
+	{
+		sprPl.open(L"java/pilotpc.jar", ios::in | ios::_Nocreate);  /* wa¿ne, by nie tworzyæ pliku, jeœli nie istnieje, st¹d flaga nocreate */
+		if (!sprPl.is_open())
+		{
+
+			printf("Brak plików, pobieranie...");
+			pobierzPlikiWszytskie();
+
+		}
 	}
 
 	if (argv[0][1] == L':')

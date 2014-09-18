@@ -282,8 +282,17 @@ void instalacja::start(wstring fol)
 		if (skrotPulpit)
 		{
 			string Pulpit = userprofile + (string)"\\Desktop\\PilotPC";
-			string polecenie = (string)"mklink \"" + Pulpit + (string)"\" \"" + std::string(folderStr.begin(), folderStr.end()) + (string)"\\Windows.exe\"";
-			system(polecenie.c_str());
+			string test1 = string("mklink \"") + Pulpit + string("\" \"");
+			const WCHAR* test2 = folderStr.c_str();
+			wstring sss = wstring(test2);
+			string sxsx = string(sss.begin(), sss.end());
+			string poleceniep = test1 + sxsx;
+			string winexe = string("\\Windo");
+			string winexe2 = string("ws.exe\"");
+			string polecenie = poleceniep + winexe + winexe2;
+			const char* polc = polecenie.c_str();
+			//MessageBoxA(NULL, polc, polc, 0);
+			system(polc);
 		}
 		if (skrotMenuStart)
 		{
