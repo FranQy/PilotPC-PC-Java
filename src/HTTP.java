@@ -640,8 +640,8 @@ public class HTTP {
                         "pulpit.timeout=setTimeout(\"pulpit.punktXs=-1000;" +
                         "var dataA=new TCP_Data();" +
                         "dataA.mouse = TCP_Data.touchedTYPE.PPM;" +
-                        "dataA.touchpadX = Math.floor(((\"+eve.clientX+\"-document.getElementById('pulpit').clientLeft)*pulpit.width/document.getElementById('pulpit').clientWidth+pulpit.x)/pulpit.zoomX);" +
-                        "dataA.touchpadY = Math.floor(((\"+eve.clientY+\"-document.getElementById('pulpit').clientTop)*pulpit.height/document.getElementById('pulpit').clientHeight+pulpit.y)/pulpit.zoomY);"
+                        "dataA.touchpadX = Math.floor(((\"+eve.clientX+\"-document.getElementById('pulpit').clientLeft)*pulpit.width/document.getElementById('pulpit').clientWidth)/pulpit.zoomX+(pulpit.x/pulpit.zoomX*pulpit.width/thi.parentNode.clientWidth));" +
+                        "dataA.touchpadY = Math.floor(((\"+eve.clientY+\"-document.getElementById('pulpit').clientTop)*pulpit.height/document.getElementById('pulpit').clientHeight)/pulpit.zoomY+(pulpit.y/pulpit.zoomY*pulpit.height/(thi.parentNode.clientHeight-document.getElementById('menu').clientHeight)));"
                         + "dataA.type=TCP_Data.typ.TOUCHPAD;send(dataA);" +
 
                         "\",500);" +
@@ -653,9 +653,10 @@ public class HTTP {
                         "{\n" +
                         "var data=new TCP_Data();" +
                         "data.mouse = TCP_Data.touchedTYPE.LPM;\n" +
-                        "data.touchpadX = Math.floor(((eve.clientX-thi.clientLeft)*pulpit.width/thi.clientWidth+pulpit.x)/pulpit.zoomX);\n" +
-                        "data.touchpadY = Math.floor(((eve.clientY-thi.clientTop)*pulpit.height/thi.clientHeight+pulpit.y)/pulpit.zoomY);\n"
-                        + "data.type=TCP_Data.typ.TOUCHPAD;send(data);\n"
+                        "data.touchpadX = Math.floor(((eve.clientX-thi.clientLeft)*pulpit.width/thi.clientWidth)/pulpit.zoomX+(pulpit.x/pulpit.zoomX*pulpit.width/(thi.parentNode.clientWidth)));\n" +
+                        "data.touchpadY = Math.floor(((eve.clientY-thi.clientTop)*pulpit.height/thi.clientHeight)/pulpit.zoomY+(pulpit.y/pulpit.zoomY*pulpit.height/(thi.parentNode.clientHeight-document.getElementById('menu').clientHeight)));\n"
+                        + " var x=new XMLHttpRequest();x.open('get','/log'+thi.parentNode.clientHeight+' '+document.body.clientHeight );x.send(null);" +
+                        "data.type=TCP_Data.typ.TOUCHPAD;send(data);\n"
                         + "}}\n" +
                         "document.getElementById('pulpit').addEventListener(\"MSGestureChange\", onDivGestureChange, false);\n" +
                         "document.getElementById('pulpit').addEventListener(\"GestureChange\", onDivGestureChange, false);\n" +
@@ -808,12 +809,12 @@ public class HTTP {
                         " src=\"/" + Program.ustawienia.haslo + "/pulpit/0/0/" + (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() + "/" + (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() + "/" + ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 16) + "/" + ((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 16) + "/JPEG/\" style=\"width:100%;height:100%\" onload=\"this.style.zIndex=2;pulpit.laduj(this);\" alt=\"Błąd\" />" +
                         //"<img " +
                         // " src=\"/"+Program.ustawienia.haslo+"/pulpit/0/0/"+ (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()+"/"+(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/16)+"/"+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/16)+"/JPEG/\" onload=\"this.style.zIndex=2;this.parentNode.children[0].style.zIndex=1;pulpit.laduj(this);\" alt=\"\" />" +
-                        "<div id=\"zoom\"><img class=\"zoom\" id=\"powieksz\" src=\"" + plusBase64 + "\" onclick=\"pulpit.zoom=pulpit.zoom*1.5;" +
+                        "<div id=\"zoom\"><img class=\"zoom\" id=\"powieksz\" src=\"" + plusBase64 + "\" onclick=\"pulpit.zoom=pulpit.zoom*1.5;pulpit.x=pulpit.x*1.5;pulpit.y=pulpit.y*1.5;" +
                         /*"document.getElementById(\'pulpit\').children[0].style.height=document.getElementById(\'pulpit\').children[0].style.width=parseFloat(document.getElementById(\'pulpit\').children[0].style.width)*1.5+'%';" +
                         "document.getElementById('pulpit').children[0].style.marginLeft=parseFloat(document.getElementById('pulpit').children[0].style.marginLeft)+(pulpit.x*pulpit.zoom/pulpit.zoomS)-pulpit.x;" +
                         "document.getElementById('pulpit').children[0].style.marginTop=parseFloat(document.getElementById('pulpit').children[0].style.marginTop)+(pulpit.y*pulpit.zoom/pulpit.zoomS)-pulpit.y;" +
                         */"\">" +
-                        "<img class=\"zoom\" id=\"pomniejsz\" src=\"" + minusBase64 + "\" onclick=\"pulpit.zoom=pulpit.zoom*0.666666666;" +
+                        "<img class=\"zoom\" id=\"pomniejsz\" src=\"" + minusBase64 + "\" onclick=\"pulpit.zoom=pulpit.zoom/1.5;pulpit.x=pulpit.x/1.5;pulpit.y=pulpit.y/1.5;" +
                         /*"document.getElementById(\'pulpit\').children[0].style.height=document.getElementById(\'pulpit\').children[0].style.width=parseFloat(document.getElementById(\'pulpit\').children[0].style.width)*0.6666666+'%';" +
                         "document.getElementById('pulpit').children[0].style.marginLeft=parseFloat(document.getElementById('pulpit').children[0].style.marginLeft)+(pulpit.x*pulpit.zoom/pulpit.zoomS)-pulpit.x;" +
                         "document.getElementById('pulpit').children[0].style.marginTop=parseFloat(document.getElementById('pulpit').children[0].style.marginTop)+(pulpit.y*pulpit.zoom/pulpit.zoomS)-pulpit.y;" +
@@ -916,8 +917,10 @@ public class HTTP {
                             + "</body></html>";
                 }
             }
-
-            os.write(wysylanie.getBytes());
+            try {
+                os.write(wysylanie.getBytes());
+            } catch (java.net.SocketException socEx) {
+            }
             os.close();
             is.close();
         }

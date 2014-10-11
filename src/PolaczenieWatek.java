@@ -297,8 +297,14 @@ public class PolaczenieWatek
                 }
                 case PPM: {
 
-                    if (data.touchpadX != 0 || data.touchpadY != 0)
+                    if (data.touchpadX != 0 || data.touchpadY != 0) {
                         MouseRobot.moveTo(data.touchpadX, data.touchpadY);
+                        try {
+                            sleep(10);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     MouseRobot.PPM();
                     break;
                 }
