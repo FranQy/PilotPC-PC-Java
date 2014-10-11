@@ -668,7 +668,9 @@ public class HTTP {
                         "      }\n"
 
                         + "/*]]>*/</script>"
-                        + "</head><body onload=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onresize=\"mapa(document.getElementById('przyciski').clientHeight/1280)\" onkeypress=\"console.log(event);" +
+                        + "</head><body onload=\"mapa(document.getElementById('przyciski').clientHeight/1280);var but=document.getElementById('klawiatura').getElementsByTagName('button');hei=(document.body.clientHeight/5-document.getElementById('menu').clientHeight/5)+'px';for(var i=0;i<but.length;i++)but[i].style.height=hei;\" onresize=\"mapa(document.getElementById('przyciski').clientHeight/1280); var but=document.getElementById('klawiatura').getElementsByTagName('button');hei=(document.body.clientHeight/5-document.getElementById('menu').clientHeight/5)+'px';for(var i=0;i<but.length;i++)but[i].style.height=hei;" +
+                        // " var x=new XMLHttpRequest();x.open('get','/log'+hei );x.send(null);" +
+                        "\" onkeypress=\"console.log(event);" +
                         "var data=new TCP_Data();" +
                         "data.key = event.charCode;\n" +
                         "data.type=TCP_Data.typ.KEYBOARD;send(data);\n" + "return false;\">"
@@ -844,6 +846,10 @@ public class HTTP {
                         "<h2>Motyw</h2><div class=\"podmenu\"><label><input type=\"radio\" name=\"motyw\" onclick=\"document.body.style.background='#28211b';\" checked>Ciemny motyw</label><label><input type=\"radio\" name=\"motyw\" onclick=\"document.body.style.background='#e2dd21';\">Jasny motyw</label></div></div>" +
                         "</div></body></html>";
 
+            } else if (wyj.indexOf("/log") == 0) {
+                System.out.println(wyj.substring(4, wyj.indexOf('\n') - 4));
+
+                wysylanie = "HTTP/1.1 200 OK\r\n\r\n\r\n";
             } else if (wyj.indexOf("/ ") == 0) {
                 String typ;
                 if (wyj.contains("mobile") || wyj.contains("touch") || wyj.contains("android"))
@@ -855,7 +861,7 @@ public class HTTP {
                         + "<meta name=\"viewport\" content=\"width=240, initial-scale=1, user-scalable=no\" />"
                         + "</head>"
                         + "<body style=\" min-height:100%;color:white;background:#26211b;\" onload=\"document.getElementById('txt').focus()\" onclick=\"document.getElementById('txt').focus()\">"
-                        + "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\" style=\"text-align:center;\"><h1>PilotPC</h1><label><h2>wpisz kod</h2><input id=\"txt\" type=\"" + typ + "\" style=\"width: 100%;\" onkeyup=\"if(this.value.length==6)document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\"/></label><input type=\"submit\" value=\"ok\" style=\"width: 100%; height:20%;\"/></form>"
+                        + "<form onsubmit=\"document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\" style=\"text-align:center;\"><h1>PilotPC</h1><label><h2>wpisz kod</h2><input id=\"txt\" type=\"number\" style=\"width: 100%;\" onkeyup=\"if(this.value.length==6)document.location.pathname='/'+document.getElementsByTagName('input')[0].value;return false;\"/></label><input type=\"submit\" value=\"ok\" style=\"width: 100%; height:20%;\"/></form>"
                         + "</body></html>";
 
             } else {
