@@ -41,7 +41,8 @@ public class Aktualizacja
                     break;
                 } catch (IOException ioe) {
                     try {
-                        is.close();
+                        if (is != null)
+                            is.close();
                     } catch (IOException ioe2) {
                         // just going to ignore this one
                     }
@@ -49,7 +50,8 @@ public class Aktualizacja
                         ioe.printStackTrace();
                 } finally {
                     try {
-                        is.close();
+                        if (is != null)
+                            is.close();
                     } catch (IOException ioe) {
                         // just going to ignore this one
                     }
