@@ -195,7 +195,21 @@ void instalacja::start(wstring fol)
 		//char[] = new char[];
 		//while (true)
 		//{
-		int n = recv(soc, buff, BuffSize, 0);
+		char bufJeden[1];
+		int n = -1;
+		while (true)
+		{
+			n = n + recv(soc, bufJeden, 1, 0);
+			buff[n] = bufJeden[0];
+			 if (n > 10)
+			 {
+				 if (buff[n] == ']'&&buff[n - 1] == 'E'&&buff[n - 2] == 'L'&&buff[n -3] == 'I'&&buff[n - 4] == 'F'&&buff[n - 5] == 'D'&&buff[n - 6] == 'N'&&buff[n - 7] == 'E'&&buff[n - 8] == '[')
+				 {
+					 n = n - 8;
+					 break;
+				 }
+			 }
+		}
 		string buforS = string(buff);
 		if (buforS.find("HTTP/1.1 200")!=0)
 		{
