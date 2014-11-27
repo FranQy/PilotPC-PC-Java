@@ -55,17 +55,20 @@ JNIEXPORT void JNICALL Java_Biblioteka_click(JNIEnv *env, jclass jobj, jint a) {
 
 
 JNIEXPORT void JNICALL Java_Biblioteka_autostart
-(JNIEnv *env, jclass jobj, jboolean, jboolean, jstring f) {
+(JNIEnv *env, jclass jobj, jboolean wlacz, jboolean wszyscy, jstring f) {
 
 	jboolean blnIsCopy;
 	jstring jstrOutput;
 	char* strCOut;
 	const char* strCIn = (env)->GetStringUTFChars(f, &blnIsCopy);
 
-	string folder = string("\"")+string(strCIn) + string("\\Windows.exe\" /no");
+	string folder = string("\"") + string(strCIn) + string("\\Windows.exe\" /no");
 	HKEY hkTest;
 	RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
-	RegSetValueExA(hkTest, "PilotPC", 0, REG_SZ, (BYTE*)(folder.c_str()), folder.length());
+	if (wlacz)
+		RegSetValueExA(hkTest, "PilotPC", 0, REG_SZ, (BYTE*)(folder.c_str()), folder.length());
+	else
+		RegDeleteValue(hkTest, L"PilotPC");
 }
 JNIEXPORT void JNICALL Java_Biblioteka_runAsRoot
 (JNIEnv *env, jclass, jstring adres, jstring parametry){
@@ -87,5 +90,19 @@ JNIEXPORT void JNICALL Java_Biblioteka_runAsRoot
 		{
 			//return false;
 		}
+	}
+}JNIEXPORT bool JNICALL Java_Biblioteka_CzyAutostart
+(JNIEnv *env, jclass){
+	{
+
+		HKEY hkTest;
+		RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
+		char buf[21];
+		DWORD dwBufSize = 20;
+		DWORD dwRegsz = REG_SZ;
+		LSTATUS result = RegQueryValueEx(hkTest, L"PilotPC", NULL, &dwRegsz, (LPBYTE)buf, &dwBufSize);
+		if (result == ERROR_SUCCESS)
+			return true;
+		return false;
 	}
 }
