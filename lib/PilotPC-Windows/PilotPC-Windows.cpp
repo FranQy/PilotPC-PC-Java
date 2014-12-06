@@ -91,7 +91,7 @@ JNIEXPORT void JNICALL Java_Biblioteka_runAsRoot
 			//return false;
 		}
 	}
-}JNIEXPORT bool JNICALL Java_Biblioteka_CzyAutostart
+}JNIEXPORT jboolean JNICALL Java_Biblioteka_CzyAutostart
 (JNIEnv *env, jclass){
 	{
 
@@ -100,6 +100,10 @@ JNIEXPORT void JNICALL Java_Biblioteka_runAsRoot
 		char buf[21];
 		DWORD dwBufSize = 20;
 		DWORD dwRegsz = REG_SZ;
+		LSTATUS result = RegQueryValueEx(hkTest, L"PilotPC", NULL, &dwRegsz, (LPBYTE)buf, &dwBufSize);
+		if (result == ERROR_SUCCESS)
+			return true;
+		RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
 		LSTATUS result = RegQueryValueEx(hkTest, L"PilotPC", NULL, &dwRegsz, (LPBYTE)buf, &dwBufSize);
 		if (result == ERROR_SUCCESS)
 			return true;

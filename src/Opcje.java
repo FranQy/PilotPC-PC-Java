@@ -159,6 +159,13 @@ public class Opcje {
 
     public void ustawJezyk() {
         startZSystememButton.setText(Jezyk.napisy[Jezyk.n.StartZSystemem.ordinal()]);
+        try{
+            if(Biblioteka.CzyAutostart())
+                startZSystememButton.setText(Jezyk.napisy[Jezyk.n.WylaczStartZSystemem.ordinal()]);
+            else
+            startZSystememButton.setText(Jezyk.napisy[Jezyk.n.WlaczStartZSystemem.ordinal()]);
+        }
+        catch(Throwable e){}
         if (Program.ustawienia.plynnaMysz)
             gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
         else

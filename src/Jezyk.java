@@ -30,7 +30,7 @@ public class Jezyk {
         WlaczWygladzanieMyszy, AktualizacjaZostanie, TrwaAktualizowanie, ProgramAktualny, MoznaZaktualizowac,
         TrwaSprawdzanieAKtualizacji, BladZLadowaniemBiblioteki, System, Model,
         DostepnePolecenia, NowyKod, NieMoznaZmienic, NieMoznaPokazac, NieznanePolecenie, BladRozlaczono, Opcje, DodatekDoPrzegladarki, BrakPodlaczonychUrzadzen, DodatekDoPrzegladarkiTak, DodatekDoPrzegladarkiNie, WylaczSerwer, PowiekszQR, AktualizujTeraz, AktualizacjaAutomatyzna, WpiszPomoc,
-        TworzenieSieciWiFi, Haslo, Start, Stop, Zaktualizowano, DostepnaNowa, Blad
+        TworzenieSieciWiFi, Haslo, Start, Stop, Zaktualizowano, DostepnaNowa, Blad,WylaczStartZSystemem,WlaczStartZSystemem
     }
 
     ;
@@ -110,6 +110,8 @@ public class Jezyk {
                 napisy[n.Blad.ordinal()] = "Błąd";
                 napisy[n.Zaktualizowano.ordinal()] = "Zaktualizowano! Czy uruchomić ponownie program PilotPC?";
                 napisy[n.DostepnaNowa.ordinal()] = "Dostępna jest nowa wersja programu PilotPC. Czy chcesz zaktualizować?";
+                napisy[n.WylaczStartZSystemem.ordinal()] = "Wyłącz start z systemem";
+                napisy[n.WlaczStartZSystemem.ordinal()] = "Włącz start z systemem";
 
                 break;
             case Angielski:
@@ -132,6 +134,8 @@ public class Jezyk {
                 napisy[n.ZmienKod.ordinal()] = "New code";
                 napisy[n.Infromacje.ordinal()] = "Settings";
                 napisy[n.StartZSystemem.ordinal()] = "Start with system boot";
+                napisy[n.WylaczStartZSystemem.ordinal()] = "Turn off start with system boot";
+                napisy[n.WlaczStartZSystemem.ordinal()] = "Turn on start with system boot";
                 napisy[n.PodlaczoneUrzadzenia.ordinal()] = "Connected devices";
                 napisy[n.WlaczWygladzanieMyszy.ordinal()] = "Turn on smooth mouse";
                 napisy[n.WylaczWygladzanieMyszy.ordinal()] = "Turn off smooth mouse";
@@ -191,6 +195,8 @@ public class Jezyk {
                 napisy[n.ZmienKod.ordinal()] = "Изменение кода";
                 napisy[n.Infromacje.ordinal()] = "О программе";
                 napisy[n.StartZSystemem.ordinal()] = "начать с операционной системой";
+                napisy[n.WylaczStartZSystemem.ordinal()] = "выключить начать с операционной системой";
+                napisy[n.WlaczStartZSystemem.ordinal()] = "включить начать с операционной системой";
                 napisy[n.PodlaczoneUrzadzenia.ordinal()] = "Подключенные устройства";
                 napisy[n.WlaczWygladzanieMyszy.ordinal()] = "включить гладкой мыши";
                 napisy[n.WylaczWygladzanieMyszy.ordinal()] = "отключить гладкой мышь";

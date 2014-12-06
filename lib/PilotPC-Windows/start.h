@@ -23,6 +23,19 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_Biblioteka_autostart
 		(JNIEnv *, jclass, jboolean, jboolean, jstring);
 
+	/*
+	* Class:     Biblioteka
+	* Method:    CzyAutostart
+	* Signature: ()Z
+	*/
+	JNIEXPORT jboolean JNICALL Java_Biblioteka_CzyAutostart
+		(JNIEnv *, jclass);
+
+	/*
+	* Class:     Biblioteka
+	* Method:    runAsRoot
+	* Signature: (Ljava/lang/String;Ljava/lang/String;)V
+	*/
 	JNIEXPORT void JNICALL Java_Biblioteka_runAsRoot
 		(JNIEnv *, jclass, jstring, jstring);
 
