@@ -63,3 +63,8 @@ JNIEXPORT void JNICALL Java_Biblioteka_autostart
 		}
 JNIEXPORT void JNICALL Java_Biblioteka_runAsRoot
 		(JNIEnv *env, jclass jobj, jstring str1, jstring str2){}
+		
+JNIEXPORT jboolean JNICALL Java_Biblioteka_CzyAutostart
+(JNIEnv *env, jclass jobj) {
+		return false;
+		}
