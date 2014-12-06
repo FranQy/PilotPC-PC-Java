@@ -1,11 +1,12 @@
 #include "start.h"
 #include <stdio.h>
 #include <jni.h>
-
+#include <fstream>      // std::fstream
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 #include <X11/extensions/XTest.h>
 #include <X11/XF86keysym.h>
+#include <sys/stat.h>
 
 enum  pilotButton{
 	OFF, MUSIC, PLAYPAUSE, PERV, NEXT, STOP, EXIT, BACK, VOLDOWN, VOLUP, MUTE,
@@ -59,7 +60,15 @@ switch (przycisk)
 }
 JNIEXPORT void JNICALL Java_Biblioteka_autostart
 (JNIEnv *env, jclass jobj, jboolean, jboolean, jstring f) {
-		
+std::fstream fs;
+fs.open ("/etc/init.d/PilotPC", std::fstream::in | std::fstream::out | std::fstream::app);
+
+  fs << " ./";
+  fs << f;
+  fs << "/Linux.sh";
+
+  fs.close();
+  chmod("/etc/init.d/PilotPC",S_IRWXG|S_IRWXO|S_IRWXU);
 		}
 JNIEXPORT void JNICALL Java_Biblioteka_runAsRoot
 		(JNIEnv *env, jclass jobj, jstring str1, jstring str2){}
