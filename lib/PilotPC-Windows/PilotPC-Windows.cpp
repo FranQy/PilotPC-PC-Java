@@ -96,16 +96,18 @@ JNIEXPORT void JNICALL Java_Biblioteka_runAsRoot
 	{
 
 		HKEY hkTest;
-		RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
-		char buf[21];
-		DWORD dwBufSize = 20;
+		LSTATUS a=RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_READ, &hkTest);
+		char buf[1024];
+		DWORD dwBufSize = 1023;
 		DWORD dwRegsz = REG_SZ;
 		LSTATUS result = RegQueryValueEx(hkTest, L"PilotPC", NULL, &dwRegsz, (LPBYTE)buf, &dwBufSize);
-		if (result == ERROR_SUCCESS)
+		if (result == ERROR_SUCCESS || result == ERROR_MORE_DATA)
 			return true;
-		RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
-		LSTATUS result = RegQueryValueEx(hkTest, L"PilotPC", NULL, &dwRegsz, (LPBYTE)buf, &dwBufSize);
-		if (result == ERROR_SUCCESS)
+		 dwBufSize = 1023;
+		 dwRegsz = REG_SZ;
+		RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_READ, &hkTest);
+		 result = RegQueryValueEx(hkTest, L"PilotPC", NULL, &dwRegsz, (LPBYTE)buf, &dwBufSize);
+		 if (result == ERROR_SUCCESS || result == ERROR_MORE_DATA)
 			return true;
 		return false;
 	}

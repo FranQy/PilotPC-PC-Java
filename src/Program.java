@@ -318,7 +318,13 @@ public class Program {
     }
 
     static public void autostart() {
-        Biblioteka.autostart(true, false, System.getProperty("user.dir"));
+        boolean dodaj=true;
+        try{
+            dodaj=!Biblioteka.CzyAutostart();
+        }catch(Throwable e){
+
+        }
+        Biblioteka.autostart(dodaj, false, System.getProperty("user.dir"));
     }
 
 

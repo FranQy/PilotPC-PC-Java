@@ -105,6 +105,7 @@ public class Opcje {
             public void actionPerformed(ActionEvent e) {
 
                 Program.autostart();
+                ustawJezyk();
             }
         });
         AktualizujAutomatycznie.setSelected(Program.ustawienia.aktualizujAutomatycznie);
