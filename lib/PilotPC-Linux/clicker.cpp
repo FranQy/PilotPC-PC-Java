@@ -7,7 +7,7 @@
 #include <X11/extensions/XTest.h>
 #include <X11/XF86keysym.h>
 #include <sys/stat.h>
-
+#include <stdio.h>
 enum  pilotButton{
 	OFF, MUSIC, PLAYPAUSE, PERV, NEXT, STOP, EXIT, BACK, VOLDOWN, VOLUP, MUTE,
 	UP, DOWN, RIGHT, LEFT, RETTURN,
@@ -59,7 +59,8 @@ switch (przycisk)
    XFlush(display);
 }
 JNIEXPORT void JNICALL Java_Biblioteka_autostart
-(JNIEnv *env, jclass jobj, jboolean, jboolean, jstring f) {
+(JNIEnv *env, jclass jobj, jboolean nowy, jboolean, jstring f) {
+if(nowy){
 std::fstream fs;
 fs.open ("/etc/init.d/PilotPC", std::fstream::in | std::fstream::out | std::fstream::app);
 
@@ -69,11 +70,23 @@ fs.open ("/etc/init.d/PilotPC", std::fstream::in | std::fstream::out | std::fstr
 
   fs.close();
   chmod("/etc/init.d/PilotPC",S_IRWXG|S_IRWXO|S_IRWXU);
+  }else
+  {
+  remove("/etc/init.d/PilotPC");
+  }
 		}
 JNIEXPORT void JNICALL Java_Biblioteka_runAsRoot
 		(JNIEnv *env, jclass jobj, jstring str1, jstring str2){}
 		
 JNIEXPORT jboolean JNICALL Java_Biblioteka_CzyAutostart
 (JNIEnv *env, jclass jobj) {
-		return false;
+        fstream plik;
+        plik.open("/etc/init.d/PilotPC", ios::in | ios::nocreate);  /* ważne, by nie tworzyć pliku, jeśli nie istnieje, stąd flaga nocreate */
+        if ( plik.is_open() )
+        {
+            plik.close();
+            return true;
+        }
+        plik.close();
+        return false;
 		}
