@@ -106,8 +106,10 @@ void pobierz(string nazwa, wstring fol)
 
 	//SetWindowTextA(StanInstalacji, nazwa.c_str());
 	int leng = nazwa.length();
-	if (nazwa[leng - 4] == '.'&&nazwa[leng - 3] == 'e'&&nazwa[leng - 2] == 'x'&&nazwa[leng - 1] == 'e')
+	if (nazwa[leng - 5] == 's'&&nazwa[leng - 4] == '.'&&nazwa[leng - 3] == 'e'&&nazwa[leng - 2] == 'x'&&nazwa[leng - 1] == 'e')
 		return;//soc = getHttp(serwery[serNr], serweryl[serNr], nazwa + ".bin", nazwa.length() + 4);
+	else if (nazwa[leng - 4] == '.'&&nazwa[leng - 3] == 'e'&&nazwa[leng - 2] == 'x'&&nazwa[leng - 1] == 'e')
+		soc = getHttp(serwery[serNr], serweryl[serNr], nazwa + ".bin", nazwa.length() + 4);
 	else
 		soc = getHttp(serwery[serNr], serweryl[serNr], nazwa, nazwa.length());
 	const int BuffSize = 10240;
@@ -116,8 +118,8 @@ void pobierz(string nazwa, wstring fol)
 	bool znalezione = false;
 
 	for (int i = 0; i < nazwa.length(); i++)
-	if (nazwa[i] == '/')
-		nazwa[i] = '\\';
+		if (nazwa[i] == '/')
+			nazwa[i] = '\\';
 
 	SECURITY_ATTRIBUTES  sa;
 	SECURITY_ATTRIBUTES*  saw = &sa;
@@ -175,20 +177,20 @@ void pobierz(string nazwa, wstring fol)
 			n = recv(soc, buff, BuffSize, 0);
 			int i = 0;
 			if (!znalezione)
-			for (; i < n; i++)
-			{
-				if (buff[i] == '\n'&&buff[i + 1] == '\n')
+				for (; i < n; i++)
 				{
-					i = i + 2;
-					znalezione = true;
-					break;
+					if (buff[i] == '\n'&&buff[i + 1] == '\n')
+					{
+						i = i + 2;
+						znalezione = true;
+						break;
+					}
+					else if (buff[i] == '\n'&&buff[i + 2] == '\n'){
+						i = i + 3;
+						znalezione = true;
+						break;
+					}
 				}
-				else if (buff[i] == '\n'&&buff[i + 2] == '\n'){
-					i = i + 3;
-					znalezione = true;
-					break;
-				}
-			}
 			int lengthStringPos = ((string)buff).find("Content-Length:");
 			if (lengthStringPos > 0)
 			{
@@ -221,17 +223,80 @@ void pobierz(string nazwa, wstring fol)
 	CloseHandle(hPlik);
 	shutdown(soc, 2);
 }
-void instalujJave(){
-	pobierz("java.bin", fold);
-	MoveFile(L"java.bin", L"\\javaInstalacja.exe");
+HINSTANCE odpalJave(_TCHAR* argv[]){
+	HINSTANCE hInst;
+	if (fold.length()>0)
+	{
+		hInst = ShellExecute(0,
+			L"open",                      // Operation to perform
+			L"javaInstalacja.exe",  // Application name
+			L"",           // Additional parameters
+			fold.c_str(),                      // Default directory
+			SW_SHOW);
+		wprintf(wstring(argv[0]).substr(0, wstring(argv[0]).find_last_of(L'\\')).c_str());
+	}
+	else if (argv[0][1] == L':')
+	{
+		hInst = ShellExecute(0,
+			L"open",                      // Operation to perform
+			L"javaInstalacja.exe",  // Application name
+			L"",           // Additional parameters
+			wstring(argv[0]).substr(0, wstring(argv[0]).find_last_of(L'\\')).c_str(),                           // Default directory
+			SW_SHOW);
+		wprintf(wstring(argv[0]).substr(0, wstring(argv[0]).find_last_of(L'\\')).c_str());
+	}
+	else
+		hInst = ShellExecute(0,
+		L"open",                      // Operation to perform
+		L"javaInstalacja.exe",  // Application name
+		L"",           // Additional parameters
+		0,                           // Default directory
+		SW_SHOW);
+	return hInst;
+}
+void instalujJave(_TCHAR* argv[]){
+
+
+	
+	//MoveFile(L"java.bin", L"javaInstalacja7.exe");
 	//MessageBox(NULL, L"W systemie brak Javy. Proszê zainstalowaæ Javê", L"Informacja o Javie", MB_ICONEXCLAMATION);
-	STARTUPINFO si;
+	/*STARTUPINFO si;
 	PROCESS_INFORMATION pi;
 
 	ZeroMemory(&si, sizeof(si));
 	si.cb = sizeof(si);
 	ZeroMemory(&pi, sizeof(pi));
-	CreateProcess(L"javaInstalacja.exe", L"javaInstalacja.exe", NULL, NULL, false, 0, NULL, 0, &si, &pi);
+	CreateProcess(L"javaInstalacja7.exe", L"javaInstalacja7.exe", NULL, NULL, false, 0, NULL, 0, &si, &pi);*/
+	/*SHELLEXECUTEINFO sei = { sizeof(sei) };
+	sei.lpVerb = L"runas";
+	sei.lpFile = L"javaInstalacja.exe";
+	sei.lpParameters = L"javaInstalacja.exe";
+	//sei.hwnd = ((instalacja*)Args)[0].okno;
+	sei.nShow = SW_NORMAL;
+
+	if (!ShellExecuteEx(&sei))
+	{
+	DWORD dwError = GetLastError();
+	if (dwError == ERROR_CANCELLED)
+	{
+
+	}
+	}*/
+	
+	HINSTANCE hInst = odpalJave(argv);
+	if (reinterpret_cast<int>(hInst) <= 32)
+	{
+		if ((reinterpret_cast<int>(hInst)) == ERROR_FILE_NOT_FOUND)
+		{
+			//brak javy
+			printf("\rBrak zainstalowanej Javy!");
+			pobierz("javaInstalacja.exe", fold);
+
+			HINSTANCE hInst = odpalJave(argv);
+			//return false;
+		}
+	}
+	return;
 }
 void plikiNew(wstring fold){
 	WIN32_FIND_DATA  FindFileData;
@@ -265,6 +330,7 @@ void plikiNew(wstring fold){
 }
 int run(_TCHAR* argv[], LPCWSTR polec, bool konsola)
 {
+	//instalujJave();
 	HINSTANCE hInst;
 	//	if (!access("PilotPC-PC-Java.jar.new", 0))
 	WCHAR *pol;
@@ -304,8 +370,8 @@ int run(_TCHAR* argv[], LPCWSTR polec, bool konsola)
 		if ((reinterpret_cast<int>(hInst)) == ERROR_FILE_NOT_FOUND)
 		{
 			//brak javy
-			printf("Brak zainstalowanej Javy!");
-			instalujJave();
+			printf("\rBrak zainstalowanej Javy!");
+			instalujJave(argv);
 			return false;
 		}
 	}
@@ -375,7 +441,7 @@ int _tmain(const int argc, _TCHAR* argv[])
 	fstream sprPl;
 
 	if (argv[0][1] == L':'){
-		sprPl.open((wstring(argv[0]).substr(0, wstring(argv[0]).find_last_of(L'\\'))+wstring(L"/java/pilotpc.jar")).c_str(), ios::in | ios::_Nocreate);  /* wa¿ne, by nie tworzyæ pliku, jeœli nie istnieje, st¹d flaga nocreate */
+		sprPl.open((wstring(argv[0]).substr(0, wstring(argv[0]).find_last_of(L'\\')) + wstring(L"/java/pilotpc.jar")).c_str(), ios::in | ios::_Nocreate);  /* wa¿ne, by nie tworzyæ pliku, jeœli nie istnieje, st¹d flaga nocreate */
 		if (!sprPl.is_open())
 		{
 
@@ -405,8 +471,8 @@ int _tmain(const int argc, _TCHAR* argv[])
 		LPCWSTR polec = L"-jar java/pilotpc.jar -o";
 
 		for (short i = 1; i < argc; i++)
-		if ((argv[i][0] == '/' || argv[i][0] == '-') && argv[i][1] == 'n'&&argv[i][2] == 'o')
-			polec = L"-jar java/pilotpc.jar";
+			if ((argv[i][0] == '/' || argv[i][0] == '-') && argv[i][1] == 'n'&&argv[i][2] == 'o')
+				polec = L"-jar java/pilotpc.jar";
 
 		return run(argv, polec, false);
 
@@ -440,10 +506,10 @@ int _tmain(const int argc, _TCHAR* argv[])
 		wstring polec = wstring(L"-jar java/pilotpc.jar -o");
 		bool konsola = false;
 		for (short i = 1; i < argc; i++)
-		if ((argv[i][0] == '/' || argv[i][0] == '-') && argv[i][1] == 'n'&&argv[i][2] == 'o')
-			polec = wstring(L"-jar java/pilotpc.jar");
-		else
-			konsola = true;
+			if ((argv[i][0] == '/' || argv[i][0] == '-') && argv[i][1] == 'n'&&argv[i][2] == 'o')
+				polec = wstring(L"-jar java/pilotpc.jar");
+			else
+				konsola = true;
 
 		for (short i = 1; i < argc; i++)
 

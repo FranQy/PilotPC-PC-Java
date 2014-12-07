@@ -80,8 +80,8 @@ JNIEXPORT void JNICALL Java_Biblioteka_runAsRoot
 		
 JNIEXPORT jboolean JNICALL Java_Biblioteka_CzyAutostart
 (JNIEnv *env, jclass jobj) {
-        fstream plik;
-        plik.open("/etc/init.d/PilotPC", ios::in | ios::nocreate);  /* ważne, by nie tworzyć pliku, jeśli nie istnieje, stąd flaga nocreate */
+        std::fstream plik;
+        plik.open("/etc/init.d/PilotPC", std::ios::in);  /* ważne, by nie tworzyć pliku, jeśli nie istnieje, stąd flaga nocreate */
         if ( plik.is_open() )
         {
             plik.close();

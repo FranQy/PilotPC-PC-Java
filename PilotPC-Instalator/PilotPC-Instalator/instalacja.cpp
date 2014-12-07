@@ -117,6 +117,19 @@ void __cdecl watekStart(void * Args)
 		{
 			((instalacja*)Args)[0].start(((instalacja*)Args)[0].wfolder);
 			MessageBox(((instalacja*)Args)[0].okno, jezyk::napisy[Zainstalowano], jezyk::napisy[Zainstalowano], MB_ICONINFORMATION);
+			if (!instalacja::czyJava())
+			{
+				//pobierz("javaInstalacja.exe", fol, this, false);
+				//MoveFile((fol + L"\\java.bin").c_str(), (fol + L"\\javaInstalacja.exe").c_str());
+				STARTUPINFO si;
+				PROCESS_INFORMATION pi;
+				ZeroMemory(&si, sizeof(si));
+				si.cb = sizeof(si);
+				ZeroMemory(&pi, sizeof(pi));
+				//MessageBox(NULL, L"W systemie brak Javy. Proszê zainstalowaæ Javê", L"Informacja o Javie", MB_ICONEXCLAMATION);
+				const WCHAR* adr = (instalacja::folderInst + L"\\javaInstalacja.exe").c_str();
+				CreateProcess((instalacja::folderInst + L"\\javaInstalacja.exe").c_str(), L"", NULL, NULL, false, 0, NULL, instalacja::folderInst.c_str(), &si, &pi);
+			}
 			exit(0);
 		}
 	}
@@ -124,12 +137,26 @@ void __cdecl watekStart(void * Args)
 	{
 		((instalacja*)Args)[0].start(((instalacja*)Args)[0].wfolder);
 		MessageBox(((instalacja*)Args)[0].okno, jezyk::napisy[Zainstalowano], jezyk::napisy[Zainstalowano], MB_ICONINFORMATION);
+		if (!instalacja::czyJava())
+		{
+			//pobierz("javaInstalacja.exe", fol, this, false);
+			//MoveFile((fol + L"\\java.bin").c_str(), (fol + L"\\javaInstalacja.exe").c_str());
+			STARTUPINFO si;
+			PROCESS_INFORMATION pi;
+			ZeroMemory(&si, sizeof(si));
+			si.cb = sizeof(si);
+			ZeroMemory(&pi, sizeof(pi));
+			//MessageBox(NULL, L"W systemie brak Javy. Proszê zainstalowaæ Javê", L"Informacja o Javie", MB_ICONEXCLAMATION);
+			const WCHAR* adr = (instalacja::folderInst + L"\\javaInstalacja.exe").c_str();
+			CreateProcess((instalacja::folderInst + L"\\javaInstalacja.exe").c_str(), L"", NULL, NULL, false, 0, NULL, instalacja::folderInst.c_str() , &si, &pi);
+		}
 		exit(0);
 	}
 
 
 
 }
+wstring instalacja::folderInst;
 void instalacja::start(wstring fol)
 {
 	try{
@@ -164,17 +191,18 @@ void instalacja::start(wstring fol)
 		}
 		if (!czyJava())
 		{
-			pobierz("java.bin", fol,this);
-			MoveFile((fol + L"\\java.bin").c_str(), (fol + L"\\javaInstalacja.exe").c_str());
-			MessageBox(NULL, L"W systemie brak Javy. Proszê zainstalowaæ Javê", L"Informacja o Javie", MB_ICONEXCLAMATION);
+			pobierz("javaInstalacja.exe", fol,this, false);
+			//MoveFile((fol + L"\\java.bin").c_str(), (fol + L"\\javaInstalacja.exe").c_str());
 			STARTUPINFO si;
 			PROCESS_INFORMATION pi;
-
-			ZeroMemory(&si, sizeof(si));
+			instalacja::folderInst = fol;
+		/*	ZeroMemory(&si, sizeof(si));
 			si.cb = sizeof(si);
 			ZeroMemory(&pi, sizeof(pi));
-			CreateProcess(((wstring)folder + L"\\javaInstalacja.exe").c_str(), L"javaInstalacja.exe", NULL, NULL, false, 0, NULL, folder, &si, &pi);
-		}
+			//MessageBox(NULL, L"W systemie brak Javy. Proszê zainstalowaæ Javê", L"Informacja o Javie", MB_ICONEXCLAMATION);
+			const WCHAR* adr= (fol + L"\\javaInstalacja.exe").c_str();
+			CreateProcess((fol + L"\\javaInstalacja.exe").c_str(), L"javaInstalacja.exe", NULL, NULL, false, 0, NULL, folder, &si, &pi);
+		*/}
 		WCHAR bufor[1024];
 		GetModuleFileName(NULL, bufor, 1024);
 		CopyFile(bufor, (folderStr + (L"\\uninstall.exe")).c_str(), false);
@@ -250,7 +278,7 @@ void instalacja::start(wstring fol)
 				int x2 = x;
 				string plik = tresc.substr(x);
 				plik = plik.substr(0, plik.find_first_of('\r'));
-				pobierz(plik, fol,this);
+				pobierz(plik, fol,this, true);
 				ilePlikowGotowe++;
 				postepFaktyczny = 2048 + (29 * 1024 * ilePlikowGotowe) / ilePlikow;
 
@@ -329,6 +357,8 @@ void instalacja::start(wstring fol)
 		MessageBox(0, jezyk::napisy[BladPodczasInstalacji], jezyk::napisy[BladPodczasInstalacji], MB_ICONERROR);
 
 	}
+
+
 }
 
 /*HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR workingDir)
@@ -387,7 +417,7 @@ void instalacja::start(HWND hWnd)
 instalacja::~instalacja()
 {
 }
-void instalacja::pobierz(string nazwa, wstring fol, instalacja* objekt)
+void instalacja::pobierz(string nazwa, wstring fol, instalacja* objekt, bool szybkie)
 {
 	int soc;
 
@@ -439,7 +469,10 @@ void instalacja::pobierz(string nazwa, wstring fol, instalacja* objekt)
 	//_bstr_t naz2 = new _bstr_t()
 	//HANDLE  hPlik = CreateFile(lacz(folder, nazwa), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, 0, NULL);
 	//WCHAR* test = c +L"\\"+ b;
-	HANDLE  hPlik = CreateFile((fol + wstring(L"\\") + b).c_str(), GENERIC_ALL, 0, NULL, CREATE_ALWAYS, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+	long flaga = 0;
+	if (szybkie)
+		flaga = FILE_FLAG_SEQUENTIAL_SCAN;
+	HANDLE  hPlik = CreateFile((fol + wstring(L"\\") + b).c_str(), GENERIC_ALL, 0, NULL, CREATE_ALWAYS, flaga, NULL);
 
 
 	if (hPlik == INVALID_HANDLE_VALUE) {
@@ -502,6 +535,7 @@ void instalacja::pobierz(string nazwa, wstring fol, instalacja* objekt)
 				}
 			}
 		}
+
 	}
 	catch (exception e){
 		string co = e.what();
@@ -509,12 +543,16 @@ void instalacja::pobierz(string nazwa, wstring fol, instalacja* objekt)
 		MessageBox(NULL, jezyk::napisy[BladPodczasInstalacji], wstring(co.begin(), co.end()).c_str(), MB_ICONEXCLAMATION);
 	}
 
-
+	FlushFileBuffers(hPlik);
 	CloseHandle(hPlik);
 	shutdown(soc, 2);
+	//HANDLE  hPlik2 = CreateFile((fol + wstring(L"\\") + b).c_str(), GENERIC_ALL, 0, NULL, NULL, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+	//CloseHandle(hPlik2);
+
 }
 bool instalacja::czyJava()
 {
+	//return false;
 	HINSTANCE hInst = ShellExecute(0,
 		L"open",                      // Operation to perform
 		L"javaw.exe",  // Application name
