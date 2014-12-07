@@ -1,0 +1,1 @@
+sudo apt-get install openjdk-7-jdk gcc libxtst-dev libc6-dev-i386 gcc-4.8-base gcc-4.8-multilib g++-4.8-multilib -y -f

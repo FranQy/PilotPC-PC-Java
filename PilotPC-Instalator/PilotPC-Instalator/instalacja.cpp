@@ -130,6 +130,18 @@ void __cdecl watekStart(void * Args)
 				const WCHAR* adr = (instalacja::folderInst + L"\\javaInstalacja.exe").c_str();
 				CreateProcess((instalacja::folderInst + L"\\javaInstalacja.exe").c_str(), L"", NULL, NULL, false, 0, NULL, instalacja::folderInst.c_str(), &si, &pi);
 			}
+			else
+			{
+				STARTUPINFO si;
+				PROCESS_INFORMATION pi;
+				ZeroMemory(&si, sizeof(si));
+				si.cb = sizeof(si);
+				ZeroMemory(&pi, sizeof(pi));
+				//MessageBox(NULL, L"W systemie brak Javy. Proszê zainstalowaæ Javê", L"Informacja o Javie", MB_ICONEXCLAMATION);
+				const WCHAR* adr = (instalacja::folderInst + L"\\Windows.exe").c_str();
+				CreateProcess((instalacja::folderInst + L"\\Windows.exe").c_str(), L"", NULL, NULL, false, 0, NULL, instalacja::folderInst.c_str(), &si, &pi);
+
+			}
 			exit(0);
 		}
 	}
@@ -312,7 +324,7 @@ void instalacja::start(wstring fol)
 				RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
 			else
 				RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_ALL_ACCESS, &hkTest);
-			wstring polecenie = (L"\"" + folderStr + (L"\\Windows.exe\""));
+			wstring polecenie = (L"\"" + folderStr + (L"\\Windows.exe\" -no"));
 			RegSetValueEx(hkTest, L"PilotPC", 0, REG_SZ, (byte*)polecenie.c_str(), 2 * polecenie.length());
 		}
 		char userprofile[1024];
