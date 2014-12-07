@@ -173,6 +173,8 @@ public class Aktualizacja
                 }
             }
             zaktualizowano = true;
+            System.out.print("Pobrano aktualizację. Zostanie ona zainstalowana po ponownym uruchomieniu programu.");
+
         }
     }
 

@@ -90,7 +90,10 @@ public class Jezyk {
                 napisy[n.NieznanePolecenie.ordinal()] = "Nieznane polecenie";
                 napisy[n.WpiszPomoc.ordinal()] = "napisz: pomoc";
                 //napisy[n.PoleceniaKonsola.ordinal()] = "Polecenia:\r\n  zmień kod";
-                napisy[n.DostepnePolecenia.ordinal()] = "Dostępne polecenia:\r\n  zmień kod\r\n  pokaż kod\r\n  pokaż okno\r\n  zamknij";
+                napisy[n.DostepnePolecenia.ordinal()] = "Dostępne polecenia:\r\n  zmień kod\r\n  pokaż kod\r\n  pokaż okno\n  pokaż opcje\n" +
+                        "  zamknij okno\n" +
+                        "  zamknij opcje\n" +
+                        "  zamknij program";
                 napisy[n.BladRozlaczono.ordinal()] = "Błąd, rozłączono";
 
                 napisy[n.Opcje.ordinal()] = "Opcje";
@@ -155,7 +158,7 @@ public class Jezyk {
                 napisy[n.NieznanePolecenie.ordinal()] = "Unknown command";
                 napisy[n.WpiszPomoc.ordinal()] = "type help";
                 //napisy[n.PoleceniaKonsola.ordinal()] = "Polecenia:\r\n  zmień kod";
-                napisy[n.DostepnePolecenia.ordinal()] = "Avaible commands:\r\n  change code\r\n  show code\r\n  show window\r\n  exit";
+                napisy[n.DostepnePolecenia.ordinal()] = "Avaible commands:\r\n  change code\r\n  show code\r\n  show window\n  show settings\n  close window\n  close settings\n  exit";
 
                 napisy[n.Opcje.ordinal()] = "Options";
                 napisy[n.DodatekDoPrzegladarkiTak.ordinal()] = "Browser addon: yes";

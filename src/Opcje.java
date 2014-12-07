@@ -38,7 +38,14 @@ public class Opcje {
         okno.frame.setVisible(true);
         return okno;
     }
+    public static void zamknij() {
+        if (okno != null){
 
+        okno.frame.setVisible(false);
+            okno.frame.dispose();
+            okno=null;
+        }
+    }
     public Opcje(boolean wyswietl) {
 
         frame = new JFrame("Opcje");

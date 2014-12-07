@@ -52,7 +52,7 @@ public class Konsola extends Thread {
                     return false;
                 } else
                     System.out.println(Jezyk.napisy[Jezyk.n.NieMoznaZmienic.ordinal()] + " " + args[2].toLowerCase(Locale.getDefault()));
-            } else if (args[1].equalsIgnoreCase("show") || args[1].equalsIgnoreCase("pokaz") || args[1].equalsIgnoreCase("покажи")|| args[1].equalsIgnoreCase("покажите")) {
+            } else if (args[1].equalsIgnoreCase("show") || args[1].equalsIgnoreCase("pokaz") ||args[1].equalsIgnoreCase("pokarz") ||args[1].equalsIgnoreCase("pokaż") || args[1].equalsIgnoreCase("покажи")|| args[1].equalsIgnoreCase("покажите")) {
                 if (args.length == 2)
                     System.out.println(Jezyk.napisy[Jezyk.n.DostepnePolecenia.ordinal()]);
                 else if (args[2].equalsIgnoreCase("kod") || args[2].equalsIgnoreCase("code")|| args[2].equalsIgnoreCase("код")) {
@@ -67,9 +67,14 @@ public class Konsola extends Thread {
 
                     Program.glowneOkno.frame.setVisible(true);
                     return false;
+                }else if (args[2].equalsIgnoreCase("options") ||args[2].equalsIgnoreCase("settings") || args[2].equalsIgnoreCase("opcje") || args[2].equalsIgnoreCase("utawienia")) {
+
+
+                    Opcje.pokarz();
+                    return false;
                 } else
                     System.out.println(Jezyk.napisy[Jezyk.n.NieMoznaPokazac.ordinal()] + " " + args[2].toLowerCase(Locale.getDefault()));
-            } else if (args[1].equalsIgnoreCase("exit") || args[1].equalsIgnoreCase("wyjdź") || args[1].equalsIgnoreCase("wyjdz") || args[1].equalsIgnoreCase("zamknij")|| args[1].equalsIgnoreCase("конец")) {
+            } else if (args[1].equalsIgnoreCase("exit") ||args[1].equalsIgnoreCase("end") || args[1].equalsIgnoreCase("wyjdź") || args[1].equalsIgnoreCase("wyjdz") ||  args[1].equalsIgnoreCase("конец")) {
                 if (!Aktualizacja.trwa)
                     System.exit(0);
                 else
@@ -79,7 +84,58 @@ public class Konsola extends Thread {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
-            } else
+            }else if (args[1].equalsIgnoreCase("close") || args[1].equalsIgnoreCase("zamknij")) {
+                if (args.length>2&&(args[2].equalsIgnoreCase("window") || args[2].equalsIgnoreCase("okno") || args[2].equalsIgnoreCase("окно"))) {
+                    if (Program.glowneOkno == null)
+                        System.out.println("Nie można zaknąć okna, jeśli nie zostało otwarte. " + Jezyk.napisy[Jezyk.n.WpiszPomoc.ordinal()]);
+else
+                        Program.glowneOkno.frame.setVisible(false);
+                }
+                else if (args.length>2&&(args[2].equalsIgnoreCase("options") ||args[2].equalsIgnoreCase("settings") || args[2].equalsIgnoreCase("opcje") || args[2].equalsIgnoreCase("utawienia"))) {
+                    if (Opcje.okno == null)
+                        System.out.println("Nie można zaknąć okna, jeśli nie zostało otwarte. " + Jezyk.napisy[Jezyk.n.WpiszPomoc.ordinal()]);
+                    else
+                        Opcje.zamknij();
+                }
+
+                    else if (!Aktualizacja.trwa)
+                    System.exit(0);
+                else
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+            }
+            else if (args[1].equalsIgnoreCase("aktualizacja") || args[1].equalsIgnoreCase("update")) {
+                if (args.length>2&&(args[2].equalsIgnoreCase("on") || args[2].equalsIgnoreCase("włącz") || args[2].equalsIgnoreCase("wlacz"))) {
+                    Program.ustawienia.aktualizujAutomatycznie = true;
+                    Program.ustawienia.eksportuj();
+                    System.out.println("Automatyczna aktualizacja została włączona");
+                }
+           else if (args.length>2&&(args[2].equalsIgnoreCase("off") || args[2].equalsIgnoreCase("wyłącz") || args[2].equalsIgnoreCase("wylacz")) ){
+                    Program.ustawienia.aktualizujAutomatycznie = false;
+                    Program.ustawienia.eksportuj();
+                    System.out.println("Automatyczna aktualizacja została wyłączona");}
+       else if (args.length>2&&(args[2].equalsIgnoreCase("now") || args[2].equalsIgnoreCase("teraz"))) {
+                    System.out.print("Rozpoczęto aktualizację");
+                    Aktualizacja.wymus = true;
+
+                    java.util.Timer timer1 = new java.util.Timer();
+                    Aktualizacja timer1_task = new Aktualizacja();
+                    timer1.schedule(timer1_task, 0);
+                }
+            else{
+                    System.out.println(Opcje.status());
+                    System.out.print("Automatyczna aktualizacja jest w");
+                    if(!Program.ustawienia.aktualizujAutomatycznie)
+                        System.out.print("y");
+                    System.out.print("łączona\n");
+                    System.out.println("Dostępne polecenia:\n  aktualizacja włącz\n  aktualizacja wyłącz\n  aktualizacja teraz");
+                }}
+
+            else
                 System.out.println(Jezyk.napisy[Jezyk.n.NieznanePolecenie.ordinal()] + " " + args[1].toLowerCase(Locale.getDefault()) + ", " + Jezyk.napisy[Jezyk.n.WpiszPomoc.ordinal()]);
         }
         return true;
