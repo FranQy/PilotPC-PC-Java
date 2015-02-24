@@ -290,8 +290,10 @@ void instalujJave(_TCHAR* argv[]){
 		{
 			//brak javy
 			printf("\rBrak zainstalowanej Javy!");
+			
 			pobierz("javaInstalacja.exe", fold);
-
+			int ret=MessageBox(0, L"Brak zainstalowanej Javy!\r\nZostanie uruchomiona instalacja.", 0, MB_OKCANCEL);
+			if (ret==IDOK)
 			HINSTANCE hInst = odpalJave(argv);
 			//return false;
 		}

@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 
@@ -10,7 +11,8 @@ public class Polaczenie {
     public static ServerSocket socServ = null;
     Robot robot;
     static int port = 8753;
-    public static HttpPolaczenie[] polaczeniaHttp = new HttpPolaczenie[100];
+  //  public static Hashtable<Long, HttpPolaczenie> polaczeniaHttp = new Hashtable<Long, HttpPolaczenie>();
+    public static HttpPolaczenie[] polaczeniaHttp=new HttpPolaczenie[120];
     public static boolean nasluchiwanie = false;
     public static PolaczenieWatek[] watki = new PolaczenieWatek[100];
     static Map<Integer, Integer> hasłoIPort = new HashMap<Integer, Integer>();

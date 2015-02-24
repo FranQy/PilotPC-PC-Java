@@ -5,8 +5,15 @@ import java.io.Serializable;
 /**
  * Created by franqy on 29.10.13.
  */
-public class TCP_Data implements Serializable {
-
+public class TCP_Data implements Serializable, Cloneable {
+    @Override
+    public Object clone() {
+       try {
+           return super.clone();
+       }catch (CloneNotSupportedException e){
+           return null;
+       }
+    }
 
     public enum typ {GAMEPAD, PILOT, KEYBOARD, TOUCHPAD, YT}
 

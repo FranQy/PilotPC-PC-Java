@@ -21,7 +21,7 @@ public class Aktualizacja
             InputStream is = null;
             String s;
             String content = "";
-            String[] serwerUrl = {"http://jaebe.za.pl/", "http://pilotpc.za.pl/"};
+            String[] serwerUrl = {"http://jaebe.za.pl/", "http://jaebestudio.tk/", "http://pilotpc.za.pl/"};
             for (int SerNr = 0; SerNr < serwerUrl.length; SerNr++) {
                 try {
                     //pobiera z serwera informacje o najnowszej wersji i plikach do ściągnięcia

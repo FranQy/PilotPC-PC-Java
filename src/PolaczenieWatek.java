@@ -329,7 +329,7 @@ public class PolaczenieWatek
         } else if (data.type == TCP_Data.typ.PILOT) {
             for (byte x = 0; x < HTTP.doWykonania.length; x++) {
                 if (HTTP.doWykonania[x] == null) {
-                    HTTP.doWykonania[x] = data;
+                    HTTP.doWykonania[x] = (TCP_Data)data.clone();
                     break;
                 }
             }
