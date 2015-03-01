@@ -11,7 +11,7 @@
 enum  pilotButton{
 	OFF, MUSIC, PLAYPAUSE, PERV, NEXT, STOP, EXIT, BACK, VOLDOWN, VOLUP, MUTE,
 	UP, DOWN, RIGHT, LEFT, RETTURN,
-	REWIND,//Przewijanie do tyłu
+	REWIND,//Przewijanie do tylu
 	FORWARD, PHOTO, VIDEO
 };
 
@@ -49,7 +49,8 @@ switch (przycisk)
 	case MUSIC:
 		keycode = XKeysymToKeycode(display, XF86XK_Music);
 		break;
-
+default:
+break;
 	}
 
 
@@ -81,7 +82,7 @@ JNIEXPORT void JNICALL Java_Biblioteka_runAsRoot
 JNIEXPORT jboolean JNICALL Java_Biblioteka_CzyAutostart
 (JNIEnv *env, jclass jobj) {
         std::fstream plik;
-        plik.open("/etc/init.d/PilotPC", std::ios::in);  /* ważne, by nie tworzyć pliku, jeśli nie istnieje, stąd flaga nocreate */
+        plik.open("/etc/init.d/PilotPC", std::ios::in);  
         if ( plik.is_open() )
         {
             plik.close();
