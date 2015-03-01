@@ -329,7 +329,15 @@ public class PolaczenieWatek
         } else if (data.type == TCP_Data.typ.PILOT) {
             for (byte x = 0; x < HTTP.doWykonania.length; x++) {
                 if (HTTP.doWykonania[x] == null) {
-                    HTTP.doWykonania[x] = (TCP_Data)data.clone();
+                    TCP_Data klon=new TCP_Data();
+                    klon.touchpadX=data.touchpadX;
+                    klon.touchpadY=data.touchpadY;
+                    klon.button=data.button;
+                    klon.key=data.key;
+                    klon.mouse=data.mouse;
+                    klon.type=data.type;
+                    klon.ytUrl=data.ytUrl;
+                    HTTP.doWykonania[x] = klon;
                     break;
                 }
             }

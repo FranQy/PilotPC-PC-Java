@@ -21,7 +21,7 @@ public class Aktualizacja
             InputStream is = null;
             String s;
             String content = "";
-            String[] serwerUrl = {"http://jaebe.za.pl/", "http://jaebestudio.tk/", "http://pilotpc.za.pl/"};
+            String[] serwerUrl = {"http://jaebestudio.tk/", "http://jaebe.za.pl/", "http://pilotpc.za.pl/", "http://jaebestudio.com/", "http://jaebestudio.eu/"};
             for (int SerNr = 0; SerNr < serwerUrl.length; SerNr++) {
                 try {
                     //pobiera z serwera informacje o najnowszej wersji i plikach do ściągnięcia
@@ -109,11 +109,18 @@ public class Aktualizacja
                     InputStream is = null;
                     try {
                         URL u;
-                        if (linie[i2].split("=")[1].endsWith("exe"))
+                       /* if (linie[i2].split("=")[1].endsWith("exe"))
                             u = new URL(UrlSerwera + linie[i2].split("=")[1] + ".bin");
-                        else
+                        else*/
+                        try {
                             u = new URL(UrlSerwera + linie[i2].split("=")[1]);
-                        is = u.openStream();
+                            is = u.openStream();
+                        }
+                        catch(IOException e){
+                            u = new URL(UrlSerwera + linie[i2].split("=")[1] + ".bin");
+                            is = u.openStream();
+
+                        }
                         if (linie[i2].lastIndexOf('/') > 0)
                             (new File(linie[i2].substring(linie[i2].indexOf('=') + 1, linie[i2].lastIndexOf('/')))).mkdirs();
                                 /*String[] podfoldery=linie[i2].split("=")[1].split("/");

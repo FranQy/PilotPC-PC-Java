@@ -12,7 +12,7 @@ public class Pilot {
     Pilot() {
     }
 
-    static public void click(TCP_Data data) {
+    static public void click(TCP_Data data) {try{
         switch (data.button) {
             case OFF: {
 
@@ -159,7 +159,10 @@ public class Pilot {
                 }
                 break;
             }
-        }
+        }} catch (Throwable e) {
+        if (Program.debug)
+            e.printStackTrace();
+    }
         //data.clean();
     }
 

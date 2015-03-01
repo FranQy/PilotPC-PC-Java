@@ -17,7 +17,7 @@ uri=karta.document.URL
 	if(uri.search("youtube.com")>=0)
 	{
 	console.log(karta);
-	console.log(karta.uri.path);
+	//console.log(karta.uri.path);
 	//console.log(dane);
 		if(dane.akcja==2)//play/pauza
 		{
