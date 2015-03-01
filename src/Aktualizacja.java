@@ -46,8 +46,7 @@ public class Aktualizacja
                     } catch (IOException ioe2) {
                         // just going to ignore this one
                     }
-                    if (Program.debug)
-                        ioe.printStackTrace();
+                    Debugowanie.Błąd(ioe);
                 } finally {
                     try {
                         if (is != null)
@@ -160,8 +159,7 @@ public class Aktualizacja
                         strumien.close();
                     } catch (IOException ioe) {
 
-                        if (Program.debug)
-                            ioe.printStackTrace();
+                        Debugowanie.Błąd(ioe);
                     } finally {
                         try {
                             is.close();
@@ -201,10 +199,12 @@ public class Aktualizacja
                         Thread.sleep(500);
                     } catch (InterruptedException e1) {
                         // TODO Auto-generated catch block
-                        e1.printStackTrace();
+
+                        Debugowanie.Błąd(e1);
                     }
             }
         } catch (Throwable e) {
+            Debugowanie.Błąd(e);
         }
     }
 }

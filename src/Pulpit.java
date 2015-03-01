@@ -39,15 +39,15 @@ public class Pulpit {
             try {
                 os.write(wysylanie.getBytes());
             } catch (IOException e1) {
-                e1.printStackTrace();
+                Debugowanie.Błąd(e1);
             }
-            e.printStackTrace();
+            Debugowanie.Błąd(e);
             try {
                 os.flush();
                 os.close();
 
             } catch (IOException e1) {
-                e1.printStackTrace();
+                Debugowanie.Błąd(e1);
             }
 
         } finally {
@@ -62,7 +62,7 @@ public class Pulpit {
                 os.flush();
                 os.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                Debugowanie.Błąd(e);
             }
         }
         return "";

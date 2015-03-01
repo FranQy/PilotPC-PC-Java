@@ -117,7 +117,7 @@ class WatekMouseRobot extends Thread {
                 MouseRobot.gladkieX -= Math.floor(MouseRobot.gladkieX * dziel);
                 MouseRobot.gladkieY -= Math.floor(MouseRobot.gladkieY * dziel);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Debugowanie.Błąd(e);
             }
         }
     }

@@ -24,7 +24,7 @@ public class HTTP {
             while (System.currentTimeMillis() < Polaczenie.czasBlokadyHasla)
                 Thread.sleep(Polaczenie.czasBlokadyHasla - System.currentTimeMillis());
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Debugowanie.Błąd(e);
         }
         Jezyk.jezyki lang = Program.ustawienia.jezyk; //ustawienie języka
         int AcceptLanguage = wyj.indexOf("Accept-Language");

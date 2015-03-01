@@ -52,7 +52,7 @@ public class Polaczenie {
                 System.out.print(Jezyk.napisy[Jezyk.n.PilotPCWersja.ordinal()] + "\r\n");
 
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Debugowanie.Błąd(e);
             }
         }
     }

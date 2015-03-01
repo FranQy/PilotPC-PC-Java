@@ -69,11 +69,9 @@ public class Ustawienia implements Serializable {
             strumien.writeObject(this);
             strumien.close();
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Debugowanie.Błąd(e);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Debugowanie.Błąd(e);
         }
 
     }
@@ -92,14 +90,12 @@ public class Ustawienia implements Serializable {
             ret.eksportuj();
             return ret;
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Debugowanie.Błąd(e);
             Ustawienia ret = new Ustawienia();
             ret.eksportuj();
             return ret;
         } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Debugowanie.Błąd(e);
             Ustawienia ret = new Ustawienia();
             ret.eksportuj();
             return ret;

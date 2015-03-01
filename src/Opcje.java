@@ -59,7 +59,7 @@ public class Opcje {
                     try {
                         AccessPoint.start(APNazwa.getText(), APHaslo.getText());
                     } catch (IOException e1) {
-                        e1.printStackTrace();
+                        Debugowanie.Błąd(e1);
                     }
                 }
             });
@@ -69,7 +69,7 @@ public class Opcje {
                     try {
                         AccessPoint.stop();
                     } catch (IOException e1) {
-                        e1.printStackTrace();
+                        Debugowanie.Błąd(e1);
                     }
                 }
             });

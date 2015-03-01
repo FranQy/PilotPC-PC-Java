@@ -301,7 +301,7 @@ public class Okno {
                             Thread.sleep(500);
                         } catch (InterruptedException e1) {
                             // TODO Auto-generated catch block
-                            e1.printStackTrace();
+                            Debugowanie.Błąd(e1);
                         }
                 }
             }
@@ -502,8 +502,7 @@ public class Okno {
                     }
                     // System.out.println("2b");
                 } catch (SocketException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
+                    Debugowanie.Błąd(e1);
                 }
                 info.setText("<html>" + Jezyk.napisy[Jezyk.n.TwojeIPTo.ordinal()] + "</html>");
                 IP2.setText("<html>" + tekstIP + "</html>");

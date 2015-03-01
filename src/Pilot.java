@@ -29,17 +29,16 @@ public class Pilot {
 
                                 Thread.sleep(500);
                             } catch (InterruptedException e1) {
-                                // TODO Auto-generated catch block
-                                e1.printStackTrace();
+                                Debugowanie.Błąd(e1);
                                 try {
                                     Thread.sleep(500);
                                 } catch (InterruptedException e) {
-                                    e.printStackTrace();
+                                    Debugowanie.Błąd(e);
                                 }
                             }
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Debugowanie.Błąd(e);
                 }
                 break;
             }
@@ -82,8 +81,7 @@ public class Pilot {
                 try {
                     Biblioteka.click(data.button.ordinal());//Korzysta z tego samego enuma co TCP_DATA, bo po co robic dwa osobne
                 } catch (Throwable e) {
-                    if (Program.debug)
-                        e.printStackTrace();
+                    Debugowanie.Błąd(e);
                 }
                 break;
             }
@@ -105,7 +103,7 @@ public class Pilot {
                 try {
                     Biblioteka.click(data.button.ordinal());
                 } catch (Throwable e) {
-                    e.printStackTrace();
+                    Debugowanie.Błąd(e);
                 }
                 break;
             }
@@ -161,7 +159,7 @@ public class Pilot {
             }
         }} catch (Throwable e) {
         if (Program.debug)
-            e.printStackTrace();
+            Debugowanie.Błąd(e);
     }
         //data.clean();
     }

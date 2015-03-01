@@ -18,7 +18,7 @@ public class Konsola extends Thread {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Debugowanie.Błąd(e);
             }
 
         }
@@ -82,7 +82,7 @@ public class Konsola extends Thread {
                         Thread.sleep(500);
                     } catch (InterruptedException e1) {
                         // TODO Auto-generated catch block
-                        e1.printStackTrace();
+                        Debugowanie.Błąd(e1);
                     }
             }else if (args[1].equalsIgnoreCase("close") || args[1].equalsIgnoreCase("zamknij")) {
                 if (args.length>2&&(args[2].equalsIgnoreCase("window") || args[2].equalsIgnoreCase("okno") || args[2].equalsIgnoreCase("окно"))) {
@@ -105,7 +105,8 @@ else
                         Thread.sleep(500);
                     } catch (InterruptedException e1) {
                         // TODO Auto-generated catch block
-                        e1.printStackTrace();
+
+                        Debugowanie.Błąd(e1);
                     }
             }
             else if (args[1].equalsIgnoreCase("aktualizacja") || args[1].equalsIgnoreCase("update")) {

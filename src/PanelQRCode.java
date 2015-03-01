@@ -68,16 +68,14 @@ public class PanelQRCode extends JPanel {
                     }
                 }
             } catch (SocketException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+                Debugowanie.Błąd(e1);
             }
             String tresc = "http://" + adres1 + ":8753/" + Program.ustawienia.haslo + adres2;
             kod = Encoder.encode(tresc, ErrorCorrectionLevel.M);
             macierz = kod.getMatrix();
             //rozmiar=new Dimension(macierz.getHeight()*10, macierz.getHeight()*10);
         } catch (WriterException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Debugowanie.Błąd(e);
         }
         this.paintImmediately(0, 0, 2000, 2000);
     }

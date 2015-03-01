@@ -25,6 +25,7 @@ public class Program {
     static public boolean nadpisywanie = false;
 
     public static void main(String[] args) throws AWTException, InterruptedException {
+        try{
         while (Polaczenie.socServ == null) {
             if (Polaczenie.port == 1024 * 64)
                 //TODO Błąd, wszytskie porty zajęte
@@ -58,8 +59,7 @@ public class Program {
                                         try {
                                             Thread.sleep(500);
                                         } catch (InterruptedException e1) {
-                                            // TODO Auto-generated catch block
-                                            e1.printStackTrace();
+                                            Debugowanie.Błąd(e1);
                                         }
                                 }
                             }
@@ -69,9 +69,9 @@ public class Program {
                         input.close();
                         soc.close();
                     } catch (UnknownHostException e1) {
-                        e1.printStackTrace();
+                        Debugowanie.Błąd(e1);
                     } catch (IOException e1) {
-                        e1.printStackTrace();
+                        Debugowanie.Błąd(e1);
                     }
                 }
             }
@@ -145,7 +145,11 @@ public class Program {
                 Thread.sleep(1000);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+
+            Debugowanie.Błąd(e);
+        }}catch (Throwable e) {
+
+            Debugowanie.Błąd(e);
         }
     }
 
@@ -188,8 +192,7 @@ public class Program {
                             try {
                                 Thread.sleep(500);
                             } catch (InterruptedException e1) {
-                                // TODO Auto-generated catch block
-                                e1.printStackTrace();
+                                Debugowanie.Błąd(e1);
                             }
                     }
                 }
@@ -295,8 +298,7 @@ public class Program {
                 tray.add(trayIcon);   // dodanie naszej ikony do zasobnika systemowego
 
             } catch (AWTException e) {
-                if (debug)
-                    e.printStackTrace();
+                Debugowanie.Błąd(e);
                 System.out.println(Jezyk.napisy[Jezyk.n.BladPodczasDodawaniaIkony.ordinal()]);            // Wyświetl komunikat
 
             }
