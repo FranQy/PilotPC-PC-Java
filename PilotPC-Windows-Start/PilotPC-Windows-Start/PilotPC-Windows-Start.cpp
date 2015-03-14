@@ -16,8 +16,8 @@ void plikiNew(wstring fold);
 wstring fold = wstring(L"");
 
 int serNr = 0;
-char** serwery = new char*[] { "jaebe.za.pl", "pilotpc.za.pl" };
-int* serweryl = new int[] { 11, 13 };
+char** serwery = new char*[] { "jaebestudio.tk", "jaebe.za.pl", "pilotpc.za.pl" };
+int* serweryl = new int[] { 14, 11, 13 };
 void convert(std::string &in, std::wstring &out)
 {
 	out.resize(in.size());
@@ -110,6 +110,8 @@ void pobierz(string nazwa, wstring fol)
 		return;//soc = getHttp(serwery[serNr], serweryl[serNr], nazwa + ".bin", nazwa.length() + 4);
 	else if (nazwa[leng - 4] == '.'&&nazwa[leng - 3] == 'e'&&nazwa[leng - 2] == 'x'&&nazwa[leng - 1] == 'e')
 		soc = getHttp(serwery[serNr], serweryl[serNr], nazwa + ".bin", nazwa.length() + 4);
+	else if (nazwa[leng - 4] == '.'&&nazwa[leng - 3] == 'd'&&nazwa[leng - 2] == 'l'&&nazwa[leng - 1] == 'l')
+		soc = getHttp(serwery[serNr], serweryl[serNr], nazwa + ".bin", nazwa.length() + 4);
 	else
 		soc = getHttp(serwery[serNr], serweryl[serNr], nazwa, nazwa.length());
 	const int BuffSize = 10240;
@@ -146,7 +148,7 @@ void pobierz(string nazwa, wstring fol)
 		if (calyplik[i] == '\\')
 		{
 			if (!CreateDirectory(calyplik.substr(0, i).c_str(), &sa) && _waccess(calyplik.substr(0, i).c_str(), 0) == ENOENT){
-				printf("B³¹d podczas pobierania :(");
+				MessageBox(0, L"B³¹d podczas pobierania :(", 0, MB_OK);
 				//MessageBox(NULL, (wstring(L"Nie mo¿na utworzyæ folderu ") + calyplik.substr(0, i)).c_str(), jezyk::napisy[BladPodczasInstalacji], MB_ICONERROR);
 				//exit(1);
 			}
@@ -159,7 +161,7 @@ void pobierz(string nazwa, wstring fol)
 
 
 	if (hPlik == INVALID_HANDLE_VALUE) {
-		printf("B³¹d podczas pobierania :(");
+		MessageBox(0, L"B³¹d podczas pobierania :(", 0, MB_OK);
 	}
 	DWORD licz = 0;
 
@@ -225,7 +227,7 @@ void pobierz(string nazwa, wstring fol)
 }
 HINSTANCE odpalJave(_TCHAR* argv[]){
 	HINSTANCE hInst;
-	if (fold.length()>0)
+	if (fold.length() > 0)
 	{
 		hInst = ShellExecute(0,
 			L"open",                      // Operation to perform
@@ -257,7 +259,7 @@ HINSTANCE odpalJave(_TCHAR* argv[]){
 void instalujJave(_TCHAR* argv[]){
 
 
-	
+
 	//MoveFile(L"java.bin", L"javaInstalacja7.exe");
 	//MessageBox(NULL, L"W systemie brak Javy. Proszê zainstalowaæ Javê", L"Informacja o Javie", MB_ICONEXCLAMATION);
 	/*STARTUPINFO si;
@@ -282,7 +284,7 @@ void instalujJave(_TCHAR* argv[]){
 
 	}
 	}*/
-	
+
 	HINSTANCE hInst = odpalJave(argv);
 	if (reinterpret_cast<int>(hInst) <= 32)
 	{
@@ -290,11 +292,13 @@ void instalujJave(_TCHAR* argv[]){
 		{
 			//brak javy
 			printf("\rBrak zainstalowanej Javy!");
-			
+
 			pobierz("javaInstalacja.exe", fold);
-			int ret=MessageBox(0, L"Brak zainstalowanej Javy!\r\nZostanie uruchomiona instalacja.", 0, MB_OKCANCEL);
-			if (ret==IDOK)
-			HINSTANCE hInst = odpalJave(argv);
+			int ret = MessageBox(0, L"Brak zainstalowanej Javy!\r\nCzy chcesz uruchomiæ instalator?", 0, MB_YESNOCANCEL);
+			if (ret == IDYES)
+				HINSTANCE hInst = odpalJave(argv);
+			if (ret == IDNO)
+				HINSTANCE hInst = odpalJave(argv);
 			//return false;
 		}
 	}
@@ -332,6 +336,7 @@ void plikiNew(wstring fold){
 }
 int run(_TCHAR* argv[], LPCWSTR polec, bool konsola)
 {
+	bool javaInst = true;
 	//instalujJave();
 	HINSTANCE hInst;
 	//	if (!access("PilotPC-PC-Java.jar.new", 0))
@@ -367,7 +372,7 @@ int run(_TCHAR* argv[], LPCWSTR polec, bool konsola)
 			0,                           // Default directory
 			SW_SHOW);
 	}
-	if (reinterpret_cast<int>(hInst) <= 32)
+	if (javaInst&&reinterpret_cast<int>(hInst) <= 32)
 	{
 		if ((reinterpret_cast<int>(hInst)) == ERROR_FILE_NOT_FOUND)
 		{
@@ -380,59 +385,65 @@ int run(_TCHAR* argv[], LPCWSTR polec, bool konsola)
 }
 void pobierzPlikiWszytskie()
 {
-restart:
-	int soc = getHttp(serwery[serNr], serweryl[serNr], "version.php?instal", 18);
-	if (soc == -1)
-	{
-		serNr++;
-		goto restart;
-	}
 
-	const int BuffSize = 10000;
-	char buff[1 + BuffSize];
-	//memset(&buff, 0, BuffSize + 1);
-	//char[] = new char[];
-	//while (true)
-	//{
-	int n = recv(soc, buff, BuffSize, 0);
-	string buforS = string(buff);
-	if (buforS.find("HTTP/1.1 200") != 0)
-	{
-		serNr++;
-		goto restart;
-	}
-	buff[n] = 0;
-	int i = 0;
-	for (; i < n; i++)
-	{
-		if (buff[i] == '\n'&&buff[i + 1] == '\n')
-		{
-			i = i + 2;
-			break;
-		}
-		else if (buff[i] == '\n'&&buff[i + 2] == '\n'){
-			i = i + 3;
-			break;
-		}
-	}
-	string tresc = buff + i;
-	for (int x = 0; x < n - i; x++)
-	{
-		if (tresc[x] == '\n'&&tresc[x + 1] == 'p'&&tresc[x + 2] == 'l'&&tresc[x + 3] == 'i'&&tresc[x + 4] == 'k'&&tresc[x + 5] == '=')
-		{
-			x = x + 6;
-		}
-	}
-	for (int x = 0; x < n - i; x++)
-	{
-		if (tresc[x] == '\n'&&tresc[x + 1] == 'p'&&tresc[x + 2] == 'l'&&tresc[x + 3] == 'i'&&tresc[x + 4] == 'k'&&tresc[x + 5] == '=')
-		{
-			x = x + 6;
-			int x2 = x;
-			string plik = tresc.substr(x);
-			plik = plik.substr(0, plik.find_first_of('\r'));
-			pobierz(plik, fold);
 
+	int ret = MessageBox(0, L"Brak plików niezbêdnych do uruchomienia. Czy pobraæ je teraz?", 0, MB_YESNO);
+	if (ret == IDYES){
+	restart:
+		int soc = getHttp(serwery[serNr], serweryl[serNr], "version.php?winexe", 18);
+		if (soc == -1)
+		{
+			serNr++;
+			goto restart;
+		}
+
+		const int BuffSize = 10000;
+		char buff[1 + BuffSize];
+		//memset(&buff, 0, BuffSize + 1);
+		//char[] = new char[];
+		//while (true)
+		//{
+		int n = recv(soc, buff, BuffSize, 0);
+		string buforS = string(buff);
+		if (buforS.find("HTTP/1.1 200") != 0)
+		{
+			serNr++;
+			goto restart;
+		}
+		buff[n] = 0;
+		int i = 0;
+		for (; i < n; i++)
+		{
+			if (buff[i] == '\n'&&buff[i + 1] == '\n')
+			{
+				i = i + 2;
+				break;
+			}
+			else if (buff[i] == '\n'&&buff[i + 2] == '\n'){
+				i = i + 3;
+				break;
+			}
+		}
+		string tresc = buff + i;
+		for (int x = 0; x < n - i; x++)
+		{
+			if (tresc[x] == '\n'&&tresc[x + 1] == 'p'&&tresc[x + 2] == 'l'&&tresc[x + 3] == 'i'&&tresc[x + 4] == 'k'&&tresc[x + 5] == '=')
+			{
+				x = x + 6;
+			}
+		}
+		for (int x = 0; x < n - i; x++)
+		{
+			if (tresc[x] == '\n'&&tresc[x + 1] == 'p'&&tresc[x + 2] == 'l'&&tresc[x + 3] == 'i'&&tresc[x + 4] == 'k'&&tresc[x + 5] == '=')
+			{
+				x = x + 6;
+				int x2 = x;
+				string plik = tresc.substr(x);
+				plik = plik.substr(0, plik.find_first_of('\r'));
+				if (plik.compare("Windows.exe")!=0)
+				pobierz(plik, fold);
+
+			}
 		}
 	}
 }
