@@ -18,13 +18,25 @@ public class Program {
     static BufferedImage imgObrazek = null;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
-    static public final String wersja = "0.7.4";
+    static public final String wersja = "0.7.5";
     static public Robot robot;
     static boolean debug = false;
     static public TrayIcon trayIcon;
     static public boolean nadpisywanie = false;
 
     public static void main(String[] args) throws AWTException, InterruptedException {
+        for(int i=0;i<args.length;i++)
+        {
+            if (args[i].equalsIgnoreCase("-a")||args[i].equalsIgnoreCase("/a")||args[i].equalsIgnoreCase("--a"))
+            {
+                try{
+                    Aktualizacja a=new Aktualizacja();
+                    a.run();
+                }finally {
+                    return;
+                }
+            }
+        }
         try{
         while (Polaczenie.socServ == null) {
             if (Polaczenie.port == 1024 * 64)
