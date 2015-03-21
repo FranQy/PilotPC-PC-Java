@@ -20,7 +20,7 @@ public class Program {
     public static Ustawienia ustawienia = Ustawienia.importuj();
     static public final String wersja = "0.7.4";
     static public Robot robot;
-    static boolean debug = true;
+    static boolean debug = false;
     static public TrayIcon trayIcon;
     static public boolean nadpisywanie = false;
 

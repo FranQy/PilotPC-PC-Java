@@ -17,7 +17,7 @@ import java.util.Date;
  */
 public class HTTP {
     public static TCP_Data[] doWykonania = new TCP_Data[16];
-
+public static int liczdodatki=0;
     public static TCP_Data polaczenie(InputStream is, Socket soc, String wyj) throws IOException {
 
         try { //zapobieganie atakom BruceForce
@@ -32,6 +32,7 @@ public class HTTP {
         int jezykHttp = max(jezykiHttp);
         if (jezykHttp != -1)
             lang = Jezyk.jezyki.values()[jezykHttp];
+
         if (wyj.indexOf("/") == 0 && wyj.indexOf("?") > 0) {
 
             OutputStream os = soc.getOutputStream();
@@ -80,7 +81,19 @@ public class HTTP {
             String wysylanie;
             if (Polaczenie.polaczeniaHttp[i].zablokowane)
                 wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.ZostalesRozlaczony.ordinal()];
-            else if (wyj.indexOf("/dodatek") == 0) {
+            else if (wyj.indexOf("/log") == 0) {
+                System.out.println(wyj.substring(4, wyj.indexOf('\n') - 4));
+
+                wysylanie = "HTTP/1.1 200 OK\r\n\r\n\r\n";
+            }else if (wyj.indexOf("/dodatek") == 0) {
+                if (liczdodatki>4)
+                {
+                    is.close();
+                    os.close();
+                    soc.close();
+                    return null;
+                }
+                liczdodatki++;
                 if (soc.getInetAddress().isLoopbackAddress()) {
                     wysylanie = "HTTP/1.1 200 OK\n" +
                             "Server: PilotPC\n" +
@@ -110,6 +123,7 @@ public class HTTP {
                             "\n" +
                             "{[\"Połączenie tylko przez localhost\"]}";
                 }
+                liczdodatki--;
             } else if (wyj.indexOf("/" + Program.ustawienia.haslo + "/pulpit/") == 0) {
                 wysylanie = Pulpit.HTTP(wyj, i, os);
             } else if (wyj.indexOf("/" + Program.ustawienia.haslo) == 0) {
@@ -848,11 +862,7 @@ public class HTTP {
                         "<h2>Motyw</h2><div class=\"podmenu\"><label><input type=\"radio\" name=\"motyw\" onclick=\"document.body.style.background='#28211b';\" checked>Ciemny motyw</label><label><input type=\"radio\" name=\"motyw\" onclick=\"document.body.style.background='#e2dd21';\">Jasny motyw</label></div></div>" +
                         "</div></body></html>";
 
-            } else if (wyj.indexOf("/log") == 0) {
-                System.out.println(wyj.substring(4, wyj.indexOf('\n') - 4));
-
-                wysylanie = "HTTP/1.1 200 OK\r\n\r\n\r\n";
-            } else if (wyj.indexOf("/ ") == 0) {
+            }  else if (wyj.indexOf("/ ") == 0) {
                 String typ;
                 if (wyj.contains("mobile") || wyj.contains("touch") || wyj.contains("android"))
                     typ = "number";
