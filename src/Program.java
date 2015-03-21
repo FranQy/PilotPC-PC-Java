@@ -93,6 +93,8 @@ public class Program {
                 pomoc = true;
             else if (args[i].equals("/n"))
                 nadpisywanie = true;
+            else if (args[i].equals("/b")||args[i].equals("-b"))
+                Aktualizacja.katalog = "beta/";
             else if (args[i].equals("/l") || args[i].equals("-l")) {
                 i++;
                 if (args[i].equalsIgnoreCase("pl"))

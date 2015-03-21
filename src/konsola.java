@@ -34,6 +34,7 @@ public class Konsola extends Thread {
     }
 
     public static boolean polecenie(String args[], boolean nasobie) {
+        try{
         if (args.length >= 2 && args[1].charAt(0) != '/' && args[1].charAt(0) != '-') {
 
             if (args[1].equalsIgnoreCase("help") || args[1].equalsIgnoreCase("pomoc")|| args[1].equalsIgnoreCase("помощь")) {
@@ -84,6 +85,12 @@ public class Konsola extends Thread {
                         // TODO Auto-generated catch block
                         Debugowanie.Błąd(e1);
                     }
+            }else if (args[1].equalsIgnoreCase("beta")) {
+                if (args[2].equalsIgnoreCase("on"))
+                    Aktualizacja.katalog="beta/";
+               else
+                    Aktualizacja.katalog="";
+
             }else if (args[1].equalsIgnoreCase("close") || args[1].equalsIgnoreCase("zamknij")) {
                 if (args.length>2&&(args[2].equalsIgnoreCase("window") || args[2].equalsIgnoreCase("okno") || args[2].equalsIgnoreCase("окно"))) {
                     if (Program.glowneOkno == null)
@@ -139,6 +146,6 @@ else
             else
                 System.out.println(Jezyk.napisy[Jezyk.n.NieznanePolecenie.ordinal()] + " " + args[1].toLowerCase(Locale.getDefault()) + ", " + Jezyk.napisy[Jezyk.n.WpiszPomoc.ordinal()]);
         }
+    }catch (Throwable e){Debugowanie.Błąd(e);}
         return true;
-    }
-}
+}}

@@ -13,7 +13,7 @@ public class Aktualizacja
     public static boolean trwa = false;
     public static Boolean wymus = false;
     public static String najnowsza = "";
-
+public static String katalog="";
     @Override
     public void run() {
         //if ((!zaktualizowano && Program.ustawienia.aktualizujAutomatycznie) || wymus)
@@ -25,7 +25,7 @@ public class Aktualizacja
             for (int SerNr = 0; SerNr < serwerUrl.length; SerNr++) {
                 try {
                     //pobiera z serwera informacje o najnowszej wersji i plikach do ściągnięcia
-                    URL u = new URL(serwerUrl[SerNr] + "version.php?v=" + Program.wersja + "&ok=" + Program.ustawienia.WersjaOk + "&auto=" + Program.ustawienia.aktualizujAutomatycznie);
+                    URL u = new URL(serwerUrl[SerNr]+katalog + "version.php?v=" + Program.wersja + "&ok=" + Program.ustawienia.WersjaOk + "&auto=" + Program.ustawienia.aktualizujAutomatycznie);
 
                     is = u.openStream();
 
@@ -34,7 +34,7 @@ public class Aktualizacja
                         content += s + '\n';
 
                     }
-                    aktualizuj(content, serwerUrl[SerNr]);
+                    aktualizuj(content, serwerUrl[SerNr]+katalog);
                     trwa = false;
                     //próbuje załadować biblioteki
                     Biblioteka.load();

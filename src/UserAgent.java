@@ -24,6 +24,8 @@ public class UserAgent {
             OS = UA.substring(UA.indexOf("Windows Phone"), UA.indexOf(";", UA.indexOf("Windows Phone")));
             String[] explode = UA.split("[;)]");
             urzadzenie = explode[explode.length - 2] + " " + explode[explode.length - 1];
+            urzadzenie = UA.substring(UA.lastIndexOf(';'));
+            urzadzenie=urzadzenie.substring(0,urzadzenie.indexOf(')'));
         } else if (UA.contains("Xbox One")) {
             urzadzenie = "Xbox One";
         } else if (UA.contains("Xbox")) {

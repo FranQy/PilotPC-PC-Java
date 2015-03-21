@@ -62,7 +62,8 @@ public class Pilot {
                 Program.robot.keyRelease(KeyEvent.VK_LEFT);
                 break;
             }
-            case VIDEO: {
+            case VIDEO:
+            case PHOTO: {
                 try {
                     Biblioteka.click(data.button.ordinal());
                 } catch (Throwable e) {

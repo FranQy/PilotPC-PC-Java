@@ -248,6 +248,8 @@ public class PolaczenieWatek
                 if (Program.debug) {
                     e.printStackTrace();
                 }
+            }finally {
+                try{soc.close();}catch(Throwable e){}
             }
 
 
