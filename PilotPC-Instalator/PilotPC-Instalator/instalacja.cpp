@@ -44,10 +44,70 @@ ret[i + i2] = a[i2];
 return ret;
 }*/
 
+// CreateLink - Uses the Shell's IShellLink and IPersistFile interfaces 
+//              to create and store a shortcut to the specified object. 
+//
+// Returns the result of calling the member functions of the interfaces. 
+//
+// Parameters:
+// lpszPathObj  - Address of a buffer that contains the path of the object,
+//                including the file name.
+// lpszPathLink - Address of a buffer that contains the path where the 
+//                Shell link is to be stored, including the file name.
+// lpszDesc     - Address of a buffer that contains a description of the 
+//                Shell link, stored in the Comment field of the link
+//                properties.
 
+#include "stdafx.h"
+#include "windows.h"
+#include "winnls.h"
+#include "shobjidl.h"
+#include "objbase.h"
+#include "objidl.h"
+#include "shlguid.h"
+
+HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc)
+{
+	HRESULT hres;
+	IShellLink* psl;
+	CoInitialize(NULL);
+	// Get a pointer to the IShellLink interface. It is assumed that CoInitialize
+	// has already been called.
+	hres = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID*)&psl);
+	
+	if (SUCCEEDED(hres))
+	{
+		IPersistFile* ppf;
+
+		// Set the path to the shortcut target and add the description. 
+		psl->SetPath(lpszPathObj);
+		psl->SetDescription(lpszDesc);
+
+		// Query IShellLink for the IPersistFile interface, used for saving the 
+		// shortcut in persistent storage. 
+		hres = psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf);
+
+		if (SUCCEEDED(hres))
+		{
+			WCHAR wsz[MAX_PATH];
+
+			// Ensure that the string is Unicode. 
+			MultiByteToWideChar(CP_ACP, 0, lpszPathLink, -1, wsz, MAX_PATH);
+
+			// Add code here to check return value from MultiByteWideChar 
+			// for success.
+
+			// Save the link by calling IPersistFile::Save. 
+			hres = ppf->Save(wsz, TRUE);
+			ppf->Release();
+		}
+		psl->Release();
+	}
+	return hres;
+}
 int instalacja::serNr = 0;
-char** instalacja::serwery = new char*[] { "jaebe.za.pl", "pilotpc.za.pl" };
-int* instalacja::serweryl = new int[] { 11, 13 };
+char** instalacja::serwery = new char*[] { "jaebestudio.tk", "jaebe.za.pl", "pilotpc.za.pl" };
+int* instalacja::serweryl = new int[] { 14, 11, 13 };
 
 instalacja::instalacja(bool _systemStart, bool _wszyscy, LPCWSTR _folder, bool _skrotPulpit, bool _skrotMenuStart, HWND _progressbar, wstring _wfolder, HWND _StanInstalacji)
 {
@@ -327,40 +387,36 @@ void instalacja::start(wstring fol)
 			wstring polecenie = (L"\"" + folderStr + (L"\\Windows.exe\" -no"));
 			RegSetValueEx(hkTest, L"PilotPC", 0, REG_SZ, (byte*)polecenie.c_str(), 2 * polecenie.length());
 		}
-		char userprofile[1024];
+		CHAR userprofile[1024];
 
 		GetEnvironmentVariableA("USERPROFILE", userprofile, 1024);
 		char appdata[1024];
 
+			const WCHAR* test2 = folderStr.c_str();
+			wstring cel = wstring(test2)+wstring(L"\\Windows.exe");
 		GetEnvironmentVariableA("appdata", appdata, 1024);
 		if (skrotPulpit)
 		{
-			string Pulpit = userprofile + (string)"\\Desktop\\PilotPC";
-			string test1 = string("mklink \"") + Pulpit + string("\" \"");
-			const WCHAR* test2 = folderStr.c_str();
-			wstring sss = wstring(test2);
-			string sxsx = string(sss.begin(), sss.end());
-			string poleceniep = test1 + sxsx;
-			string winexe = string("\\Windo");
-			string winexe2 = string("ws.exe\"");
-			string polecenie = poleceniep + winexe + winexe2;
-			const char* polc = polecenie.c_str();
-			//MessageBoxA(NULL, polc, polc, 0);
-			system(polc);
+			string Pulpit = userprofile + string("\\Desktop\\PilotPC.lnk");
+			CreateLink(cel.c_str(), Pulpit.c_str(), L"Steruj komputerem zdalnie");
+			//CreateShortcut(gcnew System::String(Pulpit.c_str()), gcnew System::String(cel.c_str()), gcnew System::String("Steruj swoim komputerem zdalnie"));
 		}
 		if (skrotMenuStart)
 		{
 			string folderMS;
-			folderMS = userprofile + (string)"\\Start Menu\\Programs\\PilotPC";
+			folderMS = userprofile + (string)"\\Start Menu\\Programs\\PilotPC.lnk";
 			CreateDirectoryA(folderMS.c_str(), NULL);
-			system(((string)"mklink \"" + folderMS + (string)"\\PilotPC\" \"" + std::string(folderStr.begin(), folderStr.end()) + (string)"\\Windows.exe\"").c_str());
+
+			CreateLink(cel.c_str(), folderMS.c_str(), L"Steruj komputerem zdalnie");
 			//CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), (folderMS + (string)"\\PilotPC").c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu", folderStr.c_str());
 			//CreateLink((folderStr + (L"\\Uninstall.exe")).c_str(), (folderMS + (string)"\\Odinstaluj").c_str(), L"Usuwa program PilotPC z tego komputera", folderStr.c_str());
-			folderMS = appdata + (string)"\\Microsoft\\Windows\\Start Menu\\Programs\\PilotPC";
+			folderMS = appdata + (string)"\\Microsoft\\Windows\\Start Menu\\Programs\\PilotPC.lnk";
 			CreateDirectoryA(folderMS.c_str(), NULL);
-			system(((string)"mklink \"" + folderMS + (string)"\\PilotPC\" \"" + std::string(folderStr.begin(), folderStr.end()) + (string)"\\Windows.exe\"").c_str());
+
+			CreateLink(cel.c_str(), folderMS.c_str(), L"Steruj komputerem zdalnie");
 			//CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), (folderMS + (string)"\\PilotPC").c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu", folderStr.c_str());
 			//CreateLink((folderStr + (L"\\Uninstall.exe")).c_str(), (folderMS + (string)"\\Odinstaluj").c_str(), L"Usuwa program PilotPC z tego komputera", folderStr.c_str());
+		
 		}
 		postepFaktyczny = 32 * 1024;
 	}
