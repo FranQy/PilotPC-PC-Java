@@ -28,7 +28,7 @@
     <PlatformToolset>v120_xp</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>false</UseOfMfc>
+    <UseOfMfc>Static</UseOfMfc>
     <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -73,6 +73,7 @@
       </AddModuleNamesToAssembly>
       <UACExecutionLevel>AsInvoker</UACExecutionLevel>
       <SubSystem>Windows</SubSystem>
+      <AdditionalOptions>/ENTRY:"WinMainCRTStartup" %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Manifest>
       <AdditionalManifestFiles>

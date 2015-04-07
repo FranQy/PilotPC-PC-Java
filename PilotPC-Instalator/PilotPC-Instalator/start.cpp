@@ -31,9 +31,12 @@ instalacja* ins;
 #pragma endregion
 
 #pragma comment (lib,"Gdiplus.lib")
+#pragma comment (lib,"Gdi32.lib")
 #pragma comment (lib,"ws2_32.lib")
 #pragma comment (lib,"comctl32.lib")
 #pragma comment (lib,"Msimg32.lib")
+#pragma comment (lib,"shell32.lib")
+#pragma comment (lib,"Advapi32.lib")
 
 HINSTANCE hinstance;
 
