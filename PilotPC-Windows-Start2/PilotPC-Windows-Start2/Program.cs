@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PilotPC_Windows_Start2
@@ -22,18 +20,30 @@ namespace PilotPC_Windows_Start2
             string plik = "javaw.exe";
             string arg = "-jar ";
             var pliki = new FileInfo("java\\pilotpc.jar");
+            var exe = new FileInfo(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
+            info.WorkingDirectory = exe.DirectoryName;
             if (pliki.Exists)
-                arg += "\""+pliki.FullName+"\"";
+                arg += "\"" + pliki.FullName + "\"";
             else
             {
                 pliki = new FileInfo("pilotpc.jar");
                 if (pliki.Exists)
                     arg += "\"" + pliki.FullName + "\"";
                 else
-                    MessageBox.Show("Brak pliku pilotpc.jar", "Jaebe PilotPC", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                {
+                    pliki = new FileInfo(info.WorkingDirectory+"\\pilotpc.jar");
+                    if (pliki.Exists)
+                        arg += "\"" + pliki.FullName + "\"";
+                    else
+                    {
+                        pliki = new FileInfo(info.WorkingDirectory + "\\java\\pilotpc.jar");
+                        if (pliki.Exists)
+                            arg += "\"" + pliki.FullName + "\"";
+
+                        MessageBox.Show("Brak pliku pilotpc.jar", "Jaebe PilotPC", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
-            var exe = new FileInfo(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0].FullyQualifiedName);
-            info.WorkingDirectory = exe.DirectoryName;
             bool okno = true;
             var args = Environment.GetCommandLineArgs();
             for (var i = 1; args.Length > i; i++)
@@ -52,8 +62,8 @@ namespace PilotPC_Windows_Start2
                 info.FileName = (new FileInfo(plik)).FullName;
             else if ((new FileInfo(Environment.GetFolderPath(Environment.SpecialFolder.System) + "\\" + plik)).Exists)
                 info.FileName = (new FileInfo(Environment.GetFolderPath(Environment.SpecialFolder.System) + "\\" + plik)).FullName;
-            else if ((new FileInfo(Environment.GetFolderPath(Environment.SpecialFolder.SystemX86) + "\\" + plik)).Exists)
-                info.FileName = (new FileInfo(Environment.GetFolderPath(Environment.SpecialFolder.SystemX86) + "\\" + plik)).FullName;
+            else if ((new FileInfo(Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFiles) + "\\" + plik)).Exists)
+                info.FileName = (new FileInfo(Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFiles) + "\\" + plik)).FullName;
             else
                 info.FileName = plik;
                // MessageBox.Show("Nie znaleziono javy", "Jaebe PilotPC", MessageBoxButtons.OK, MessageBoxIcon.Error);
