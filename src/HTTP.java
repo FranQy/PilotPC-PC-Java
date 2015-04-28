@@ -17,7 +17,8 @@ import java.util.Date;
  */
 public class HTTP {
     public static TCP_Data[] doWykonania = new TCP_Data[16];
-public static int liczdodatki=0;
+    public static int liczdodatki = 0;
+
     public static TCP_Data polaczenie(InputStream is, Socket soc, String wyj) throws IOException {
 
         try { //zapobieganie atakom BruceForce
@@ -77,7 +78,7 @@ public static int liczdodatki=0;
             return ret;
         } else if (wyj.indexOf("/") == 0) {
             OutputStream os = soc.getOutputStream();
-            byte i = id(wyj,wyj.indexOf("/dodatek") == 0);
+            byte i = id(wyj, wyj.indexOf("/dodatek") == 0);
             String wysylanie;
             if (Polaczenie.polaczeniaHttp[i].zablokowane)
                 wysylanie = "HTTP/1.1 403	Forbidden\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.ZostalesRozlaczony.ordinal()];
@@ -85,9 +86,8 @@ public static int liczdodatki=0;
                 System.out.println(wyj.substring(4, wyj.indexOf('\n') - 4));
 
                 wysylanie = "HTTP/1.1 200 OK\r\n\r\n\r\n";
-            }else if (wyj.indexOf("/dodatek") == 0) {
-                if (liczdodatki>4)
-                {
+            } else if (wyj.indexOf("/dodatek") == 0) {
+                if (liczdodatki > 4) {
                     is.close();
                     os.close();
                     soc.close();
@@ -104,7 +104,7 @@ public static int liczdodatki=0;
                     boolean przecinek = false;
                     for (byte x = 0; x < doWykonania.length; x++) {
                         if (doWykonania[x] != null) {
-                            if (doWykonania[x].type == typ.PILOT&&doWykonania[x].button!=null) {
+                            if (doWykonania[x].type == typ.PILOT && doWykonania[x].button != null) {
                                 if (przecinek)
                                     wysylanie += ",";
                                 wysylanie += "{\"akcja\":" + doWykonania[x].button.ordinal() + "}";
@@ -862,7 +862,7 @@ public static int liczdodatki=0;
                         "<h2>Motyw</h2><div class=\"podmenu\"><label><input type=\"radio\" name=\"motyw\" onclick=\"document.body.style.background='#28211b';\" checked>Ciemny motyw</label><label><input type=\"radio\" name=\"motyw\" onclick=\"document.body.style.background='#e2dd21';\">Jasny motyw</label></div></div>" +
                         "</div></body></html>";
 
-            }  else if (wyj.indexOf("/ ") == 0) {
+            } else if (wyj.indexOf("/ ") == 0) {
                 String typ;
                 if (wyj.contains("mobile") || wyj.contains("touch") || wyj.contains("android"))
                     typ = "number";
@@ -944,15 +944,14 @@ public static int liczdodatki=0;
         //spradzanie po cookie czy jest już
         byte i = 0;
         if (dodatekCzyJest)
-            i=110;
-        else
-        if (wyj.contains("Cookie: id=")) {
+            i = 110;
+        else if (wyj.contains("Cookie: id=")) {
             try {
                 i = (byte) Integer.parseInt(wyj.substring(wyj.indexOf("Cookie: id=") + 11, wyj.indexOf('\r', wyj.indexOf("Cookie: id="))));
                 //if (Polaczenie.polaczeniaHttp[i] == null) {
 
 
-               // }
+                // }
             } catch (Exception e) {
                 for (; i < 100; i++)//Otwiera max 100 połączeń, zapisuje je w tablicy
                 {
@@ -969,21 +968,23 @@ public static int liczdodatki=0;
                 if (Polaczenie.polaczeniaHttp[i] == null) {
                     break;
                 } else if (!Polaczenie.polaczeniaHttp[i].pokazane && terazCzas - Polaczenie.polaczeniaHttp[i].czas.getTime() > 60000) {
-                    synchronized (Polaczenie.polaczeniaHttp){ Polaczenie.polaczeniaHttp[i] = null;}
+                    synchronized (Polaczenie.polaczeniaHttp) {
+                        Polaczenie.polaczeniaHttp[i] = null;
+                    }
                     break;
                 }
             }
         }
-       synchronized (Polaczenie.polaczeniaHttp) {
-           if (Polaczenie.polaczeniaHttp[i] == null) {
-               Polaczenie.polaczeniaHttp[i] = new HttpPolaczenie();
+        synchronized (Polaczenie.polaczeniaHttp) {
+            if (Polaczenie.polaczeniaHttp[i] == null) {
+                Polaczenie.polaczeniaHttp[i] = new HttpPolaczenie();
 
-               Polaczenie.polaczeniaHttp[i].UserAgent = new UserAgent(wyj.substring(wyj.indexOf("User-Agent:") + 11, wyj.indexOf('\r', wyj.indexOf("User-Agent:"))));
-               if (wyj.indexOf("/dodatek") == 0)
-                   Polaczenie.polaczeniaHttp[i].UserAgent.urzadzenie = "Dodatek do przeglądarki";
-           } else
-               Polaczenie.polaczeniaHttp[i].czas = new Date();
-       }
+                Polaczenie.polaczeniaHttp[i].UserAgent = new UserAgent(wyj.substring(wyj.indexOf("User-Agent:") + 11, wyj.indexOf('\r', wyj.indexOf("User-Agent:"))));
+                if (wyj.indexOf("/dodatek") == 0)
+                    Polaczenie.polaczeniaHttp[i].UserAgent.urzadzenie = "Dodatek do przeglądarki";
+            } else
+                Polaczenie.polaczeniaHttp[i].czas = new Date();
+        }
         return i;
     }
 

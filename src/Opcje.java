@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -38,17 +39,21 @@ public class Opcje {
         okno.frame.setVisible(true);
         return okno;
     }
-    public static void zamknij() {
-        if (okno != null){
 
-        okno.frame.setVisible(false);
+    public static void zamknij() {
+        if (okno != null) {
+
+            okno.frame.setVisible(false);
             okno.frame.dispose();
-            okno=null;
+            okno = null;
         }
     }
+
     public Opcje(boolean wyswietl) {
 
         frame = new JFrame("Opcje");
+        if (!Program.ikonaProgram)
+            frame.setType(Window.Type.UTILITY);
         frame.setTitle(Jezyk.napisy[Jezyk.n.Infromacje.ordinal()]);
         if (!AccessPoint.dostepny()) {
             APOpcje.setVisible(false);
@@ -167,13 +172,13 @@ public class Opcje {
 
     public void ustawJezyk() {
         startZSystememButton.setText(Jezyk.napisy[Jezyk.n.StartZSystemem.ordinal()]);
-        try{
-            if(Biblioteka.CzyAutostart())
+        try {
+            if (Biblioteka.CzyAutostart())
                 startZSystememButton.setText(Jezyk.napisy[Jezyk.n.WylaczStartZSystemem.ordinal()]);
             else
-            startZSystememButton.setText(Jezyk.napisy[Jezyk.n.WlaczStartZSystemem.ordinal()]);
+                startZSystememButton.setText(Jezyk.napisy[Jezyk.n.WlaczStartZSystemem.ordinal()]);
+        } catch (Throwable e) {
         }
-        catch(Throwable e){}
         if (Program.ustawienia.plynnaMysz)
             gladkaMysz.setText(Jezyk.napisy[Jezyk.n.WylaczWygladzanieMyszy.ordinal()]);
         else

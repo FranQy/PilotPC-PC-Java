@@ -18,156 +18,169 @@ public class Program {
     static BufferedImage imgObrazek = null;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
-    static public final String wersja = "0.7.5";
+    static public final String wersja = "0.7.9";
     static public Robot robot;
     static boolean debug = false;
+    static public boolean ikonaZasobnik = true;
+    static public boolean ikonaProgram = true;
     static public TrayIcon trayIcon;
     static public boolean nadpisywanie = false;
 
     public static void main(String[] args) throws AWTException, InterruptedException {
-        for(int i=0;i<args.length;i++)
-        {
-            if (args[i].equalsIgnoreCase("-a")||args[i].equalsIgnoreCase("/a")||args[i].equalsIgnoreCase("--a"))
-            {
-                try{
-                    Aktualizacja a=new Aktualizacja();
-                    a.run();
-                }finally {
-                    return;
-                }
-            }
-        }
-        try{
-        while (Polaczenie.socServ == null) {
-            if (Polaczenie.port == 1024 * 64)
-                //TODO Błąd, wszytskie porty zajęte
-                break;
-            try {
-                Polaczenie.socServ = new ServerSocket(Polaczenie.port);
-            } catch (IOException e) {
-
-                Polaczenie.port++;
-            }
-            if (Polaczenie.port > 8753) {
-                // if (Polaczenie.port == 8753) //łączy się z innym serwerem
-                {
-                    try {
-                        Socket soc = new Socket("localhost", 8753);
-                        OutputStream output = soc.getOutputStream();
-                        InputStream input = soc.getInputStream();
-                        output.write(("pilotpc" + ustawienia.haslo + Polaczenie.port + "\n\n\n\n").getBytes());
-                        // output.close();
-                        //int a= input.read();
-                        byte[] bufor = new byte[10];
-                        input.read(bufor);
-                        if (bufor[0] == 'p')//pilotpc
-                        {
-                            if (bufor[1] == 'e')//exit
-                            {
-                                while (true) {
-                                    if (!Aktualizacja.trwa)
-                                        System.exit(0);
-                                    else
-                                        try {
-                                            Thread.sleep(500);
-                                        } catch (InterruptedException e1) {
-                                            Debugowanie.Błąd(e1);
-                                        }
-                                }
-                            }
-
-                        }
-                        output.close();
-                        input.close();
-                        soc.close();
-                    } catch (UnknownHostException e1) {
-                        Debugowanie.Błąd(e1);
-                    } catch (IOException e1) {
-                        Debugowanie.Błąd(e1);
-                    }
-                }
-            }
-        }
-
-        Biblioteka.load();
-        if (ustawienia.jezyk == null) {
-            ustawienia.jezyk = Jezyk.jezyki.Polski;
-            ustawienia.eksportuj();
-        }
-        robot = new Robot();
-        wyswietlanie = TypWyswietlania.Konsola;
-        boolean pomoc = false;
-        Jezyk.jezyki lang = ustawienia.jezyk;
-        for (int i = 0; i < args.length; i++) {
-            if (args[i].equalsIgnoreCase("/o") || args[i].equalsIgnoreCase("-o"))
-                wyswietlanie = TypWyswietlania.Okno;
-            else if (args[i].equals("/?"))
-                pomoc = true;
-            else if (args[i].equals("/n"))
-                nadpisywanie = true;
-            else if (args[i].equals("/b")||args[i].equals("-b"))
-                Aktualizacja.katalog = "beta/";
-            else if (args[i].equals("/l") || args[i].equals("-l")) {
-                i++;
-                if (args[i].equalsIgnoreCase("pl"))
-                    lang = Jezyk.jezyki.Polski;
-                else if (args[i].equalsIgnoreCase("en"))
-                    lang = Jezyk.jezyki.Angielski;
-                else if (args[i].equalsIgnoreCase("ru"))
-                    lang = Jezyk.jezyki.Rosyjski;
-            }
-
-        }
-        Jezyk.laduj(lang);
-        if (!Konsola.polecenie(args, true))
-            return;
-        if (wyswietlanie == TypWyswietlania.Okno) {
-            glowneOkno = new Okno();
-        }
-        if (pomoc) {
-            String Tekst = "To jest pomoc.\n\r\n\rParametry:\n\r /?  Wyświetlenie pomocy\n\r /k  Uruchomienie bez okna (tylko konsola)\n\r\r\n";
-            System.out.print(Tekst);
-
-            //if(wyświetlanie==TypWyświetlania.Okno)
-            //Mess
-        } else
-            System.out.println(Jezyk.napisy[Jezyk.n.PilotPCWersja.ordinal()] + wersja + "\r\nKod: " + ustawienia.haslo);
-
-        (new Konsola()).start();
-        tray(true);
-
         try {
-            while (true) {
-                DatagramSocket socket = null;
-                for (int i = 8753; i < 20000; i++) {
+            for (int i = 0; i < args.length; i++) {
+                if (args[i].equalsIgnoreCase("-a") || args[i].equalsIgnoreCase("/a") || args[i].equalsIgnoreCase("--a")) {
                     try {
-                        socket = new DatagramSocket(i);
-                        break;
-                    } catch (BindException e) {
+                        Aktualizacja a = new Aktualizacja();
+                        a.run();
+                    } finally {
+                        return;
                     }
                 }
-                if (socket != null) {
-                    socket.setBroadcast(true);
-
-                    String host = "aaaa" + java.net.InetAddress.getLocalHost().getHostName();
-
-                    DatagramPacket pakiet = new DatagramPacket(host.getBytes(), host.length(), InetAddress.getByName("255.255.255.255"), 8753);
-                    socket.connect(InetAddress.getByName("255.255.255.255"), 8753);
-                    socket.send(pakiet);
-                    socket.close();
-                }
-                Thread.sleep(1000);
             }
-        } catch (IOException e) {
+            try {
+                while (Polaczenie.socServ == null) {
+                    if (Polaczenie.port == 1024 * 64)
+                        //TODO Błąd, wszytskie porty zajęte
+                        break;
+                    try {
+                        Polaczenie.socServ = new ServerSocket(Polaczenie.port);
+                    } catch (IOException e) {
 
-            Debugowanie.Błąd(e);
-        }}catch (Throwable e) {
+                        Polaczenie.port++;
+                    }
+                    if (Polaczenie.port > 8753) {
+                        // if (Polaczenie.port == 8753) //łączy się z innym serwerem
+                        {
+                            try {
+                                Socket soc = new Socket("localhost", 8753);
+                                OutputStream output = soc.getOutputStream();
+                                InputStream input = soc.getInputStream();
+                                output.write(("pilotpc" + ustawienia.haslo + Polaczenie.port + "\n\n\n\n").getBytes());
+                                // output.close();
+                                //int a= input.read();
+                                byte[] bufor = new byte[10];
+                                input.read(bufor);
+                                if (bufor[0] == 'p')//pilotpc
+                                {
+                                    if (bufor[1] == 'e')//exit
+                                    {
+                                        while (true) {
+                                            if (!Aktualizacja.trwa)
+                                                System.exit(0);
+                                            else
+                                                try {
+                                                    Thread.sleep(500);
+                                                } catch (InterruptedException e1) {
+                                                    Debugowanie.Błąd(e1);
+                                                }
+                                        }
+                                    }
 
+                                }
+                                output.close();
+                                input.close();
+                                soc.close();
+                            } catch (UnknownHostException e1) {
+                                Debugowanie.Błąd(e1);
+                            } catch (IOException e1) {
+                                Debugowanie.Błąd(e1);
+                            }
+                        }
+                    }
+                }
+
+                Biblioteka.load();
+                if (ustawienia.jezyk == null) {
+                    ustawienia.jezyk = Jezyk.jezyki.Polski;
+                    ustawienia.eksportuj();
+                }
+                robot = new Robot();
+                wyswietlanie = TypWyswietlania.Konsola;
+                boolean pomoc = false;
+                Jezyk.jezyki lang = ustawienia.jezyk;
+                for (int i = 0; i < args.length; i++) {
+                    if (args[i].equalsIgnoreCase("/o") || args[i].equalsIgnoreCase("-o"))
+                        wyswietlanie = TypWyswietlania.Okno;
+                    else if (args[i].equals("/?"))
+                        pomoc = true;
+                    else if (args[i].equals("/n"))
+                        nadpisywanie = true;
+                    else if (args[i].equals("/npi") || args[i].equals("-npi") || args[i].equals("/noprogramicon") || args[i].equals("-noprogramicon"))
+                        ikonaProgram = false;
+                    else if (args[i].equals("/nti") || args[i].equals("-nti") || args[i].equals("/notrayicon") || args[i].equals("-notrayicon"))
+                        ikonaZasobnik = false;
+                    else if (args[i].equals("/noupdate") || args[i].equals("-noupdate") )
+                        Aktualizacja.możnaAktualizować = false;
+                    else if (args[i].equals("/b") || args[i].equals("-b") || args[i].equals("-beta") || args[i].equals("/beta"))
+                        Aktualizacja.katalog = "beta/";
+                    else if (args[i].equals("/l") || args[i].equals("-l") || args[i].equals("-lang") || args[i].equals("/lang")) {
+                        i++;
+                        if (args[i].equalsIgnoreCase("pl"))
+                            lang = Jezyk.jezyki.Polski;
+                        else if (args[i].equalsIgnoreCase("en"))
+                            lang = Jezyk.jezyki.Angielski;
+                        else if (args[i].equalsIgnoreCase("ru"))
+                            lang = Jezyk.jezyki.Rosyjski;
+                    }
+
+                }
+                Jezyk.laduj(lang);
+                if (!Konsola.polecenie(args, true))
+                    return;
+                if (wyswietlanie == TypWyswietlania.Okno) {
+                    glowneOkno = new Okno();
+                }
+                if (pomoc) {
+                    String Tekst = "To jest pomoc.\n\r\n\rParametry:\n\r /?  Wyświetlenie pomocy\n\r /k  Uruchomienie bez okna (tylko konsola)\n\r\r\n";
+                    System.out.print(Tekst);
+
+                    //if(wyświetlanie==TypWyświetlania.Okno)
+                    //Mess
+                } else
+                    System.out.println(Jezyk.napisy[Jezyk.n.PilotPCWersja.ordinal()] + wersja + "\r\nKod: " + ustawienia.haslo);
+
+                (new Konsola()).start();
+                tray(true);
+
+                try {
+                    while (true) {
+                        DatagramSocket socket = null;
+                        for (int i = 8753; i < 20000; i++) {
+                            try {
+                                socket = new DatagramSocket(i);
+                                break;
+                            } catch (BindException e) {
+                            }
+                        }
+                        if (socket != null) {
+                            socket.setBroadcast(true);
+
+                            String host = "aaaa" + java.net.InetAddress.getLocalHost().getHostName();
+
+                            DatagramPacket pakiet = new DatagramPacket(host.getBytes(), host.length(), InetAddress.getByName("255.255.255.255"), 8753);
+                            socket.connect(InetAddress.getByName("255.255.255.255"), 8753);
+                            socket.send(pakiet);
+                            socket.close();
+                        }
+                        Thread.sleep(1000);
+                    }
+                } catch (IOException e) {
+
+                    Debugowanie.Błąd(e);
+                }
+            } catch (Throwable e) {
+
+                Debugowanie.Błąd(e);
+            }
+        } catch (Throwable e) {
             Debugowanie.Błąd(e);
         }
     }
 
     public static void tray(boolean nowy) {
+        if (!ikonaZasobnik)
+            return;
         if (SystemTray.isSupported()) {
             final SystemTray tray = SystemTray.getSystemTray();
             final JPopupMenu popup = new JPopupMenu();
@@ -265,7 +278,7 @@ public class Program {
                 }
             });
 
-            trayIcon = new TrayIcon(imgObrazek.getScaledInstance((int) tray.getTrayIconSize().getWidth(), (int) tray.getTrayIconSize().getHeight(), Image.SCALE_SMOOTH), "PilotPC-PC-Java", null);
+            trayIcon = new TrayIcon(imgObrazek.getScaledInstance((int) tray.getTrayIconSize().getWidth(), (int) tray.getTrayIconSize().getHeight(), Image.SCALE_SMOOTH), "PilotPC", null);
 
             trayIcon.addMouseListener(new MouseListener() {
                 @Override
@@ -309,6 +322,7 @@ public class Program {
                 }
             });
             try {
+                trayIcon.setToolTip("Jaebe PilotPC");
                 tray.add(trayIcon);   // dodanie naszej ikony do zasobnika systemowego
 
             } catch (AWTException e) {
@@ -334,10 +348,10 @@ public class Program {
     }
 
     static public void autostart() {
-        boolean dodaj=true;
-        try{
-            dodaj=!Biblioteka.CzyAutostart();
-        }catch(Throwable e){
+        boolean dodaj = true;
+        try {
+            dodaj = !Biblioteka.CzyAutostart();
+        } catch (Throwable e) {
 
         }
         Biblioteka.autostart(dodaj, false, System.getProperty("user.dir"));

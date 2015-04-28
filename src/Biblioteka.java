@@ -80,6 +80,7 @@ public class Biblioteka {
     static public native void click(int i);
 
     static public native void autostart(boolean wlacz, boolean wszyscy, String folder);
+
     static public native boolean CzyAutostart();
 
     static public native void runAsRoot(String polecenie, String atr);

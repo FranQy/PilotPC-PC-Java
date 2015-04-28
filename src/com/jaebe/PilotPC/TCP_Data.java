@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by franqy on 29.10.13.
  */
-public class TCP_Data implements Serializable{
+public class TCP_Data implements Serializable {
 
     public enum typ {GAMEPAD, PILOT, KEYBOARD, TOUCHPAD, YT}
 

@@ -2,9 +2,9 @@
 <?xml-stylesheet href="chrome://pilotpc_firefox/skin/overlay.css" type="text/css"?>
 <!DOCTYPE overlay SYSTEM "chrome://pilotpc_firefox/locale/overlay.dtd">
 <overlay id="pilotpc_firefox-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script src="chrome://pilotpc_firefox/content/wspolne.js"/>
-  <script src="chrome://pilotpc_firefox/content/ff-overlay.js"/>
-  <stringbundleset id="stringbundleset">
-    <stringbundle id="pilotpc_firefox-strings" src="chrome://pilotpc_firefox/locale/overlay.properties"/>
-  </stringbundleset>
+    <script src="chrome://pilotpc_firefox/content/wspolne.js"/>
+    <script src="chrome://pilotpc_firefox/content/ff-overlay.js"/>
+    <stringbundleset id="stringbundleset">
+        <stringbundle id="pilotpc_firefox-strings" src="chrome://pilotpc_firefox/locale/overlay.properties"/>
+    </stringbundleset>
 </overlay>

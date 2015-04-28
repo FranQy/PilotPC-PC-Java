@@ -4,15 +4,16 @@
 
 <!DOCTYPE dialog SYSTEM "chrome://pilotpc_firefox/locale/about.dtd">
 
-<dialog title="&about; PilotPC-Firefox" orient="vertical" autostretch="always" onload="sizeToContent()" buttons="accept" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <groupbox align="center" orient="horizontal">
-    <vbox>
-      <label value="PilotPC-Firefox" style="font-weight: bold; font-size: x-large;"/>
-      <label value="&version; 0.2.3"/>
-      <separator class="thin"/>
-      <label value="&createdBy;" style="font-weight: bold;"/>
-      <label value="matrix0123456789"/>
-      <separator class="thin"/>
-    </vbox>
-  </groupbox>
+<dialog title="&about; PilotPC-Firefox" orient="vertical" autostretch="always" onload="sizeToContent()" buttons="accept"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+    <groupbox align="center" orient="horizontal">
+        <vbox>
+            <label value="PilotPC-Firefox" style="font-weight: bold; font-size: x-large;"/>
+            <label value="&version; 0.2.3"/>
+            <separator class="thin"/>
+            <label value="&createdBy;" style="font-weight: bold;"/>
+            <label value="matrix0123456789"/>
+            <separator class="thin"/>
+        </vbox>
+    </groupbox>
 </dialog>

@@ -30,7 +30,7 @@ public class Jezyk {
         WlaczWygladzanieMyszy, AktualizacjaZostanie, TrwaAktualizowanie, ProgramAktualny, MoznaZaktualizowac,
         TrwaSprawdzanieAKtualizacji, BladZLadowaniemBiblioteki, System, Model,
         DostepnePolecenia, NowyKod, NieMoznaZmienic, NieMoznaPokazac, NieznanePolecenie, BladRozlaczono, Opcje, DodatekDoPrzegladarki, BrakPodlaczonychUrzadzen, DodatekDoPrzegladarkiTak, DodatekDoPrzegladarkiNie, WylaczSerwer, PowiekszQR, AktualizujTeraz, AktualizacjaAutomatyzna, WpiszPomoc,
-        TworzenieSieciWiFi, Haslo, Start, Stop, Zaktualizowano, DostepnaNowa, Blad,WylaczStartZSystemem,WlaczStartZSystemem
+        TworzenieSieciWiFi, Haslo, Start, Stop, Zaktualizowano, DostepnaNowa, Blad, WylaczStartZSystemem, WlaczStartZSystemem
     }
 
     ;

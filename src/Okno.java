@@ -43,12 +43,16 @@ public class Okno {
     public Okno() {
         this(true);
     }
+
     public Okno(boolean wyswietl) {
 
         frame = new JFrame("PilotPC");
         frame.setTitle("PilotPC");
         //frame.setType(Window.Type.POPUP);
         frame.setUndecorated(true);
+        if (!Program.ikonaProgram)
+            frame.setType(Window.Type.UTILITY);
+        //frame.set
         if (Program.imgObrazek == null) {
             try {
                 Program.imgObrazek = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
@@ -423,42 +427,42 @@ public class Okno {
         public void run() {
             if (frame.isVisible()) {  //gdy okno jest zamknięte to nie obciąża procka
                 int ileTel = 0;
-            for (byte i = 0; i < Polaczenie.watki.length; i++) {
-                if (Polaczenie.watki[i] != null)
-                    if (Polaczenie.watki[i].czyPolaczono()) {
-                        ileTel++;
+                for (byte i = 0; i < Polaczenie.watki.length; i++) {
+                    if (Polaczenie.watki[i] != null)
+                        if (Polaczenie.watki[i].czyPolaczono()) {
+                            ileTel++;
 
-                        if (!Polaczenie.watki[i].pokazane && Polaczenie.watki[i].infoPrzyPolaczeniu != null && (new Date()).getTime() < Polaczenie.watki[i].czasMax) {
-                            Polaczenie.watki[i].pokazane = true;
-                            telefony.add(Polaczenie.watki[i].UI = new Urzadzenie(Polaczenie.watki[i], telefony));
+                            if (!Polaczenie.watki[i].pokazane && Polaczenie.watki[i].infoPrzyPolaczeniu != null && (new Date()).getTime() < Polaczenie.watki[i].czasMax) {
+                                Polaczenie.watki[i].pokazane = true;
+                                telefony.add(Polaczenie.watki[i].UI = new Urzadzenie(Polaczenie.watki[i], telefony));
+                                potrzebneOdswierzenie = true;
+                            } else if (Polaczenie.watki[i].pokazane && (new Date()).getTime() > Polaczenie.watki[i].czasMax) {
+                                Polaczenie.watki[i].pokazane = false;
+                                telefony.remove(Polaczenie.watki[i].UI);
+                                potrzebneOdswierzenie = true;
+                            }
+                        }
+                }
+                Boolean dodatek = false;
+                for (byte i = 0; i < Polaczenie.polaczeniaHttp.length; i++) {
+                    if (Polaczenie.polaczeniaHttp[i] != null) {
+                        long rozn = (new Date()).getTime() - Polaczenie.polaczeniaHttp[i].czas.getTime();
+                        if (rozn < 5000)
+                            ileTel++;
+                        if (Polaczenie.polaczeniaHttp[i].toString() == "Dodatek do przeglądarki") {
+                            dodatek = true;
+                        } else if (!Polaczenie.polaczeniaHttp[i].pokazane && rozn < 5000) {
+                            Polaczenie.polaczeniaHttp[i].pokazane = true;
+                            telefony.add(Polaczenie.polaczeniaHttp[i].UI = new Okno.Urzadzenie(Polaczenie.polaczeniaHttp[i], telefony));
                             potrzebneOdswierzenie = true;
-                        } else if (Polaczenie.watki[i].pokazane && (new Date()).getTime() > Polaczenie.watki[i].czasMax) {
-                            Polaczenie.watki[i].pokazane = false;
-                            telefony.remove(Polaczenie.watki[i].UI);
+                        } else if (Polaczenie.polaczeniaHttp[i].pokazane && rozn > 5000) {
+                            telefony.remove(Polaczenie.polaczeniaHttp[i].UI);
+                            Polaczenie.polaczeniaHttp[i].pokazane = false;
                             potrzebneOdswierzenie = true;
+
                         }
                     }
-            }
-            Boolean dodatek = false;
-            for (byte i = 0; i < Polaczenie.polaczeniaHttp.length; i++) {
-                if (Polaczenie.polaczeniaHttp[i] != null) {
-                    long rozn = (new Date()).getTime() - Polaczenie.polaczeniaHttp[i].czas.getTime();
-                    if (rozn < 5000)
-                        ileTel++;
-                    if (Polaczenie.polaczeniaHttp[i].toString() == "Dodatek do przeglądarki") {
-                        dodatek = true;
-                    } else if (!Polaczenie.polaczeniaHttp[i].pokazane && rozn < 5000) {
-                        Polaczenie.polaczeniaHttp[i].pokazane = true;
-                        telefony.add(Polaczenie.polaczeniaHttp[i].UI = new Okno.Urzadzenie(Polaczenie.polaczeniaHttp[i], telefony));
-                        potrzebneOdswierzenie = true;
-                    } else if (Polaczenie.polaczeniaHttp[i].pokazane && rozn > 5000) {
-                        telefony.remove(Polaczenie.polaczeniaHttp[i].UI);
-                        Polaczenie.polaczeniaHttp[i].pokazane = false;
-                        potrzebneOdswierzenie = true;
-
-                    }
                 }
-            }
                 if (ileTel == 0 && PodlaczoneUrzadzeniaWyswietlane) {
                     PodlaczoneUrzadzeniaWyswietlane = false;
                     PodlaczoneUrzadzenia.setText(Jezyk.napisy[Jezyk.n.BrakPodlaczonychUrzadzen.ordinal()]);
@@ -474,11 +478,11 @@ public class Okno {
                     DodatekDoPrzeg.setText(Jezyk.napisy[Jezyk.n.DodatekDoPrzegladarkiNie.ordinal()]);
                 }
                 if (potrzebneOdswierzenie) {
-                telefony.paintAll(telefony.getGraphics());
-                zawartosc.paintAll(zawartosc.getGraphics());
+                    telefony.paintAll(telefony.getGraphics());
+                    zawartosc.paintAll(zawartosc.getGraphics());
                     frame.repaint(500);
                 }
-            potrzebneOdswierzenie = false;
+                potrzebneOdswierzenie = false;
 
 
                 //z klasy start
@@ -486,26 +490,26 @@ public class Okno {
                     String tekstIP = "";
 
                     Enumeration<NetworkInterface> n;
-                try {
-                    n = NetworkInterface.getNetworkInterfaces();
+                    try {
+                        n = NetworkInterface.getNetworkInterfaces();
 
-                    //System.out.println("2a");
-                    for (; n.hasMoreElements(); ) {
-                        NetworkInterface e = n.nextElement();
-                        // System.out.println("Interface: " + e.getName());
-                        Enumeration<InetAddress> a = e.getInetAddresses();
-                        for (; a.hasMoreElements(); ) {
-                            InetAddress addr = a.nextElement();
-                            if (!addr.isLoopbackAddress() && addr.getAddress().length == 4)
-                                tekstIP += addr.getHostAddress() + "<br/>";
+                        //System.out.println("2a");
+                        for (; n.hasMoreElements(); ) {
+                            NetworkInterface e = n.nextElement();
+                            // System.out.println("Interface: " + e.getName());
+                            Enumeration<InetAddress> a = e.getInetAddresses();
+                            for (; a.hasMoreElements(); ) {
+                                InetAddress addr = a.nextElement();
+                                if (!addr.isLoopbackAddress() && addr.getAddress().length == 4)
+                                    tekstIP += addr.getHostAddress() + "<br/>";
+                            }
                         }
+                        // System.out.println("2b");
+                    } catch (SocketException e1) {
+                        Debugowanie.Błąd(e1);
                     }
-                    // System.out.println("2b");
-                } catch (SocketException e1) {
-                    Debugowanie.Błąd(e1);
-                }
-                info.setText("<html>" + Jezyk.napisy[Jezyk.n.TwojeIPTo.ordinal()] + "</html>");
-                IP2.setText("<html>" + tekstIP + "</html>");
+                    info.setText("<html>" + Jezyk.napisy[Jezyk.n.TwojeIPTo.ordinal()] + "</html>");
+                    IP2.setText("<html>" + tekstIP + "</html>");
                 }
                 /*if (licznik % 10 == 0) {
                     //frame.repaint();

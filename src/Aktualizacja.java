@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.*;
 import java.net.URL;
 import java.util.TimerTask;
@@ -13,11 +14,15 @@ public class Aktualizacja
     public static boolean trwa = false;
     public static Boolean wymus = false;
     public static String najnowsza = "";
-public static String katalog="";
+    public static String katalog = "";
+    public static boolean możnaAktualizować =true;
+
     @Override
     public void run() {
         //if ((!zaktualizowano && Program.ustawienia.aktualizujAutomatycznie) || wymus)
         {
+            if(!możnaAktualizować)
+                return;
             InputStream is = null;
             String s;
             String content = "";
@@ -25,7 +30,7 @@ public static String katalog="";
             for (int SerNr = 0; SerNr < serwerUrl.length; SerNr++) {
                 try {
                     //pobiera z serwera informacje o najnowszej wersji i plikach do ściągnięcia
-                    URL u = new URL(serwerUrl[SerNr]+katalog + "version.php?v=" + Program.wersja + "&ok=" + Program.ustawienia.WersjaOk + "&auto=" + Program.ustawienia.aktualizujAutomatycznie);
+                    URL u = new URL(serwerUrl[SerNr] + katalog + "version.php?v=" + Program.wersja + "&ok=" + Program.ustawienia.WersjaOk + "&auto=" + Program.ustawienia.aktualizujAutomatycznie);
 
                     is = u.openStream();
 
@@ -34,7 +39,7 @@ public static String katalog="";
                         content += s + '\n';
 
                     }
-                    aktualizuj(content, serwerUrl[SerNr]+katalog);
+                    aktualizuj(content, serwerUrl[SerNr] + katalog);
                     trwa = false;
                     //próbuje załadować biblioteki
                     Biblioteka.load();
@@ -60,6 +65,8 @@ public static String katalog="";
     }
 
     static void aktualizuj(String content, String UrlSerwera) {
+        if(!możnaAktualizować)
+            return;
         String[] linie = content.split("\n");
         for (int i2 = 0; i2 < linie.length; i2++) {
             if (linie[i2].split("=")[0].compareTo("plik") == 0) {//Usuwa pozostałości po ostatniej aktualizacji
@@ -101,6 +108,8 @@ public static String katalog="";
     public static void samoAkt(String[] linie, String UrlSerwera) {
 
         {
+            if(!możnaAktualizować)
+                return;
             trwa = true;
 
             for (int i2 = 0; i2 < linie.length; i2++) {
@@ -108,18 +117,18 @@ public static String katalog="";
                     InputStream is = null;
                     try {
                         URL u;
-                       /* if (linie[i2].split("=")[1].endsWith("exe"))
-                            u = new URL(UrlSerwera + linie[i2].split("=")[1] + ".bin");
-                        else*/
-                        try {
-                            u = new URL(UrlSerwera + linie[i2].split("=")[1]);
-                            is = u.openStream();
-                        }
-                        catch(IOException e){
+                        if (linie[i2].split("=")[1].endsWith("exe")) {
                             u = new URL(UrlSerwera + linie[i2].split("=")[1] + ".bin");
                             is = u.openStream();
+                        } else
+                            try {
+                                u = new URL(UrlSerwera + linie[i2].split("=")[1]);
+                                is = u.openStream();
+                            } catch (IOException e) {
+                                u = new URL(UrlSerwera + linie[i2].split("=")[1] + ".bin");
+                                is = u.openStream();
 
-                        }
+                            }
                         if (linie[i2].lastIndexOf('/') > 0)
                             (new File(linie[i2].substring(linie[i2].indexOf('=') + 1, linie[i2].lastIndexOf('/')))).mkdirs();
                                 /*String[] podfoldery=linie[i2].split("=")[1].split("/");
@@ -127,27 +136,69 @@ public static String katalog="";
                                 {
                                     CreateDirectory();
                                 }  */
-                        FileOutputStream strumien;
-                        if (linie[i2].split("=")[1].compareTo("PilotPC-PC-Java.jar") == 0) {
-                            if (Program.glowneOkno == null)
-                                Program.glowneOkno = new Okno(false);  //otwiera okno, bo potem będzie problem, ale go nie pokazuje
-                            strumien = new FileOutputStream(linie[i2].split("=")[1]);
-                            // strumien=new FileOutputStream(linie[i2].split("=")[1]+".new");
-                        } else if (!(new File(linie[i2].split("=")[1])).exists()) {
-                            strumien = new FileOutputStream(linie[i2].split("=")[1]);
+                        FileOutputStream strumien = null;
+                        String workspace = new File(".").getCanonicalPath() + "/";
+                        String plikpodst = workspace + linie[i2].split("=")[1];
+                        jeszczeraz:
+                        try {
+                            if (linie[i2].split("=")[1].compareTo("PilotPC-PC-Java.jar") == 0) {
+                                if (Program.glowneOkno == null)
+                                    Program.glowneOkno = new Okno(false);  //otwiera okno, bo potem będzie problem, ale go nie pokazuje
+                                strumien = new FileOutputStream(plikpodst);
+                                // strumien=new FileOutputStream(linie[i2].split("=")[1]+".new");
+                            } else if (!(new File(plikpodst)).exists()) {
+                                strumien = new FileOutputStream(new File(plikpodst));
 
-                            if (linie[i2].split("=")[1].equals("Linux.sh"))
-                                (new File(linie[i2].split("=")[1])).setExecutable(true);
-                        } else if ((new File(linie[i2].split("=")[1] + ".new")).exists() || Program.nadpisywanie) {
-                            strumien = new FileOutputStream(linie[i2].split("=")[1]);
+                                if (linie[i2].split("=")[1].equals("Linux.sh"))
+                                    (new File(plikpodst)).setExecutable(true);
+                            } else if ((new File(plikpodst + ".new")).exists() || Program.nadpisywanie) {
+                                strumien = new FileOutputStream(plikpodst);
 
-                            if (linie[i2].split("=")[1].equals("Linux.sh"))
-                                (new File(linie[i2].split("=")[1])).setExecutable(true);
-                        } else {
-                            strumien = new FileOutputStream(linie[i2].split("=")[1] + ".new");
+                                if (linie[i2].split("=")[1].equals("Linux.sh"))
+                                    (new File(plikpodst)).setExecutable(true);
+                            } else {
+                                try {
+                                    strumien = new FileOutputStream(plikpodst + ".new");
 
-                            if (linie[i2].split("=")[1].equals("Linux.sh"))
-                                (new File(linie[i2].split("=")[1] + ".new")).setExecutable(true);
+                                    if (linie[i2].split("=")[1].equals("Linux.sh"))
+                                        (new File(plikpodst + ".new")).setExecutable(true);
+                                } catch (IOException ioe) {
+                                    strumien = new FileOutputStream(plikpodst);
+
+                                    if (linie[i2].split("=")[1].equals("Linux.sh"))
+                                        (new File(plikpodst)).setExecutable(true);
+                                }
+                            }
+                        } catch (IOException ioe) {
+                            try {
+                                plikpodst = plikpodst.replace('/', '\\');
+                                if (linie[i2].split("=")[1].compareTo("PilotPC-PC-Java.jar") == 0) {
+                                    if (Program.glowneOkno == null)
+                                        Program.glowneOkno = new Okno(false);  //otwiera okno, bo potem będzie problem, ale go nie pokazuje
+                                    strumien = new FileOutputStream(plikpodst);
+                                    // strumien=new FileOutputStream(linie[i2].split("=")[1]+".new");
+                                } else if (!(new File(plikpodst)).exists()) {
+                                    strumien = new FileOutputStream(new File(plikpodst));
+
+                                    if (linie[i2].split("=")[1].equals("Linux.sh"))
+                                        (new File(plikpodst)).setExecutable(true);
+                                } else if ((new File(plikpodst + ".new")).exists() || Program.nadpisywanie) {
+                                    strumien = new FileOutputStream(plikpodst);
+
+                                    if (linie[i2].split("=")[1].equals("Linux.sh"))
+                                        (new File(plikpodst)).setExecutable(true);
+                                } else {
+                                    strumien = new FileOutputStream(plikpodst + ".new");
+
+                                    if (linie[i2].split("=")[1].equals("Linux.sh"))
+                                        (new File(plikpodst + ".new")).setExecutable(true);
+                                }
+                            } catch (IOException ioe2) {
+
+                                Debugowanie.Błąd(ioe);
+                                JOptionPane.showMessageDialog(null, "Wystąpił błąd z zapisem pliku:\r\n" + plikpodst + "\r\n\r\nSpróbuj zmienić uprawnienia folderu lub zainstaluj program w inny folderze.", "Błąd aktualizacji Jaebe PilotPC", JOptionPane.ERROR_MESSAGE);
+
+                            }
                         }
 
                         while (true) {
@@ -156,9 +207,11 @@ public static String katalog="";
                                 break;
                             strumien.write(bajt);
                         }
-                        strumien.close();
+                        if (strumien != null)
+                            strumien.close();
                     } catch (IOException ioe) {
 
+                        //String pdst2=plikpodst.
                         Debugowanie.Błąd(ioe);
                     } finally {
                         try {

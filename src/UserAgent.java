@@ -25,7 +25,7 @@ public class UserAgent {
             String[] explode = UA.split("[;)]");
             urzadzenie = explode[explode.length - 2] + " " + explode[explode.length - 1];
             urzadzenie = UA.substring(UA.lastIndexOf(';'));
-            urzadzenie=urzadzenie.substring(0,urzadzenie.indexOf(')'));
+            urzadzenie = urzadzenie.substring(0, urzadzenie.indexOf(')'));
         } else if (UA.contains("Xbox One")) {
             urzadzenie = "Xbox One";
         } else if (UA.contains("Xbox")) {
