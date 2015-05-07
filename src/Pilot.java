@@ -84,6 +84,13 @@ public class Pilot {
                 case VOLDOWN: {
                     try {
                         Biblioteka.click(data.button.ordinal());//Korzysta z tego samego enuma co TCP_DATA, bo po co robic dwa osobne
+                        if (System.getProperty("os.name").toUpperCase().contains("WIN"))
+                        {
+                            Biblioteka.click(data.button.ordinal());
+                            Biblioteka.click(data.button.ordinal());
+                            Biblioteka.click(data.button.ordinal());
+                            Biblioteka.click(data.button.ordinal());
+                        }
                     } catch (Throwable e) {
                         Debugowanie.Błąd(e);
                     }
@@ -92,6 +99,13 @@ public class Pilot {
                 case VOLUP: {
                     try {
                         Biblioteka.click(data.button.ordinal());
+                        if (System.getProperty("os.name").toUpperCase().contains("WIN"))
+                        {
+                            Biblioteka.click(data.button.ordinal());
+                            Biblioteka.click(data.button.ordinal());
+                            Biblioteka.click(data.button.ordinal());
+                            Biblioteka.click(data.button.ordinal());
+                        }
                     } catch (Throwable e) {
                     }
                     break;

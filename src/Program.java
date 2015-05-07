@@ -18,7 +18,7 @@ public class Program {
     static BufferedImage imgObrazek = null;
     static TypWyswietlania wyswietlanie;
     public static Ustawienia ustawienia = Ustawienia.importuj();
-    static public final String wersja = "0.7.9";
+    static public final String wersja = "0.7.10";
     static public Robot robot;
     static boolean debug = false;
     static public boolean ikonaZasobnik = true;
