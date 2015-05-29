@@ -4,32 +4,15 @@
 <p>
 	Jest to serwer dla programu PilotPC. Program posiada mechanizm automatycznej aktualizacji.
 </p>
-<!--instrukcja-->
-<h2>Instrukcja</h2>
-<p>
-	Aby uruchomić serwer należy zapisać plik <b>PilotPC-PC-Java</b>.jar, najlepiej w pustym folderze, a następnie go uruchomić. Jeśli dostaniesz komunikat z zapory (firewalla) to zezwól na połączenie/dodanie wyjątku.
-</p>
-<p>
-	W zasobniku systemowym pokarze się ikona (tymczasowo jest to czarny kwadrat) informująca że serwer jest uruchomiony. Można kliknąć ją 2 razy aby pojawiło się okno serwera. Okno to można dowolnie otwierać i zamykać: nie wpływa to na działanie serwera. Aby wyłączyć serwer kliknij prawym przyciskiem myszy na ikonę w zasobniku i wybierz <b>Zamknij</b>
-</p>
-<p>
-	Pierwszą metodą na połączenie się jest skorzystanie z <a href="https://github.com/FranQy/PilotPC-Android">Aplikacji na androida</a>. należy w niej wpisać adres IP komputera (pokazuje się on w oknie serwera) oraz hasło (również pokazuje się w oknie serwera).
-</p>
-<p>
-	Drugą metodą jest zeskanowanie kodu QR wyświetlonego w oknie serwera.
-</p>
-<p>
-	Trzecią metodą jest uruchomienie przeglądarki www w telefonie/tablecie i wpisanie numeru IP komputera, dwukropka i liczby <i>8753</i> np. <i>127.127.127.127:8753</i>.
-</p>
-<!--/instrukcja-->
 <h2>Pliki</h2>
 <table>
-	<tr><td><b>PilotPC-PC-Java</b>.jar</td><td>Główny plik z programem</td></tr>
-	<tr><td><b>libpilotpc</b>.so</td><td>Dodatkowa biblioteka dla Linuksa z 32-bitową Javą</td></tr>
-	<tr><td><b>libpilotpc-x64</b>.so</td><td>Dodatkowa biblioteka dla Linuksa z 64-bitową Javą</td></tr>
-	<tr><td><b>pilotpc</b>.dll</td><td>Dodatkowa biblioteka dla Windowsa z 32-bitową Javą</td></tr>
-	<tr><td><b>pilotpc-x64</b>.dll</td><td>Dodatkowa biblioteka dla Windowsa z 64-bitową Javą</td></tr>
+	<tr><td>java/<b>pilotpc</b>.jar</td><td>Główny plik z programem</td></tr>
+	<tr><td>lib/<b>libpilotpc</b>.so</td><td>Dodatkowa biblioteka dla Linuksa z 32-bitową Javą</td></tr>
+	<tr><td>lib/<b>libpilotpc-x64</b>.so</td><td>Dodatkowa biblioteka dla Linuksa z 64-bitową Javą</td></tr>
+	<tr><td>lib/<b>pilotpc</b>.dll</td><td>Dodatkowa biblioteka dla Windowsa z 32-bitową Javą</td></tr>
+	<tr><td>lib/<b>pilotpc-x64</b>.dll</td><td>Dodatkowa biblioteka dla Windowsa z 64-bitową Javą</td></tr>
 	<tr><td><b>windows</b>.exe</td><td>Plik uruchamiający program pod systemem Windows</td></tr>
+	<tr><td><b>Linux</b>.sh</td><td>Plik uruchamiający program pod systemem Linux</td></tr>
 </table>
 <h2>Wspierane systemy operacyjne</h2>
 <p>
