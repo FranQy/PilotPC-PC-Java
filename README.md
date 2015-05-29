@@ -1,4 +1,5 @@
-<h1>PilotPC-PC-Java</h1>
+<h1>PilotPC Server</h1>
+<strong><a href="http://jaeebestudio.tk/pilotpc/">Oficjalna strona www!</a></strong>
 <h2>Wstęp</h2>
 <p>
 	Jest to serwer dla programu PilotPC. Program posiada mechanizm automatycznej aktualizacji.
