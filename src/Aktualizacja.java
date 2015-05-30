@@ -15,13 +15,13 @@ public class Aktualizacja
     public static Boolean wymus = false;
     public static String najnowsza = "";
     public static String katalog = "";
-    public static boolean możnaAktualizować =true;
+    public static boolean możnaAktualizować = true;
 
     @Override
     public void run() {
         //if ((!zaktualizowano && Program.ustawienia.aktualizujAutomatycznie) || wymus)
         {
-            if(!możnaAktualizować)
+            if (!możnaAktualizować)
                 return;
             InputStream is = null;
             String s;
@@ -65,7 +65,11 @@ public class Aktualizacja
     }
 
     static void aktualizuj(String content, String UrlSerwera) {
-        if(!możnaAktualizować)
+        if (!content.substring(0, 13).equals("nazwa=PilotPC")) {
+            System.out.println(Jezyk.napisy[Jezyk.n.BladPolaczeniaZSerweremAktualizacji.ordinal()]);
+            return;
+        }
+        if (!możnaAktualizować)
             return;
         String[] linie = content.split("\n");
         for (int i2 = 0; i2 < linie.length; i2++) {
@@ -108,7 +112,7 @@ public class Aktualizacja
     public static void samoAkt(String[] linie, String UrlSerwera) {
 
         {
-            if(!możnaAktualizować)
+            if (!możnaAktualizować)
                 return;
             trwa = true;
 
