@@ -110,7 +110,7 @@ public class Program {
                         ikonaProgram = false;
                     else if (args[i].equals("/nti") || args[i].equals("-nti") || args[i].equals("/notrayicon") || args[i].equals("-notrayicon"))
                         ikonaZasobnik = false;
-                    else if (args[i].equals("/noupdate") || args[i].equals("-noupdate") )
+                    else if (args[i].equals("/noupdate") || args[i].equals("-noupdate"))
                         Aktualizacja.możnaAktualizować = false;
                     else if (args[i].equals("/b") || args[i].equals("-b") || args[i].equals("-beta") || args[i].equals("/beta"))
                         Aktualizacja.katalog = "beta/";
