@@ -1,3 +1,5 @@
+
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include "instalacja.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,7 +26,6 @@
 #include <Sddl.h>
 #include "jezyk.h"
 using namespace std;
-
 /*WCHAR* lacz(LPCWSTR a, string b)
 {
 int i = 0;
@@ -74,7 +75,7 @@ HRESULT CreateLink(LPCWSTR lpszPathObj, LPCSTR lpszPathLink, LPCWSTR lpszDesc)
 	// Get a pointer to the IShellLink interface. It is assumed that CoInitialize
 	// has already been called.
 	hres = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID*)&psl);
-	
+
 	if (SUCCEEDED(hres))
 	{
 		IPersistFile* ppf;
@@ -220,7 +221,7 @@ void __cdecl watekStart(void * Args)
 			ZeroMemory(&pi, sizeof(pi));
 			//MessageBox(NULL, L"W systemie brak Javy. Proszê zainstalowaæ Javê", L"Informacja o Javie", MB_ICONEXCLAMATION);
 			const WCHAR* adr = (instalacja::folderInst + L"\\javaInstalacja.exe").c_str();
-			CreateProcess((instalacja::folderInst + L"\\javaInstalacja.exe").c_str(), L"", NULL, NULL, false, 0, NULL, instalacja::folderInst.c_str() , &si, &pi);
+			CreateProcess((instalacja::folderInst + L"\\javaInstalacja.exe").c_str(), L"", NULL, NULL, false, 0, NULL, instalacja::folderInst.c_str(), &si, &pi);
 		}
 		exit(0);
 	}
@@ -263,25 +264,31 @@ void instalacja::start(wstring fol)
 		}
 		if (!czyJava())
 		{
-			pobierz("javaInstalacja.exe", fol,this, false);
+			pobierz("javaInstalacja.exe", fol, this, false);
 			//MoveFile((fol + L"\\java.bin").c_str(), (fol + L"\\javaInstalacja.exe").c_str());
 			STARTUPINFO si;
 			PROCESS_INFORMATION pi;
 			instalacja::folderInst = fol;
-		/*	ZeroMemory(&si, sizeof(si));
-			si.cb = sizeof(si);
-			ZeroMemory(&pi, sizeof(pi));
-			//MessageBox(NULL, L"W systemie brak Javy. Proszê zainstalowaæ Javê", L"Informacja o Javie", MB_ICONEXCLAMATION);
-			const WCHAR* adr= (fol + L"\\javaInstalacja.exe").c_str();
-			CreateProcess((fol + L"\\javaInstalacja.exe").c_str(), L"javaInstalacja.exe", NULL, NULL, false, 0, NULL, folder, &si, &pi);
-		*/}
+			/*	ZeroMemory(&si, sizeof(si));
+				si.cb = sizeof(si);
+				ZeroMemory(&pi, sizeof(pi));
+				//MessageBox(NULL, L"W systemie brak Javy. Proszê zainstalowaæ Javê", L"Informacja o Javie", MB_ICONEXCLAMATION);
+				const WCHAR* adr= (fol + L"\\javaInstalacja.exe").c_str();
+				CreateProcess((fol + L"\\javaInstalacja.exe").c_str(), L"javaInstalacja.exe", NULL, NULL, false, 0, NULL, folder, &si, &pi);
+				*/
+		}
 		WCHAR bufor[1024];
 		GetModuleFileName(NULL, bufor, 1024);
 		CopyFile(bufor, (folderStr + (L"\\uninstall.exe")).c_str(), false);
 		postepFaktyczny = 512;
 
 		//int soc=getHttp("pilotpc.za.pl", 13, "pilotpc-pc-java.jar", 19);
-		restart:
+	restart:
+		if (instalacja::serNr > 2)
+		{
+			MessageBox(0, L"B³¹d po³¹czenia z serwerem. Prawdopodobnie nie masz internetu.", jezyk::napisy[BladPodczasInstalacji], MB_ICONERROR);
+			return;
+		}
 		int soc = getHttp(instalacja::serwery[instalacja::serNr], instalacja::serweryl[instalacja::serNr], "version.php?instal", 18);
 		if (soc == -1)
 		{
@@ -289,7 +296,7 @@ void instalacja::start(wstring fol)
 			goto restart;
 		}
 
-		const int BuffSize = 10000;
+		const int BuffSize = 20000;
 		char buff[1 + BuffSize];
 		//memset(&buff, 0, BuffSize + 1);
 		//char[] = new char[];
@@ -301,17 +308,23 @@ void instalacja::start(wstring fol)
 		{
 			n = n + recv(soc, bufJeden, 1, 0);
 			buff[n] = bufJeden[0];
-			 if (n > 10)
-			 {
-				 if (buff[n] == ']'&&buff[n - 1] == 'E'&&buff[n - 2] == 'L'&&buff[n -3] == 'I'&&buff[n - 4] == 'F'&&buff[n - 5] == 'D'&&buff[n - 6] == 'N'&&buff[n - 7] == 'E'&&buff[n - 8] == '[')
-				 {
-					 n = n - 8;
-					 break;
-				 }
-			 }
+			if (n > 10)
+			{
+				if (buff[n] == ']'&&buff[n - 1] == 'E'&&buff[n - 2] == 'L'&&buff[n - 3] == 'I'&&buff[n - 4] == 'F'&&buff[n - 5] == 'D'&&buff[n - 6] == 'N'&&buff[n - 7] == 'E'&&buff[n - 8] == '[')
+				{
+					n = n - 8;
+					break;
+				}
+			}
+			if (n >= BuffSize)
+			{
+				instalacja::serNr++;
+				goto restart;
+				return;
+			}
 		}
 		string buforS = string(buff);
-		if (buforS.find("HTTP/1.1 200")!=0)
+		if (buforS.find("HTTP/1.1 200") != 0)
 		{
 			instalacja::serNr++;
 			goto restart;
@@ -350,7 +363,7 @@ void instalacja::start(wstring fol)
 				int x2 = x;
 				string plik = tresc.substr(x);
 				plik = plik.substr(0, plik.find_first_of('\r'));
-				pobierz(plik, fol,this, true);
+				pobierz(plik, fol, this, true);
 				ilePlikowGotowe++;
 				postepFaktyczny = 2048 + (29 * 1024 * ilePlikowGotowe) / ilePlikow;
 
@@ -369,10 +382,10 @@ void instalacja::start(wstring fol)
 			KEY_ALL_ACCESS, NULL, &hkProgram, &dwDisp);
 		RegSetValueEx(hkProgram, L"DisplayName", 0, REG_SZ, (byte*)L"PilotPC", 14);
 		RegSetValueEx(hkProgram, L"UninstallString", 0, REG_SZ, (byte*)(folderStr + (L"\\uninstall.exe")).c_str(), 28 + 2 * folderStr.length());
-		RegSetValueEx(hkProgram, L"URLInfoAbout", 0, REG_SZ, (byte*)L"https://github.com/FranQy/PilotPC-PC-Java", 82);
-		RegSetValueEx(hkProgram, L"Publisher", 0, REG_SZ, (byte*)L"Matrix0123456789&FranQy", 46);
+		RegSetValueEx(hkProgram, L"URLInfoAbout", 0, REG_SZ, (byte*)L"http://jaebestudio.tk/pilotpc", 58);
+		RegSetValueEx(hkProgram, L"Publisher", 0, REG_SZ, (byte*)L"Jaebe Studio", 24);
 		RegSetValueEx(hkProgram, L"Readme", 0, REG_SZ, (byte*)(folderStr + (L"\\readme.html")).c_str(), 24 + 2 * folderStr.length());
-		int rozmiar = 2252;
+		int rozmiar = 1605;
 		RegSetValueEx(hkProgram, L"EstimatedSize", 0, REG_DWORD, (byte*)&rozmiar, 4);
 		//string wersja = "0.1.25";
 		//RegSetValueEx(hkProgram, L"DisplayVersion", 0, REG_SZ, (byte*)wersja.c_str(), 2 * wersja.length());
@@ -392,8 +405,8 @@ void instalacja::start(wstring fol)
 		GetEnvironmentVariableA("USERPROFILE", userprofile, 1024);
 		char appdata[1024];
 
-			const WCHAR* test2 = folderStr.c_str();
-			wstring cel = wstring(test2)+wstring(L"\\Windows.exe");
+		const WCHAR* test2 = folderStr.c_str();
+		wstring cel = wstring(test2) + wstring(L"\\Windows.exe");
 		GetEnvironmentVariableA("appdata", appdata, 1024);
 		if (skrotPulpit)
 		{
@@ -416,7 +429,7 @@ void instalacja::start(wstring fol)
 			CreateLink(cel.c_str(), folderMS.c_str(), L"Steruj komputerem zdalnie");
 			//CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), (folderMS + (string)"\\PilotPC").c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu", folderStr.c_str());
 			//CreateLink((folderStr + (L"\\Uninstall.exe")).c_str(), (folderMS + (string)"\\Odinstaluj").c_str(), L"Usuwa program PilotPC z tego komputera", folderStr.c_str());
-		
+
 		}
 		postepFaktyczny = 32 * 1024;
 	}
@@ -473,10 +486,10 @@ return hres;
 void instalacja::start(HWND hWnd)
 {
 	okno = hWnd;
-	OSVERSIONINFO osv;
+	/*OSVERSIONINFO osv;
 	ZeroMemory(&osv, sizeof(OSVERSIONINFO));
 	osv.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-	GetVersionEx(&osv);
+	GetVersionEx(&osv);*/
 	int test = (int)this;
 	_beginthread(watekStart, 0, this);
 }
@@ -500,9 +513,9 @@ void instalacja::pobierz(string nazwa, wstring fol, instalacja* objekt, bool szy
 	int n = 1;
 	bool znalezione = false;
 
-	for (int i = 0; i < nazwa.length();i++)
-	if (nazwa[i] == '/')
-		nazwa[i] = '\\';
+	for (int i = 0; i < nazwa.length(); i++)
+		if (nazwa[i] == '/')
+			nazwa[i] = '\\';
 
 	SECURITY_ATTRIBUTES  sa;
 	SECURITY_ATTRIBUTES*  saw = &sa;
@@ -519,7 +532,7 @@ void instalacja::pobierz(string nazwa, wstring fol, instalacja* objekt, bool szy
 	wstring b;
 	convert(nazwa, b);
 	const WCHAR* nazwa2 = b.c_str();;
-	
+
 	const WCHAR* folder2 = fol.c_str();
 	//tworzy podfoldery
 	wstring calyplik = (fol + wstring(L"\\") + b);
@@ -567,20 +580,20 @@ void instalacja::pobierz(string nazwa, wstring fol, instalacja* objekt, bool szy
 			n = recv(soc, buff, BuffSize, 0);
 			int i = 0;
 			if (!znalezione)
-			for (; i < n; i++)
-			{
-				if (buff[i] == '\n'&&buff[i + 1] == '\n')
+				for (; i < n; i++)
 				{
-					i = i + 2;
-					znalezione = true;
-					break;
+					if (buff[i] == '\n'&&buff[i + 1] == '\n')
+					{
+						i = i + 2;
+						znalezione = true;
+						break;
+					}
+					else if (buff[i] == '\n'&&buff[i + 2] == '\n'){
+						i = i + 3;
+						znalezione = true;
+						break;
+					}
 				}
-				else if (buff[i] == '\n'&&buff[i + 2] == '\n'){
-					i = i + 3;
-					znalezione = true;
-					break;
-				}
-			}
 			int lengthStringPos = ((string)buff).find("Content-Length:");
 			if (lengthStringPos > 0)
 			{

@@ -238,15 +238,15 @@ public class HTTP {
                 } catch (IOException e) {
                     przyciskiBase64 = "";
                 }
-                String overflow = "hidden";
-                if (wyj.toLowerCase().contains("android"))
-                    overflow = "scrool";
+                //String overflow = "auto";
+              //  if (wyj.toLowerCase().contains("android")||wyj.toLowerCase().contains("phone")||wyj.toLowerCase().contains("mobile"))
+                String overflow = "scroll";
                 wysylanie = "HTTP/1.1 200 OK\r\nServer: PilotPC\r\nSet-Cookie: id=" + i + "; path=/\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n"
                         + "<?xml version=\"1.0\" encoding=\"UTF-8\"?><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<title>PilotPC</title>"
                         + "<meta name=\"viewport\" content=\"width=220px, initial-scale=1, user-scalable=no\" />"
                         + "<style>"
-                        + "*{-ms-touch-action: none;touch-action: none;}" +
-                        "a img{border:none;}"
+                      //  + "*{-ms-touch-action: none;touch-action: none;}"
+                        +"a img{border:none;}"
                         + "body{font-family:\"Segoe UI Light\",\"Segoe UI\",arial;overflow:" + overflow + ";background:#26211b;color:white;font-style:non-sherif;}"
                         + "#menu{z-index:10;transition:all 300ms;-webkit-transition:all 300ms;height:10%;position: absolute;top: 90%;background: #2e2e2e;margin: 0;left: 0;width: 100%;text-align: center;margin:0;padding:0;}"
                         + "#menu li{display:inline;}" +
@@ -273,26 +273,37 @@ public class HTTP {
 
                         "</style>"
                         + "<script>/*<![CDATA[*/\n" +
+                        "function windowScrollY(){" +
+                        "if(window.scrollY!=undefined)\n" +
+                        "\t\t\t\t\treturn window.scrollY\n" +
+                        "\t\t\t\telse\n" +
+                        "\t\t\t\t\treturn document.documentElement.scrollTop" +
+                        "" +
+                        "" +
+                        "}" +
+                        "" +
                         "var wstecz=0;\n" +
                         "var aktywny=true;" +
                         "var hash=setInterval(function(){\n" +
-                        "if(wstecz>0&&window.scrollY==0&&location.hash!='') \n" +
+                        "if(wstecz>0&&windowScrollY()==0&&location.hash!='') \n" +
                         "{" +
                         "location.hash='';" +
                         "wstecz=0;" +
                         "}\n" + "" +
-                        "else if(wstecz==0&&window.scrollY>0&&location.hash=='') \n" +
+                        "else if(wstecz==0&&windowScrollY()>0&&location.hash=='') \n" +
                         "{" +
                         "location.hash='ustawienia';" +
                         "wstecz=1;" +
                         "}\n" +
-                        "else if(wstecz>0&&window.scrollY>0&&location.hash=='')\n" +
+                        "else if(wstecz>0&&windowScrollY()>0&&location.hash=='')\n" +
                         "{wstecz=0;" +
-                        "window.scroll(0,0);}" +
+                        "window.scroll(0,0);" +
+                        "}" +
 
                         "else if(wstecz==0&&location.hash=='#ustawienia')\n" +
                         "{" +
                         "window.scroll(0,document.body.clientHeight*0.85);" +
+                        "wstecz=1;" +
                         "}" +
                         "}" +
                         "" +
@@ -425,7 +436,7 @@ public class HTTP {
                         "klawiatura.t=function()\n" +
                         "{"
                         + "var txt=document.getElementsByTagName('textarea')[0];" +
-                        "for(;klawiatura.i<txt.value.length;klawiatura.i++)\n" +
+                        "for(;txt!=null&&klawiatura.i<txt.value.length;klawiatura.i++)\n" +
                         "{" +
                         "var data=new TCP_Data();data.key = txt.value.charCodeAt(klawiatura.i);\n"
                         + "data.type=TCP_Data.typ.KEYBOARD;send(data);\n"
@@ -529,7 +540,7 @@ public class HTTP {
                         "<area shape=\"rect\" coords=\"'+(skala*240)+','+(skala*1040)+','+(skala*480)+','+(skala*1280)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.VIDEO);\"/>" +
                         "<area shape=\"rect\" coords=\"'+(skala*480)+','+(skala*1040)+','+(skala*720)+','+(skala*1280)+'\" onclick=\"pilot.click(TCP_Data.pilotButton.MUSIC);\"/>" +
 
-                        "<area shape=\"poly\" coords=\"'+(skala*40)+','+(skala*390)+','+(skala*320)+','+(skala*390)+','+(skala*40)+','+(skala*670)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLDOWN); return false;\" onmouseup=\"pilot.trzymaj=null; return false;\" ontouchstart=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLDOWN); return false;\" ontouchend=\"pilot.trzymaj=null; return false;\" />" +
+                        "<area shape=\"poly\" coords=\"'+(skala*40)+','+(skala*390)+','+(skala*320)+','+(skala*390)+','+(skala*40)+','+(skala*670)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLDOWN); return false;\" onmouseup=\"pilot.trzymaj=null; return false;\" ontouchstart=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLDOWN); return false;\" ontouchend=\"pilot.trzymaj=null; return false;\" onclick=\" return false;\" onmouseclick=\" return false;\" />" +
                         "<area shape=\"poly\" coords=\"'+(skala*670)+','+(skala*390)+','+(skala*400)+','+(skala*390)+','+(skala*670)+','+(skala*670)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLUP); return false;\" onmouseup=\"pilot.trzymaj=null\"  ontouchstart=\"pilot.clickTrzymaj(TCP_Data.pilotButton.VOLUP); return false;\" ontouchend=\"pilot.trzymaj=null; return false;\" />" +
                         "<area shape=\"poly\" coords=\"'+(skala*40)+','+(skala*1020)+','+(skala*320)+','+(skala*1020)+','+(skala*40)+','+(skala*730)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.PERV,TCP_Data.pilotButton.REWIND); return false;\"  ontouchstart=\"pilot.clickTrzymaj(null,TCP_Data.pilotButton.REWIND); return false;\"  ontouchend=\"pilot.trzymaj=null;if(pilot.trzymajLicz<0)pilot.click(TCP_Data.pilotButton.PERV); return false;\"  onmouseup=\"pilot.trzymaj=null;if(pilot.trzymajLicz<0)pilot.click(TCP_Data.pilotButton.PERV);\" />" +
                         "<area shape=\"poly\" coords=\"'+(skala*670)+','+(skala*1020)+','+(skala*400)+','+(skala*1020)+','+(skala*670)+','+(skala*730)+'\" onmousedown=\"pilot.clickTrzymaj(TCP_Data.pilotButton.NEXT, TCP_Data.pilotButton.FORWARD); return false;\" ontouchstart=\"pilot.clickTrzymaj(null, TCP_Data.pilotButton.FORWARD); return false;\"  ontouchend=\"pilot.trzymaj=null;if(pilot.trzymajLicz<0)pilot.click(TCP_Data.pilotButton.NEXT); return false;\"  onmouseup=\"pilot.trzymaj=null;if(pilot.trzymajLicz<0)pilot.click(TCP_Data.pilotButton.NEXT);\" />" +
@@ -673,9 +684,10 @@ public class HTTP {
                         + " var x=new XMLHttpRequest();x.open('get','/log'+thi.parentNode.clientHeight+' '+document.body.clientHeight );x.send(null);" +
                         "data.type=TCP_Data.typ.TOUCHPAD;send(data);\n"
                         + "}}\n" +
+                        "if(document.getElementById('pulpit')!=null){\n" +
                         "document.getElementById('pulpit').addEventListener(\"MSGestureChange\", onDivGestureChange, false);\n" +
                         "document.getElementById('pulpit').addEventListener(\"GestureChange\", onDivGestureChange, false);\n" +
-                        "\n" +
+                        "}\n" +
                         "      function onDivGestureChange(e) {\n" +
                         "        pulpit.zoom=pulpit.zoom*e.scale;" +
                         "document.getElementById(\"pulpit\").children[0].style.width=e.scale*parseFloat(document.getElementById(\"pulpit\").children[0].style.width)+'%';" +
@@ -693,7 +705,7 @@ public class HTTP {
                         //+ "<div class=\"karta\" id=\"gamepad\">Gamepad wkrodce</div>"
                         //+ "<div id=\"aaa\" style=\"color:white;position:fixed;left:0;top:0;\">test</div>"
                         + "<div class=\"karta\" style=\"display:block\" id=\"pilot\">"
-                        + "<img id=\"przyciski\" src=\"" + przyciskiBase64 + "\" usemap=\"#przycMapa\" />" +
+                        + "<img id=\"przyciski\" src=\"" + przyciskiBase64 + "\" usemap=\"#przycMapa\" onclick=\"return false;\"  ontouch=\"return false;\"  onmouseclick=\"return false;\" />" +
                         "<map id=\"przycMapa\" name=\"przycMapa\">" +
                         "</map>"
                         + "</div>"
@@ -839,7 +851,7 @@ public class HTTP {
                         //"<li onclick='kartaPokaz(\"gamepad\")'><img title=\"gamepad\" src=\""+gamepadBase64+"\"/></li>" +
                         "<li onclick=\"kartaPokaz(\'pilot\');mapa(document.getElementById('przyciski').clientHeight/1280);\"><img alt=\"pilot\" src=\"" + pilotBase64 + "\"/></li><li onclick='kartaPokaz(\"klawiatura\");'><img alt=\"klawiatura\" src=\"" + klawiaturaBase64 + "\"/></li><li onclick='kartaPokaz(\"touchpad\")'><img alt=\"touchpad\" src=\"" + touchpadBase64 + "\"/></li><li onclick='kartaPokaz(\"pulpit\");pulpit.laduj(document.getElementById(\"pulpit\").children[0]);'><img alt=\"Pulpit\" src=\"" + pulpitBase64 + "\"/></li><li onclick=\"" +
                         //"if(document.getElementById('menu').style.top=='5%'){document.getElementById('menu').style.top='90%';document.getElementById('menur').style.top='100%';}else{document.getElementById('menu').style.top='5%';document.getElementById('menur').style.top='15%';}" +
-                        "if(window.scrollY>0)window.scroll(0,0); else window.scroll(0,document.body.clientHeight*0.85);" +
+                        "if(windowScrollY()>0){window.scroll(0,0);location.hash=''} else {window.scroll(0,document.body.clientHeight*0.85);location.hash='#ustawienia'}" +
                         "\"><img style=\"float:right\" alt=\"menu\" src=\"" + menuBase64 + "\"/></li>" +
                         "</ul><div id=\"menur\"><h2>" + Jezyk.nhttp[lang.ordinal()][Jezyk.nHTTP.Informacje.ordinal()] + "</h2>" +
                         "<div class=\"podmenu\">" +

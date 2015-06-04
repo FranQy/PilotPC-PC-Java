@@ -36,10 +36,10 @@ public class HttpPolaczenie implements PolaczenieInfo {
     public String opis() {
         String ret = "<html>";
         if (UserAgent.OS != null)
-            ret += Jezyk.napisy[Jezyk.n.System.ordinal()] + ": " + UserAgent.OS;
+            ret += Jezyk.napisy[Jezyk.n.System.ordinal()] + ": " + UserAgent.OS+"<br>";
         if (UserAgent.urzadzenie != null)
-            ret += Jezyk.napisy[Jezyk.n.Model.ordinal()] + "<br>: " + UserAgent.urzadzenie;
-        ret += "<br>User-Agent: " + UserAgent + "</html>";
+            ret += Jezyk.napisy[Jezyk.n.Model.ordinal()] + ": " + UserAgent.urzadzenie+"<br>";
+        ret += "User-Agent: " + UserAgent + "</html>";
         return ret;
     }
 }

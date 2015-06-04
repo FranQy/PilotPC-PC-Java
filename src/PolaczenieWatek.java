@@ -19,6 +19,7 @@ public class PolaczenieWatek
     InputStream is;
     public Okno.Urzadzenie UI = null;
     public long czasMax = (long) 0x7fffffff * (long) 0x7fffffff;
+    private String ostatnizłykod;
 
     public Okno.Urzadzenie getUI() {
         return UI;
@@ -90,7 +91,9 @@ public class PolaczenieWatek
                                     odpowiedz.status = Connect.Status.ok;
                                 else {
                                     odpowiedz.status = Connect.Status.zlyKod;
+                                    if(!infoPrzyPolaczeniu.haslo.equals(ostatnizłykod))
                                     Polaczenie.czasBlokadyHasla = System.currentTimeMillis() + 500;
+                                    ostatnizłykod=infoPrzyPolaczeniu.haslo;
                                     //in.close();
                                     odpowiedz.nazwa = java.net.InetAddress.getLocalHost().getHostName();
                                     ObjectOutputStream oos = new ObjectOutputStream(soc.getOutputStream());

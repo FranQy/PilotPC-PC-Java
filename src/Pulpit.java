@@ -38,7 +38,12 @@ public class Pulpit {
                     "\n";
             try {
                 os.write(wysylanie.getBytes());
-            } catch (IOException e1) {
+            }
+            catch(java.net.SocketException e1){
+
+            }
+            catch (IOException e1) {
+
                 Debugowanie.Błąd(e1);
             }
             Debugowanie.Błąd(e);
