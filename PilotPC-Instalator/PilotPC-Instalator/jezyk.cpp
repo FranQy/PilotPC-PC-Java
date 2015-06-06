@@ -50,6 +50,10 @@ void jezyk::laduj(jezyki a)
 		napisy[n::JavaTak] = L"Zainstaluj Javę i kontynuuj";
 		napisy[n::JavaNie] = L"Anuluj";
 		napisy[n::Wybierz] = L"Wybierz";
+		napisy[n::BladPolaczeniaZSerwerrem] = L"Błąd połączenia z serwerem. Prawdopodobnie nie masz internetu.";
+		napisy[n::NieMoznaUtworzycFolderu] = L"Nie można utworzyć folderu ";
+		napisy[n::SterujKomputeremZdalnie] = L"Steruj komputerem zdalnie";
+		napisy[n::OdinstalujPilotPC] = L"Odinstaluj Jaebe PilotPC";
 		break;
 	case jezyk::Angielski:
 		napisy[n::Kod] = L"EN";
@@ -76,6 +80,10 @@ void jezyk::laduj(jezyki a)
 		napisy[n::JavaTak] = L"Install Java and continue";
 		napisy[n::JavaNie] = L"Cancel";
 		napisy[n::Wybierz] = L"Choose";
+		napisy[n::BladPolaczeniaZSerwerrem] = L"Connection server error. Probably no internet connection.";
+		napisy[n::NieMoznaUtworzycFolderu] = L"Creating folder error ";
+		napisy[n::SterujKomputeremZdalnie] = L"Remote control";
+		napisy[n::OdinstalujPilotPC] = L"Uninstall Jaebe PilotPC";
 		break;
 	case jezyk::Rosyjski:
 		napisy[n::Kod] = L"RU";
@@ -102,6 +110,10 @@ void jezyk::laduj(jezyki a)
 		napisy[n::JavaTak] = L"Установите Java и продолжить";
 		napisy[n::JavaNie] = L"Отмени";
 		napisy[n::Wybierz] = L"Выберите";
+		napisy[n::BladPolaczeniaZSerwerrem] = L"Не удалось подключиться к серверу . Вы, наверное, не имеют доступа в Интернет.";
+		napisy[n::NieMoznaUtworzycFolderu] = L"Ошибка создания папки ";
+		napisy[n::SterujKomputeremZdalnie] = L"дистанционное управление";
+		napisy[n::OdinstalujPilotPC] = L"удалить Jaebe PilotPC";
 		break;
 	default:
 		break;

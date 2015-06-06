@@ -18,4 +18,4 @@ public:
 
 
 enum jezyk::jezyki{ Polski, Angielski, Rosyjski };
-enum n{ Kod, Instaluj, Odinstaluj, WybierzFolder, DlaObecnegoUzytkownika, DlaWszystkichUzytkownikow, UruchamiajAutomatyczneiPrzyStarcieSystemu, SkrotNaPulpicie, SkrotWMenuStart, ProgramJestJuzZainstalowany, InstalujPonownie, PilotPCInstalator, Zainstalowano, BladPodczasInstalacji, BladZapisuDoPliku, NieMoznaUtworzycPliku, Usunieto, WymaganeUprawneiniaAdministratora, Zaakceptuj, Licencja, PotrzebnaJava,JavaTak,JavaNie,Wybierz };
+enum n{ Kod, Instaluj, Odinstaluj, WybierzFolder, DlaObecnegoUzytkownika, DlaWszystkichUzytkownikow, UruchamiajAutomatyczneiPrzyStarcieSystemu, SkrotNaPulpicie, SkrotWMenuStart, ProgramJestJuzZainstalowany, InstalujPonownie, PilotPCInstalator, Zainstalowano, BladPodczasInstalacji, BladZapisuDoPliku, NieMoznaUtworzycPliku, Usunieto, WymaganeUprawneiniaAdministratora, Zaakceptuj, Licencja, PotrzebnaJava, JavaTak, JavaNie, Wybierz, BladPolaczeniaZSerwerrem, NieMoznaUtworzycFolderu, SterujKomputeremZdalnie, OdinstalujPilotPC };

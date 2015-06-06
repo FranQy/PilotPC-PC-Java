@@ -253,13 +253,13 @@ void instalacja::start(wstring fol)
 			if (fol[i] == '\\')
 			{
 				if (!CreateDirectory(fol.substr(0, i).c_str(), &sa) && _waccess(fol.substr(0, i).c_str(), 0) == ENOENT){
-					MessageBox(NULL, (wstring(L"Nie mo¿na utworzyæ folderu ") + fol.substr(0, i)).c_str(), jezyk::napisy[BladPodczasInstalacji], MB_ICONERROR);
+					MessageBox(NULL, (wstring(jezyk::napisy[NieMoznaUtworzycFolderu]) + fol.substr(0, i)).c_str(), jezyk::napisy[BladPodczasInstalacji], MB_ICONERROR);
 					exit(1);
 				}
 			}
 		}
 		if (!CreateDirectory(fol.c_str(), &sa) && _waccess(fol.c_str(), 0) == ENOENT){
-			MessageBox(NULL, (wstring(L"Nie mo¿na utworzyæ folderu ") + fol).c_str(), jezyk::napisy[BladPodczasInstalacji], MB_ICONERROR);
+			MessageBox(NULL, (wstring(jezyk::napisy[NieMoznaUtworzycFolderu]) + fol).c_str(), jezyk::napisy[BladPodczasInstalacji], MB_ICONERROR);
 			exit(1);
 		}
 		if (!czyJava())
@@ -286,7 +286,7 @@ void instalacja::start(wstring fol)
 	restart:
 		if (instalacja::serNr > 2)
 		{
-			MessageBox(0, L"B³¹d po³¹czenia z serwerem. Prawdopodobnie nie masz internetu.", jezyk::napisy[BladPodczasInstalacji], MB_ICONERROR);
+			MessageBox(0, jezyk::napisy[BladPolaczeniaZSerwerrem], jezyk::napisy[BladPodczasInstalacji], MB_ICONERROR);
 			return;
 		}
 		int soc = getHttp(instalacja::serwery[instalacja::serNr], instalacja::serweryl[instalacja::serNr], "version.php?instal", 18);
@@ -407,26 +407,35 @@ void instalacja::start(wstring fol)
 
 		const WCHAR* test2 = folderStr.c_str();
 		wstring cel = wstring(test2) + wstring(L"\\Windows.exe");
+		wstring celUin = wstring(test2) + wstring(L"\\Uninstall.exe");
 		GetEnvironmentVariableA("appdata", appdata, 1024);
 		if (skrotPulpit)
 		{
 			string Pulpit = userprofile + string("\\Desktop\\PilotPC.lnk");
-			CreateLink(cel.c_str(), Pulpit.c_str(), L"Steruj komputerem zdalnie");
+			CreateLink(cel.c_str(), Pulpit.c_str(), jezyk::napisy[SterujKomputeremZdalnie]);
 			//CreateShortcut(gcnew System::String(Pulpit.c_str()), gcnew System::String(cel.c_str()), gcnew System::String("Steruj swoim komputerem zdalnie"));
 		}
 		if (skrotMenuStart)
 		{
 			string folderMS;
-			folderMS = userprofile + (string)"\\Start Menu\\Programs\\PilotPC.lnk";
+			string folderMSlnk;
+			string folderMSuin;
+			folderMS = userprofile + (string)"\\Start Menu\\Programs\\PilotPC";
+			folderMSlnk = userprofile + (string)"\\Start Menu\\Programs\\PilotPC\\PilotPC.lnk";
+			folderMSuin = userprofile + (string)"\\Start Menu\\Programs\\PilotPC\\Odinstaluj.lnk";
 			CreateDirectoryA(folderMS.c_str(), NULL);
 
-			CreateLink(cel.c_str(), folderMS.c_str(), L"Steruj komputerem zdalnie");
+			CreateLink(cel.c_str(), folderMSlnk.c_str(), jezyk::napisy[SterujKomputeremZdalnie]);
+			CreateLink(celUin.c_str(), folderMSuin.c_str(), jezyk::napisy[OdinstalujPilotPC]);
 			//CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), (folderMS + (string)"\\PilotPC").c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu", folderStr.c_str());
 			//CreateLink((folderStr + (L"\\Uninstall.exe")).c_str(), (folderMS + (string)"\\Odinstaluj").c_str(), L"Usuwa program PilotPC z tego komputera", folderStr.c_str());
-			folderMS = appdata + (string)"\\Microsoft\\Windows\\Start Menu\\Programs\\PilotPC.lnk";
+			folderMS = appdata + (string)"\\Microsoft\\Windows\\Start Menu\\Programs\\PilotPC";
+			folderMSlnk = appdata + (string)"\\Microsoft\\Windows\\Start Menu\\Programs\\PilotPC\\PilotPC.lnk";
+			folderMSuin = appdata + (string)"\\Microsoft\\Windows\\Start Menu\\Programs\\PilotPC\\Odinstaluj.lnk";
 			CreateDirectoryA(folderMS.c_str(), NULL);
 
-			CreateLink(cel.c_str(), folderMS.c_str(), L"Steruj komputerem zdalnie");
+			CreateLink(cel.c_str(), folderMSlnk.c_str(), jezyk::napisy[SterujKomputeremZdalnie]);
+			CreateLink(celUin.c_str(), folderMSuin.c_str(), jezyk::napisy[OdinstalujPilotPC]);
 			//CreateLink((folderStr + (L"\\PilotPC-PC-Java.jar")).c_str(), (folderMS + (string)"\\PilotPC").c_str(), L"PilotPC - program do sterowania komputerem z poziomu telefonu", folderStr.c_str());
 			//CreateLink((folderStr + (L"\\Uninstall.exe")).c_str(), (folderMS + (string)"\\Odinstaluj").c_str(), L"Usuwa program PilotPC z tego komputera", folderStr.c_str());
 
