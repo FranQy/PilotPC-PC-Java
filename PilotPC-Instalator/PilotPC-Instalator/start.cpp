@@ -5,13 +5,14 @@
 #include <Shlobj.h>
 using namespace Gdiplus;
 HWND przyciskJezyk[3];
-HWND g_hPrzycisk, user1, userWiele, systemStart, skrotP, skrotMS;
+HWND g_hPrzycisk, g_hPrzyciskKoniec, user1, userWiele, systemStart, skrotP, skrotMS;
 BOOL systemStartBool = true;
 BOOL wszyscy = false;
 BOOL skrotPulpit = true;
 BOOL skrotMenuStart = true;
 HWND folder;
 HWND FolderTxt;
+HWND NapisKoniec;
 HWND StanInstalacji;
 int logoCzas;
 HWND hProgressBar;
@@ -200,8 +201,10 @@ void wyswietl2(HINSTANCE hInstance)
 	}
 
 }
+HINSTANCE hinstCopy;
 void wyswietl3(HINSTANCE hInstance)
 {
+	//hinstCopy = hInstance;
 	nrAni = 4;
 	animacjaCzas = GetTickCount();
 	FolderTxt = CreateWindowEx(0, L"STATIC", NULL, WS_CHILD | WS_VISIBLE |
@@ -258,6 +261,24 @@ void wyswietl3(HINSTANCE hInstance)
 
 	SendMessage(skrotMS, BM_SETCHECK, 1, 0);
 
+	InitCommonControls();
+}
+void wyswietl4()
+{
+	wyswietl4(hinstCopy);
+}
+void wyswietl4(HINSTANCE hInstance)
+{
+	animacjaCzas = GetTickCount();
+
+	NapisKoniec = CreateWindowEx(0, L"STATIC", NULL, WS_CHILD | WS_VISIBLE |
+		SS_LEFT, 475, 140, 400, 20, hWnd, NULL, hInstance, NULL);
+
+	//HFONT PilotPCCzcionka = CreateFont(18, 7, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, L"Arial");
+	SendMessage(NapisKoniec, WM_SETFONT, (WPARAM)hNormalFont, 0);
+	SetWindowText(NapisKoniec, jezyk::napisy[n::WybierzFolder]);
+	SendMessage(NapisKoniec, WM_SETFONT, (WPARAM)PilotPCCzcionka, 0);
+	nrAni = 5;
 	InitCommonControls();
 }
 
@@ -457,6 +478,7 @@ VOID CALLBACK TimerProc(
 	)
 {
 	float czas = (float)(GetTickCount() - animacjaCzas) * 2;
+	//czas = czas / 10;
 	int przes = (int)(0.00045*czas*czas - 0.9*czas);
 	/*if (przes >= 0)
 		return;*/
@@ -777,6 +799,35 @@ VOID CALLBACK TimerProc(
 		prostTlo2.bottom = 470;
 		FillRect(GetDC(hWnd), &prostTlo2, ciemnyTlo2);
 	}
+	if (nrAni == 5)
+	{
+		RECT zakrec;
+		zakrec.left = 450 + przes;
+		zakrec.top = 110;
+		zakrec.right = 450;
+		zakrec.bottom = 160;
+		wstring zastr = wstring(jezyk::napisy[Zainstalowano]);
+		HDC hDC = GetDC(hWnd);
+		SetTextColor(hDC, RGB(255, 255, 255));
+		SelectObject(hDC, PilotPCCzcionka2);
+		FillRect(hDC, &zakrec, ciemnyTlo);
+		SetBkMode(hDC, TRANSPARENT);
+		DrawText(hDC, jezyk::napisy[Zainstalowano], zastr.length(), &zakrec, DT_CENTER | DT_SINGLELINE);
+
+
+		/*zakrec.left = 475 + przes;
+		zakrec.top = 600;
+		zakrec.right = 775 + przes;
+		zakrec.bottom = 750;
+zastr = wstring(jezyk::napisy[Zakoncz]);
+
+		SetTextColor(hDC, RGB(255, 255, 255));
+		SelectObject(hDC, hNormalFont);
+		FillRect(hDC, &zakrec, ciemnyTlo);
+		SetBkMode(hDC, TRANSPARENT);
+		DrawText(hDC, jezyk::napisy[Zakoncz], zastr.length(), &zakrec, DT_CENTER | DT_SINGLELINE);*/
+		MoveWindow(g_hPrzyciskKoniec, 451 + przes, 500, 448, 149, true);
+	}
 	//if (hProgressBar != NULL)
 	//	SendMessage(hProgressBar, PBM_SETPOS, (WPARAM)(*ins).postepFaktyczny, 0);
 }
@@ -909,6 +960,7 @@ void przerysuj(HWND msghwnd)
 }
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 {
+	hinstCopy = hInstance;
 		Checkbox1 = LoadBitmap(hinstance, MAKEINTRESOURCE(2));
 		Checkbox2 = LoadBitmap(hinstance, MAKEINTRESOURCE(3));
 	hbmObraz = LoadBitmap(hinstance, MAKEINTRESOURCE(1));
@@ -978,6 +1030,16 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR test, INT iCmdShow)
 	ShowWindow(hWnd, iCmdShow);
 
 	UpdateWindow(hWnd);
+
+
+
+
+	g_hPrzyciskKoniec = CreateWindowEx(0, L"BUTTON", jezyk::napisy[Zakoncz], WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
+		521, 500, 448, 149, hWnd, (HMENU)2011, hInstance, NULL);
+	SendMessage(g_hPrzyciskKoniec, WM_SETFONT, (WPARAM)PilotPCCzcionka2, 0);
+
+
+
 
 	SetTimer(hWnd, 1, 10, TimerProc);
 	HFONT hNormalFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
@@ -1269,6 +1331,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 								drawButtonRed(dis, JavaTakB, ciemnyTlo4, ciemnyTlo5, jezyk::napisy[JavaTak], stringDlugosc(jezyk::napisy[JavaTak]));
 							else if (dis->CtlID == 2010)
 								drawButtonRed(dis, g_hPrzycisk, ciemnyTlo2, ciemnyTlo3, jezyk::napisy[Instaluj], stringDlugosc(jezyk::napisy[Instaluj]));
+							else if (dis->CtlID == 2011 && jezyk::napisy[0]!=0)
+								drawButtonRed(dis, g_hPrzyciskKoniec, ciemnyTlo2, ciemnyTlo3, jezyk::napisy[Zakoncz], stringDlugosc(jezyk::napisy[Zakoncz]));
 							else if (dis->CtlID == 2999)
 								drawButtonRed(dis, folderButton, ciemnyTlo2, ciemnyTlo3, jezyk::napisy[Wybierz], stringDlugosc(jezyk::napisy[Wybierz]));
 							else if (dis->CtlID == 3000)
@@ -1425,6 +1489,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 				}
 			}
 			else if ((HWND)lParam == przyciskX)
+			{
+				exit(0);
+			}
+			else if ((HWND)lParam == g_hPrzyciskKoniec)
 			{
 				exit(0);
 			}

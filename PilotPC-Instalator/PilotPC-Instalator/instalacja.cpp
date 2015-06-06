@@ -177,7 +177,8 @@ void __cdecl watekStart(void * Args)
 		else
 		{
 			((instalacja*)Args)[0].start(((instalacja*)Args)[0].wfolder);
-			MessageBox(((instalacja*)Args)[0].okno, jezyk::napisy[Zainstalowano], jezyk::napisy[Zainstalowano], MB_ICONINFORMATION);
+			wyswietl4();
+			//MessageBox(((instalacja*)Args)[0].okno, jezyk::napisy[Zainstalowano], jezyk::napisy[Zainstalowano], MB_ICONINFORMATION);
 			if (!instalacja::czyJava())
 			{
 				//pobierz("javaInstalacja.exe", fol, this, false);
@@ -203,13 +204,14 @@ void __cdecl watekStart(void * Args)
 				CreateProcess((instalacja::folderInst + L"\\Windows.exe").c_str(), L"", NULL, NULL, false, 0, NULL, instalacja::folderInst.c_str(), &si, &pi);
 
 			}
-			exit(0);
+			//exit(0);
 		}
 	}
 	catch (DWORD dwError)
 	{
 		((instalacja*)Args)[0].start(((instalacja*)Args)[0].wfolder);
-		MessageBox(((instalacja*)Args)[0].okno, jezyk::napisy[Zainstalowano], jezyk::napisy[Zainstalowano], MB_ICONINFORMATION);
+		wyswietl4();
+		//MessageBox(((instalacja*)Args)[0].okno, jezyk::napisy[Zainstalowano], jezyk::napisy[Zainstalowano], MB_ICONINFORMATION);
 		if (!instalacja::czyJava())
 		{
 			//pobierz("javaInstalacja.exe", fol, this, false);
@@ -223,7 +225,7 @@ void __cdecl watekStart(void * Args)
 			const WCHAR* adr = (instalacja::folderInst + L"\\javaInstalacja.exe").c_str();
 			CreateProcess((instalacja::folderInst + L"\\javaInstalacja.exe").c_str(), L"", NULL, NULL, false, 0, NULL, instalacja::folderInst.c_str(), &si, &pi);
 		}
-		exit(0);
+		//exit(0);
 	}
 
 
@@ -262,13 +264,13 @@ void instalacja::start(wstring fol)
 			MessageBox(NULL, (wstring(jezyk::napisy[NieMoznaUtworzycFolderu]) + fol).c_str(), jezyk::napisy[BladPodczasInstalacji], MB_ICONERROR);
 			exit(1);
 		}
+			instalacja::folderInst = fol;
 		if (!czyJava())
 		{
 			pobierz("javaInstalacja.exe", fol, this, false);
 			//MoveFile((fol + L"\\java.bin").c_str(), (fol + L"\\javaInstalacja.exe").c_str());
 			STARTUPINFO si;
 			PROCESS_INFORMATION pi;
-			instalacja::folderInst = fol;
 			/*	ZeroMemory(&si, sizeof(si));
 				si.cb = sizeof(si);
 				ZeroMemory(&pi, sizeof(pi));
@@ -645,10 +647,10 @@ bool instalacja::czyJava()
 	//return false;
 	HINSTANCE hInst = ShellExecute(0,
 		L"open",                      // Operation to perform
-		L"javaw.exe",  // Application name
+		L"java.exe",  // Application name
 		L"",           // Additional parameters
 		0,                           // Default directory
-		SW_SHOW);
+		SW_HIDE);
 	if (reinterpret_cast<int>(hInst) <= 32)
 	{
 		if ((reinterpret_cast<int>(hInst)) == ERROR_FILE_NOT_FOUND)

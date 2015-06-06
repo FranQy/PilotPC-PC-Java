@@ -8,5 +8,7 @@ int WinMain(HINSTANCE hInstance,
 	int nCmdShow
 	);
 void wyswietl3(HINSTANCE);
+void wyswietl4(HINSTANCE);
+void wyswietl4();
 void convert(std::string &in, std::wstring &out);
 void przerysuj(HWND);

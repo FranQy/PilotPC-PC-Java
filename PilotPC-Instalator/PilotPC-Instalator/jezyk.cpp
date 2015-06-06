@@ -54,6 +54,7 @@ void jezyk::laduj(jezyki a)
 		napisy[n::NieMoznaUtworzycFolderu] = L"Nie można utworzyć folderu ";
 		napisy[n::SterujKomputeremZdalnie] = L"Steruj komputerem zdalnie";
 		napisy[n::OdinstalujPilotPC] = L"Odinstaluj Jaebe PilotPC";
+		napisy[n::Zakoncz] = L"Zakończ";
 		break;
 	case jezyk::Angielski:
 		napisy[n::Kod] = L"EN";
@@ -84,6 +85,7 @@ void jezyk::laduj(jezyki a)
 		napisy[n::NieMoznaUtworzycFolderu] = L"Creating folder error ";
 		napisy[n::SterujKomputeremZdalnie] = L"Remote control";
 		napisy[n::OdinstalujPilotPC] = L"Uninstall Jaebe PilotPC";
+		napisy[n::Zakoncz] = L"Exit";
 		break;
 	case jezyk::Rosyjski:
 		napisy[n::Kod] = L"RU";
@@ -114,6 +116,7 @@ void jezyk::laduj(jezyki a)
 		napisy[n::NieMoznaUtworzycFolderu] = L"Ошибка создания папки ";
 		napisy[n::SterujKomputeremZdalnie] = L"дистанционное управление";
 		napisy[n::OdinstalujPilotPC] = L"удалить Jaebe PilotPC";
+		napisy[n::Zakoncz] = L"Zakończ";
 		break;
 	default:
 		break;
