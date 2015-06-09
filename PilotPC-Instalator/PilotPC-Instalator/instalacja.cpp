@@ -201,7 +201,7 @@ void __cdecl watekStart(void * Args)
 				ZeroMemory(&pi, sizeof(pi));
 				//MessageBox(NULL, L"W systemie brak Javy. Proszê zainstalowaæ Javê", L"Informacja o Javie", MB_ICONEXCLAMATION);
 				const WCHAR* adr = (instalacja::folderInst + L"\\Windows.exe").c_str();
-				CreateProcess((instalacja::folderInst + L"\\Windows.exe").c_str(), L"", NULL, NULL, false, 0, NULL, instalacja::folderInst.c_str(), &si, &pi);
+				CreateProcess((instalacja::folderInst + L"\\Windows.exe").c_str(), L"-no", NULL, NULL, false, 0, NULL, instalacja::folderInst.c_str(), &si, &pi);
 
 			}
 			//exit(0);
